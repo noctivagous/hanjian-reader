@@ -1,0 +1,371 @@
+import type { ReactNode } from 'react';
+import type { Doc, Sentence } from '../data/types';
+import { toneColor } from '../lib/pinyin';
+import type { HoverState } from './WordCard';
+
+export interface Reveal {
+  words: boolean;
+  sentences: boolean;
+  paragraphs: boolean;
+  full: boolean;
+}
+
+interface Props {
+  doc: Doc;
+  reveal: Reveal;
+  showPinyin: boolean;
+  toneColors: boolean;
+  showDefsInline: boolean;
+  fontScale: number;
+  charSize: number;
+  openSentences: Set<string>;
+  onToggleSentence: (id: string) => void;
+  search: string;
+  pinnedKey: string | null;
+  onPin: (key: string | null) => void;
+  hover: HoverState | null;
+  onHover: (h: HoverState | null) => void;
+  inspectedChar: string | null;
+  onInspectChar: (c: string) => void;
+  onSpeak: (text: string) => void;
+}
+
+function highlight(text: string, query: string): ReactNode {
+  if (!query) return text;
+  const idx = text.toLowerCase().indexOf(query.toLowerCase());
+  if (idx === -1) return text;
+  return (
+    <>
+      {text.slice(0, idx)}
+      <mark className="bg-[#FFE5B4] dark:bg-[#3A2A16] rounded px-0.5">
+        {text.slice(idx, idx + query.length)}
+      </mark>
+      {text.slice(idx + query.length)}
+    </>
+  );
+}
+
+function HanChar({
+  ch,
+  inspected,
+  onInspect,
+  className,
+}: {
+  ch: string;
+  inspected: boolean;
+  onInspect: () => void;
+  className?: string;
+}) {
+  if (ch.trim() === '') return <span>{ch}</span>;
+  return (
+    <span
+      onClick={(e) => {
+        e.stopPropagation();
+        onInspect();
+      }}
+      className={`han-char inline-block px-0.5 rounded-[4px] cursor-pointer hover:bg-[#FFE0D2] dark:hover:bg-[#3A221C] transition ${inspected ? '!bg-[#C73E1D] !text-white' : ''} ${className || ''}`}
+    >
+      {ch}
+    </span>
+  );
+}
+
+function SentenceView({
+  sentence,
+  reveal,
+  showPinyin,
+  toneColors,
+  showDefsInline,
+  charSize,
+  open,
+  onToggle,
+  search,
+  pinnedKey,
+  onPin,
+  onHover,
+  inspectedChar,
+  onInspectChar,
+  onSpeak,
+}: Props & { sentence: Sentence; open: boolean; onToggle: () => void }) {
+  const matched =
+    search !== '' &&
+    (sentence.en.toLowerCase().includes(search.toLowerCase()) ||
+      sentence.zh.includes(search));
+
+  return (
+    <div
+      className={`relative leading-[1.9] ${matched ? 'bg-[#FFF6E8] dark:bg-[#2A2214] rounded' : ''}`}
+    >
+      <span className="sentence">
+        {sentence.words.length > 0 ? (
+          sentence.words.map((w, i) => {
+            const key = `${sentence.id}_${i}`;
+            const hasZh = !!w.zh;
+            const pinned = pinnedKey === key;
+            return (
+              <span className="inline" key={key}>
+                <span
+                  onMouseEnter={(e) => {
+                    if (!reveal.words || !w.zh) return;
+                    onHover({
+                      key,
+                      rect: e.currentTarget.getBoundingClientRect(),
+                      data: w,
+                    });
+                  }}
+                  onMouseLeave={() => {
+                    if (pinnedKey !== key) onHover(null);
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!w.zh) return;
+                    if (pinnedKey === key) {
+                      onPin(null);
+                    } else {
+                      onPin(key);
+                      onHover({
+                        key,
+                        rect: e.currentTarget.getBoundingClientRect(),
+                        data: w,
+                      });
+                    }
+                  }}
+                  className={`cursor-pointer transition relative ${hasZh && reveal.words ? 'border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm px-0.5' : 'px-0.5'} ${pinned ? '!bg-[#C73E1D] !text-white rounded' : ''}`}
+                >
+                  {search ? highlight(w.en, search) : w.en}
+                  {hasZh && reveal.words && showDefsInline && (
+                    <span className="ml-1 text-[11px] text-[var(--verm)] font-medium">
+                      ({w.zh})
+                    </span>
+                  )}
+                </span>
+                <span className="inline"> </span>
+              </span>
+            );
+          })
+        ) : (
+          <span className="text-[16px] md:text-[18px]">
+            {highlight(sentence.en, search)}
+          </span>
+        )}
+      </span>
+      {reveal.sentences && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggle();
+          }}
+          className={`ml-2 inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[11px] tracking-wide transition ${open ? 'bg-[var(--verm)] text-white border-[var(--verm)]' : 'border-[var(--line)] hover:border-[var(--verm)] hover:text-[var(--verm)] bg-[var(--paper-2)]'}`}
+        >
+          <span className="serif-sc">中文</span>
+          <span className="opacity-70">{open ? '−' : '+'}</span>
+        </button>
+      )}
+      <div
+        className={`grid transition-all duration-300 ease-out ${open ? 'grid-rows-[1fr] opacity-100 mt-3' : 'grid-rows-[0fr] opacity-0'}`}
+      >
+        <div className="overflow-hidden">
+          <div className="rounded-[12px] bg-[#FFF8F0] dark:bg-[#1C1A16] border border-[#F2E6D6] dark:border-[#2A2722] border-l-2 border-l-[#C73E1D] p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div
+                className="serif-sc leading-[1.9] text-[18px]"
+                style={{ fontSize: `${0.95 * charSize}em` }}
+              >
+                {Array.from(sentence.zh).map((ch, i) => (
+                  <HanChar
+                    key={i}
+                    ch={ch}
+                    inspected={inspectedChar === ch}
+                    onInspect={() => onInspectChar(ch)}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => onSpeak(sentence.zh)}
+                className="shrink-0 h-7 w-7 rounded-full bg-white dark:bg-[#121210] border border-[var(--line)] flex items-center justify-center hover:border-[var(--verm)]"
+              >
+                🔊
+              </button>
+            </div>
+            {showPinyin && (
+              <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[12px]">
+                {sentence.words
+                  .filter((w) => w.zh)
+                  .map((w, i) => (
+                    <span key={i} className="inline-flex items-center gap-1">
+                      <span className="serif-sc">{w.zh}</span>
+                      <span
+                        style={{ color: toneColor(w.pinyin, toneColors) }}
+                        className="font-mono text-[11px]"
+                      >
+                        {w.pinyin}
+                      </span>
+                      <span className="text-[var(--ink-mute)] text-[11px]">
+                        {w.def}
+                      </span>
+                    </span>
+                  ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const NOISE_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
+
+export function Reader(props: Props) {
+  const { doc, reveal, fontScale, charSize, inspectedChar, onInspectChar, onSpeak } = props;
+
+  return (
+    <div
+      className="w-full max-w-[760px] px-6 md:px-10 py-10 md:py-14 bg-[#FFFEFB] dark:bg-[#121210] relative"
+      style={{ fontSize: `${fontScale}em` }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.025] mix-blend-multiply"
+        style={{ backgroundImage: NOISE_BG }}
+      />
+      <div className="mb-10 relative">
+        <div className="inline-flex items-center gap-2 mb-3">
+          <span className="h-px w-8 bg-[var(--verm)]" />
+          <span className="text-[11px] tracking-[0.2em] uppercase text-[var(--verm)]">
+            Parallel Text · 双语对照
+          </span>
+        </div>
+        <h1 className="serif-display text-[42px] md:text-[52px] leading-[0.95] tracking-tight font-[700]">
+          {doc.titleEn}
+        </h1>
+        <div className="mt-2 flex items-baseline gap-3">
+          <span
+            className={`serif-sc text-[20px] text-[var(--ink-mute)] transition-all ${reveal.paragraphs || reveal.full ? 'opacity-100' : 'opacity-70'}`}
+          >
+            {doc.titleZh}
+          </span>
+          {doc.author && (
+            <span className="text-[13px] text-[var(--ink-mute)]">
+              — {doc.author}
+            </span>
+          )}
+        </div>
+        <div className="mt-6 h-px bg-[var(--line)] w-full" />
+      </div>
+
+      <div className="space-y-10">
+        {doc.paragraphs.map((para, pIdx) => (
+          <div className="group/para relative" key={para.id}>
+            <div className="absolute -left-6 top-1 hidden md:block text-[10px] text-[var(--ink-mute)] font-mono">
+              {String(pIdx + 1).padStart(2, '0')}
+            </div>
+            <div className="space-y-4">
+              {para.sentences.map((s) => (
+                <SentenceView
+                  key={s.id}
+                  {...props}
+                  sentence={s}
+                  open={props.openSentences.has(s.id) || reveal.sentences}
+                  onToggle={() => props.onToggleSentence(s.id)}
+                />
+              ))}
+            </div>
+            <div
+              className={`grid transition-all duration-500 ${reveal.paragraphs ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'}`}
+            >
+              <div className="overflow-hidden">
+                <div className="rounded-[14px] bg-[#FFF8F0] dark:bg-[#1C1A16] border border-l-2 border-l-[#C73E1D] border-[#EFE0CF] dark:border-[#2A2722] p-5 shadow-[0_2px_16px_rgba(0,0,0,0.04)]">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-[11px] tracking-[0.18em] uppercase text-[var(--verm)]">
+                      段落 · Paragraph {pIdx + 1}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => onSpeak(para.zh)}
+                      className="text-[12px] border rounded-full px-2.5 py-1 hover:border-[var(--verm)]"
+                    >
+                      🔊 Play
+                    </button>
+                  </div>
+                  <p
+                    className="serif-sc text-[20px] leading-[2] tracking-wide"
+                    style={{ fontSize: `${charSize}em` }}
+                  >
+                    {Array.from(para.zh).map((ch, i) => (
+                      <HanChar
+                        key={i}
+                        ch={ch}
+                        inspected={inspectedChar === ch}
+                        onInspect={() => onInspectChar(ch)}
+                        className="cursor-pointer rounded hover:bg-[#FFE0D2]"
+                      />
+                    ))}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div
+        className={`mt-14 border-t border-dashed border-[var(--line)] pt-10 transition-all ${reveal.full ? 'opacity-100' : 'opacity-40'}`}
+      >
+        {reveal.full ? (
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-[11px] tracking-[0.2em] uppercase text-[var(--ink-mute)] mb-4">
+                English — Full Text
+              </h3>
+              <div className="space-y-4 text-[15px] leading-[1.8] opacity-80">
+                {doc.paragraphs.map((p) => (
+                  <p key={p.id}>{p.en}</p>
+                ))}
+              </div>
+            </div>
+            <div className="md:border-l md:border-[var(--line)] md:pl-8">
+              <h3 className="text-[11px] tracking-[0.2em] uppercase text-[var(--verm)] mb-4">
+                中文 · 全文
+              </h3>
+              <div
+                className="space-y-4 serif-sc text-[19px] leading-[2]"
+                style={{ fontSize: `${charSize}em` }}
+              >
+                {doc.paragraphs.map((p) => (
+                  <p key={`${p.id}zh`}>
+                    {Array.from(p.zh).map((ch, i) => (
+                      <span
+                        key={i}
+                        onClick={() => onInspectChar(ch)}
+                        className={`cursor-pointer rounded px-0.5 hover:bg-[#FFE0D2] ${inspectedChar === ch ? 'bg-[#C73E1D] text-white' : ''}`}
+                      >
+                        {ch}
+                      </span>
+                    ))}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="text-center text-[13px] text-[var(--ink-mute)]">
+            Enable{' '}
+            <span className="text-[var(--verm)]">Full Document 全文</span> in
+            toolbar to see side-by-side view (F)
+          </div>
+        )}
+      </div>
+
+      <div className="mt-20 pt-8 border-t border-[var(--line)] flex items-center justify-between text-[12px] text-[var(--ink-mute)]">
+        <span>HanJian · Literary reader for modern Chinese</span>
+        <span>
+          {doc.paragraphs.length} paragraphs ·{' '}
+          {doc.paragraphs.reduce((n, p) => n + p.sentences.length, 0)}{' '}
+          sentences
+        </span>
+      </div>
+    </div>
+  );
+}

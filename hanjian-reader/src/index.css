@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --paper: #fffefb;
+  --paper-2: #fff8f0;
+  --ink: #1a1a18;
+  --ink-mute: #6b6b63;
+  --line: #ede8e0;
+  --verm: #c73e1d;
+  --verm-soft: #fff0eb;
+  --glass: rgba(255, 254, 251, 0.82);
+  --safe-area-inset-top: 0px;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Newsreader, Georgia, "Times New Roman", serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.serif-display {
+  font-family: Fraunces, Newsreader, Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+.serif-sc {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #d8d0c5;
+  border-radius: 99px;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stroke-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

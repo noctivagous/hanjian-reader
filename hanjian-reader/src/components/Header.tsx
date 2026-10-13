@@ -1,0 +1,118 @@
+import type { Doc } from '../data/types';
+
+interface Props {
+  docs: Doc[];
+  activeId: string;
+  onSelect: (id: string) => void;
+  onImport: () => void;
+  fontScale: number;
+  onFontScale: (v: number) => void;
+  dark: boolean;
+  onToggleDark: () => void;
+  sidebarCollapsed: boolean;
+  onToggleSidebar: () => void;
+  onOpenTools: () => void;
+}
+
+export function Header({
+  docs,
+  activeId,
+  onSelect,
+  onImport,
+  fontScale,
+  onFontScale,
+  dark,
+  onToggleDark,
+  sidebarCollapsed,
+  onToggleSidebar,
+  onOpenTools,
+}: Props) {
+  return (
+    <header
+      className="sticky top-0 z-30 flex h-[64px] items-center justify-between border-b border-[var(--line)] bg-[var(--glass)] px-4 md:px-6 backdrop-blur-xl"
+      style={{ paddingTop: 'var(--safe-area-inset-top)' }}
+    >
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
+          <div className="h-8 w-8 rounded-[10px] bg-[var(--ink)] text-[var(--paper)] flex items-center justify-center font-bold serif-display text-[14px] tracking-tight">
+            涵
+          </div>
+          <div className="leading-none">
+            <div className="serif-display font-semibold text-[17px] tracking-tight -mb-0.5">
+              HanJian{' '}
+              <span className="font-normal text-[var(--ink-mute)]">涵简</span>
+            </div>
+            <div className="text-[10px] tracking-[0.18em] uppercase text-[var(--ink-mute)]">
+              Parallel Reader
+            </div>
+          </div>
+        </div>
+        <div className="hidden md:block h-5 w-px bg-[var(--line)] mx-2" />
+        <div className="relative">
+          <select
+            value={activeId}
+            onChange={(e) => onSelect(e.target.value)}
+            className="appearance-none pl-3 pr-8 py-1.5 rounded-full border border-[var(--line)] bg-[var(--paper)] text-[13px] font-medium tracking-tight outline-none hover:border-[var(--ink-mute)] transition"
+          >
+            {docs.map((d) => (
+              <option key={d.id} value={d.id}>
+                {d.titleEn} · {d.titleZh}
+              </option>
+            ))}
+          </select>
+          <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px]">
+            ▼
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={onImport}
+          className="hidden md:inline-flex ml-2 text-[11px] tracking-wide uppercase border border-dashed border-[var(--line)] rounded-full px-3 py-1 hover:border-[var(--verm)] hover:text-[var(--verm)] transition"
+        >
+          Import Custom
+        </button>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="hidden md:flex items-center gap-1 rounded-full border border-[var(--line)] p-1 bg-[var(--paper)]">
+          <span className="px-2 text-[11px] tracking-wide">Aa</span>
+          <button
+            type="button"
+            onClick={() => onFontScale(Math.max(0.85, fontScale - 0.05))}
+            className="h-6 w-6 rounded-full hover:bg-[var(--line)] flex items-center justify-center text-[14px]"
+          >
+            −
+          </button>
+          <div className="w-px h-4 bg-[var(--line)]" />
+          <button
+            type="button"
+            onClick={() => onFontScale(Math.min(1.35, fontScale + 0.05))}
+            className="h-6 w-6 rounded-full hover:bg-[var(--line)] flex items-center justify-center text-[14px]"
+          >
+            +
+          </button>
+        </div>
+        <button
+          type="button"
+          onClick={onToggleDark}
+          className="h-8 w-8 rounded-full border border-[var(--line)] bg-[var(--paper)] flex items-center justify-center text-[14px] hover:bg-[var(--line)] transition"
+        >
+          {dark ? '☾' : '☀'}
+        </button>
+        <button
+          type="button"
+          onClick={onToggleSidebar}
+          className="hidden lg:flex h-8 w-8 rounded-full border border-[var(--line)] bg-[var(--paper)] items-center justify-center hover:bg-[var(--line)]"
+        >
+          {sidebarCollapsed ? '◀' : '▶'}
+        </button>
+        <button
+          type="button"
+          onClick={onOpenTools}
+          className="lg:hidden h-8 w-8 rounded-full bg-[var(--ink)] text-[var(--paper)] flex items-center justify-center"
+        >
+          ≡
+        </button>
+      </div>
+    </header>
+  );
+}
