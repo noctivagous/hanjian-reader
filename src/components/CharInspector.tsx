@@ -4,6 +4,7 @@ import { toneColor } from '../lib/pinyin';
 interface Props {
   char: string;
   toneColors: boolean;
+  showZhuyin?: boolean;
   note: string;
   onNote: (char: string, note: string) => void;
   onSpeak: (text: string) => void;
@@ -15,6 +16,7 @@ interface Props {
 export function CharInspector({
   char,
   toneColors,
+  showZhuyin = true,
   note,
   onNote,
   onSpeak,
@@ -56,9 +58,11 @@ export function CharInspector({
             >
               {info?.pinyin || '—'}
             </span>
-            <span className="text-[12px] text-[var(--ink-mute)] font-mono">
-              {info?.zhuyin || ''}
-            </span>
+            {showZhuyin && info?.zhuyin && (
+              <span className="text-[12px] text-[var(--ink-mute)] font-mono">
+                {info.zhuyin}
+              </span>
+            )}
           </div>
           <div className="text-[13px] leading-[1.5] mt-1">
             {info?.meaning || 'Tap to add definition'}

@@ -25,6 +25,7 @@ export default function App() {
     full: false,
   });
   const [showPinyin, setShowPinyin] = useState(true);
+  const [showZhuyin, setShowZhuyin] = useState(false);
   const [toneColors, setToneColors] = useState(true);
   const [defsInline, setDefsInline] = useState(false);
   const [fontScale, setFontScale] = useState(1);
@@ -142,6 +143,7 @@ export default function App() {
             doc={doc}
             reveal={reveal}
             showPinyin={showPinyin}
+            showZhuyin={showZhuyin}
             toneColors={toneColors}
             showDefsInline={defsInline}
             fontScale={fontScale}
@@ -165,6 +167,8 @@ export default function App() {
           onToggleReveal={(k) => setReveal((r) => ({ ...r, [k]: !r[k] }))}
           showPinyin={showPinyin}
           onShowPinyin={setShowPinyin}
+          showZhuyin={showZhuyin}
+          onShowZhuyin={setShowZhuyin}
           showDefsInline={defsInline}
           onShowDefsInline={setDefsInline}
           toneColors={toneColors}
@@ -201,6 +205,7 @@ export default function App() {
           hover={hover}
           pinnedKey={pinnedKey}
           toneColors={toneColors}
+          showZhuyin={showZhuyin}
           onEnter={setHover}
           onLeave={() => {
             if (pinnedKey !== hover.key) setHover(null);

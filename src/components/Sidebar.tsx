@@ -16,6 +16,8 @@ interface Props {
   onToggleReveal: (k: keyof Reveal) => void;
   showPinyin: boolean;
   onShowPinyin: (v: boolean) => void;
+  showZhuyin: boolean;
+  onShowZhuyin: (v: boolean) => void;
   showDefsInline: boolean;
   onShowDefsInline: (v: boolean) => void;
   toneColors: boolean;
@@ -103,6 +105,15 @@ export function Sidebar(p: Props) {
                 type="checkbox"
                 checked={p.showPinyin}
                 onChange={(e) => p.onShowPinyin(e.target.checked)}
+                className="accent-[#C73E1D]"
+              />
+            </label>
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-[13px]">Show Zhuyin / 注音</span>
+              <input
+                type="checkbox"
+                checked={p.showZhuyin}
+                onChange={(e) => p.onShowZhuyin(e.target.checked)}
                 className="accent-[#C73E1D]"
               />
             </label>
@@ -204,6 +215,7 @@ export function Sidebar(p: Props) {
               <CharInspector
                 char={p.inspectedChar}
                 toneColors={p.toneColors}
+                showZhuyin={p.showZhuyin}
                 note={p.note}
                 onNote={p.onNote}
                 onSpeak={p.onSpeak}

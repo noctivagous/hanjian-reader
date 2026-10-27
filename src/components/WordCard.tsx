@@ -1,5 +1,6 @@
 import type { WordAlign } from '../data/types';
 import { toneColor } from '../lib/pinyin';
+import { zhuyinForWord } from '../lib/zhuyin';
 
 export interface HoverState {
   key: string;
@@ -11,6 +12,7 @@ interface Props {
   hover: HoverState;
   pinnedKey: string | null;
   toneColors: boolean;
+  showZhuyin: boolean;
   onEnter: (h: HoverState) => void;
   onLeave: () => void;
   onInspect: (zh: string) => void;
@@ -21,11 +23,13 @@ export function WordCard({
   hover,
   pinnedKey,
   toneColors,
+  showZhuyin,
   onEnter,
   onLeave,
   onInspect,
   onSpeak,
 }: Props) {
+  const zhuyin = showZhuyin ? zhuyinForWord(hover.data.pinyin) : null;
   return (
     <div
       className="fixed z-50 pointer-events-auto"
@@ -50,6 +54,11 @@ export function WordCard({
               >
                 {hover.data.pinyin}
               </span>
+              {zhuyin && (
+                <span className="font-mono text-[11px] text-[var(--ink-mute)]">
+                  {zhuyin}
+                </span>
+              )}
             </div>
             <div className="text-[12px] text-[var(--ink-mute)] leading-tight mt-0.5">
               {hover.data.def} · {hover.data.en}

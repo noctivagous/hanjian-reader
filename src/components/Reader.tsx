@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { Doc, Sentence } from '../data/types';
 import { allParagraphs, paragraphEn, primaryTranslation } from '../lib/doc';
 import { toneColor } from '../lib/pinyin';
+import { zhuyinForWord } from '../lib/zhuyin';
 import type { HoverState } from './WordCard';
 
 export interface Reveal {
@@ -15,6 +16,7 @@ interface Props {
   doc: Doc;
   reveal: Reveal;
   showPinyin: boolean;
+  showZhuyin: boolean;
   toneColors: boolean;
   showDefsInline: boolean;
   fontScale: number;
@@ -75,6 +77,7 @@ function SentenceView({
   sentence,
   reveal,
   showPinyin,
+  showZhuyin,
   toneColors,
   showDefsInline,
   charSize,
@@ -204,24 +207,34 @@ function SentenceView({
                 🔊
               </button>
             </div>
-            {showPinyin && (
+            {(showPinyin || showZhuyin) && (
               <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[12px]">
                 {words
                   .filter((w) => w.zh)
-                  .map((w, i) => (
-                    <span key={i} className="inline-flex items-center gap-1">
-                      <span className="serif-sc">{w.zh}</span>
-                      <span
-                        style={{ color: toneColor(w.pinyin, toneColors) }}
-                        className="font-mono text-[11px]"
-                      >
-                        {w.pinyin}
+                  .map((w, i) => {
+                    const zhuyin = showZhuyin ? zhuyinForWord(w.pinyin) : null;
+                    return (
+                      <span key={i} className="inline-flex items-center gap-1">
+                        <span className="serif-sc">{w.zh}</span>
+                        {showPinyin && (
+                          <span
+                            style={{ color: toneColor(w.pinyin, toneColors) }}
+                            className="font-mono text-[11px]"
+                          >
+                            {w.pinyin}
+                          </span>
+                        )}
+                        {zhuyin && (
+                          <span className="font-mono text-[11px] text-[var(--ink-mute)]">
+                            {zhuyin}
+                          </span>
+                        )}
+                        <span className="text-[var(--ink-mute)] text-[11px]">
+                          {w.def}
+                        </span>
                       </span>
-                      <span className="text-[var(--ink-mute)] text-[11px]">
-                        {w.def}
-                      </span>
-                    </span>
-                  ))}
+                    );
+                  })}
               </div>
             )}
           </div>
