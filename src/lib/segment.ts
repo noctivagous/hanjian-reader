@@ -20,22 +20,39 @@ export function importCustomDoc(
     const zhSentences = zhPara.split(/(?<=[。！？])\s*/).filter(Boolean);
     return {
       id: `cp_${stamp}_${pIdx}`,
-      en: enPara,
       zh: zhPara,
       sentences: enSentences.map((en, sIdx) => ({
         id: `c_${stamp}_${pIdx}_${sIdx}`,
-        en: en.trim(),
         zh: (zhSentences[sIdx] || '').trim(),
-        words: [],
+        translations: [
+          {
+            id: 'en',
+            language: 'en',
+            label: 'English',
+            translator: '',
+            text: en.trim(),
+            words: [],
+          },
+        ],
       })),
     };
   });
 
   return {
+    format: 'hanjian',
+    version: 1,
     id: `custom_${stamp}`,
     titleEn: titleEn || 'Custom Document',
     titleZh: titleZh || '自定义文档',
     author: '',
-    paragraphs,
+    sourceLanguage: 'zh',
+    sections: [
+      {
+        id: `custom_${stamp}-main`,
+        titleEn: '',
+        titleZh: '',
+        paragraphs,
+      },
+    ],
   };
 }

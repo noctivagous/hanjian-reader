@@ -1,4 +1,5 @@
 import type { Doc } from '../data/types';
+import { bilingualText, chineseText, englishText } from '../lib/doc';
 import { CharInspector } from './CharInspector';
 import type { Reveal } from './Reader';
 
@@ -220,30 +221,21 @@ export function Sidebar(p: Props) {
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
-              onClick={() =>
-                p.onCopy(p.doc.paragraphs.map((x) => x.en).join('\n\n'), 'English')
-              }
+              onClick={() => p.onCopy(englishText(p.doc), 'English')}
               className="rounded-full border bg-white dark:bg-[#181611] py-1.5 text-[11px] hover:border-[var(--verm)]"
             >
               Copy EN
             </button>
             <button
               type="button"
-              onClick={() =>
-                p.onCopy(p.doc.paragraphs.map((x) => x.zh).join('\n\n'), 'Chinese')
-              }
+              onClick={() => p.onCopy(chineseText(p.doc), 'Chinese')}
               className="rounded-full border bg-white dark:bg-[#181611] py-1.5 text-[11px] hover:border-[var(--verm)]"
             >
               Copy 中文
             </button>
             <button
               type="button"
-              onClick={() =>
-                p.onCopy(
-                  p.doc.paragraphs.map((x) => `${x.en}\n${x.zh}`).join('\n\n'),
-                  'Bilingual',
-                )
-              }
+              onClick={() => p.onCopy(bilingualText(p.doc), 'Bilingual')}
               className="rounded-full border bg-white dark:bg-[#181611] py-1.5 text-[11px] hover:border-[var(--verm)]"
             >
               Copy 双语

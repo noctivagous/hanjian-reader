@@ -5,24 +5,42 @@ export interface WordAlign {
   def: string;
 }
 
+export interface Translation {
+  id: string;
+  language: string;
+  label: string;
+  translator: string;
+  license?: string;
+  text: string;
+  words: WordAlign[];
+}
+
 export interface Sentence {
   id: string;
-  en: string;
   zh: string;
-  words: WordAlign[];
+  translations: Translation[];
 }
 
 export interface Paragraph {
   id: string;
-  en: string;
   zh: string;
   sentences: Sentence[];
 }
 
+export interface Section {
+  id: string;
+  titleEn: string;
+  titleZh: string;
+  paragraphs: Paragraph[];
+}
+
 export interface Doc {
+  format: 'hanjian';
+  version: 1;
   id: string;
   titleEn: string;
   titleZh: string;
   author: string;
-  paragraphs: Paragraph[];
+  sourceLanguage: string;
+  sections: Section[];
 }

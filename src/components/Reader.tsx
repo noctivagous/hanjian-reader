@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { Doc, Sentence } from '../data/types';
+import { allParagraphs, paragraphEn, primaryTranslation } from '../lib/doc';
 import { toneColor } from '../lib/pinyin';
 import type { HoverState } from './WordCard';
 
@@ -87,9 +88,12 @@ function SentenceView({
   onInspectChar,
   onSpeak,
 }: Props & { sentence: Sentence; open: boolean; onToggle: () => void }) {
+  const translation = primaryTranslation(sentence);
+  const words = translation?.words ?? [];
+  const enText = translation?.text ?? '';
   const matched =
     search !== '' &&
-    (sentence.en.toLowerCase().includes(search.toLowerCase()) ||
+    (enText.toLowerCase().includes(search.toLowerCase()) ||
       sentence.zh.includes(search));
 
   return (
@@ -97,8 +101,19 @@ function SentenceView({
       className={`relative leading-[1.9] ${matched ? 'bg-[#FFF6E8] dark:bg-[#2A2214] rounded' : ''}`}
     >
       <span className="sentence">
-        {sentence.words.length > 0 ? (
-          sentence.words.map((w, i) => {
+        {!translation ? (
+          <span className="serif-sc text-[18px]">
+            {Array.from(sentence.zh).map((ch, i) => (
+              <HanChar
+                key={i}
+                ch={ch}
+                inspected={inspectedChar === ch}
+                onInspect={() => onInspectChar(ch)}
+              />
+            ))}
+          </span>
+        ) : words.length > 0 ? (
+          words.map((w, i) => {
             const key = `${sentence.id}_${i}`;
             const hasZh = !!w.zh;
             const pinned = pinnedKey === key;
@@ -145,7 +160,7 @@ function SentenceView({
           })
         ) : (
           <span className="text-[16px] md:text-[18px]">
-            {highlight(sentence.en, search)}
+            {highlight(enText, search)}
           </span>
         )}
       </span>
@@ -191,7 +206,7 @@ function SentenceView({
             </div>
             {showPinyin && (
               <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[12px]">
-                {sentence.words
+                {words
                   .filter((w) => w.zh)
                   .map((w, i) => (
                     <span key={i} className="inline-flex items-center gap-1">
@@ -256,7 +271,29 @@ export function Reader(props: Props) {
       </div>
 
       <div className="space-y-10">
-        {doc.paragraphs.map((para, pIdx) => (
+        {doc.sections.map((section, sIdx) => {
+          const offset = doc.sections
+            .slice(0, sIdx)
+            .reduce((n, s) => n + s.paragraphs.length, 0);
+          return (
+            <div key={section.id} className="space-y-10">
+              {(section.titleEn || section.titleZh) && (
+                <div>
+                  {section.titleEn && (
+                    <h2 className="serif-display text-[28px] font-semibold tracking-tight">
+                      {section.titleEn}
+                    </h2>
+                  )}
+                  {section.titleZh && (
+                    <div className="serif-sc text-[18px] text-[var(--ink-mute)]">
+                      {section.titleZh}
+                    </div>
+                  )}
+                </div>
+              )}
+              {section.paragraphs.map((para, localIdx) => {
+                const pIdx = offset + localIdx;
+                return (
           <div className="group/para relative" key={para.id}>
             <div className="absolute -left-6 top-1 hidden md:block text-[10px] text-[var(--ink-mute)] font-mono">
               {String(pIdx + 1).padStart(2, '0')}
@@ -307,7 +344,11 @@ export function Reader(props: Props) {
               </div>
             </div>
           </div>
-        ))}
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
 
       <div
@@ -320,8 +361,8 @@ export function Reader(props: Props) {
                 English — Full Text
               </h3>
               <div className="space-y-4 text-[15px] leading-[1.8] opacity-80">
-                {doc.paragraphs.map((p) => (
-                  <p key={p.id}>{p.en}</p>
+                {allParagraphs(doc).map((p) => (
+                  <p key={p.id}>{paragraphEn(p)}</p>
                 ))}
               </div>
             </div>
@@ -333,7 +374,7 @@ export function Reader(props: Props) {
                 className="space-y-4 serif-sc text-[19px] leading-[2]"
                 style={{ fontSize: `${charSize}em` }}
               >
-                {doc.paragraphs.map((p) => (
+                {allParagraphs(doc).map((p) => (
                   <p key={`${p.id}zh`}>
                     {Array.from(p.zh).map((ch, i) => (
                       <span
@@ -361,8 +402,8 @@ export function Reader(props: Props) {
       <div className="mt-20 pt-8 border-t border-[var(--line)] flex items-center justify-between text-[12px] text-[var(--ink-mute)]">
         <span>HanJian · Literary reader for modern Chinese</span>
         <span>
-          {doc.paragraphs.length} paragraphs ·{' '}
-          {doc.paragraphs.reduce((n, p) => n + p.sentences.length, 0)}{' '}
+          {allParagraphs(doc).length} paragraphs ·{' '}
+          {allParagraphs(doc).reduce((n, p) => n + p.sentences.length, 0)}{' '}
           sentences
         </span>
       </div>

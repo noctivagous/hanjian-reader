@@ -1,4 +1,5 @@
 import type { Doc } from '../data/types';
+import { chineseText, englishText } from '../lib/doc';
 import { CharInspector } from './CharInspector';
 import type { Reveal } from './Reader';
 
@@ -90,18 +91,14 @@ export function MobileTools({
           <div className="flex gap-2">
             <button
               type="button"
-              onClick={() =>
-                onCopy(doc.paragraphs.map((x) => x.en).join('\n\n'), 'EN')
-              }
+              onClick={() => onCopy(englishText(doc), 'EN')}
               className="flex-1 rounded-full border py-2 text-[12px]"
             >
               Copy EN
             </button>
             <button
               type="button"
-              onClick={() =>
-                onCopy(doc.paragraphs.map((x) => x.zh).join('\n\n'), '中文')
-              }
+              onClick={() => onCopy(chineseText(doc), '中文')}
               className="flex-1 rounded-full border py-2 text-[12px]"
             >
               Copy 中文
