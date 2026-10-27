@@ -1,10 +1,13 @@
 import type { Doc } from '../data/types';
+import type { PrimaryLang } from './Reader';
 
 interface Props {
   docs: Doc[];
   activeId: string;
   onSelect: (id: string) => void;
   onImport: () => void;
+  primaryLang: PrimaryLang;
+  onPrimaryLang: (v: PrimaryLang) => void;
   fontScale: number;
   onFontScale: (v: number) => void;
   dark: boolean;
@@ -19,6 +22,8 @@ export function Header({
   activeId,
   onSelect,
   onImport,
+  primaryLang,
+  onPrimaryLang,
   fontScale,
   onFontScale,
   dark,
@@ -73,6 +78,32 @@ export function Header({
         </button>
       </div>
       <div className="flex items-center gap-2">
+        <div
+          role="group"
+          aria-label="Reading direction: language shown first, language revealed"
+          className="flex items-center gap-0.5 rounded-full border border-[var(--line)] p-1 bg-[var(--paper)]"
+        >
+          <button
+            type="button"
+            aria-pressed={primaryLang === 'en'}
+            title="Read English, reveal Chinese"
+            onClick={() => onPrimaryLang('en')}
+            className={`rounded-full px-2 py-1 text-[11px] tracking-wide transition ${primaryLang === 'en' ? 'bg-[var(--ink)] text-[var(--paper)]' : 'hover:bg-[var(--line)]'}`}
+          >
+            EN<span aria-hidden="true"> → </span>
+            <span className="serif-sc">中</span>
+          </button>
+          <button
+            type="button"
+            aria-pressed={primaryLang === 'zh'}
+            title="Read Chinese, reveal English"
+            onClick={() => onPrimaryLang('zh')}
+            className={`rounded-full px-2 py-1 text-[11px] tracking-wide transition ${primaryLang === 'zh' ? 'bg-[var(--ink)] text-[var(--paper)]' : 'hover:bg-[var(--line)]'}`}
+          >
+            <span className="serif-sc">中</span>
+            <span aria-hidden="true"> → </span>EN
+          </button>
+        </div>
         <div className="hidden md:flex items-center gap-1 rounded-full border border-[var(--line)] p-1 bg-[var(--paper)]">
           <span className="px-2 text-[11px] tracking-wide">Aa</span>
           <button

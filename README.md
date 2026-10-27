@@ -16,6 +16,12 @@ Most parallel readers force you to choose: English *or* Chinese, side-by-side. H
 2.  **You reveal** Chinese only when you want it, at the granularity you need.
 3.  **You inspect** the exact character that caught your eye.
 
+The header direction control (`EN → 中` / `中 → EN`, left of the `Aa`
+font-size control) chooses which language is shown and which is revealed:
+read the translation and uncover the Chinese, or read the original Chinese
+and reveal the English. The choice is kept in `localStorage`
+(`hanjian:primaryLang`) and defaults to English-first.
+
 Ideal for translated literature, business docs, classical texts, or any Chinese → English workflow where you want comprehension without losing the original.
 
 ## Features
@@ -33,10 +39,10 @@ The toolbar is fixed on desktop (360px), bottom-sheet drawer on mobile.
 
 | Control | Shortcut | What it does |
 |---|---|---|
-| **Words / 词语** | `W` | Dotted underline on translatable English words. Hover → floating card with Chinese, pinyin (tone-colored), definition. Click to pin. |
-| **Sentences / 句子** | `S` | `中文` pill at end of each sentence. Toggles Chinese sentence block with ruby pinyin and 🔊 TTS (Web Speech API `zh-CN`). |
-| **Paragraphs / 段落** | `P` | Chinese paragraph card below each English paragraph — left vermillion accent, each hanzi clickable. |
-| **Full Document / 全文** | `F` | Side-by-side split view, scroll-synced. English left, full Chinese right. |
+| **Words / 词语** | `W` | Dotted underline on translatable words in the shown language. Hover → floating card with the other language, pinyin (tone-colored), definition. Click to pin. |
+| **Sentences / 句子** | `S` | `中文` / `English` pill at end of each sentence. Toggles the other-language sentence block (Chinese block includes pinyin and 🔊 TTS, Web Speech API `zh-CN`). |
+| **Paragraphs / 段落** | `P` | Other-language paragraph card below each paragraph — left vermillion accent, each hanzi clickable in the Chinese card. |
+| **Full Document / 全文** | `F` | Side-by-side split view. Shown language first, revealed language second. |
 
 Modes are independent — combine Words + Sentences for intensive study, or just Paragraphs for light review.
 

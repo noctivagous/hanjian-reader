@@ -13,6 +13,7 @@ interface Props {
   pinnedKey: string | null;
   toneColors: boolean;
   showZhuyin: boolean;
+  primaryLang?: 'en' | 'zh';
   onEnter: (h: HoverState) => void;
   onLeave: () => void;
   onInspect: (zh: string) => void;
@@ -24,6 +25,7 @@ export function WordCard({
   pinnedKey,
   toneColors,
   showZhuyin,
+  primaryLang = 'en',
   onEnter,
   onLeave,
   onInspect,
@@ -46,23 +48,50 @@ export function WordCard({
             {hover.data.zh || '字'}
           </div>
           <div className="flex-1">
-            <div className="flex items-baseline gap-2">
-              <span className="serif-sc font-semibold">{hover.data.zh}</span>
-              <span
-                className="font-mono text-[11px]"
-                style={{ color: toneColor(hover.data.pinyin, toneColors) }}
-              >
-                {hover.data.pinyin}
-              </span>
-              {zhuyin && (
-                <span className="font-mono text-[11px] text-[var(--ink-mute)]">
-                  {zhuyin}
-                </span>
-              )}
-            </div>
-            <div className="text-[12px] text-[var(--ink-mute)] leading-tight mt-0.5">
-              {hover.data.def} · {hover.data.en}
-            </div>
+            {primaryLang === 'zh' ? (
+              <>
+                <div className="flex items-baseline gap-2">
+                  <span className="font-semibold">{hover.data.en}</span>
+                </div>
+                <div className="text-[12px] text-[var(--ink-mute)] leading-tight mt-0.5">
+                  <span className="serif-sc">{hover.data.zh}</span>
+                  {hover.data.pinyin && (
+                    <span
+                      className="font-mono text-[11px] ml-1.5"
+                      style={{ color: toneColor(hover.data.pinyin, toneColors) }}
+                    >
+                      {hover.data.pinyin}
+                    </span>
+                  )}
+                  {zhuyin && (
+                    <span className="font-mono text-[11px] text-[var(--ink-mute)] ml-1.5">
+                      {zhuyin}
+                    </span>
+                  )}
+                  {hover.data.def && <> · {hover.data.def}</>}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex items-baseline gap-2">
+                  <span className="serif-sc font-semibold">{hover.data.zh}</span>
+                  <span
+                    className="font-mono text-[11px]"
+                    style={{ color: toneColor(hover.data.pinyin, toneColors) }}
+                  >
+                    {hover.data.pinyin}
+                  </span>
+                  {zhuyin && (
+                    <span className="font-mono text-[11px] text-[var(--ink-mute)]">
+                      {zhuyin}
+                    </span>
+                  )}
+                </div>
+                <div className="text-[12px] text-[var(--ink-mute)] leading-tight mt-0.5">
+                  {hover.data.def} · {hover.data.en}
+                </div>
+              </>
+            )}
           </div>
         </div>
         <div className="px-3 pb-2 flex gap-2">

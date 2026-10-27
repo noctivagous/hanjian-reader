@@ -1,18 +1,22 @@
 import type { Doc } from '../data/types';
 import { bilingualText, chineseText, englishText } from '../lib/doc';
 import { CharInspector } from './CharInspector';
-import type { Reveal } from './Reader';
+import type { PrimaryLang, Reveal } from './Reader';
 
-const MODES: { k: keyof Reveal; label: string; sub: string; icon: string; hint: string }[] = [
-  { k: 'words', label: 'Words / 词语', sub: 'Hover English words to see Chinese', icon: 'Aa→字', hint: 'W' },
-  { k: 'sentences', label: 'Sentences / 句子', sub: 'Toggle per-sentence Chinese', icon: 'S', hint: 'S' },
-  { k: 'paragraphs', label: 'Paragraphs / 段落', sub: 'Show Chinese paragraph cards', icon: '¶', hint: 'P' },
-  { k: 'full', label: 'Full Document / 全文', sub: 'Side-by-side full view', icon: 'Doc', hint: 'F' },
-];
+function modesFor(primaryLang: PrimaryLang): { k: keyof Reveal; label: string; sub: string; icon: string; hint: string }[] {
+  const enPrimary = primaryLang === 'en';
+  return [
+    { k: 'words', label: 'Words / 词语', sub: enPrimary ? 'Hover English words to see Chinese' : 'Hover Chinese words to see English', icon: 'Aa→字', hint: 'W' },
+    { k: 'sentences', label: 'Sentences / 句子', sub: enPrimary ? 'Toggle per-sentence Chinese' : 'Toggle per-sentence English', icon: 'S', hint: 'S' },
+    { k: 'paragraphs', label: 'Paragraphs / 段落', sub: enPrimary ? 'Show Chinese paragraph cards' : 'Show English paragraph cards', icon: '¶', hint: 'P' },
+    { k: 'full', label: 'Full Document / 全文', sub: 'Side-by-side full view', icon: 'Doc', hint: 'F' },
+  ];
+}
 
 interface Props {
   doc: Doc;
   reveal: Reveal;
+  primaryLang: PrimaryLang;
   onToggleReveal: (k: keyof Reveal) => void;
   showPinyin: boolean;
   onShowPinyin: (v: boolean) => void;
@@ -38,6 +42,8 @@ interface Props {
 
 export function Sidebar(p: Props) {
   const activeCount = Object.values(p.reveal).filter(Boolean).length;
+  const enPrimary = p.primaryLang === 'en';
+  const MODES = modesFor(p.primaryLang);
 
   return (
     <aside
@@ -47,7 +53,7 @@ export function Sidebar(p: Props) {
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="serif-display text-[18px] font-semibold tracking-tight">
-              Reveal 中文
+              {enPrimary ? 'Reveal 中文' : 'Reveal English'}
             </h2>
             <span className="text-[11px] px-2 py-0.5 rounded-full bg-[var(--verm-soft)] text-[var(--verm)] border border-[#F2C4B8]">
               {activeCount}/4 active
@@ -264,9 +270,9 @@ export function Sidebar(p: Props) {
 
         <div className="text-[11px] text-[var(--ink-mute)] leading-[1.6] border-t border-[var(--line)] pt-4">
           <div className="font-semibold text-[var(--ink)]">How to read</div>
-          Start in English. Reveal Chinese progressively: words for quick
-          lookup, sentences for structure, paragraphs for flow, full for
-          immersion. Click any 汉字 to inspect in this panel.
+          {enPrimary
+            ? 'Start in English. Reveal Chinese progressively: words for quick lookup, sentences for structure, paragraphs for flow, full for immersion. Click any 汉字 to inspect in this panel.'
+            : 'Start in Chinese. Reveal English progressively: words for quick lookup, sentences for structure, paragraphs for flow, full for immersion. Click any 汉字 to inspect in this panel.'}
         </div>
       </div>
     </aside>

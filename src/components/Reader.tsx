@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { Doc, Sentence } from '../data/types';
 import { allParagraphs, paragraphEn, primaryTranslation } from '../lib/doc';
 import { toneColor } from '../lib/pinyin';
+import { tokenizeChinese } from '../lib/tokenize';
 import { zhuyinForWord } from '../lib/zhuyin';
 import type { HoverState } from './WordCard';
 
@@ -12,9 +13,13 @@ export interface Reveal {
   full: boolean;
 }
 
+/** Language shown as the main text; the other language is revealed. */
+export type PrimaryLang = 'en' | 'zh';
+
 interface Props {
   doc: Doc;
   reveal: Reveal;
+  primaryLang: PrimaryLang;
   showPinyin: boolean;
   showZhuyin: boolean;
   toneColors: boolean;
@@ -76,6 +81,7 @@ function HanChar({
 function SentenceView({
   sentence,
   reveal,
+  primaryLang,
   showPinyin,
   showZhuyin,
   toneColors,
@@ -94,6 +100,8 @@ function SentenceView({
   const translation = primaryTranslation(sentence);
   const words = translation?.words ?? [];
   const enText = translation?.text ?? '';
+  const enPrimary = primaryLang === 'en';
+  const zhTokens = enPrimary ? [] : tokenizeChinese(sentence.zh, words);
   const matched =
     search !== '' &&
     (enText.toLowerCase().includes(search.toLowerCase()) ||
@@ -115,7 +123,7 @@ function SentenceView({
               />
             ))}
           </span>
-        ) : words.length > 0 ? (
+        ) : enPrimary && words.length > 0 ? (
           words.map((w, i) => {
             const key = `${sentence.id}_${i}`;
             const hasZh = !!w.zh;
@@ -161,6 +169,84 @@ function SentenceView({
               </span>
             );
           })
+        ) : !enPrimary && words.length > 0 ? (
+          <span
+            className="serif-sc text-[18px]"
+            style={{ fontSize: `${charSize}em` }}
+          >
+            {zhTokens.map((tok, i) => {
+              const w = tok.word;
+              if (!w) {
+                return (
+                  <span key={`${sentence.id}_t${i}`}>
+                    {Array.from(tok.text).map((ch, j) => (
+                      <HanChar
+                        key={j}
+                        ch={ch}
+                        inspected={inspectedChar === ch}
+                        onInspect={() => onInspectChar(ch)}
+                      />
+                    ))}
+                  </span>
+                );
+              }
+              const key = `${sentence.id}_t${i}`;
+              const pinned = pinnedKey === key;
+              return (
+                <span
+                  key={key}
+                  onMouseEnter={(e) => {
+                    if (!reveal.words) return;
+                    onHover({
+                      key,
+                      rect: e.currentTarget.getBoundingClientRect(),
+                      data: w,
+                    });
+                  }}
+                  onMouseLeave={() => {
+                    if (pinnedKey !== key) onHover(null);
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (pinnedKey === key) {
+                      onPin(null);
+                    } else {
+                      onPin(key);
+                      onHover({
+                        key,
+                        rect: e.currentTarget.getBoundingClientRect(),
+                        data: w,
+                      });
+                    }
+                  }}
+                  className={`cursor-pointer transition relative ${reveal.words ? 'border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm px-0.5' : 'px-0.5'} ${pinned ? '!bg-[#C73E1D] !text-white rounded' : ''}`}
+                >
+                  {search && tok.text.includes(search)
+                    ? highlight(tok.text, search)
+                    : tok.text}
+                  {reveal.words && showDefsInline && w.en && (
+                    <span className="ml-1 text-[11px] text-[var(--verm)] font-medium">
+                      ({w.en})
+                    </span>
+                  )}
+                </span>
+              );
+            })}
+          </span>
+        ) : !enPrimary ? (
+          <span
+            className="serif-sc text-[18px]"
+            style={{ fontSize: `${charSize}em` }}
+          >
+            {Array.from(sentence.zh).map((ch, i) => (
+              <HanChar
+                key={i}
+                ch={ch}
+                inspected={inspectedChar === ch}
+                onInspect={() => onInspectChar(ch)}
+              />
+            ))}
+          </span>
         ) : (
           <span className="text-[16px] md:text-[18px]">
             {highlight(enText, search)}
@@ -176,7 +262,9 @@ function SentenceView({
           }}
           className={`ml-2 inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[11px] tracking-wide transition ${open ? 'bg-[var(--verm)] text-white border-[var(--verm)]' : 'border-[var(--line)] hover:border-[var(--verm)] hover:text-[var(--verm)] bg-[var(--paper-2)]'}`}
         >
-          <span className="serif-sc">中文</span>
+          <span className={enPrimary ? 'serif-sc' : ''}>
+            {enPrimary ? '中文' : 'English'}
+          </span>
           <span className="opacity-70">{open ? '−' : '+'}</span>
         </button>
       )}
@@ -185,6 +273,21 @@ function SentenceView({
       >
         <div className="overflow-hidden">
           <div className="rounded-[12px] bg-[#FFF8F0] dark:bg-[#1C1A16] border border-[#F2E6D6] dark:border-[#2A2722] border-l-2 border-l-[#C73E1D] p-4">
+            {!enPrimary ? (
+              <div className="flex items-start justify-between gap-3">
+                <p className="text-[16px] leading-[1.8]">
+                  {highlight(enText, search)}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => onSpeak(sentence.zh)}
+                  className="shrink-0 h-7 w-7 rounded-full bg-white dark:bg-[#121210] border border-[var(--line)] flex items-center justify-center hover:border-[var(--verm)]"
+                >
+                  🔊
+                </button>
+              </div>
+            ) : (
+              <>
             <div className="flex items-start justify-between gap-3">
               <div
                 className="serif-sc leading-[1.9] text-[18px]"
@@ -237,6 +340,8 @@ function SentenceView({
                   })}
               </div>
             )}
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -247,7 +352,8 @@ function SentenceView({
 const NOISE_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
 
 export function Reader(props: Props) {
-  const { doc, reveal, fontScale, charSize, inspectedChar, onInspectChar, onSpeak } = props;
+  const { doc, reveal, primaryLang, fontScale, charSize, inspectedChar, onInspectChar, onSpeak } = props;
+  const enPrimary = primaryLang === 'en';
 
   return (
     <div
@@ -266,13 +372,13 @@ export function Reader(props: Props) {
           </span>
         </div>
         <h1 className="serif-display text-[42px] md:text-[52px] leading-[0.95] tracking-tight font-[700]">
-          {doc.titleEn}
+          {enPrimary ? doc.titleEn : doc.titleZh}
         </h1>
         <div className="mt-2 flex items-baseline gap-3">
           <span
             className={`serif-sc text-[20px] text-[var(--ink-mute)] transition-all ${reveal.paragraphs || reveal.full ? 'opacity-100' : 'opacity-70'}`}
           >
-            {doc.titleZh}
+            {enPrimary ? doc.titleZh : doc.titleEn}
           </span>
           {doc.author && (
             <span className="text-[13px] text-[var(--ink-mute)]">
@@ -292,14 +398,14 @@ export function Reader(props: Props) {
             <div key={section.id} className="space-y-10">
               {(section.titleEn || section.titleZh) && (
                 <div>
-                  {section.titleEn && (
+                  {(enPrimary ? section.titleEn : section.titleZh) && (
                     <h2 className="serif-display text-[28px] font-semibold tracking-tight">
-                      {section.titleEn}
+                      {enPrimary ? section.titleEn : section.titleZh}
                     </h2>
                   )}
-                  {section.titleZh && (
+                  {(enPrimary ? section.titleZh : section.titleEn) && (
                     <div className="serif-sc text-[18px] text-[var(--ink-mute)]">
-                      {section.titleZh}
+                      {enPrimary ? section.titleZh : section.titleEn}
                     </div>
                   )}
                 </div>
@@ -329,7 +435,9 @@ export function Reader(props: Props) {
                 <div className="rounded-[14px] bg-[#FFF8F0] dark:bg-[#1C1A16] border border-l-2 border-l-[#C73E1D] border-[#EFE0CF] dark:border-[#2A2722] p-5 shadow-[0_2px_16px_rgba(0,0,0,0.04)]">
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-[11px] tracking-[0.18em] uppercase text-[var(--verm)]">
-                      段落 · Paragraph {pIdx + 1}
+                      {enPrimary
+                        ? `段落 · Paragraph ${pIdx + 1}`
+                        : `English · Paragraph ${pIdx + 1}`}
                     </span>
                     <button
                       type="button"
@@ -339,20 +447,26 @@ export function Reader(props: Props) {
                       🔊 Play
                     </button>
                   </div>
-                  <p
-                    className="serif-sc text-[20px] leading-[2] tracking-wide"
-                    style={{ fontSize: `${charSize}em` }}
-                  >
-                    {Array.from(para.zh).map((ch, i) => (
-                      <HanChar
-                        key={i}
-                        ch={ch}
-                        inspected={inspectedChar === ch}
-                        onInspect={() => onInspectChar(ch)}
-                        className="cursor-pointer rounded hover:bg-[#FFE0D2]"
-                      />
-                    ))}
-                  </p>
+                  {enPrimary ? (
+                    <p
+                      className="serif-sc text-[20px] leading-[2] tracking-wide"
+                      style={{ fontSize: `${charSize}em` }}
+                    >
+                      {Array.from(para.zh).map((ch, i) => (
+                        <HanChar
+                          key={i}
+                          ch={ch}
+                          inspected={inspectedChar === ch}
+                          onInspect={() => onInspectChar(ch)}
+                          className="cursor-pointer rounded hover:bg-[#FFE0D2]"
+                        />
+                      ))}
+                    </p>
+                  ) : (
+                    <p className="text-[16px] leading-[1.9]">
+                      {paragraphEn(para)}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -369,7 +483,7 @@ export function Reader(props: Props) {
       >
         {reveal.full ? (
           <div className="grid md:grid-cols-2 gap-8">
-            <div>
+            <div className={enPrimary ? '' : 'md:order-2 md:border-l md:border-[var(--line)] md:pl-8'}>
               <h3 className="text-[11px] tracking-[0.2em] uppercase text-[var(--ink-mute)] mb-4">
                 English — Full Text
               </h3>
@@ -379,7 +493,7 @@ export function Reader(props: Props) {
                 ))}
               </div>
             </div>
-            <div className="md:border-l md:border-[var(--line)] md:pl-8">
+            <div className={enPrimary ? 'md:border-l md:border-[var(--line)] md:pl-8' : 'md:order-1'}>
               <h3 className="text-[11px] tracking-[0.2em] uppercase text-[var(--verm)] mb-4">
                 中文 · 全文
               </h3>

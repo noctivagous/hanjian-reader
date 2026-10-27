@@ -1,7 +1,7 @@
 import type { Doc } from '../data/types';
 import { chineseText, englishText } from '../lib/doc';
 import { CharInspector } from './CharInspector';
-import type { Reveal } from './Reader';
+import type { PrimaryLang, Reveal } from './Reader';
 
 const MODES: { k: keyof Reveal; l: string }[] = [
   { k: 'words', l: 'Words 词语' },
@@ -15,6 +15,7 @@ interface Props {
   open: boolean;
   onClose: () => void;
   reveal: Reveal;
+  primaryLang: PrimaryLang;
   onToggleReveal: (k: keyof Reveal) => void;
   inspectedChar: string | null;
   onCopy: (text: string, label: string) => void;
@@ -25,6 +26,7 @@ export function MobileTools({
   open,
   onClose,
   reveal,
+  primaryLang,
   onToggleReveal,
   inspectedChar,
   onCopy,
@@ -52,6 +54,11 @@ export function MobileTools({
           </button>
         </div>
         <div className="p-5 space-y-6">
+          <div className="text-[12px] text-[var(--ink-mute)]">
+            {primaryLang === 'en'
+              ? 'Reading English · revealing 中文'
+              : 'Reading 中文 · revealing English'}
+          </div>
           <div className="grid grid-cols-2 gap-2">
             {MODES.map((m) => (
               <button

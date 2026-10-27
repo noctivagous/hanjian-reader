@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Header } from './components/Header';
 import { ImportModal } from './components/ImportModal';
 import { MobileTools } from './components/MobileTools';
-import { Reader, type Reveal } from './components/Reader';
+import { Reader, type PrimaryLang, type Reveal } from './components/Reader';
 import { Sidebar } from './components/Sidebar';
 import { WordCard, type HoverState } from './components/WordCard';
 import { docs as seedDocs } from './data/documents';
@@ -24,6 +24,23 @@ export default function App() {
     paragraphs: false,
     full: false,
   });
+  const [primaryLang, setPrimaryLang] = useState<PrimaryLang>(() => {
+    try {
+      const v = window.localStorage.getItem('hanjian:primaryLang');
+      return v === 'zh' || v === 'en' ? v : 'en';
+    } catch {
+      return 'en';
+    }
+  });
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('hanjian:primaryLang', primaryLang);
+    } catch {
+      // storage unavailable (private mode); direction stays in-memory
+    }
+  }, [primaryLang]);
+
   const [showPinyin, setShowPinyin] = useState(true);
   const [showZhuyin, setShowZhuyin] = useState(false);
   const [toneColors, setToneColors] = useState(true);
@@ -124,6 +141,12 @@ export default function App() {
         activeId={doc.id}
         onSelect={setActiveId}
         onImport={() => setImportOpen(true)}
+        primaryLang={primaryLang}
+        onPrimaryLang={(v) => {
+          setPrimaryLang(v);
+          setHover(null);
+          setPinnedKey(null);
+        }}
         fontScale={fontScale}
         onFontScale={setFontScale}
         dark={dark}
@@ -142,6 +165,7 @@ export default function App() {
           <Reader
             doc={doc}
             reveal={reveal}
+            primaryLang={primaryLang}
             showPinyin={showPinyin}
             showZhuyin={showZhuyin}
             toneColors={toneColors}
@@ -164,6 +188,7 @@ export default function App() {
         <Sidebar
           doc={doc}
           reveal={reveal}
+          primaryLang={primaryLang}
           onToggleReveal={(k) => setReveal((r) => ({ ...r, [k]: !r[k] }))}
           showPinyin={showPinyin}
           onShowPinyin={setShowPinyin}
@@ -195,6 +220,7 @@ export default function App() {
         open={toolsOpen}
         onClose={() => setToolsOpen(false)}
         reveal={reveal}
+        primaryLang={primaryLang}
         onToggleReveal={(k) => setReveal((r) => ({ ...r, [k]: !r[k] }))}
         inspectedChar={inspectedChar}
         onCopy={handleCopy}
@@ -206,6 +232,7 @@ export default function App() {
           pinnedKey={pinnedKey}
           toneColors={toneColors}
           showZhuyin={showZhuyin}
+          primaryLang={primaryLang}
           onEnter={setHover}
           onLeave={() => {
             if (pinnedKey !== hover.key) setHover(null);
@@ -230,9 +257,9 @@ export default function App() {
         <div className="hidden lg:block fixed right-[380px] top-[88px] z-20 w-[300px] rounded-[14px] bg-[#1A1A18] text-[#FFFEFB] p-4 shadow-[0_16px_40px_rgba(0,0,0,0.3)] animate-[rise-in_0.4s_ease]">
           <div className="text-[13px] font-medium">Progressive Reveal →</div>
           <div className="text-[12px] opacity-80 mt-1 leading-[1.5]">
-            Start reading in English. Use the toolbar to reveal Chinese words
-            on hover (W), then sentences (S), paragraphs (P), and full
-            side-by-side (F). Click any 汉字 to inspect.
+            {primaryLang === 'en'
+              ? 'Start reading in English. Use the toolbar to reveal Chinese words on hover (W), then sentences (S), paragraphs (P), and full side-by-side (F). Click any 汉字 to inspect.'
+              : 'Start reading in Chinese. Use the toolbar to reveal English words on hover (W), then sentences (S), paragraphs (P), and full side-by-side (F). Click any 汉字 to inspect.'}
           </div>
           <button
             type="button"
