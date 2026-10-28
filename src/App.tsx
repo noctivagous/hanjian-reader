@@ -45,6 +45,9 @@ export default function App() {
   const [showZhuyin, setShowZhuyin] = useState(brand.defaults.showZhuyin);
   const [toneColors, setToneColors] = useState(brand.defaults.toneColors);
   const [defsInline, setDefsInline] = useState(brand.defaults.defsInline);
+  const [showSentenceChips, setShowSentenceChips] = useState(
+    brand.defaults.showSentenceChips,
+  );
   const [fontScale, setFontScale] = useState(brand.defaults.fontScale);
   const [charSize, setCharSize] = useState(brand.defaults.charSize);
   const [showSpeakerButtons, setShowSpeakerButtons] = useState(
@@ -269,6 +272,7 @@ export default function App() {
             showZhuyin={showZhuyin}
             toneColors={toneColors}
             showDefsInline={defsInline}
+            showSentenceChips={showSentenceChips}
             fontScale={fontScale}
             charSize={charSize}
             openSentences={openSentences}
@@ -300,6 +304,8 @@ export default function App() {
           onShowDefsInline={setDefsInline}
           toneColors={toneColors}
           onToneColors={setToneColors}
+          showSentenceChips={showSentenceChips}
+          onShowSentenceChips={setShowSentenceChips}
           charSize={charSize}
           onCharSize={setCharSize}
           showSpeakerButtons={showSpeakerButtons}
@@ -349,6 +355,7 @@ export default function App() {
 
       {hover && reveal.words && (
         <WordCard
+          key={hover.key}
           hover={hover}
           pinnedKey={pinnedKey}
           toneColors={toneColors}

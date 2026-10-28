@@ -27,6 +27,8 @@ interface Props {
   onShowDefsInline: (v: boolean) => void;
   toneColors: boolean;
   onToneColors: (v: boolean) => void;
+  showSentenceChips: boolean;
+  onShowSentenceChips: (v: boolean) => void;
   charSize: number;
   onCharSize: (v: number) => void;
   showSpeakerButtons: boolean;
@@ -152,6 +154,17 @@ export function Sidebar(p: Props) {
                 type="checkbox"
                 checked={p.toneColors}
                 onChange={(e) => p.onToneColors(e.target.checked)}
+                className="accent-[var(--verm)]"
+              />
+            </label>
+            )}
+            {brand.features.sentenceChips && (
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-[13px]">Show Sentence Chips</span>
+              <input
+                type="checkbox"
+                checked={p.showSentenceChips}
+                onChange={(e) => p.onShowSentenceChips(e.target.checked)}
                 className="accent-[var(--verm)]"
               />
             </label>

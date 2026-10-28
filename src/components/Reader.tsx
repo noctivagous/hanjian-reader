@@ -25,6 +25,7 @@ interface Props {
   showZhuyin: boolean;
   toneColors: boolean;
   showDefsInline: boolean;
+  showSentenceChips: boolean;
   fontScale: number;
   charSize: number;
   openSentences: Set<string>;
@@ -95,6 +96,7 @@ function SentenceView({
   showZhuyin,
   toneColors,
   showDefsInline,
+  showSentenceChips,
   charSize,
   open,
   onToggle,
@@ -269,6 +271,7 @@ function SentenceView({
           </span>
         )}
       </span>
+      {showSentenceChips && (
       <button
         type="button"
         aria-expanded={open}
@@ -283,6 +286,7 @@ function SentenceView({
         </span>
         <span className="opacity-70">{open ? '−' : '+'}</span>
       </button>
+      )}
       <div
         className={`grid transition-all duration-300 ease-out ${open ? 'grid-rows-[1fr] opacity-100 mt-3' : 'grid-rows-[0fr] opacity-0'}`}
       >

@@ -48,6 +48,7 @@ export interface BrandFeatures {
   zhuyin: boolean;
   definitions: boolean;
   toneColors: boolean;
+  sentenceChips: boolean;
   charSize: boolean;
   fontSize: boolean;
   search: boolean;
@@ -67,6 +68,7 @@ export interface BrandDefaults {
   showZhuyin: boolean;
   toneColors: boolean;
   defsInline: boolean;
+  showSentenceChips: boolean;
   fontScale: number;
   charSize: number;
   dark: boolean;
@@ -118,6 +120,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     zhuyin: true,
     definitions: true,
     toneColors: true,
+    sentenceChips: true,
     charSize: true,
     fontSize: true,
     search: true,
@@ -135,6 +138,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     showZhuyin: false,
     toneColors: true,
     defsInline: false,
+    showSentenceChips: true,
     fontScale: 1,
     charSize: 1,
     dark: false,
@@ -202,6 +206,7 @@ function mergeBrand(override: BrandOverride | undefined): BrandConfig {
   if (!merged.features.pinyin) merged.defaults.showPinyin = false;
   if (!merged.features.zhuyin) merged.defaults.showZhuyin = false;
   if (!merged.features.toneColors) merged.defaults.toneColors = false;
+  if (!merged.features.sentenceChips) merged.defaults.showSentenceChips = false;
   if (!merged.features.definitions) merged.defaults.defsInline = false;
   if (!merged.features.fontSize) merged.defaults.fontScale = 1;
   if (!merged.features.charSize) merged.defaults.charSize = 1;
