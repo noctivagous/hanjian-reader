@@ -452,9 +452,26 @@ export function Reader(props: Props) {
                 const pIdx = offset + localIdx;
                 return (
           <div className="group/para relative scroll-mt-[76px]" key={para.id} id={para.id}>
-            <div className="absolute -left-6 top-1 hidden md:block text-[10px] text-[var(--ink-mute)] font-mono">
-              {String(pIdx + 1).padStart(2, '0')}
-            </div>
+            {canSpeak ? (
+              <button
+                type="button"
+                onClick={() => onSpeak(para.zh)}
+                aria-label={`Speak paragraph ${pIdx + 1}`}
+                title={`Speak paragraph ${pIdx + 1}`}
+                className="group/speak absolute -left-7 top-0.5 hidden md:flex h-7 w-7 items-center justify-center rounded-full border border-transparent text-[10px] font-mono text-[var(--ink-mute)] transition hover:border-[var(--verm)] hover:text-[var(--verm)] hover:bg-[var(--paper-2)] focus-visible:border-[var(--verm)]"
+              >
+                <span className="group-hover/speak:hidden">
+                  {String(pIdx + 1).padStart(2, '0')}
+                </span>
+                <span className="hidden group-hover/speak:inline text-[12px]">
+                  🔊
+                </span>
+              </button>
+            ) : (
+              <div className="absolute -left-6 top-1 hidden md:block text-[10px] text-[var(--ink-mute)] font-mono">
+                {String(pIdx + 1).padStart(2, '0')}
+              </div>
+            )}
             <div className="space-y-4">
               {para.sentences.map((s) => (
                 <SentenceView
