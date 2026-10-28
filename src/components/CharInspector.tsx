@@ -1,6 +1,7 @@
 import { brand } from '../brand';
 import { charDict } from '../data/charDict';
 import { toneColor } from '../lib/pinyin';
+import { StrokeOrder } from './StrokeOrder';
 
 interface Props {
   char: string;
@@ -18,13 +19,14 @@ function CharDetail({
   ch,
   toneColors,
   showZhuyin,
+  onSpeak,
 }: {
   ch: string;
   toneColors: boolean;
   showZhuyin: boolean;
+  onSpeak: (text: string) => void;
 }) {
   const info = charDict[ch];
-  const strokeCount = Math.min(info?.strokes || 3, 5);
   return (
     <div className="space-y-4">
       <div className="flex gap-4">
@@ -35,17 +37,29 @@ function CharDetail({
           </span>
         </div>
         <div className="flex-1">
-          <div className="flex items-baseline gap-2">
-            <span
-              className="text-[22px] font-semibold"
-              style={{ color: toneColor(info?.pinyin || '', toneColors) }}
-            >
-              {info?.pinyin || '—'}
-            </span>
-            {showZhuyin && info?.zhuyin && (
-              <span className="text-[12px] text-[var(--ink-mute)] font-mono">
-                {info.zhuyin}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-baseline gap-2">
+              <span
+                className="text-[22px] font-semibold"
+                style={{ color: toneColor(info?.pinyin || '', toneColors) }}
+              >
+                {info?.pinyin || '—'}
               </span>
+              {showZhuyin && info?.zhuyin && (
+                <span className="text-[12px] text-[var(--ink-mute)] font-mono">
+                  {info.zhuyin}
+                </span>
+              )}
+            </div>
+            {brand.features.speech && (
+              <button
+                type="button"
+                onClick={() => onSpeak(ch)}
+                aria-label={`Hear ${ch}`}
+                className="shrink-0 h-8 w-8 rounded-full border border-[var(--line)] bg-white dark:bg-[#1A1916] text-[14px] leading-none hover:opacity-80"
+              >
+                🔊
+              </button>
             )}
           </div>
           <div className="text-[13px] leading-[1.5] mt-1">
@@ -74,28 +88,7 @@ function CharDetail({
             {info?.strokes || '?'} strokes
           </span>
         </div>
-        <svg
-          viewBox="0 0 100 100"
-          className="w-full h-[84px] rounded bg-white dark:bg-[#1A1916] border border-[var(--line)]"
-        >
-          <rect x="0" y="50" width="100" height="0.5" fill="#E5DDD2" />
-          <rect x="50" y="0" width="0.5" height="100" fill="#E5DDD2" />
-          {Array.from({ length: strokeCount }).map((_, i) => (
-            <path
-              key={i}
-              d={`M ${15 + i * 14} 20 Q ${30 + i * 10} ${40 + i * 10} ${20 + i * 15} 78`}
-              stroke="var(--verm)"
-              strokeWidth="2.2"
-              fill="none"
-              strokeLinecap="round"
-              style={{
-                strokeDasharray: 120,
-                strokeDashoffset: 120,
-                animation: `stroke-draw 1.2s ease forwards ${i * 0.3}s`,
-              }}
-            />
-          ))}
-        </svg>
+        <StrokeOrder char={ch} strokeCount={info?.strokes} />
       </div>
 
       <div>
@@ -185,7 +178,7 @@ export function CharInspector({
           key={`${ch}-${i}`}
           className={isWord ? 'border-t border-[var(--line)] pt-4 first:border-t-0 first:pt-0' : undefined}
         >
-          <CharDetail ch={ch} toneColors={toneColors} showZhuyin={showZhuyin} />
+          <CharDetail ch={ch} toneColors={toneColors} showZhuyin={showZhuyin} onSpeak={onSpeak} />
         </div>
       ))}
 
