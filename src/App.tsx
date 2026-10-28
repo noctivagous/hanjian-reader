@@ -6,6 +6,7 @@ import { MobileNavDrawer, NavSidebar } from './components/NavSidebar';
 import { Reader, type PrimaryLang, type Reveal } from './components/Reader';
 import { Sidebar } from './components/Sidebar';
 import { WordCard, type HoverState } from './components/WordCard';
+import { applyBrand, brand, brandStorageKey } from './brand';
 import { docs as seedDocs } from './data/documents';
 import type { Doc } from './data/types';
 import { importCustomDoc } from './lib/segment';
@@ -20,35 +21,32 @@ export default function App() {
     [docs, activeId],
   );
 
-  const [reveal, setReveal] = useState<Reveal>({
-    words: true,
-    sentences: false,
-    paragraphs: false,
-    full: false,
-  });
+  // White-label: initial state comes from the brand config, so a rebrand
+  // ships its own texts, enabled features, and defaults with no code edits.
+  const [reveal, setReveal] = useState<Reveal>(() => ({ ...brand.defaults.reveal }));
   const [primaryLang, setPrimaryLang] = useState<PrimaryLang>(() => {
     try {
-      const v = window.localStorage.getItem('hanjian:primaryLang');
-      return v === 'zh' || v === 'en' ? v : 'en';
+      const v = window.localStorage.getItem(brandStorageKey('primaryLang'));
+      return v === 'zh' || v === 'en' ? v : brand.defaults.primaryLang;
     } catch {
-      return 'en';
+      return brand.defaults.primaryLang;
     }
   });
 
   useEffect(() => {
     try {
-      window.localStorage.setItem('hanjian:primaryLang', primaryLang);
+      window.localStorage.setItem(brandStorageKey('primaryLang'), primaryLang);
     } catch {
       // storage unavailable (private mode); direction stays in-memory
     }
   }, [primaryLang]);
 
-  const [showPinyin, setShowPinyin] = useState(true);
-  const [showZhuyin, setShowZhuyin] = useState(false);
-  const [toneColors, setToneColors] = useState(true);
-  const [defsInline, setDefsInline] = useState(false);
-  const [fontScale, setFontScale] = useState(1);
-  const [charSize, setCharSize] = useState(1);
+  const [showPinyin, setShowPinyin] = useState(brand.defaults.showPinyin);
+  const [showZhuyin, setShowZhuyin] = useState(brand.defaults.showZhuyin);
+  const [toneColors, setToneColors] = useState(brand.defaults.toneColors);
+  const [defsInline, setDefsInline] = useState(brand.defaults.defsInline);
+  const [fontScale, setFontScale] = useState(brand.defaults.fontScale);
+  const [charSize, setCharSize] = useState(brand.defaults.charSize);
 
   const [inspectedChar, setInspectedChar] = useState<string | null>(null);
   const [pinnedKey, setPinnedKey] = useState<string | null>(null);
@@ -60,7 +58,7 @@ export default function App() {
   const [search, setSearch] = useState('');
   const [notes, setNotes] = useState<Record<string, string>>({});
 
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(brand.defaults.dark);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [navCollapsed, setNavCollapsed] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
@@ -96,10 +94,14 @@ export default function App() {
       )
         return;
       const k = e.key.toLowerCase();
-      if (k === 'w') setReveal((r) => ({ ...r, words: !r.words }));
-      if (k === 's') setReveal((r) => ({ ...r, sentences: !r.sentences }));
-      if (k === 'p') setReveal((r) => ({ ...r, paragraphs: !r.paragraphs }));
-      if (k === 'f') setReveal((r) => ({ ...r, full: !r.full }));
+      if (k === 'w' && brand.features.words)
+        setReveal((r) => ({ ...r, words: !r.words }));
+      if (k === 's' && brand.features.sentences)
+        setReveal((r) => ({ ...r, sentences: !r.sentences }));
+      if (k === 'p' && brand.features.paragraphs)
+        setReveal((r) => ({ ...r, paragraphs: !r.paragraphs }));
+      if (k === 'f' && brand.features.full)
+        setReveal((r) => ({ ...r, full: !r.full }));
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -107,10 +109,7 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
-    document.documentElement.style.setProperty(
-      '--paper',
-      dark ? '#121210' : '#FFFEFB',
-    );
+    applyBrand(dark);
   }, [dark]);
 
   useEffect(() => {
@@ -160,6 +159,7 @@ export default function App() {
   };
 
   const toggleReveal = (k: keyof Reveal) => {
+    if (!brand.features[k]) return;
     if (k === 'sentences') {
       if (reveal.sentences) setOpenSentences(new Set());
       else setClosedSentences(new Set());
@@ -168,6 +168,7 @@ export default function App() {
   };
 
   const handleInspectChar = (c: string) => {
+    if (!brand.features.inspector) return;
     setInspectedChar((prev) => (prev === c ? null : c));
   };
 
@@ -360,7 +361,7 @@ export default function App() {
         />
       )}
 
-      {importOpen && (
+      {importOpen && brand.features.import && (
         <ImportModal
           onImport={handleImport}
           onClose={() => setImportOpen(false)}

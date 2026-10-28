@@ -1,3 +1,4 @@
+import { brand } from '../brand';
 import type { PrimaryLang } from './Reader';
 
 interface Props {
@@ -56,26 +57,32 @@ export function Header({
         </button>
         <div className="flex items-center gap-2.5">
           <div className="h-8 w-8 rounded-[10px] bg-[var(--ink)] text-[var(--paper)] flex items-center justify-center font-bold serif-display text-[14px] tracking-tight">
-            涵
+            {brand.texts.logoGlyph}
           </div>
           <div className="leading-none">
             <div className="serif-display font-semibold text-[17px] tracking-tight -mb-0.5">
-              HanJian{' '}
-              <span className="font-normal text-[var(--ink-mute)]">涵简</span>
+              {brand.texts.appName}{' '}
+              <span className="font-normal text-[var(--ink-mute)]">
+                {brand.texts.appNameZh}
+              </span>
             </div>
             <div className="text-[10px] tracking-[0.18em] uppercase text-[var(--ink-mute)]">
-              Parallel Reader
+              {brand.texts.tagline}
             </div>
           </div>
         </div>
-        <div className="hidden md:block h-5 w-px bg-[var(--line)] mx-2" />
-        <button
-          type="button"
-          onClick={onImport}
-          className="hidden md:inline-flex ml-2 text-[11px] tracking-wide uppercase border border-dashed border-[var(--line)] rounded-full px-3 py-1 hover:border-[var(--verm)] hover:text-[var(--verm)] transition"
-        >
-          Import Custom
-        </button>
+        {brand.features.import && (
+          <>
+            <div className="hidden md:block h-5 w-px bg-[var(--line)] mx-2" />
+            <button
+              type="button"
+              onClick={onImport}
+              className="hidden md:inline-flex ml-2 text-[11px] tracking-wide uppercase border border-dashed border-[var(--line)] rounded-full px-3 py-1 hover:border-[var(--verm)] hover:text-[var(--verm)] transition"
+            >
+              Import Custom
+            </button>
+          </>
+        )}
       </div>
       <div className="flex items-center gap-2">
         <div
@@ -104,6 +111,7 @@ export function Header({
             <span aria-hidden="true"> → </span>EN
           </button>
         </div>
+        {brand.features.fontSize && (
         <div className="hidden md:flex items-center gap-1 rounded-full border border-[var(--line)] p-1 bg-[var(--paper)]">
           <span className="px-2 text-[11px] tracking-wide">Aa</span>
           <button
@@ -122,6 +130,8 @@ export function Header({
             +
           </button>
         </div>
+        )}
+        {brand.features.darkMode && (
         <button
           type="button"
           onClick={onToggleDark}
@@ -129,6 +139,7 @@ export function Header({
         >
           {dark ? '☾' : '☀'}
         </button>
+        )}
         <button
           type="button"
           aria-label="Toggle tools panel"

@@ -11,3 +11,10 @@ for storing original text alongside its translations.
   continuous scroll. Paginated mode pages the reader column and keeps a
   stable footer (document position, page indicator) fixed at the bottom
   of the reading area while pages change above it.
+
+[x] Private labeling / white labeling: rename the app and bundle it on a
+  website with just a given set of texts, features, and defaults. Done via
+  `src/brand.config.ts` (single editable file: `texts`, `theme`, `features`,
+  `defaults`) merged over `src/brand.ts` defaults; `npm run build`, host
+  `dist/`. Unknown keys and mistyped values fall back to the default brand,
+  and disabled features are hidden in the UI and forced off in defaults.

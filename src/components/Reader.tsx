@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { brand } from '../brand';
 import type { Doc, Sentence } from '../data/types';
 import { allParagraphs, paragraphEn, primaryTranslation } from '../lib/doc';
 import { toneColor } from '../lib/pinyin';
@@ -77,7 +78,7 @@ function HanChar({
         e.stopPropagation();
         onInspect();
       }}
-      className={`han-char inline-block px-0.5 rounded-[4px] cursor-pointer hover:bg-[#FFE0D2] dark:hover:bg-[#3A221C] transition ${inspected ? '!bg-[#C73E1D] !text-white' : ''} ${className || ''}`}
+      className={`han-char inline-block px-0.5 rounded-[4px] cursor-pointer hover:bg-[#FFE0D2] dark:hover:bg-[#3A221C] transition ${inspected ? '!bg-[var(--verm)] !text-white' : ''} ${className || ''}`}
     >
       {ch}
     </span>
@@ -162,7 +163,7 @@ function SentenceView({
                       });
                     }
                   }}
-                  className={`cursor-pointer transition relative ${hasZh && reveal.words ? 'border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm px-0.5' : 'px-0.5'} ${pinned ? '!bg-[#C73E1D] !text-white rounded' : ''}`}
+                  className={`cursor-pointer transition relative ${hasZh && reveal.words ? 'border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm px-0.5' : 'px-0.5'} ${pinned ? '!bg-[var(--verm)] !text-white rounded' : ''}`}
                 >
                   {search ? highlight(w.en, search) : w.en}
                   {hasZh && reveal.words && showDefsInline && (
@@ -225,7 +226,7 @@ function SentenceView({
                       });
                     }
                   }}
-                  className={`cursor-pointer transition relative ${reveal.words ? 'border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm px-0.5' : 'px-0.5'} ${pinned ? '!bg-[#C73E1D] !text-white rounded' : ''}`}
+                  className={`cursor-pointer transition relative ${reveal.words ? 'border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm px-0.5' : 'px-0.5'} ${pinned ? '!bg-[var(--verm)] !text-white rounded' : ''}`}
                 >
                   {search && tok.text.includes(search)
                     ? highlight(tok.text, search)
@@ -277,12 +278,13 @@ function SentenceView({
         className={`grid transition-all duration-300 ease-out ${open ? 'grid-rows-[1fr] opacity-100 mt-3' : 'grid-rows-[0fr] opacity-0'}`}
       >
         <div className="overflow-hidden">
-          <div className="rounded-[12px] bg-[#FFF8F0] dark:bg-[#1C1A16] border border-[#F2E6D6] dark:border-[#2A2722] border-l-2 border-l-[#C73E1D] p-4">
+          <div className="rounded-[12px] bg-[#FFF8F0] dark:bg-[#1C1A16] border border-[#F2E6D6] dark:border-[#2A2722] border-l-2 border-l-[var(--verm)] p-4">
             {!enPrimary ? (
               <div className="flex items-start justify-between gap-3">
                 <p className="text-[16px] leading-[1.8]">
                   {highlight(enText, search)}
                 </p>
+                {brand.features.speech && (
                 <button
                   type="button"
                   onClick={() => onSpeak(sentence.zh)}
@@ -290,6 +292,7 @@ function SentenceView({
                 >
                   🔊
                 </button>
+                )}
               </div>
             ) : (
               <>
@@ -307,6 +310,7 @@ function SentenceView({
                   />
                 ))}
               </div>
+              {brand.features.speech && (
               <button
                 type="button"
                 onClick={() => onSpeak(sentence.zh)}
@@ -314,6 +318,7 @@ function SentenceView({
               >
                 🔊
               </button>
+              )}
             </div>
             {(showPinyin || showZhuyin) && (
               <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[12px]">
@@ -441,13 +446,14 @@ export function Reader(props: Props) {
               className={`grid transition-all duration-500 ${reveal.paragraphs ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'}`}
             >
               <div className="overflow-hidden">
-                <div className="rounded-[14px] bg-[#FFF8F0] dark:bg-[#1C1A16] border border-l-2 border-l-[#C73E1D] border-[#EFE0CF] dark:border-[#2A2722] p-5 shadow-[0_2px_16px_rgba(0,0,0,0.04)]">
+                <div className="rounded-[14px] bg-[#FFF8F0] dark:bg-[#1C1A16] border border-l-2 border-l-[var(--verm)] border-[#EFE0CF] dark:border-[#2A2722] p-5 shadow-[0_2px_16px_rgba(0,0,0,0.04)]">
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-[11px] tracking-[0.18em] uppercase text-[var(--verm)]">
                       {enPrimary
                         ? `段落 · Paragraph ${pIdx + 1}`
                         : `English · Paragraph ${pIdx + 1}`}
                     </span>
+                    {brand.features.speech && (
                     <button
                       type="button"
                       onClick={() => onSpeak(para.zh)}
@@ -455,6 +461,7 @@ export function Reader(props: Props) {
                     >
                       🔊 Play
                     </button>
+                    )}
                   </div>
                   {enPrimary ? (
                     <p
@@ -516,7 +523,7 @@ export function Reader(props: Props) {
                       <span
                         key={i}
                         onClick={() => onInspectChar(ch)}
-                        className={`cursor-pointer rounded px-0.5 hover:bg-[#FFE0D2] ${isInspected(inspectedChar, ch) ? 'bg-[#C73E1D] text-white' : ''}`}
+                        className={`cursor-pointer rounded px-0.5 hover:bg-[#FFE0D2] ${isInspected(inspectedChar, ch) ? 'bg-[var(--verm)] text-white' : ''}`}
                       >
                         {ch}
                       </span>

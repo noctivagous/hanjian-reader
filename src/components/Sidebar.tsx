@@ -1,3 +1,4 @@
+import { brand } from '../brand';
 import type { Doc } from '../data/types';
 import { bilingualText, chineseText, englishText } from '../lib/doc';
 import { CharInspector } from './CharInspector';
@@ -44,7 +45,8 @@ interface Props {
 export function Sidebar(p: Props) {
   const activeCount = Object.values(p.reveal).filter(Boolean).length;
   const enPrimary = p.primaryLang === 'en';
-  const MODES = modesFor(p.primaryLang);
+  // White-label: only the reveal modes enabled by the brand are offered.
+  const MODES = modesFor(p.primaryLang).filter((m) => brand.features[m.k]);
 
   return (
     <aside
@@ -106,42 +108,51 @@ export function Sidebar(p: Props) {
             Display Options
           </h3>
           <div className="space-y-3">
+            {brand.features.pinyin && (
             <label className="flex items-center justify-between cursor-pointer">
               <span className="text-[13px]">Show Pinyin / 拼音</span>
               <input
                 type="checkbox"
                 checked={p.showPinyin}
                 onChange={(e) => p.onShowPinyin(e.target.checked)}
-                className="accent-[#C73E1D]"
+                className="accent-[var(--verm)]"
               />
             </label>
+            )}
+            {brand.features.zhuyin && (
             <label className="flex items-center justify-between cursor-pointer">
               <span className="text-[13px]">Show Zhuyin / 注音</span>
               <input
                 type="checkbox"
                 checked={p.showZhuyin}
                 onChange={(e) => p.onShowZhuyin(e.target.checked)}
-                className="accent-[#C73E1D]"
+                className="accent-[var(--verm)]"
               />
             </label>
+            )}
+            {brand.features.definitions && (
             <label className="flex items-center justify-between cursor-pointer">
               <span className="text-[13px]">Show Definitions Inline</span>
               <input
                 type="checkbox"
                 checked={p.showDefsInline}
                 onChange={(e) => p.onShowDefsInline(e.target.checked)}
-                className="accent-[#C73E1D]"
+                className="accent-[var(--verm)]"
               />
             </label>
+            )}
+            {brand.features.toneColors && (
             <label className="flex items-center justify-between cursor-pointer">
               <span className="text-[13px]">Tone Colors</span>
               <input
                 type="checkbox"
                 checked={p.toneColors}
                 onChange={(e) => p.onToneColors(e.target.checked)}
-                className="accent-[#C73E1D]"
+                className="accent-[var(--verm)]"
               />
             </label>
+            )}
+            {brand.features.charSize && (
             <div>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[13px]">Character Size</span>
@@ -156,12 +167,14 @@ export function Sidebar(p: Props) {
                 step={0.05}
                 value={p.charSize}
                 onChange={(e) => p.onCharSize(parseFloat(e.target.value))}
-                className="w-full accent-[#C73E1D]"
+                className="w-full accent-[var(--verm)]"
               />
             </div>
+            )}
           </div>
         </div>
 
+        {brand.features.search && (
         <div className="space-y-2">
           <h3 className="text-[12px] tracking-[0.15em] uppercase font-semibold">
             Search
@@ -184,7 +197,9 @@ export function Sidebar(p: Props) {
             )}
           </div>
         </div>
+        )}
 
+        {brand.features.inspector && (
         <div className="sticky top-6">
           <div className="rounded-[16px] border border-[var(--line)] bg-white dark:bg-[#181611] overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
             <div className="px-4 py-3 border-b border-[var(--line)] flex items-center justify-between">
@@ -244,6 +259,7 @@ export function Sidebar(p: Props) {
             )}
           </div>
         </div>
+        )}
 
         <div className="rounded-[14px] border border-[var(--line)] bg-[var(--paper-2)] p-4 space-y-3">
           <h3 className="text-[12px] tracking-[0.15em] uppercase font-semibold">
@@ -272,6 +288,7 @@ export function Sidebar(p: Props) {
               Copy 双语
             </button>
           </div>
+          {brand.features.import && (
           <button
             type="button"
             onClick={p.onImport}
@@ -279,13 +296,12 @@ export function Sidebar(p: Props) {
           >
             + Import Custom Document
           </button>
+          )}
         </div>
 
         <div className="text-[11px] text-[var(--ink-mute)] leading-[1.6] border-t border-[var(--line)] pt-4">
           <div className="font-semibold text-[var(--ink)]">How to read</div>
-          {enPrimary
-            ? 'Start in English. Reveal Chinese progressively: words for quick lookup, sentences for structure, paragraphs for flow, full for immersion. Click any 汉字 to inspect in this panel.'
-            : 'Start in Chinese. Reveal English progressively: words for quick lookup, sentences for structure, paragraphs for flow, full for immersion. Click any 汉字 to inspect in this panel.'}
+          {enPrimary ? brand.texts.howToReadEn : brand.texts.howToReadZh}
         </div>
       </div>
     </aside>

@@ -1,14 +1,18 @@
+import { brand } from '../brand';
 import type { Doc } from '../data/types';
 import { chineseText, englishText } from '../lib/doc';
 import { CharInspector } from './CharInspector';
 import type { PrimaryLang, Reveal } from './Reader';
 
-const MODES: { k: keyof Reveal; l: string }[] = [
+const ALL_MODES: { k: keyof Reveal; l: string }[] = [
   { k: 'words', l: 'Words 词语' },
   { k: 'sentences', l: 'Sentences 句子' },
   { k: 'paragraphs', l: 'Paragraphs 段落' },
   { k: 'full', l: 'Full 全文' },
 ];
+
+// White-label: only the reveal modes enabled by the brand are offered.
+const MODES = ALL_MODES.filter((m) => brand.features[m.k]);
 
 interface Props {
   doc: Doc;
@@ -67,7 +71,7 @@ export function MobileTools({
                 key={m.k}
                 type="button"
                 onClick={() => onToggleReveal(m.k)}
-                className={`rounded-[12px] border p-3 text-left ${reveal[m.k] ? 'bg-[#FFF0EB] border-[#C73E1D]' : 'bg-[var(--paper-2)]'}`}
+                className={`rounded-[12px] border p-3 text-left ${reveal[m.k] ? 'bg-[var(--verm-soft)] border-[var(--verm)]' : 'bg-[var(--paper-2)]'}`}
               >
                 <div className="text-[13px] font-medium">{m.l}</div>
                 <div className="text-[11px] text-[var(--ink-mute)]">
@@ -76,6 +80,7 @@ export function MobileTools({
               </button>
             ))}
           </div>
+          {brand.features.inspector && (
           <div className="rounded-[16px] border p-4 bg-white dark:bg-[#181611]">
             <div className="flex items-center justify-between mb-3">
               <div className="text-[12px] uppercase tracking-wide font-semibold">
@@ -109,6 +114,7 @@ export function MobileTools({
               />
             )}
           </div>
+          )}
           <div className="flex gap-2">
             <button
               type="button"

@@ -59,7 +59,7 @@ export function ImportModal({ onImport, onClose }: Props) {
                 value={en}
                 onChange={(e) => setEn(e.target.value)}
                 placeholder={`Paragraphs separated by blank line.\n\nExample:\nThe courtyard was quiet.\n\nThe rain began...`}
-                className="w-full h-[280px] rounded-[12px] border bg-white dark:bg-[#181611] p-3 text-[13px] leading-[1.6] outline-none focus:border-[#C73E1D] resize-none"
+                className="w-full h-[280px] rounded-[12px] border bg-white dark:bg-[#181611] p-3 text-[13px] leading-[1.6] outline-none focus:border-[var(--verm)] resize-none"
               />
             </div>
             <div>
@@ -70,7 +70,7 @@ export function ImportModal({ onImport, onClose }: Props) {
                 value={zh}
                 onChange={(e) => setZh(e.target.value)}
                 placeholder={`段落之间空一行\n\n例如：\n庭院很安静。\n\n雨开始下了...`}
-                className="w-full h-[280px] rounded-[12px] border bg-white dark:bg-[#181611] p-3 text-[14px] leading-[1.8] outline-none focus:border-[#C73E1D] resize-none serif-sc"
+                className="w-full h-[280px] rounded-[12px] border bg-white dark:bg-[#181611] p-3 text-[14px] leading-[1.8] outline-none focus:border-[var(--verm)] resize-none serif-sc"
               />
             </div>
           </div>
@@ -91,7 +91,7 @@ export function ImportModal({ onImport, onClose }: Props) {
                 type="button"
                 onClick={() => onImport(en, zh, titleEn, titleZh)}
                 disabled={!en || !zh}
-                className="rounded-full bg-[#C73E1D] text-white px-5 py-2 text-[12px] font-medium disabled:opacity-40"
+                className="rounded-full bg-[var(--verm)] text-white px-5 py-2 text-[12px] font-medium disabled:opacity-40"
               >
                 Import & Read
               </button>

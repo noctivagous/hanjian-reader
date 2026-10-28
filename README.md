@@ -136,6 +136,32 @@ To embed in a repo / GitHub Pages:
 
 **Theming:** Change CSS variables at top: `--paper`, `--ink`, `--vermillion`.
 
+## White labeling (private label)
+
+Ship the reader under your own name, on your own site, with your own
+feature set — no code edits beyond one file:
+
+1. Edit [`src/brand.config.ts`](src/brand.config.ts):
+   - `texts` — app name, Chinese name, tagline, logo glyph, tab title, help copy.
+   - `theme` — page background, ink, accent, soft accent.
+   - `features` — which reveal modes (words/sentences/paragraphs/full),
+     display options (pinyin, zhuyin, definitions, tone colors, sizes,
+     search, font scaling, dark mode), and tools (import, speech,
+     character inspector) are offered. Disabled features are hidden from
+     the UI and forced off.
+   - `defaults` — startup state: primary language, enabled reveal modes,
+     display toggles, sizes, dark mode.
+   - `id` — bundle slug; also namespaces `localStorage` so white-labels
+     deployed side by side don't share settings.
+2. Run `npm run build`.
+3. Host the resulting `dist/` folder on any static website.
+
+Every field is optional — delete lines to fall back to the default HanJian
+brand. Unknown keys and mistyped values are ignored safely (see
+[`src/brand.ts`](src/brand.ts)).
+Feature flags gate at runtime, so disabled code still ships in the bundle;
+this keeps every white-label a single static build with no backend.
+
 ## Roadmap
 
 - [ ] CEDICT integration for full dictionary coverage

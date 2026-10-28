@@ -1,3 +1,4 @@
+import { brand } from '../brand';
 import { charDict } from '../data/charDict';
 import { toneColor } from '../lib/pinyin';
 
@@ -83,7 +84,7 @@ function CharDetail({
             <path
               key={i}
               d={`M ${15 + i * 14} 20 Q ${30 + i * 10} ${40 + i * 10} ${20 + i * 15} 78`}
-              stroke="#C73E1D"
+              stroke="var(--verm)"
               strokeWidth="2.2"
               fill="none"
               strokeLinecap="round"
@@ -189,6 +190,7 @@ export function CharInspector({
       ))}
 
       <div className="flex gap-2">
+        {brand.features.speech && (
         <button
           type="button"
           onClick={() => onSpeak(char)}
@@ -196,6 +198,7 @@ export function CharInspector({
         >
           🔊 Play
         </button>
+        )}
         <button
           type="button"
           onClick={() => onCopy(char, isWord ? 'Word' : 'Character')}

@@ -1,3 +1,4 @@
+import { brand } from '../brand';
 import type { WordAlign } from '../data/types';
 import { toneColor } from '../lib/pinyin';
 import { zhuyinForWord } from '../lib/zhuyin';
@@ -105,6 +106,7 @@ export function WordCard({
           </div>
         </div>
         <div className="px-3 pb-2 flex gap-2">
+          {brand.features.inspector && (
           <button
             type="button"
             onClick={() => {
@@ -114,6 +116,8 @@ export function WordCard({
           >
             Inspect
           </button>
+          )}
+          {brand.features.speech && (
           <button
             type="button"
             onClick={() => onSpeak(hover.data.zh)}
@@ -121,6 +125,7 @@ export function WordCard({
           >
             🔊
           </button>
+          )}
         </div>
         {pinnedKey === hover.key && (
           <div className="px-3 pb-2 text-[10px] text-[var(--ink-mute)]">
