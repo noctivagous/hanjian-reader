@@ -38,6 +38,11 @@ interface Props {
   onSpeak: (text: string) => void;
 }
 
+/** True when `ch` is the inspected character or part of the inspected word. */
+function isInspected(inspectedChar: string | null, ch: string): boolean {
+  return inspectedChar !== null && Array.from(inspectedChar).includes(ch);
+}
+
 function highlight(text: string, query: string): ReactNode {
   if (!query) return text;
   const idx = text.toLowerCase().indexOf(query.toLowerCase());
@@ -118,7 +123,7 @@ function SentenceView({
               <HanChar
                 key={i}
                 ch={ch}
-                inspected={inspectedChar === ch}
+                inspected={isInspected(inspectedChar, ch)}
                 onInspect={() => onInspectChar(ch)}
               />
             ))}
@@ -183,7 +188,7 @@ function SentenceView({
                       <HanChar
                         key={j}
                         ch={ch}
-                        inspected={inspectedChar === ch}
+                        inspected={isInspected(inspectedChar, ch)}
                         onInspect={() => onInspectChar(ch)}
                       />
                     ))}
@@ -242,7 +247,7 @@ function SentenceView({
               <HanChar
                 key={i}
                 ch={ch}
-                inspected={inspectedChar === ch}
+                inspected={isInspected(inspectedChar, ch)}
                 onInspect={() => onInspectChar(ch)}
               />
             ))}
@@ -297,7 +302,7 @@ function SentenceView({
                   <HanChar
                     key={i}
                     ch={ch}
-                    inspected={inspectedChar === ch}
+                    inspected={isInspected(inspectedChar, ch)}
                     onInspect={() => onInspectChar(ch)}
                   />
                 ))}
@@ -456,7 +461,7 @@ export function Reader(props: Props) {
                         <HanChar
                           key={i}
                           ch={ch}
-                          inspected={inspectedChar === ch}
+                          inspected={isInspected(inspectedChar, ch)}
                           onInspect={() => onInspectChar(ch)}
                           className="cursor-pointer rounded hover:bg-[#FFE0D2]"
                         />
@@ -507,7 +512,7 @@ export function Reader(props: Props) {
                       <span
                         key={i}
                         onClick={() => onInspectChar(ch)}
-                        className={`cursor-pointer rounded px-0.5 hover:bg-[#FFE0D2] ${inspectedChar === ch ? 'bg-[#C73E1D] text-white' : ''}`}
+                        className={`cursor-pointer rounded px-0.5 hover:bg-[#FFE0D2] ${isInspected(inspectedChar, ch) ? 'bg-[#C73E1D] text-white' : ''}`}
                       >
                         {ch}
                       </span>

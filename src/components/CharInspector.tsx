@@ -13,39 +13,22 @@ interface Props {
   compact?: boolean;
 }
 
-export function CharInspector({
-  char,
+function CharDetail({
+  ch,
   toneColors,
-  showZhuyin = true,
-  note,
-  onNote,
-  onSpeak,
-  onCopy,
-  onAddToList,
-  compact,
-}: Props) {
-  const info = charDict[char];
+  showZhuyin,
+}: {
+  ch: string;
+  toneColors: boolean;
+  showZhuyin: boolean;
+}) {
+  const info = charDict[ch];
   const strokeCount = Math.min(info?.strokes || 3, 5);
-
-  if (compact) {
-    return (
-      <div className="flex gap-3">
-        <div className="h-20 w-20 rounded-xl bg-[#FFF8F0] flex items-center justify-center text-[48px] serif-sc">
-          {char}
-        </div>
-        <div>
-          <div className="font-semibold">{info?.pinyin}</div>
-          <div className="text-[13px]">{info?.meaning}</div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="p-4 space-y-4">
+    <div className="space-y-4">
       <div className="flex gap-4">
         <div className="relative h-[92px] w-[92px] shrink-0 rounded-[16px] bg-[#FFF8F0] dark:bg-[#1C1A16] border border-[#F0DFCC] flex items-center justify-center">
-          <span className="serif-sc text-[64px] leading-none">{char}</span>
+          <span className="serif-sc text-[64px] leading-none">{ch}</span>
           <span className="absolute -top-2 -right-2 text-[10px] px-1.5 py-0.5 rounded-full bg-[var(--ink)] text-white">
             {info?.strokes ?? '?'} strokes
           </span>
@@ -132,6 +115,78 @@ export function CharInspector({
           ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+export function CharInspector({
+  char,
+  toneColors,
+  showZhuyin = true,
+  note,
+  onNote,
+  onSpeak,
+  onCopy,
+  onAddToList,
+  compact,
+}: Props) {
+  const chars = Array.from(char);
+  const isWord = chars.length > 1;
+
+  if (compact) {
+    if (!isWord) {
+      const info = charDict[char];
+      return (
+        <div className="flex gap-3">
+          <div className="h-20 w-20 rounded-xl bg-[#FFF8F0] flex items-center justify-center text-[48px] serif-sc">
+            {char}
+          </div>
+          <div>
+            <div className="font-semibold">{info?.pinyin}</div>
+            <div className="text-[13px]">{info?.meaning}</div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="space-y-3">
+        <div className="rounded-xl bg-[#FFF8F0] flex items-center justify-center py-3 serif-sc text-[32px]">
+          {char}
+        </div>
+        <div className="space-y-2">
+          {chars.map((ch, i) => {
+            const info = charDict[ch];
+            return (
+              <div key={`${ch}-${i}`} className="flex gap-3 items-baseline">
+                <span className="serif-sc text-[20px]">{ch}</span>
+                <span className="font-semibold text-[13px]">{info?.pinyin || '—'}</span>
+                <span className="text-[13px]">{info?.meaning || ''}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-4 space-y-4">
+      {isWord && (
+        <div className="rounded-[12px] bg-[#FFF8F0] dark:bg-[#1C1A16] border border-[#F0DFCC] px-3 py-2 text-center">
+          <span className="serif-sc text-[28px] leading-none">{char}</span>
+          <span className="block text-[11px] text-[var(--ink-mute)] mt-1">
+            {chars.length} characters
+          </span>
+        </div>
+      )}
+      {chars.map((ch, i) => (
+        <div
+          key={`${ch}-${i}`}
+          className={isWord ? 'border-t border-[var(--line)] pt-4 first:border-t-0 first:pt-0' : undefined}
+        >
+          <CharDetail ch={ch} toneColors={toneColors} showZhuyin={showZhuyin} />
+        </div>
+      ))}
 
       <div className="flex gap-2">
         <button
@@ -143,7 +198,7 @@ export function CharInspector({
         </button>
         <button
           type="button"
-          onClick={() => onCopy(char, 'Character')}
+          onClick={() => onCopy(char, isWord ? 'Word' : 'Character')}
           className="flex-1 rounded-full border border-[var(--line)] bg-white dark:bg-[#1A1916] py-2 text-[12px]"
         >
           Copy

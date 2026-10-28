@@ -98,7 +98,7 @@ export function WordCard({
           <button
             type="button"
             onClick={() => {
-              onInspect(hover.data.zh[0] || hover.data.zh);
+              onInspect(hover.data.zh);
             }}
             className="flex-1 rounded-full bg-[var(--ink)] text-white text-[11px] py-1.5"
           >
