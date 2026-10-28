@@ -57,6 +57,8 @@ export const BRAND_OVERRIDE: BrandOverride = {
   //   search: true,
   //   import: true,
   //   speech: true,
+  //   speakerButtons: true,
+  //   speakOnClick: true,
   //   darkMode: true,
   //   inspector: true,
   // },
@@ -70,5 +72,7 @@ export const BRAND_OVERRIDE: BrandOverride = {
   //   fontScale: 1,
   //   charSize: 1,
   //   dark: false,
+  //   showSpeakerButtons: true,
+  //   speakOnClick: false,
   // },
 };

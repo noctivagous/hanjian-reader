@@ -54,6 +54,8 @@ export interface BrandFeatures {
   // Tooling.
   import: boolean;
   speech: boolean;
+  speakerButtons: boolean;
+  speakOnClick: boolean;
   darkMode: boolean;
   inspector: boolean;
 }
@@ -68,6 +70,8 @@ export interface BrandDefaults {
   fontScale: number;
   charSize: number;
   dark: boolean;
+  showSpeakerButtons: boolean;
+  speakOnClick: boolean;
 }
 
 export interface BrandConfig {
@@ -119,6 +123,8 @@ export const DEFAULT_BRAND: BrandConfig = {
     search: true,
     import: true,
     speech: true,
+    speakerButtons: true,
+    speakOnClick: true,
     darkMode: true,
     inspector: true,
   },
@@ -132,6 +138,8 @@ export const DEFAULT_BRAND: BrandConfig = {
     fontScale: 1,
     charSize: 1,
     dark: false,
+    showSpeakerButtons: true,
+    speakOnClick: false,
   },
 };
 
@@ -198,6 +206,12 @@ function mergeBrand(override: BrandOverride | undefined): BrandConfig {
   if (!merged.features.fontSize) merged.defaults.fontScale = 1;
   if (!merged.features.charSize) merged.defaults.charSize = 1;
   if (!merged.features.darkMode) merged.defaults.dark = false;
+  if (!merged.features.speech) {
+    merged.defaults.showSpeakerButtons = false;
+    merged.defaults.speakOnClick = false;
+  }
+  if (!merged.features.speakerButtons) merged.defaults.showSpeakerButtons = false;
+  if (!merged.features.speakOnClick) merged.defaults.speakOnClick = false;
   if (merged.defaults.primaryLang !== 'en' && merged.defaults.primaryLang !== 'zh') {
     merged.defaults.primaryLang = 'en';
   }

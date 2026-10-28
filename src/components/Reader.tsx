@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { brand } from '../brand';
 import type { Doc, Sentence } from '../data/types';
-import { allParagraphs, paragraphEn, primaryTranslation } from '../lib/doc';
+import { allParagraphs, chineseText, paragraphEn, primaryTranslation } from '../lib/doc';
 import { toneColor } from '../lib/pinyin';
 import { tokenizeChinese } from '../lib/tokenize';
 import { zhuyinForWord } from '../lib/zhuyin';
@@ -38,6 +38,8 @@ interface Props {
   inspectedChar: string | null;
   onInspectChar: (c: string) => void;
   onSpeak: (text: string) => void;
+  showSpeakerButtons: boolean;
+  speakOnClick: boolean;
 }
 
 /** True when `ch` is the inspected character or part of the inspected word. */
@@ -103,7 +105,14 @@ function SentenceView({
   inspectedChar,
   onInspectChar,
   onSpeak,
+  showSpeakerButtons,
+  speakOnClick,
 }: Props & { sentence: Sentence; open: boolean; onToggle: () => void }) {
+  const canSpeak = brand.features.speech && showSpeakerButtons;
+  const handleCharClick = (ch: string) => {
+    onInspectChar(ch);
+    if (speakOnClick) onSpeak(ch);
+  };
   const translation = primaryTranslation(sentence);
   const words = translation?.words ?? [];
   const enText = translation?.text ?? '';
@@ -126,7 +135,7 @@ function SentenceView({
                 key={i}
                 ch={ch}
                 inspected={isInspected(inspectedChar, ch)}
-                onInspect={() => onInspectChar(ch)}
+                onInspect={() => handleCharClick(ch)}
               />
             ))}
           </span>
@@ -191,7 +200,7 @@ function SentenceView({
                         key={j}
                         ch={ch}
                         inspected={isInspected(inspectedChar, ch)}
-                        onInspect={() => onInspectChar(ch)}
+                        onInspect={() => handleCharClick(ch)}
                       />
                     ))}
                   </span>
@@ -250,7 +259,7 @@ function SentenceView({
                 key={i}
                 ch={ch}
                 inspected={isInspected(inspectedChar, ch)}
-                onInspect={() => onInspectChar(ch)}
+                onInspect={() => handleCharClick(ch)}
               />
             ))}
           </span>
@@ -284,7 +293,7 @@ function SentenceView({
                 <p className="text-[16px] leading-[1.8]">
                   {highlight(enText, search)}
                 </p>
-                {brand.features.speech && (
+                {canSpeak && (
                 <button
                   type="button"
                   onClick={() => onSpeak(sentence.zh)}
@@ -306,11 +315,11 @@ function SentenceView({
                     key={i}
                     ch={ch}
                     inspected={isInspected(inspectedChar, ch)}
-                    onInspect={() => onInspectChar(ch)}
+                    onInspect={() => handleCharClick(ch)}
                   />
                 ))}
               </div>
-              {brand.features.speech && (
+              {canSpeak && (
               <button
                 type="button"
                 onClick={() => onSpeak(sentence.zh)}
@@ -362,8 +371,13 @@ function SentenceView({
 const NOISE_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
 
 export function Reader(props: Props) {
-  const { doc, reveal, primaryLang, fontScale, charSize, inspectedChar, onInspectChar, onSpeak } = props;
+  const { doc, reveal, primaryLang, fontScale, charSize, inspectedChar, onInspectChar, onSpeak, showSpeakerButtons, speakOnClick } = props;
   const enPrimary = primaryLang === 'en';
+  const canSpeak = brand.features.speech && showSpeakerButtons;
+  const handleCharClick = (ch: string) => {
+    onInspectChar(ch);
+    if (speakOnClick) onSpeak(ch);
+  };
 
   return (
     <div
@@ -374,6 +388,16 @@ export function Reader(props: Props) {
         className="pointer-events-none absolute inset-0 opacity-[0.025] mix-blend-multiply"
         style={{ backgroundImage: NOISE_BG }}
       />
+      {canSpeak && (
+        <button
+          type="button"
+          onClick={() => onSpeak(chineseText(doc))}
+          aria-label="Speak entire page"
+          className="absolute top-10 right-6 md:right-10 z-10 text-[12px] border border-[var(--line)] rounded-full px-2.5 py-1 bg-[var(--paper-2)] hover:border-[var(--verm)]"
+        >
+          🔊 Page
+        </button>
+      )}
       <div className="mb-10 relative">
         <div className="inline-flex items-center gap-2 mb-3">
           <span className="h-px w-8 bg-[var(--verm)]" />
@@ -453,7 +477,7 @@ export function Reader(props: Props) {
                         ? `段落 · Paragraph ${pIdx + 1}`
                         : `English · Paragraph ${pIdx + 1}`}
                     </span>
-                    {brand.features.speech && (
+                    {canSpeak && (
                     <button
                       type="button"
                       onClick={() => onSpeak(para.zh)}
@@ -473,7 +497,7 @@ export function Reader(props: Props) {
                           key={i}
                           ch={ch}
                           inspected={isInspected(inspectedChar, ch)}
-                          onInspect={() => onInspectChar(ch)}
+                          onInspect={() => handleCharClick(ch)}
                           className="cursor-pointer rounded hover:bg-[#FFE0D2]"
                         />
                       ))}
@@ -522,7 +546,7 @@ export function Reader(props: Props) {
                     {Array.from(p.zh).map((ch, i) => (
                       <span
                         key={i}
-                        onClick={() => onInspectChar(ch)}
+                        onClick={() => handleCharClick(ch)}
                         className={`cursor-pointer rounded px-0.5 hover:bg-[#FFE0D2] ${isInspected(inspectedChar, ch) ? 'bg-[var(--verm)] text-white' : ''}`}
                       >
                         {ch}

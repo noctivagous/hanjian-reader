@@ -47,6 +47,10 @@ export default function App() {
   const [defsInline, setDefsInline] = useState(brand.defaults.defsInline);
   const [fontScale, setFontScale] = useState(brand.defaults.fontScale);
   const [charSize, setCharSize] = useState(brand.defaults.charSize);
+  const [showSpeakerButtons, setShowSpeakerButtons] = useState(
+    brand.defaults.showSpeakerButtons,
+  );
+  const [speakOnClick, setSpeakOnClick] = useState(brand.defaults.speakOnClick);
 
   const [inspectedChar, setInspectedChar] = useState<string | null>(null);
   const [pinnedKey, setPinnedKey] = useState<string | null>(null);
@@ -277,6 +281,8 @@ export default function App() {
             onHover={setHover}
             inspectedChar={inspectedChar}
             onInspectChar={handleInspectChar}
+            showSpeakerButtons={showSpeakerButtons}
+            speakOnClick={speakOnClick}
             onSpeak={handleSpeak}
           />
         </div>
@@ -296,6 +302,10 @@ export default function App() {
           onToneColors={setToneColors}
           charSize={charSize}
           onCharSize={setCharSize}
+          showSpeakerButtons={showSpeakerButtons}
+          onShowSpeakerButtons={setShowSpeakerButtons}
+          speakOnClick={speakOnClick}
+          onSpeakOnClick={setSpeakOnClick}
           search={search}
           onSearch={setSearch}
           inspectedChar={inspectedChar}

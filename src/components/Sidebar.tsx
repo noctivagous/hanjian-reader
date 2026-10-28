@@ -29,6 +29,10 @@ interface Props {
   onToneColors: (v: boolean) => void;
   charSize: number;
   onCharSize: (v: number) => void;
+  showSpeakerButtons: boolean;
+  onShowSpeakerButtons: (v: boolean) => void;
+  speakOnClick: boolean;
+  onSpeakOnClick: (v: boolean) => void;
   search: string;
   onSearch: (v: string) => void;
   inspectedChar: string | null;
@@ -152,6 +156,17 @@ export function Sidebar(p: Props) {
               />
             </label>
             )}
+            {brand.features.speech && brand.features.speakerButtons && (
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-[13px]">Show Speaker Button</span>
+              <input
+                type="checkbox"
+                checked={p.showSpeakerButtons}
+                onChange={(e) => p.onShowSpeakerButtons(e.target.checked)}
+                className="accent-[var(--verm)]"
+              />
+            </label>
+            )}
             {brand.features.charSize && (
             <div>
               <div className="flex items-center justify-between mb-1">
@@ -173,6 +188,27 @@ export function Sidebar(p: Props) {
             )}
           </div>
         </div>
+
+        {brand.features.speech && (
+        <div className="rounded-[14px] border border-[var(--line)] bg-white dark:bg-[#181611] p-4 space-y-4">
+          <h3 className="text-[12px] tracking-[0.15em] uppercase font-semibold">
+            Interactive Options
+          </h3>
+          <div className="space-y-3">
+            {brand.features.speakOnClick && (
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-[13px]">Speak On Click</span>
+              <input
+                type="checkbox"
+                checked={p.speakOnClick}
+                onChange={(e) => p.onSpeakOnClick(e.target.checked)}
+                className="accent-[var(--verm)]"
+              />
+            </label>
+            )}
+          </div>
+        </div>
+        )}
 
         {brand.features.search && (
         <div className="space-y-2">
