@@ -53,8 +53,3 @@ html {
   }
 }
 
-@keyframes stroke-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
