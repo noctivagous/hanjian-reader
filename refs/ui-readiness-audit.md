@@ -4,8 +4,9 @@ Date: 2026-10-28
 Scope: current Vite/React app in `src/` compared against the archived
 web artifact in `archive/Hanjian-Reader.html`, the behavior described in
 `README.md`, the plan in `refs/hanjian-format-recommendation.md`, and
-`TASKS.md`. This is an audit only — nothing here is implemented yet.
-Every item names the file/symbol it was found in and what "done" means.
+`TASKS.md`. Items marked ✅ DONE were fixed after the audit; the rest
+are still open. Every item names the file/symbol it was found in and
+what "done" means.
 
 Severity key: **P0** = a shipped-looking control is broken, dead, or
 unrecoverable, or a core reading loop cannot be completed. **P1** =
@@ -15,12 +16,19 @@ should close before calling the app ready.
 
 ---
 
-## 1. The headline defect: selection has no way back
+## 1. ✅ DONE (2026-10-28): selection escape paths
+
+> Status: implemented and browser-verified (click toggle, ✕ buttons,
+> `Escape` cascade, background-click clear, sentence override sets, tip
+> re-aim, modifier-guarded shortcuts). What follows is the original
+> finding, kept for the record. Remaining §1-adjacent work: tip
+> persistence and dismissal timer (§7.3), swipe-to-close on the mobile
+> drawer (§1.2 table), word-card viewport flip (§3).
 
 This class of bug — *state you can enter but not leave* — is the
 pattern to hunt everywhere, not just the one reported case.
 
-### 1.1 (P0) Clicking a character a second time does not deselect it
+### 1.1 ✅ DONE (P0) Clicking a character a second time deselects it
 
 `onInspectChar: (c: string) => void` (`src/components/Reader.tsx:37`)
 is wired straight to `setInspectedChar` (`src/App.tsx:183`). Every
@@ -48,7 +56,7 @@ clears both pinned word and inspected char; all of this works in
 English-primary, Chinese-primary, sentence/paragraph reveals, and
 full view (all six call sites above).
 
-### 1.2 (P0) Siblings of the same defect
+### 1.2 ✅ DONE (P0) Siblings of the same defect
 
 Audit every toggle for the same enter-but-never-leave shape:
 
@@ -386,8 +394,8 @@ and functional on mobile, even if the layout differs.
 
 ## Suggested order
 
-1. **Selection escape fixes** (§1): char toggle/close/Esc — small,
-   highest-annoyance. Includes the sentence-pill contract (§3).
+1. ✅ DONE (2026-10-28) — **Selection escape fixes** (§1):
+   char toggle/close/Esc plus the sentence-pill contract (§3 P0 row).
 2. **Left divisions sidebar** (§2) with anchors + scroll-spy.
 3. **Dead-control sweep** (§4 list, §8 mobile no-ops): wire or
    remove every no-op button.

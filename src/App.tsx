@@ -52,6 +52,9 @@ export default function App() {
   const [pinnedKey, setPinnedKey] = useState<string | null>(null);
   const [hover, setHover] = useState<HoverState | null>(null);
   const [openSentences, setOpenSentences] = useState<Set<string>>(new Set());
+  const [closedSentences, setClosedSentences] = useState<Set<string>>(
+    new Set(),
+  );
   const [search, setSearch] = useState('');
   const [notes, setNotes] = useState<Record<string, string>>({});
 
@@ -67,9 +70,24 @@ export default function App() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (importOpen) setImportOpen(false);
+        else if (toolsOpen) setToolsOpen(false);
+        else if (inspectedChar) setInspectedChar(null);
+        else if (pinnedKey) {
+          setPinnedKey(null);
+          setHover(null);
+        } else if (hover) setHover(null);
+        else if (showTip) setShowTip(false);
+        return;
+      }
       if (
         e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLTextAreaElement
+        e.target instanceof HTMLTextAreaElement ||
+        e.target instanceof HTMLSelectElement ||
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey
       )
         return;
       const k = e.key.toLowerCase();
@@ -80,7 +98,7 @@ export default function App() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  }, [importOpen, toolsOpen, inspectedChar, pinnedKey, hover, showTip]);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
@@ -126,12 +144,32 @@ export default function App() {
   };
 
   const toggleSentence = (id: string) => {
-    setOpenSentences((prev) => {
+    const toggle = (prev: Set<string>) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
       return next;
-    });
+    };
+    if (reveal.sentences) setClosedSentences(toggle);
+    else setOpenSentences(toggle);
+  };
+
+  const toggleReveal = (k: keyof Reveal) => {
+    if (k === 'sentences') {
+      if (reveal.sentences) setOpenSentences(new Set());
+      else setClosedSentences(new Set());
+    }
+    setReveal((r) => ({ ...r, [k]: !r[k] }));
+  };
+
+  const handleInspectChar = (c: string) => {
+    setInspectedChar((prev) => (prev === c ? null : c));
+  };
+
+  const clearSelection = () => {
+    setInspectedChar(null);
+    setPinnedKey(null);
+    setHover(null);
   };
 
   return (
@@ -160,7 +198,7 @@ export default function App() {
         <div
           ref={scrollRef}
           className="flex-1 flex justify-center overflow-auto"
-          onClick={() => setPinnedKey(null)}
+          onClick={clearSelection}
         >
           <Reader
             doc={doc}
@@ -173,6 +211,7 @@ export default function App() {
             fontScale={fontScale}
             charSize={charSize}
             openSentences={openSentences}
+            closedSentences={closedSentences}
             onToggleSentence={toggleSentence}
             search={search}
             pinnedKey={pinnedKey}
@@ -180,7 +219,7 @@ export default function App() {
             hover={hover}
             onHover={setHover}
             inspectedChar={inspectedChar}
-            onInspectChar={setInspectedChar}
+            onInspectChar={handleInspectChar}
             onSpeak={handleSpeak}
           />
         </div>
@@ -189,7 +228,7 @@ export default function App() {
           doc={doc}
           reveal={reveal}
           primaryLang={primaryLang}
-          onToggleReveal={(k) => setReveal((r) => ({ ...r, [k]: !r[k] }))}
+          onToggleReveal={toggleReveal}
           showPinyin={showPinyin}
           onShowPinyin={setShowPinyin}
           showZhuyin={showZhuyin}
@@ -211,6 +250,7 @@ export default function App() {
           onCopy={handleCopy}
           onAddToList={() => flash('Added to list (local)', 1500)}
           onImport={() => setImportOpen(true)}
+          onCloseInspector={() => setInspectedChar(null)}
           collapsed={sidebarCollapsed}
         />
       </div>
@@ -221,8 +261,9 @@ export default function App() {
         onClose={() => setToolsOpen(false)}
         reveal={reveal}
         primaryLang={primaryLang}
-        onToggleReveal={(k) => setReveal((r) => ({ ...r, [k]: !r[k] }))}
+        onToggleReveal={toggleReveal}
         inspectedChar={inspectedChar}
+        onClearInspected={() => setInspectedChar(null)}
         onCopy={handleCopy}
       />
 
@@ -238,9 +279,13 @@ export default function App() {
             if (pinnedKey !== hover.key) setHover(null);
           }}
           onInspect={(zh) => {
-            setInspectedChar(zh);
+            handleInspectChar(zh);
             setHover(null);
             setPinnedKey(null);
+          }}
+          onClose={() => {
+            setPinnedKey(null);
+            setHover(null);
           }}
           onSpeak={handleSpeak}
         />
@@ -254,7 +299,10 @@ export default function App() {
       )}
 
       {showTip && (
-        <div className="hidden lg:block fixed right-[380px] top-[88px] z-20 w-[300px] rounded-[14px] bg-[#1A1A18] text-[#FFFEFB] p-4 shadow-[0_16px_40px_rgba(0,0,0,0.3)] animate-[rise-in_0.4s_ease]">
+        <div
+          className="hidden lg:block fixed top-[88px] z-20 w-[300px] rounded-[14px] bg-[#1A1A18] text-[#FFFEFB] p-4 shadow-[0_16px_40px_rgba(0,0,0,0.3)] animate-[rise-in_0.4s_ease]"
+          style={{ right: sidebarCollapsed ? 24 : 380 }}
+        >
           <div className="text-[13px] font-medium">Progressive Reveal →</div>
           <div className="text-[12px] opacity-80 mt-1 leading-[1.5]">
             {primaryLang === 'en'

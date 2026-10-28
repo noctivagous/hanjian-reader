@@ -18,6 +18,7 @@ interface Props {
   primaryLang: PrimaryLang;
   onToggleReveal: (k: keyof Reveal) => void;
   inspectedChar: string | null;
+  onClearInspected: () => void;
   onCopy: (text: string, label: string) => void;
 }
 
@@ -29,6 +30,7 @@ export function MobileTools({
   primaryLang,
   onToggleReveal,
   inspectedChar,
+  onClearInspected,
   onCopy,
 }: Props) {
   return (
@@ -75,8 +77,20 @@ export function MobileTools({
             ))}
           </div>
           <div className="rounded-[16px] border p-4 bg-white dark:bg-[#181611]">
-            <div className="text-[12px] uppercase tracking-wide font-semibold mb-3">
-              Character Inspector
+            <div className="flex items-center justify-between mb-3">
+              <div className="text-[12px] uppercase tracking-wide font-semibold">
+                Character Inspector
+              </div>
+              {inspectedChar && (
+                <button
+                  type="button"
+                  aria-label="Close character inspector"
+                  onClick={onClearInspected}
+                  className="h-6 w-6 rounded-full border flex items-center justify-center text-[11px]"
+                >
+                  ✕
+                </button>
+              )}
             </div>
             {!inspectedChar ? (
               <div className="text-[13px] text-[var(--ink-mute)]">

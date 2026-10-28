@@ -37,6 +37,7 @@ interface Props {
   onCopy: (text: string, label: string) => void;
   onAddToList: () => void;
   onImport: () => void;
+  onCloseInspector: () => void;
   collapsed: boolean;
 }
 
@@ -190,8 +191,20 @@ export function Sidebar(p: Props) {
               <h3 className="text-[12px] tracking-[0.15em] uppercase font-semibold">
                 Character Inspector
               </h3>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--paper-2)] border border-[var(--line)]">
-                点击汉字查看
+              <span className="flex items-center gap-2">
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--paper-2)] border border-[var(--line)]">
+                  点击汉字查看
+                </span>
+                {p.inspectedChar && (
+                  <button
+                    type="button"
+                    aria-label="Close character inspector"
+                    onClick={p.onCloseInspector}
+                    className="h-6 w-6 rounded-full border border-[var(--line)] flex items-center justify-center text-[11px] hover:border-[var(--verm)] hover:text-[var(--verm)]"
+                  >
+                    ✕
+                  </button>
+                )}
               </span>
             </div>
             {!p.inspectedChar ? (

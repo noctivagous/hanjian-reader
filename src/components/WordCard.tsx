@@ -17,6 +17,7 @@ interface Props {
   onEnter: (h: HoverState) => void;
   onLeave: () => void;
   onInspect: (zh: string) => void;
+  onClose: () => void;
   onSpeak: (text: string) => void;
 }
 
@@ -29,6 +30,7 @@ export function WordCard({
   onEnter,
   onLeave,
   onInspect,
+  onClose,
   onSpeak,
 }: Props) {
   const zhuyin = showZhuyin ? zhuyinForWord(hover.data.pinyin) : null;
@@ -42,7 +44,15 @@ export function WordCard({
       onMouseEnter={() => onEnter(hover)}
       onMouseLeave={onLeave}
     >
-      <div className="w-[260px] rounded-[14px] border border-[#EAD9C8] bg-white dark:bg-[#1E1C18] shadow-[0_12px_32px_rgba(0,0,0,0.18)] overflow-hidden animate-[rise-in_0.18s_ease]">
+      <div className="relative w-[260px] rounded-[14px] border border-[#EAD9C8] bg-white dark:bg-[#1E1C18] shadow-[0_12px_32px_rgba(0,0,0,0.18)] overflow-hidden animate-[rise-in_0.18s_ease]">
+        <button
+          type="button"
+          aria-label="Close word card"
+          onClick={onClose}
+          className="absolute right-2 top-2 z-10 h-6 w-6 rounded-full border border-[var(--line)] bg-white dark:bg-[#1E1C18] flex items-center justify-center text-[11px] hover:border-[var(--verm)] hover:text-[var(--verm)]"
+        >
+          ✕
+        </button>
         <div className="p-3 flex gap-3">
           <div className="h-10 w-10 rounded-[10px] bg-[#FFF0EB] flex items-center justify-center serif-sc text-[18px]">
             {hover.data.zh || '字'}
@@ -114,7 +124,7 @@ export function WordCard({
         </div>
         {pinnedKey === hover.key && (
           <div className="px-3 pb-2 text-[10px] text-[var(--ink-mute)]">
-            Pinned — click the word again to unpin
+            Pinned — click the word again, ✕, or press Esc to unpin
           </div>
         )}
       </div>

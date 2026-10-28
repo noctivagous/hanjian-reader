@@ -27,6 +27,7 @@ interface Props {
   fontScale: number;
   charSize: number;
   openSentences: Set<string>;
+  closedSentences: Set<string>;
   onToggleSentence: (id: string) => void;
   search: string;
   pinnedKey: string | null;
@@ -258,21 +259,20 @@ function SentenceView({
           </span>
         )}
       </span>
-      {reveal.sentences && (
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onToggle();
-          }}
-          className={`ml-2 inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[11px] tracking-wide transition ${open ? 'bg-[var(--verm)] text-white border-[var(--verm)]' : 'border-[var(--line)] hover:border-[var(--verm)] hover:text-[var(--verm)] bg-[var(--paper-2)]'}`}
-        >
-          <span className={enPrimary ? 'serif-sc' : ''}>
-            {enPrimary ? '中文' : 'English'}
-          </span>
-          <span className="opacity-70">{open ? '−' : '+'}</span>
-        </button>
-      )}
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggle();
+        }}
+        className={`ml-2 inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[11px] tracking-wide transition ${open ? 'bg-[var(--verm)] text-white border-[var(--verm)]' : 'border-[var(--line)] hover:border-[var(--verm)] hover:text-[var(--verm)] bg-[var(--paper-2)]'}`}
+      >
+        <span className={enPrimary ? 'serif-sc' : ''}>
+          {enPrimary ? '中文' : 'English'}
+        </span>
+        <span className="opacity-70">{open ? '−' : '+'}</span>
+      </button>
       <div
         className={`grid transition-all duration-300 ease-out ${open ? 'grid-rows-[1fr] opacity-100 mt-3' : 'grid-rows-[0fr] opacity-0'}`}
       >
@@ -428,7 +428,11 @@ export function Reader(props: Props) {
                   key={s.id}
                   {...props}
                   sentence={s}
-                  open={props.openSentences.has(s.id) || reveal.sentences}
+                  open={
+                    reveal.sentences
+                      ? !props.closedSentences.has(s.id)
+                      : props.openSentences.has(s.id)
+                  }
                   onToggle={() => props.onToggleSentence(s.id)}
                 />
               ))}
