@@ -1,10 +1,6 @@
-import type { Doc } from '../data/types';
 import type { PrimaryLang } from './Reader';
 
 interface Props {
-  docs: Doc[];
-  activeId: string;
-  onSelect: (id: string) => void;
   onImport: () => void;
   primaryLang: PrimaryLang;
   onPrimaryLang: (v: PrimaryLang) => void;
@@ -14,13 +10,13 @@ interface Props {
   onToggleDark: () => void;
   sidebarCollapsed: boolean;
   onToggleSidebar: () => void;
+  navCollapsed: boolean;
+  onToggleNav: () => void;
+  onOpenNav: () => void;
   onOpenTools: () => void;
 }
 
 export function Header({
-  docs,
-  activeId,
-  onSelect,
   onImport,
   primaryLang,
   onPrimaryLang,
@@ -30,6 +26,9 @@ export function Header({
   onToggleDark,
   sidebarCollapsed,
   onToggleSidebar,
+  navCollapsed,
+  onToggleNav,
+  onOpenNav,
   onOpenTools,
 }: Props) {
   return (
@@ -38,6 +37,23 @@ export function Header({
       style={{ paddingTop: 'var(--safe-area-inset-top)' }}
     >
       <div className="flex items-center gap-3">
+        <button
+          type="button"
+          aria-label="Toggle contents panel"
+          aria-expanded={!navCollapsed}
+          onClick={onToggleNav}
+          className="hidden lg:flex h-8 w-8 rounded-full border border-[var(--line)] bg-[var(--paper)] items-center justify-center hover:bg-[var(--line)]"
+        >
+          {navCollapsed ? '▶' : '◀'}
+        </button>
+        <button
+          type="button"
+          aria-label="Open contents"
+          onClick={onOpenNav}
+          className="lg:hidden h-8 w-8 rounded-full border border-[var(--line)] bg-[var(--paper)] flex items-center justify-center"
+        >
+          ☰
+        </button>
         <div className="flex items-center gap-2.5">
           <div className="h-8 w-8 rounded-[10px] bg-[var(--ink)] text-[var(--paper)] flex items-center justify-center font-bold serif-display text-[14px] tracking-tight">
             涵
@@ -53,22 +69,6 @@ export function Header({
           </div>
         </div>
         <div className="hidden md:block h-5 w-px bg-[var(--line)] mx-2" />
-        <div className="relative">
-          <select
-            value={activeId}
-            onChange={(e) => onSelect(e.target.value)}
-            className="appearance-none pl-3 pr-8 py-1.5 rounded-full border border-[var(--line)] bg-[var(--paper)] text-[13px] font-medium tracking-tight outline-none hover:border-[var(--ink-mute)] transition"
-          >
-            {docs.map((d) => (
-              <option key={d.id} value={d.id}>
-                {d.titleEn} · {d.titleZh}
-              </option>
-            ))}
-          </select>
-          <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px]">
-            ▼
-          </span>
-        </div>
         <button
           type="button"
           onClick={onImport}
@@ -131,6 +131,8 @@ export function Header({
         </button>
         <button
           type="button"
+          aria-label="Toggle tools panel"
+          aria-expanded={!sidebarCollapsed}
           onClick={onToggleSidebar}
           className="hidden lg:flex h-8 w-8 rounded-full border border-[var(--line)] bg-[var(--paper)] items-center justify-center hover:bg-[var(--line)]"
         >
@@ -138,6 +140,7 @@ export function Header({
         </button>
         <button
           type="button"
+          aria-label="Open tools"
           onClick={onOpenTools}
           className="lg:hidden h-8 w-8 rounded-full bg-[var(--ink)] text-[var(--paper)] flex items-center justify-center"
         >

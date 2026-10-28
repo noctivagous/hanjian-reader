@@ -400,7 +400,7 @@ export function Reader(props: Props) {
             .slice(0, sIdx)
             .reduce((n, s) => n + s.paragraphs.length, 0);
           return (
-            <div key={section.id} className="space-y-10">
+            <div key={section.id} id={section.id} className="space-y-10 scroll-mt-[76px]">
               {(section.titleEn || section.titleZh) && (
                 <div>
                   {(enPrimary ? section.titleEn : section.titleZh) && (
@@ -418,7 +418,7 @@ export function Reader(props: Props) {
               {section.paragraphs.map((para, localIdx) => {
                 const pIdx = offset + localIdx;
                 return (
-          <div className="group/para relative" key={para.id}>
+          <div className="group/para relative scroll-mt-[76px]" key={para.id} id={para.id}>
             <div className="absolute -left-6 top-1 hidden md:block text-[10px] text-[var(--ink-mute)] font-mono">
               {String(pIdx + 1).padStart(2, '0')}
             </div>

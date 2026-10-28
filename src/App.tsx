@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Header } from './components/Header';
 import { ImportModal } from './components/ImportModal';
 import { MobileTools } from './components/MobileTools';
+import { MobileNavDrawer, NavSidebar } from './components/NavSidebar';
 import { Reader, type PrimaryLang, type Reveal } from './components/Reader';
 import { Sidebar } from './components/Sidebar';
 import { WordCard, type HoverState } from './components/WordCard';
@@ -9,6 +10,7 @@ import { docs as seedDocs } from './data/documents';
 import type { Doc } from './data/types';
 import { importCustomDoc } from './lib/segment';
 import { copyText, speakChinese } from './lib/speech';
+import { useScrollSpy } from './lib/useScrollSpy';
 
 export default function App() {
   const [docs, setDocs] = useState<Doc[]>(seedDocs);
@@ -60,6 +62,8 @@ export default function App() {
 
   const [dark, setDark] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [navCollapsed, setNavCollapsed] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
   const [showTip, setShowTip] = useState(true);
@@ -72,6 +76,7 @@ export default function App() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (importOpen) setImportOpen(false);
+        else if (navOpen) setNavOpen(false);
         else if (toolsOpen) setToolsOpen(false);
         else if (inspectedChar) setInspectedChar(null);
         else if (pinnedKey) {
@@ -98,7 +103,7 @@ export default function App() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [importOpen, toolsOpen, inspectedChar, pinnedKey, hover, showTip]);
+  }, [importOpen, navOpen, toolsOpen, inspectedChar, pinnedKey, hover, showTip]);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
@@ -172,12 +177,49 @@ export default function App() {
     setHover(null);
   };
 
+  const navIds = useMemo(
+    () =>
+      doc.sections.flatMap((s) => [
+        s.id,
+        ...s.paragraphs.map((p) => p.id),
+      ]),
+    [doc],
+  );
+  const [activeNavId, setActiveNavId] = useScrollSpy(scrollRef, navIds, doc.id);
+
+  const activeSectionId = useMemo(() => {
+    if (!activeNavId) return doc.sections[0]?.id ?? null;
+    const direct = doc.sections.find((s) => s.id === activeNavId);
+    if (direct) return direct.id;
+    return (
+      doc.sections.find((s) =>
+        s.paragraphs.some((p) => p.id === activeNavId),
+      )?.id ?? doc.sections[0]?.id ?? null
+    );
+  }, [doc, activeNavId]);
+
+  const activeParagraphId = useMemo(() => {
+    if (!activeNavId) return null;
+    const isParagraph = doc.sections.some((s) =>
+      s.paragraphs.some((p) => p.id === activeNavId),
+    );
+    return isParagraph ? activeNavId : null;
+  }, [doc, activeNavId]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 });
+  }, [doc.id]);
+
+  const handleNavigate = (id: string) => {
+    setActiveNavId(id);
+    setNavOpen(false);
+    const el = scrollRef.current?.querySelector(`#${CSS.escape(id)}`);
+    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-[var(--paper)] text-[var(--ink)] selection:bg-[var(--verm-soft)]">
       <Header
-        docs={docs}
-        activeId={doc.id}
-        onSelect={setActiveId}
         onImport={() => setImportOpen(true)}
         primaryLang={primaryLang}
         onPrimaryLang={(v) => {
@@ -191,10 +233,24 @@ export default function App() {
         onToggleDark={() => setDark((v) => !v)}
         sidebarCollapsed={sidebarCollapsed}
         onToggleSidebar={() => setSidebarCollapsed((v) => !v)}
+        navCollapsed={navCollapsed}
+        onToggleNav={() => setNavCollapsed((v) => !v)}
+        onOpenNav={() => setNavOpen(true)}
         onOpenTools={() => setToolsOpen(true)}
       />
 
       <div className="flex flex-1 min-h-0">
+        <NavSidebar
+          doc={doc}
+          docs={docs}
+          activeDocId={doc.id}
+          onSelectDoc={setActiveId}
+          primaryLang={primaryLang}
+          activeSectionId={activeSectionId}
+          activeParagraphId={activeParagraphId}
+          onNavigate={handleNavigate}
+          collapsed={navCollapsed}
+        />
         <div
           ref={scrollRef}
           className="flex-1 flex justify-center overflow-auto"
@@ -254,6 +310,19 @@ export default function App() {
           collapsed={sidebarCollapsed}
         />
       </div>
+
+      <MobileNavDrawer
+        doc={doc}
+        docs={docs}
+        activeDocId={doc.id}
+        onSelectDoc={setActiveId}
+        primaryLang={primaryLang}
+        activeSectionId={activeSectionId}
+        activeParagraphId={activeParagraphId}
+        onNavigate={handleNavigate}
+        open={navOpen}
+        onClose={() => setNavOpen(false)}
+      />
 
       <MobileTools
         doc={doc}
