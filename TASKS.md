@@ -6,3 +6,8 @@
 - app might take data and actively convert it to .epub
 along with one of the formats designed specifically 
 for storing original text alongside its translations.
+
+- Reading mode: add pagination as a display setting alongside the default
+  continuous scroll. Paginated mode pages the reader column and keeps a
+  stable footer (document position, page indicator) fixed at the bottom
+  of the reading area while pages change above it.
