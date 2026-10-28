@@ -453,26 +453,18 @@ export function Reader(props: Props) {
                 return (
           <div className="group/para relative scroll-mt-[76px]" key={para.id} id={para.id}>
             {canSpeak ? (
-              <div className="group/speak absolute -left-6 top-0.5 hidden md:block">
-                <button
-                  type="button"
-                  onClick={() => onSpeak(para.zh)}
-                  aria-label={`Speak paragraph ${pIdx + 1}`}
-                  title={`Speak paragraph ${pIdx + 1}`}
-                  className="flex h-7 w-7 items-center justify-center rounded-full border border-transparent text-[10px] font-mono text-[var(--ink-mute)] transition hover:border-[var(--verm)] hover:text-[var(--verm)] hover:bg-[var(--paper-2)] focus-visible:border-[var(--verm)]"
-                >
-                  {String(pIdx + 1).padStart(2, '0')}
-                </button>
-                <button
-                  type="button"
-                  tabIndex={-1}
-                  aria-hidden="true"
-                  onClick={() => onSpeak(para.zh)}
-                  className="absolute right-full mr-1 top-0 flex h-7 w-7 items-center justify-center rounded-full border border-transparent text-[12px] transition opacity-0 group-hover/speak:opacity-100 group-focus-within/speak:opacity-100 hover:border-[var(--verm)] hover:bg-[var(--paper-2)]"
-                >
+              <button
+                type="button"
+                onClick={() => onSpeak(para.zh)}
+                aria-label={`Speak paragraph ${pIdx + 1}`}
+                title={`Speak paragraph ${pIdx + 1}`}
+                className="group absolute right-full mr-2 top-0.5 hidden md:inline-flex items-center gap-1 rounded-full border border-transparent px-1.5 py-1 text-[10px] font-mono text-[var(--ink-mute)] transition hover:border-[var(--verm)] hover:text-[var(--verm)] hover:bg-[var(--paper-2)] focus-visible:border-[var(--verm)]"
+              >
+                <span className="w-[14px] text-center text-[12px] opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
                   🔊
-                </button>
-              </div>
+                </span>
+                <span>{String(pIdx + 1).padStart(2, '0')}</span>
+              </button>
             ) : (
               <div className="absolute -left-6 top-1 hidden md:block text-[10px] text-[var(--ink-mute)] font-mono">
                 {String(pIdx + 1).padStart(2, '0')}
