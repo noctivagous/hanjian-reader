@@ -160,7 +160,7 @@ export function Sidebar(p: Props) {
             )}
             {brand.features.sentenceChips && (
             <label className="flex items-center justify-between cursor-pointer">
-              <span className="text-[13px]">Show Sentence Chips</span>
+              <span className="text-[13px]">Show Sentence-Level Toggles</span>
               <input
                 type="checkbox"
                 checked={p.showSentenceChips}
