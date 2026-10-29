@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- Three Character Classic 三字經: parallel Chinese/English. -->
+  <!-- source = traditional Chinese (Sung original, Giles 1900 sequence, -->
+  <!-- normalized forms; Qing continuation marked sup-h*), -->
+  <!-- target = public/threeCharacterClassic.txt stanzas 1-76 verbatim plus -->
+  <!-- editorial supplements (marked per-unit) for passages it skips. -->
+  <!-- Note: s62 (昔仲尼…) precedes s61 (古聖賢…) in document order. -->
+  <file original="three-character-classic" source-language="zh" target-language="en" datatype="plaintext">
+    <body>
+      <group id="part-1" resname="Human Nature and Learning|性善與為學">
+        <trans-unit id="s01">
+          <source>人之初，性本善。性相近，習相遠。</source>
+          <target>All men are born with the same good nature, but as they grow up, they acquire different habits, so they become widely different in their characters.</target>
+        </trans-unit>
+        <trans-unit id="s02">
+          <source>苟不教，性乃遷。教之道，貴以專。</source>
+          <target>If a man has not been properly taught, his nature will gradually become bad. The most important thing in education is the close cooperation between teacher and pupil.</target>
+        </trans-unit>
+        <trans-unit id="s03">
+          <source>昔孟母，擇鄰處。子不學，斷機杼。</source>
+          <target>The mother of Mencius carefully chose her neighbours wherever she stayed. On one occasion, when her son refused to study, she cut the cloth on her loom before his eyes.</target>
+        </trans-unit>
+        <trans-unit id="s04">
+          <source>竇燕山，有義方。教五子，名俱揚。</source>
+          <target>Old Tou Yen Shan taught his five sons by a good method, and all of them became famous men.</target>
+        </trans-unit>
+        <trans-unit id="s05">
+          <source>養不教，父之過。教不嚴，師之惰。</source>
+          <target>To rear and feed children without giving them an education is the father's fault. If teachers are not strict in their teaching, they are idle teachers.</target>
+        </trans-unit>
+        <trans-unit id="s06">
+          <source>子不學，非所宜。幼不學，老何為。</source>
+          <target>It is wrong if children do not study. If they do not study during their younger days, what can they do when they are older?</target>
+        </trans-unit>
+        <trans-unit id="s07">
+          <source>玉不琢，不成器。人不學，不知義。</source>
+          <target>Unpolished gems cannot form ornaments. If a man is untaught, he can never know his duties to his neighbours.</target>
+        </trans-unit>
+        <trans-unit id="s08">
+          <source>為人子，方少時。親師友，習禮儀。</source>
+          <target>In their youth, children should be closely attached to tutors and friends in order to learn the rites and observances.</target>
+        </trans-unit>
+        <trans-unit id="s09">
+          <source>香九齡，能溫席。孝於親，所當執。</source>
+          <target>A child should know how to obey his parents. When Hsiang was nine years old, he could warm the bed for his parents to sleep.</target>
+        </trans-unit>
+        <trans-unit id="s10">
+          <source>融四歲，能讓梨。弟於長，宜先知。</source>
+          <target>Children must respect their elders. When Jung was four years old, he could give the bigger pear to his elder brother.</target>
+        </trans-unit>
+        <trans-unit id="s11">
+          <source>首孝弟，次見聞。知某數，識某文。</source>
+          <target>First comes duty to parents and superiors. Study follows next. Thus, one will know the laws of numbers and understand written texts.</target>
+        </trans-unit>
+        <trans-unit id="s12">
+          <source>一而十，十而百。百而千，千而萬。</source>
+          <target>In numbers, we count from units to tens, tens to hundreds, hundreds to thousands, and thousands to ten thousands.</target>
+        </trans-unit>
+      </group>
+      <group id="part-2" resname="The World in Numbers|三才五行人倫">
+        <trans-unit id="s13">
+          <source>三才者，天地人。</source>
+          <target>The three mighty powers of nature are Heaven, Earth, and Man.</target>
+        </trans-unit>
+        <trans-unit id="s14">
+          <source>三光者，日月星。</source>
+          <target>The three great celestial lights are the Sun, the Moon, and the Stars.</target>
+        </trans-unit>
+        <trans-unit id="s15">
+          <source>三綱者，君臣義。父子親，夫婦順。</source>
+          <target>The three binding principles are these: Prince and minister must treat each other fairly; father and son must love each other; husband and wife must be agreeable to each other.</target>
+        </trans-unit>
+        <trans-unit id="s16">
+          <source>曰春夏，曰秋冬。此四時，運不窮。</source>
+          <target>The four seasons are spring, summer, autumn, and winter. They succeed one another without fail.</target>
+        </trans-unit>
+        <trans-unit id="s17">
+          <source>曰南北，曰西東。此四方，應乎中。</source>
+          <target>North, south, east, and west are called the four directions, which branch off from a central point.</target>
+        </trans-unit>
+        <trans-unit id="s18">
+          <source>曰水火，木金土。此五行，本乎數。</source>
+          <target>Water, fire, wood, metal, and earth are the five elements from which all things are classified.</target>
+        </trans-unit>
+        <trans-unit id="s19">
+          <source>曰仁義，禮智信。此五常，不容紊。</source>
+          <target>Goodwill, justice, decorum, wisdom, and truth are the five principal virtues. They should not be misunderstood or violated.</target>
+        </trans-unit>
+        <trans-unit id="s20">
+          <source>稻粱菽，麥黍稷。此六穀，人所食。</source>
+          <target>Paddy, millet, pulse, wheat, fine rice, and panicled millet are the six important grains consumed by mankind.</target>
+        </trans-unit>
+        <trans-unit id="s21">
+          <source>馬牛羊，雞犬豕。此六畜，人所飼。</source>
+          <target>Horses, oxen, sheep, fowls, dogs, and pigs are the six animals reared and domesticated by mankind.</target>
+        </trans-unit>
+        <trans-unit id="s22">
+          <source>曰喜怒，曰哀懼。愛惡欲，七情具。</source>
+          <target>Joy, anger, grief, fear, love, hatred, and desire are the seven human passions experienced by all.</target>
+        </trans-unit>
+        <trans-unit id="s23">
+          <source>匏土革，木石金。絲與竹，乃八音。</source>
+          <target>The eight distinctive musical sounds can be produced from the gourd, clay, leather, wood, stone, metal, strings, and bamboo.</target>
+        </trans-unit>
+        <trans-unit id="s24">
+          <source>高曾祖，父而身。身而子，子而孫。自子孫，至玄曾。乃九族，人之倫。</source>
+          <target>Great-great-grandfather, great-grandfather, grandfather, father, oneself, son, grandson, great-grandson, and great-great-grandson are the nine generations in the order of family relationships.</target>
+        </trans-unit>
+        <trans-unit id="s25">
+          <source>父子恩，夫婦從。兄則友，弟則恭。長幼序，友與朋。君則敬，臣則忠。此十義，人所同。</source>
+          <target>The ten moral duties everyone must observe are these: father and son must love each other kindly; husband and wife must treat each other agreeably; elder brothers must be considerate, and younger brothers respectful; superiors and youngsters must treat one another according to their ranks; friends must deal with one another sincerely; the sovereign must esteem his courtiers, and the courtiers must be loyal to their sovereign.</target>
+        </trans-unit>
+        <trans-unit id="s26">
+          <source>凡訓蒙，須講究。詳訓詁，明句讀。</source>
+          <target>In teaching the young, one must explain the full meanings of words, explain idiomatic expressions, and teach them how to distinguish between commas and full stops.</target>
+        </trans-unit>
+      </group>
+      <group id="part-3" resname="Books and the Order of Study|讀書次第">
+        <trans-unit id="s27">
+          <source>為學者，必有初。小學終，至四書。</source>
+          <target>Scholars of Chinese should first study the Learning of the Young, which teaches children the art of sprinkling water, sweeping, and behaving properly. It also teaches the six accomplishments: rites, music, archery, driving, writing, and mathematics. After this, they may study the Four Books.</target>
+        </trans-unit>
+        <trans-unit id="s28">
+          <source>論語者，二十篇。群弟子，記善言。</source>
+          <target>The Analects of Confucius contains twenty chapters of the Sage's sayings, recorded by his disciples.</target>
+        </trans-unit>
+        <trans-unit id="s29">
+          <source>孟子者，七篇止。講道德，說仁義。</source>
+          <target>The Works of Mencius contains seven chapters explaining humanity and righteousness and discussing virtuous conduct and good principles.</target>
+        </trans-unit>
+        <trans-unit id="s30">
+          <source>作中庸，子思筆。中不偏，庸不易。</source>
+          <target>The Doctrine of the Golden Mean was written by K'ung Chi, the grandson of Confucius. The word Chung means impartial principles, and Yung means fixed principles.</target>
+        </trans-unit>
+        <trans-unit id="s31">
+          <source>作大學，乃曾子。自修齊，至平治。</source>
+          <target>The Great Learning was written by the philosopher Tseng, a disciple of Confucius. It teaches us how to improve our morals and regulate our family life, so that our state may be properly governed and our country made tranquil and happy.</target>
+        </trans-unit>
+        <trans-unit id="s32">
+          <source>孝經通，四書熟。如六經，始可讀。</source>
+          <target>After thoroughly learning the Filial Code and the Four Books, students may then study the Six Classics.</target>
+        </trans-unit>
+        <trans-unit id="s33">
+          <source>詩書易，禮春秋。號六經，當講求。</source>
+          <target>The Six Classics are the Book of Odes, the Records, the Book of Changes, the Book of Rites, the Rites of Chou, and the Spring and Autumn Annals. Every Chinese scholar should study them.</target>
+        </trans-unit>
+        <trans-unit id="s34">
+          <source>有連山，有歸藏。有周易，三易詳。</source>
+          <target>The Book of Changes includes the Lien Shan of the Hsia dynasty, the Kui Ts'ang of the Shang dynasty, and the Chou Ih of the Chou dynasty. These are three theories concerning the changes in nature.</target>
+        </trans-unit>
+        <trans-unit id="s35">
+          <source>有典謨，有訓誥。有誓命，書之奧。</source>
+          <target>The Records contains the Royal and Ministerial Canons, the Instructions, the Injunctions, the Solemn Vows, and the Commands, which are its remarkable writings.</target>
+        </trans-unit>
+        <trans-unit id="s36">
+          <source>我周公，作周禮。著六官，存治體。</source>
+          <target>The Duke of Chou wrote the Rites of Chou. He appointed the Six Boards to oversee Heaven, Earth, and the four seasons in governing the affairs of the state.</target>
+        </trans-unit>
+        <trans-unit id="s37">
+          <source>大小戴，註禮記。述聖言，禮樂備。</source>
+          <target>Tai Senior and Tai Junior commented on the Book of Rites and retold the sayings of the Sages. The rules of rites and the theory of music are fully discussed in it.</target>
+        </trans-unit>
+        <trans-unit id="s38">
+          <source>曰國風，曰雅頌。號四詩，當諷詠。</source>
+          <target>The four divisions of the Book of Odes—the Ballads, the Eulogies of the Emperor, the Eulogies of Feudal Princes, and the Sacrificial Songs—should be read by every scholar.</target>
+        </trans-unit>
+        <trans-unit id="s39">
+          <source>詩既亡，春秋作。寓褒貶，別善惡。</source>
+          <target>The Spring and Autumn Annals was compiled by Confucius. He regarded it as his immortal work and said that through it people would know him. It records historical events, praises virtue, and condemns vice. It was written in an attempt to revive ancient customs, which were declining as emperors gradually lost power to feudal princes.</target>
+        </trans-unit>
+        <trans-unit id="s40">
+          <source>三傳者，有公羊。有左氏，有穀梁。</source>
+          <target>The critics Kung Yang, Tsuo Shih, and Ku Liang wrote three different commentaries on the Spring and Autumn Annals. These commentaries were called the San Chuan.</target>
+        </trans-unit>
+        <trans-unit id="s41">
+          <source>經既明，方讀子。撮其要，記其事。</source>
+          <target>After mastering the Classics, study the books written by the great philosophers. As these books are plentiful, students should choose the important passages and commit them to memory.</target>
+        </trans-unit>
+        <trans-unit id="s42">
+          <source>五子者，有荀楊。文中子，及老莊。</source>
+          <target>The Five Philosophers were Hsiin-tzu, Yang-tzu, Wen Chung-tzu, Lao-tzu, and Chuang-tzu.</target>
+        </trans-unit>
+        <trans-unit id="s43">
+          <source>經子通，讀諸史。考世系，知終始。</source>
+          <target>Having studied the Classics and the books written by the great philosophers, study the history of the successive dynasties. Carefully trace their beginnings and endings, and understand the rise and fall of each age.</target>
+        </trans-unit>
+      </group>
+      <group id="part-4" resname="Dynasties and Histories|歷代興衰">
+        <trans-unit id="s44">
+          <source>自羲農，至黃帝。號三皇，居上世。</source>
+          <target>Emperor Fu-hsi, Emperor Shen-nung, and Emperor Huang-ti were the Three Emperors of High Antiquity.</target>
+        </trans-unit>
+        <trans-unit id="s45">
+          <source>唐有虞，號二帝。相揖遜，稱盛世。</source>
+          <target>Emperor Yao and Emperor Shun were two celebrated emperors whose reigns were known in history as the Golden Age. Both abdicated their thrones in favour of worthier men.</target>
+        </trans-unit>
+        <trans-unit id="s46">
+          <source>夏有禹，商有湯。周文武，稱三王。</source>
+          <target>King Yu of the Hsia dynasty, King Tang of the Shang dynasty, and King Wen and King Wu of the Chou dynasty were celebrated rulers of antiquity.</target>
+        </trans-unit>
+        <trans-unit id="s47">
+          <source>夏傳子，家天下。四百載，遷夏社。</source>
+          <target>In the Hsia dynasty, thrones became hereditary, and this continued for four centuries before the dynasty was replaced.</target>
+        </trans-unit>
+        <trans-unit id="s48">
+          <source>湯伐夏，國號商。六百載，至紂亡。</source>
+          <target>The last emperor of the Hsia dynasty was conquered by Tang, who founded the Shang dynasty. This dynasty lasted for more than six centuries before it came to an end.</target>
+        </trans-unit>
+        <trans-unit id="s49">
+          <source>周武王，始誅紂。八百載，最長久。</source>
+          <target>Emperor Chou was a tyrant. He was killed by Wu, who became emperor and founded the Chou dynasty. This dynasty lasted for eight hundred years, the longest of all.</target>
+        </trans-unit>
+        <trans-unit id="sup-50a">
+          <source>周轍東，王綱墜。逞干戈，尚遊說。</source>
+          <target>When the Chou court moved east, the feudal bond slackened. Warfare prevailed, and wandering persuaders were held in high esteem.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="sup-50b">
+          <source>始春秋，終戰國。五霸強，七雄出。</source>
+          <target>This age began with the Spring and Autumn period and ended with the Warring States. The Five Hegemons rose to power, and the Seven Mighty States came forth.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="s50">
+          <source>嬴秦氏，始兼並。傳二世，楚漢爭。</source>
+          <target>After the Chou dynasty came the Ch'in dynasty, which united the empire but did not last long.</target>
+        </trans-unit>
+        <trans-unit id="s51">
+          <source>高祖興，漢業建。</source>
+          <target>After conquering Ruler Ch'u, Han became emperor and was known as Emperor Han Kao-tsu. He ruled over the empire of Ch'in and founded the Han dynasty.</target>
+        </trans-unit>
+        <trans-unit id="s52">
+          <source>至孝平，王莽篡。光武興，為東漢。四百年，終於獻。</source>
+          <target>Emperor Kuang Wu defeated Wang Mang and ruled over the Han Empire. His reign began the Tung Han, or Later Han dynasty.</target>
+        </trans-unit>
+        <trans-unit id="s53">
+          <source>魏蜀吳，爭漢鼎。號三國，迄兩晉。</source>
+          <target>The dynasties of Western Chin and Eastern Chin followed the period of the Three Kingdoms, which were formed by Wei, Shu, and Wu.</target>
+        </trans-unit>
+        <trans-unit id="s54">
+          <source>宋齊繼，梁陳承。</source>
+          <target>After these two dynasties came Liu Sung, Chi, Liang, and Ch'en.</target>
+        </trans-unit>
+        <trans-unit id="sup-54a">
+          <source>為南朝，都金陵。</source>
+          <target>These were the Southern dynasties, with their capital at Chin-ling.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="s55">
+          <source>北元魏，分東西。宇文周，與高齊。</source>
+          <target>Yuan Wei, the Northern dynasty, was divided into Eastern Wei and Western Wei. These were followed by Northern Chi and Northern Chou.</target>
+        </trans-unit>
+        <trans-unit id="s56">
+          <source>逮至隋，一土宇。不再傳，失統緒。</source>
+          <target>The empire remained united until the Sui dynasty. But this dynasty did not last more than two generations, and the empire was soon in disorder again.</target>
+        </trans-unit>
+        <trans-unit id="s57">
+          <source>唐高祖，起義師。除隋亂，創國基。</source>
+          <target>After the Sui came the T'ang dynasty, which brought peace and order to the empire.</target>
+        </trans-unit>
+        <trans-unit id="sup-58a">
+          <source>二十傳，三百載。梁滅之，國乃改。</source>
+          <target>The throne passed twenty times over three hundred years, until the Liang destroyed the T'ang and changed the dynastic title.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="s58">
+          <source>梁唐晉，及漢周。稱五代，皆有由。</source>
+          <target>The T'ang dynasty was followed by the Five Dynasties: Later Liang, Later T'ang, Later Chin, Later Han, and Later Chou.</target>
+        </trans-unit>
+        <trans-unit id="s59">
+          <source>炎宋興，受周禪。十八傳，南北混。</source>
+          <target>The Sung dynasty succeeded the Five Dynasties. Later, the Southern Sung, Yuan, Ming, and Ch'ing dynasties followed.</target>
+        </trans-unit>
+        <trans-unit id="sup-h1">
+          <source>遼與金，皆稱帝。元滅金，絕宋世。</source>
+          <target>The Liao and the Chin both claimed imperial title. The Yuan destroyed the Chin and ended the Sung line.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="sup-h2">
+          <source>輿圖廣，超前代。九十年，國祚廢。</source>
+          <target>Its territory was wider than any former age, yet after ninety years its mandate was spent.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="sup-h3">
+          <source>太祖興，國大明。號洪武，都金陵。</source>
+          <target>The Grand Progenitor arose and founded the Great Ming; his reign title was Hung-wu, with Nanking as his capital.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="sup-h4">
+          <source>迨成祖，遷燕京。十六世，至崇禎。</source>
+          <target>Under Ch'eng-tsu the capital moved to Yen-ching. Sixteen reigns later came Ch'ung-chen.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="sup-h5">
+          <source>權閹肆，寇如林。李闖出，神器焚。</source>
+          <target>Powerful eunuchs ran riot and rebels rose like forests. Li Ch'uang came forth, and the sacred throne was consumed in flames.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="sup-h6">
+          <source>清世祖，膺景命。靖四方，克大定。</source>
+          <target>Shih-tsu of the Ch'ing received the great mandate. He pacified the four quarters and secured the realm.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="sup-h7">
+          <source>由康雍，歷乾嘉。民安富，治績誇。</source>
+          <target>From K'ang-hsi and Yung-cheng through Ch'ien-lung and Chia-ch'ing, the people lived in wealth and the government won praise.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="sup-h8">
+          <source>道咸間，變亂起。始英法，擾都鄙。</source>
+          <target>In the Tao-kuang and Hsien-feng years rebellions arose; first England and France troubled the capital region.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="sup-h9">
+          <source>同光後，政權移。講新法，謀自強。</source>
+          <target>After T'ung-chih and Kuang-hsu the balance of power shifted. New reforms were discussed in the quest for strength.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="s60">
+          <source>十七史，全在茲。載治亂，知興衰。</source>
+          <target>The history of the successive dynasties should be studied carefully, so that students may understand the rise and fall of rulers and kingdoms.</target>
+        </trans-unit>
+        <trans-unit id="sup-60a">
+          <source>讀史者，考實錄。通古今，若親目。</source>
+          <target>Readers of history should study the true records, and understand all ages as though seeing them with their own eyes.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="sup-60b">
+          <source>口而誦，心而惟。朝於斯，夕於斯。</source>
+          <target>Recite with the mouth and reflect in the heart; do this in the morning and in the evening.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+      </group>
+      <group id="part-5" resname="Models of Diligence|勤學典範">
+        <trans-unit id="s62">
+          <source>昔仲尼，師項橐。</source>
+          <target>Sages of ancient times loved learning very much. In his quest for knowledge, Confucius did not hesitate to learn from Hsiang T'uo.</target>
+        </trans-unit>
+        <trans-unit id="s61">
+          <source>古聖賢，尚勤學。</source>
+          <target>The ancient sages and worthies were diligent in their studies, and their examples should inspire later generations.</target>
+        </trans-unit>
+        <trans-unit id="s63">
+          <source>趙中令，讀魯論。彼既仕，學且勤。</source>
+          <target>Despite his heavy duties, Mr. Chao, a Cabinet Minister of the Sung dynasty, loved to study the Confucian Analects whenever time permitted him.</target>
+        </trans-unit>
+        <trans-unit id="s64">
+          <source>披蒲編，削竹簡。彼無書，且知勉。</source>
+          <target>Having no books to write on, Lu Wen-shu wove rushes into mats and used them as writing materials. Kung Sun-hung studied diligently despite his poverty.</target>
+        </trans-unit>
+        <trans-unit id="s65">
+          <source>頭懸梁，錐刺股。彼不教，自勤苦。</source>
+          <target>There were two scholars who, afraid of falling asleep over their studies, devised painful methods to keep themselves awake. One was Sun Ching, who tied his hair to a beam; the other was Su Ch'in, who pricked himself with an awl.</target>
+        </trans-unit>
+        <trans-unit id="s66">
+          <source>如囊螢，如映雪。家雖貧，學不輟。</source>
+          <target>Che Yin studied by the light of fireflies, while Sun Kang read by the light reflected from snow. Both persevered despite lacking lamps.</target>
+        </trans-unit>
+        <trans-unit id="s67">
+          <source>如負薪，如掛角。身雖勞，猶苦卓。</source>
+          <target>Chu Mai-ch'en studied while carrying firewood, and Li Mi hung his book from his cow's horn so that he could read as he travelled.</target>
+        </trans-unit>
+        <trans-unit id="s68">
+          <source>蘇老泉，二十七。始發憤，讀書籍。彼既老，猶悔遲。</source>
+          <target>When one is young, one should take one's studies seriously, for it may be too late to learn when one is older. Su Lao-ch'uan realised this and worked hard in his later years.</target>
+        </trans-unit>
+        <trans-unit id="sup-69a">
+          <source>爾小生，宜早思。</source>
+          <target>You young students should take thought betimes.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="s69">
+          <source>若梁灝，八十二。對大廷，魁多士。彼晚成，眾稱異。</source>
+          <target>Liang Hao passed the oral examinations in the Imperial Court, where the emperor himself was the examiner. He achieved success at an advanced age, proving that perseverance brings results.</target>
+        </trans-unit>
+        <trans-unit id="sup-70a">
+          <source>爾小生，宜立志。</source>
+          <target>You young students should set your resolve.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+        <trans-unit id="s70">
+          <source>瑩八歲，能詠詩。泌七歲，能賦棋。彼穎悟，人稱奇。爾幼學，當效之。</source>
+          <target>Ying of the Northern Ch'i dynasty could recite the Odes at the age of eight, and Pi of the T'ang dynasty could compose unusual verses at the age of seven. They were talented and admired by everyone. Young people should follow their examples.</target>
+        </trans-unit>
+        <trans-unit id="s71">
+          <source>蔡文姬，能辨琴。謝道韞，能詠吟。彼女子，且聰敏。爾男子，當自警。</source>
+          <target>There were two brilliant girls whose examples are worth following. Ts'ai Wen Chi could distinguish the strings of the lute, while Hsieh Taowen could compose poetry.</target>
+        </trans-unit>
+        <trans-unit id="s72">
+          <source>唐劉晏，方七歲。舉神童，作正字。彼雖幼，身已仕。</source>
+          <target>Even at the age of seven, little Liu Yen of the T'ang dynasty was recognised by the emperor as an exceptionally talented boy. Later, he was appointed to high office.</target>
+        </trans-unit>
+        <trans-unit id="sup-72a">
+          <source>爾幼學，勉而致。有為者，亦若是。</source>
+          <target>You who learn in youth should strive to this end; those who have achieved did likewise.</target>
+          <note>translator: Editorial supplement</note>
+        </trans-unit>
+      </group>
+      <group id="part-6" resname="Exhortation|勸學">
+        <trans-unit id="s73">
+          <source>犬守夜，雞司晨。苟不學，曷為人。蠶吐絲，蜂釀蜜。人不學，不如物。</source>
+          <target>Dogs keep watch at night, and cocks announce the dawn. If children do not learn, what do they expect to become when they grow up? Silkworms spin silk, and bees make honey. If people fail to learn, they are inferior to these creatures.</target>
+        </trans-unit>
+        <trans-unit id="s74">
+          <source>幼而學，壯而行。上致君，下澤民。</source>
+          <target>Learn diligently while you are young. Do not waste your time, for youth passes quickly and opportunities may not return.</target>
+        </trans-unit>
+        <trans-unit id="s75">
+          <source>揚名聲，顯父母。光於前，裕於後。人遺子，金滿籯。我教子，惟一經。</source>
+          <target>The young should learn from the examples of the ancient sages and worthies, respect their teachers and parents, and cultivate good conduct.</target>
+        </trans-unit>
+        <trans-unit id="s76">
+          <source>勤有功，戲無益。戒之哉，宜勉力。</source>
+          <target>Diligence brings merit. Time is precious, so always be prepared and strive hard to achieve these precepts.</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

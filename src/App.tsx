@@ -15,6 +15,8 @@ import {
   type DictIndex,
   type DictStatus,
 } from './lib/dictionary';
+import { loadJiayan, type JiayanIndex } from './lib/jiayan';
+import { loadPublicDocs } from './lib/publicDocs';
 import { docScript } from './lib/script';
 import { importCustomDoc } from './lib/segment';
 import { copyText, speakChinese } from './lib/speech';
@@ -22,9 +24,31 @@ import { useScrollSpy } from './lib/useScrollSpy';
 
 const initialDocs: Doc[] = [...seedDocs, ...extraDocs];
 
+function readStoredDocId(available: Doc[]): string {
+  try {
+    const v = window.localStorage.getItem(brandStorageKey('activeDoc'));
+    if (v && available.some((d) => d.id === v)) return v;
+  } catch {
+    // storage unavailable (private mode)
+  }
+  return available[0].id;
+}
+
 export default function App() {
   const [docs, setDocs] = useState<Doc[]>(initialDocs);
-  const [activeId, setActiveId] = useState(initialDocs[0].id);
+  // Public-domain XLIFF texts from public/texts/ load at runtime and slot
+  // in after the bundled docs; private/ (localDocs) stays last.
+  useEffect(() => {
+    let live = true;
+    loadPublicDocs().then((pub) => {
+      if (!live || pub.length === 0) return;
+      setDocs([...seedDocs, ...pub, ...extraDocs]);
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
+  const [activeId, setActiveId] = useState(() => readStoredDocId(initialDocs));
   const doc = useMemo(
     () => docs.find((d) => d.id === activeId) || docs[0],
     [docs, activeId],
@@ -49,6 +73,14 @@ export default function App() {
       // storage unavailable (private mode); direction stays in-memory
     }
   }, [primaryLang]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(brandStorageKey('activeDoc'), activeId);
+    } catch {
+      // storage unavailable (private mode); selection stays in-memory
+    }
+  }, [activeId]);
 
   const [showPinyin, setShowPinyin] = useState(brand.defaults.showPinyin);
   const [showZhuyin, setShowZhuyin] = useState(brand.defaults.showZhuyin);
@@ -113,6 +145,21 @@ export default function App() {
       : needsDict
         ? 'loading'
         : 'idle';
+
+  const [jiayan, setJiayan] = useState<JiayanIndex | null>(null);
+  const needsJiayan =
+    brand.features.words && docScript(doc) === 'traditional';
+  useEffect(() => {
+    if (!needsJiayan || jiayan) return;
+    let live = true;
+    loadJiayan().then((j) => {
+      if (live && j) setJiayan(j);
+    });
+    return () => {
+      live = false;
+    };
+  }, [needsJiayan, jiayan]);
+  const segmentZh = jiayan?.segment;
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const toastTimer = useRef<number | undefined>(undefined);
@@ -332,6 +379,7 @@ export default function App() {
             speakOnClick={speakOnClick}
             onSpeak={handleSpeak}
             dict={dict}
+            segmentZh={segmentZh}
           />
         </div>
 
