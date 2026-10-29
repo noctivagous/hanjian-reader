@@ -36,7 +36,9 @@ the XLIFF file wins.
   ```
 
   Inline tags inside `<source>`/`<target>` (`<g>`, `<x/>`, `<ph/>`, …) are
-  dropped, keeping their text. Keep attributes simple (no `>` inside quotes).
+  dropped, keeping their text. CDATA sections, entities, and namespace
+  prefixes are handled; malformed XML fails loudly. The reader is covered
+  by `scripts/xliff-docs.test.mjs` (`npm test`).
 
 - `tao-te-ching.en.txt` — your copy of the Feng & English translation.
   Chapters 1–81 in order. Each chapter is one block; separate chapters with

@@ -89,142 +89,10 @@ function chapterZh(n) {
   return `第${s}章`;
 }
 
-// --- Minimal XLIFF reader (1.2 and 2.0) ---
-//
-// Only the structural elements the contract needs are understood: file,
-// group, trans-unit, unit, segment, source, target. Inline elements inside
-// source/target (<g>, <x/>, <ph/>, …) are dropped, keeping their text.
-// Attributes containing `>` are not supported — keep them simple.
-
-function unescapeXml(s) {
-  return s
-    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
-    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&apos;/g, "'")
-    .replace(/&amp;/g, '&');
-}
-
-const cleanText = (s) =>
-  unescapeXml(s.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
-
-function parseXliff(xml, label) {
-  // Tiny stack parser building { kind, children } nodes; source/target
-  // nodes also gather raw text.
-  const STRUCT = new Set(['file', 'group', 'trans-unit', 'unit', 'segment']);
-  const rootNode = { kind: 'root', children: [] };
-  const stack = [rootNode];
-  const tagRe = /<!--[\s\S]*?-->|<\?[\s\S]*?\?>|<!DOCTYPE[^>]*>|<(\/?)([a-zA-Z][\w.-]*)\b[^>]*?(\/?)>|([^<]+)/g;
-  let m;
-  let files = 0;
-  while ((m = tagRe.exec(xml))) {
-    const [, close, name, selfClose, text] = m;
-    if (text !== undefined) {
-      const top = stack[stack.length - 1];
-      if (top.kind === 'source' || top.kind === 'target') top.text += text;
-      continue;
-    }
-    if (name === undefined) continue; // comment / PI / doctype
-    const kind = name.toLowerCase();
-    if (close) {
-      if (
-        stack.length > 1 &&
-        stack[stack.length - 1].kind === kind &&
-        (STRUCT.has(kind) || kind === 'source' || kind === 'target')
-      ) {
-        stack.pop();
-      }
-      continue;
-    }
-    if (kind === 'source' || kind === 'target') {
-      const node = { kind, children: [], text: '' };
-      stack[stack.length - 1].children.push(node);
-      if (!selfClose) stack.push(node);
-    } else if (STRUCT.has(kind)) {
-      const node = { kind, children: [] };
-      stack[stack.length - 1].children.push(node);
-      if (kind === 'file') files += 1;
-      if (!selfClose) stack.push(node);
-    }
-    // Anything else (xliff root, skeleton, inline tags, …) is ignored;
-    // inline tags inside source/target vanish but their text is kept.
-  }
-  if (files === 0) {
-    console.error(`error: ${label} contains no <file> elements; not XLIFF?`);
-    process.exit(1);
-  }
-  return rootNode.children.filter((c) => c.kind === 'file');
-}
-
-const unitText = (unit, side) =>
-  cleanText(
-    (unit.children.find((c) => c.kind === side)?.text ?? ''),
-  );
-
-function sentencesOf(container) {
-  // Explicit segmentation: each segment (2.0) or trans-unit/unit (1.2)
-  // is one sentence, in document order.
-  const out = [];
-  for (const child of container.children) {
-    if (child.kind === 'segment' || child.kind === 'trans-unit') {
-      out.push({ zh: unitText(child, 'source'), en: unitText(child, 'target') });
-    } else if (child.kind === 'unit') {
-      const segs = child.children.filter((c) => c.kind === 'segment');
-      if (segs.length > 0) {
-        for (const s of segs) {
-          out.push({ zh: unitText(s, 'source'), en: unitText(s, 'target') });
-        }
-      } else {
-        out.push({ zh: unitText(child, 'source'), en: unitText(child, 'target') });
-      }
-    }
-  }
-  return out;
-}
-
-function chaptersFromXliff(files, label) {
-  let chapters = files;
-  if (files.length === 1) {
-    const groups = files[0].children.filter((c) => c.kind === 'group');
-    const units = files[0].children.filter(
-      (c) => c.kind === 'unit' || c.kind === 'trans-unit',
-    );
-    if (groups.length === 81) chapters = groups;
-    else if (units.length === 81) chapters = units;
-    else {
-      console.error(
-        `error: ${label} has 1 <file> with ${groups.length} <group>s and ${units.length} <unit>s; expected 81 <file>s, or 1 <file> with 81 <group> or 81 <unit> chapters.`,
-      );
-      process.exit(1);
-    }
-  } else if (files.length !== 81) {
-    console.error(
-      `error: ${label} has ${files.length} <file>s; expected 81 chapter <file>s, or 1 <file> with 81 <group> or 81 <unit> chapters.`,
-    );
-    process.exit(1);
-  }
-  return chapters.map((ch, i) => {
-    const n = i + 1;
-    const groups = ch.children.filter((c) => c.kind === 'group');
-    const paraNodes = groups.length > 0 ? groups : [ch];
-    const paras = paraNodes.map((g) => {
-      const nested = g.children.filter((c) => c.kind === 'group');
-      const sents =
-        nested.length > 0 ? nested.flatMap(sentencesOf) : sentencesOf(g);
-      return sents;
-    });
-    const flat = paras.flat();
-    if (flat.length === 0 || flat.some((s) => !s.zh || !s.en)) {
-      console.error(
-        `error: chapter ${n} has an empty Chinese or English side (every unit needs non-empty <source> and <target>).`,
-      );
-      process.exit(1);
-    }
-    return paras;
-  });
-}
+// XLIFF input lives in ./xliff-docs.mjs (pure, tested): fast-xml-parser
+// handles tokenizing, entities, CDATA, and namespaces; this script keeps
+// only the chapter/shape contract and the .txt fallback below.
+import { xliffChapters } from './xliff-docs.mjs';
 
 function stripWikiMarkup(raw) {
   return raw
@@ -285,8 +153,12 @@ if (xlfPath) {
     console.error(`error: --xlf-file not found: ${xlfPath}`);
     process.exit(1);
   }
-  const files = parseXliff(readFileSync(xlfPath, 'utf8'), xlfPath);
-  chapters = chaptersFromXliff(files, xlfPath);
+  try {
+    chapters = xliffChapters(readFileSync(xlfPath, 'utf8'), xlfPath);
+  } catch (err) {
+    console.error(`error: ${err.message}`);
+    process.exit(1);
+  }
   enSource = `${xlfPath} (XLIFF)`;
 } else {
   if (!existsSync(enPath)) {
