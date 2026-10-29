@@ -33,6 +33,16 @@ html {
   font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
 }
 
+.serif-tc {
+  font-family: "Noto Serif TC", "Source Han Serif TC", "Songti TC", serif;
+}
+
+/* Traditional-script docs render Chinese in TC glyph forms, including
+   components that only know the generic serif-sc class. */
+[data-script="traditional"] .serif-sc {
+  font-family: "Noto Serif TC", "Source Han Serif TC", "Songti TC", serif;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;

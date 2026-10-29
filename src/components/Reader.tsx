@@ -4,6 +4,12 @@ import type { Doc, Sentence } from '../data/types';
 import { allParagraphs, chineseText, paragraphEn, primaryTranslation } from '../lib/doc';
 import type { ReadingProvider } from '../lib/dictionary';
 import { toneColor } from '../lib/pinyin';
+import {
+  canonicalSearchText,
+  foldedIndexOf,
+  scriptTag,
+  zhFontClass,
+} from '../lib/script';
 import { tokenizeChinese } from '../lib/tokenize';
 import { zhuyinForWord } from '../lib/zhuyin';
 import type { HoverState } from './WordCard';
@@ -52,15 +58,19 @@ function isInspected(inspectedChar: string | null, ch: string): boolean {
 
 function highlight(text: string, query: string): ReactNode {
   if (!query) return text;
-  const idx = text.toLowerCase().indexOf(query.toLowerCase());
+  // Cross-script matching (simplified query finds traditional text and
+  // vice versa); the original display text is sliced, never rewritten.
+  const idx = foldedIndexOf(text, query);
   if (idx === -1) return text;
+  const chars = Array.from(text);
+  const qlen = Array.from(query).length;
   return (
     <>
-      {text.slice(0, idx)}
+      {chars.slice(0, idx).join('')}
       <mark className="bg-[#FFE5B4] dark:bg-[#3A2A16] rounded px-0.5">
-        {text.slice(idx, idx + query.length)}
+        {chars.slice(idx, idx + qlen).join('')}
       </mark>
-      {text.slice(idx + query.length)}
+      {chars.slice(idx + qlen).join('')}
     </>
   );
 }
@@ -91,6 +101,7 @@ function HanChar({
 }
 
 function SentenceView({
+  doc,
   sentence,
   reveal,
   primaryLang,
@@ -114,6 +125,7 @@ function SentenceView({
   dict,
 }: Props & { sentence: Sentence; open: boolean; onToggle: () => void }) {
   const canSpeak = brand.features.speech && showSpeakerButtons;
+  const zhFont = zhFontClass(doc);
   const handleCharClick = (ch: string) => {
     onInspectChar(ch);
     if (speakOnClick) onSpeak(ch);
@@ -125,10 +137,11 @@ function SentenceView({
   const zhTokens = enPrimary
     ? []
     : tokenizeChinese(sentence.zh, words, dict ?? undefined);
+  const foldedQuery = canonicalSearchText(search);
   const matched =
     search !== '' &&
-    (enText.toLowerCase().includes(search.toLowerCase()) ||
-      sentence.zh.includes(search));
+    (canonicalSearchText(enText).includes(foldedQuery) ||
+      canonicalSearchText(sentence.zh).includes(foldedQuery));
 
   return (
     <div
@@ -136,7 +149,7 @@ function SentenceView({
     >
       <span className="sentence">
         {!translation ? (
-          <span className="serif-sc text-[18px]">
+          <span className={`${zhFont} text-[18px]`}>
             {Array.from(sentence.zh).map((ch, i) => (
               <HanChar
                 key={i}
@@ -194,7 +207,7 @@ function SentenceView({
           })
         ) : !enPrimary && words.length > 0 ? (
           <span
-            className="serif-sc text-[18px]"
+            className={`${zhFont} text-[18px]`}
             style={{ fontSize: `${charSize}em` }}
           >
             {zhTokens.map((tok, i) => {
@@ -244,7 +257,7 @@ function SentenceView({
                   }}
                   className={`cursor-pointer transition relative ${reveal.words ? 'border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm px-0.5' : 'px-0.5'} ${pinned ? '!bg-[var(--verm)] !text-white rounded' : ''}`}
                 >
-                  {search && tok.text.includes(search)
+                  {search && foldedIndexOf(tok.text, search) !== -1
                     ? highlight(tok.text, search)
                     : tok.text}
                   {reveal.words && showDefsInline && w.en && (
@@ -258,7 +271,7 @@ function SentenceView({
           </span>
         ) : !enPrimary ? (
           <span
-            className="serif-sc text-[18px]"
+            className={`${zhFont} text-[18px]`}
             style={{ fontSize: `${charSize}em` }}
           >
             {Array.from(sentence.zh).map((ch, i) => (
@@ -286,7 +299,7 @@ function SentenceView({
         }}
         className={`ml-2 inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[11px] tracking-wide transition ${open ? 'bg-[var(--verm)] text-white border-[var(--verm)]' : 'border-[var(--line)] hover:border-[var(--verm)] hover:text-[var(--verm)] bg-[var(--paper-2)]'}`}
       >
-        <span className={enPrimary ? 'serif-sc' : ''}>
+        <span className={enPrimary ? zhFont : ''}>
           {enPrimary ? '中文' : 'English'}
         </span>
         <span className="opacity-70">{open ? '−' : '+'}</span>
@@ -316,7 +329,7 @@ function SentenceView({
               <>
             <div className="flex items-start justify-between gap-3">
               <div
-                className="serif-sc leading-[1.9] text-[18px]"
+                className={`${zhFont} leading-[1.9] text-[18px]`}
                 style={{ fontSize: `${0.95 * charSize}em` }}
               >
                 {Array.from(sentence.zh).map((ch, i) => (
@@ -346,7 +359,7 @@ function SentenceView({
                     const zhuyin = showZhuyin ? zhuyinForWord(w.pinyin) : null;
                     return (
                       <span key={i} className="inline-flex items-center gap-1">
-                        <span className="serif-sc">{w.zh}</span>
+                        <span className={zhFont}>{w.zh}</span>
                         {showPinyin && (
                           <span
                             style={{ color: toneColor(w.pinyin, toneColors) }}
@@ -381,6 +394,7 @@ const NOISE_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='ht
 
 export function Reader(props: Props) {
   const { doc, reveal, primaryLang, fontScale, charSize, inspectedChar, onInspectChar, onSpeak, showSpeakerButtons, speakOnClick } = props;
+  const zhFont = zhFontClass(doc);
   const enPrimary = primaryLang === 'en';
   const canSpeak = brand.features.speech && showSpeakerButtons;
   const handleCharClick = (ch: string) => {
@@ -419,15 +433,14 @@ export function Reader(props: Props) {
         </h1>
         <div className="mt-2 flex items-baseline gap-3">
           <span
-            className={`serif-sc text-[20px] text-[var(--ink-mute)] transition-all ${reveal.paragraphs || reveal.full ? 'opacity-100' : 'opacity-70'}`}
+            className={`${zhFont} text-[20px] text-[var(--ink-mute)] transition-all ${reveal.paragraphs || reveal.full ? 'opacity-100' : 'opacity-70'}`}
           >
             {enPrimary ? doc.titleZh : doc.titleEn}
           </span>
-          {doc.author && (
-            <span className="text-[13px] text-[var(--ink-mute)]">
-              — {doc.author}
-            </span>
-          )}
+          <span className="text-[13px] text-[var(--ink-mute)]">
+            {doc.author ? `— ${doc.author} ` : ''}
+            {scriptTag(doc)}
+          </span>
         </div>
         <div className="mt-6 h-px bg-[var(--line)] w-full" />
       </div>
@@ -447,7 +460,7 @@ export function Reader(props: Props) {
                     </h2>
                   )}
                   {(enPrimary ? section.titleZh : section.titleEn) && (
-                    <div className="serif-sc text-[18px] text-[var(--ink-mute)]">
+                    <div className={`${zhFont} text-[18px] text-[var(--ink-mute)]`}>
                       {enPrimary ? section.titleZh : section.titleEn}
                     </div>
                   )}
@@ -513,7 +526,7 @@ export function Reader(props: Props) {
                   </div>
                   {enPrimary ? (
                     <p
-                      className="serif-sc text-[20px] leading-[2] tracking-wide"
+                      className={`${zhFont} text-[20px] leading-[2] tracking-wide`}
                       style={{ fontSize: `${charSize}em` }}
                     >
                       {Array.from(para.zh).map((ch, i) => (
@@ -562,7 +575,7 @@ export function Reader(props: Props) {
                 中文 · 全文
               </h3>
               <div
-                className="space-y-4 serif-sc text-[19px] leading-[2]"
+                className={`space-y-4 ${zhFont} text-[19px] leading-[2]`}
                 style={{ fontSize: `${charSize}em` }}
               >
                 {allParagraphs(doc).map((p) => (

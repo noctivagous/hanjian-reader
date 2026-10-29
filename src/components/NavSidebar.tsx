@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { Doc } from '../data/types';
 import { paragraphEn } from '../lib/doc';
+import { canonicalSearchText, scriptTag, zhFontClass } from '../lib/script';
 import type { PrimaryLang } from './Reader';
 
 interface NavContentProps {
@@ -36,7 +37,8 @@ export function NavContent({
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
 
   const allUntitled = doc.sections.every((s) => !s.titleEn && !s.titleZh);
-  const query = filter.trim().toLowerCase();
+  const zhFont = zhFontClass(doc);
+  const query = canonicalSearchText(filter.trim());
 
   // Global paragraph numbering, mirroring Reader's offset numbering.
   const globalIndex = useMemo(() => {
@@ -56,13 +58,14 @@ export function NavContent({
           return { p, en, global: globalIndex.get(p.id) ?? 0 };
         });
         if (!query) return { section, sIdx, paras };
-        const sectionText =
-          `${sIdx + 1} chapter ${sIdx + 1} ${section.titleZh} ${section.titleEn}`.toLowerCase();
+        const sectionText = canonicalSearchText(
+          `${sIdx + 1} chapter ${sIdx + 1} ${section.titleZh} ${section.titleEn}`,
+        );
         if (sectionText.includes(query)) return { section, sIdx, paras };
         const matched = paras.filter(
           ({ p, en, global }) =>
-            p.zh.toLowerCase().includes(query) ||
-            en.toLowerCase().includes(query) ||
+            canonicalSearchText(p.zh).includes(query) ||
+            canonicalSearchText(en).includes(query) ||
             String(global + 1) === query ||
             String(global + 1).padStart(2, '0') === query,
         );
@@ -144,7 +147,7 @@ export function NavContent({
           >
             {docs.map((d) => (
               <option key={d.id} value={d.id}>
-                {d.titleEn} · {d.titleZh}
+                {d.titleEn} · {d.titleZh} {scriptTag(d)}
               </option>
             ))}
           </select>
@@ -153,10 +156,13 @@ export function NavContent({
           </span>
         </div>
         <h2 className="serif-display mt-3 text-[18px] font-semibold leading-tight tracking-tight">
-          {enPrimary ? doc.titleEn : doc.titleZh}
+          {enPrimary ? doc.titleEn : doc.titleZh}{' '}
+          <span className="text-[13px] font-normal text-[var(--ink-mute)]">
+            {scriptTag(doc)}
+          </span>
         </h2>
         <div className="mt-0.5 flex items-baseline gap-2">
-          <span className="serif-sc text-[14px] text-[var(--ink-mute)]">
+          <span className={`${zhFont} text-[14px] text-[var(--ink-mute)]`}>
             {enPrimary ? doc.titleZh : doc.titleEn}
           </span>
           {doc.author && (
@@ -234,7 +240,7 @@ export function NavContent({
                           {titlePrimary || titleSecondary || `Section ${sIdx + 1}`}
                         </span>
                         {titleSecondary && (
-                          <span className="serif-sc block truncate text-[11px] text-[var(--ink-mute)]">
+                          <span className={`${zhFont} block truncate text-[11px] text-[var(--ink-mute)]`}>
                             {titleSecondary}
                           </span>
                         )}

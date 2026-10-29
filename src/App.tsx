@@ -15,6 +15,7 @@ import {
   type DictIndex,
   type DictStatus,
 } from './lib/dictionary';
+import { docScript } from './lib/script';
 import { importCustomDoc } from './lib/segment';
 import { copyText, speakChinese } from './lib/speech';
 import { useScrollSpy } from './lib/useScrollSpy';
@@ -262,7 +263,10 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--paper)] text-[var(--ink)] selection:bg-[var(--verm-soft)]">
+    <div
+      data-script={docScript(doc)}
+      className="min-h-screen flex flex-col bg-[var(--paper)] text-[var(--ink)] selection:bg-[var(--verm-soft)]"
+    >
       <Header
         onImport={() => setImportOpen(true)}
         primaryLang={primaryLang}
