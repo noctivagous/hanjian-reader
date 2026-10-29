@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import { brand } from '../brand';
-import type { Doc, Sentence } from '../data/types';
+import type { Doc, Paragraph, Sentence, WordAlign } from '../data/types';
 import { allParagraphs, chineseText, paragraphEn, primaryTranslation } from '../lib/doc';
 import type { ReadingProvider } from '../lib/dictionary';
 import { toneColor } from '../lib/pinyin';
@@ -10,7 +10,7 @@ import {
   scriptTag,
   zhFontClass,
 } from '../lib/script';
-import { tokenizeChinese } from '../lib/tokenize';
+import { tokenizeChinese, type ZhToken } from '../lib/tokenize';
 import { zhuyinForWord } from '../lib/zhuyin';
 import type { HoverState } from './WordCard';
 
@@ -100,6 +100,100 @@ function HanChar({
   );
 }
 
+function ZhHoverText({
+  tokens,
+  idPrefix,
+  revealWords,
+  showDefsInline,
+  search,
+  pinnedKey,
+  onPin,
+  onHover,
+  inspectedChar,
+  onCharClick,
+}: {
+  tokens: ZhToken[];
+  idPrefix: string;
+  revealWords: boolean;
+  showDefsInline: boolean;
+  search: string;
+  pinnedKey: string | null;
+  onPin: (key: string | null) => void;
+  onHover: (h: HoverState | null) => void;
+  inspectedChar: string | null;
+  onCharClick: (ch: string) => void;
+}) {
+  return (
+    <>
+      {tokens.map((tok, i) => {
+        const w = tok.word;
+        if (!w) {
+          return (
+            <span key={`${idPrefix}_t${i}`}>
+              {Array.from(tok.text).map((ch, j) => (
+                <HanChar
+                  key={j}
+                  ch={ch}
+                  inspected={isInspected(inspectedChar, ch)}
+                  onInspect={() => onCharClick(ch)}
+                />
+              ))}
+            </span>
+          );
+        }
+        const key = `${idPrefix}_t${i}`;
+        const pinned = pinnedKey === key;
+        return (
+          <span
+            key={key}
+            onMouseEnter={(e) => {
+              if (!revealWords) return;
+              onHover({
+                key,
+                rect: e.currentTarget.getBoundingClientRect(),
+                data: w,
+              });
+            }}
+            onMouseLeave={() => {
+              if (pinnedKey !== key) onHover(null);
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (pinnedKey === key) {
+                onPin(null);
+              } else {
+                onPin(key);
+                onHover({
+                  key,
+                  rect: e.currentTarget.getBoundingClientRect(),
+                  data: w,
+                });
+              }
+            }}
+            className={`cursor-pointer transition relative ${revealWords ? 'border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm px-0.5' : 'px-0.5'} ${pinned ? '!bg-[var(--verm)] !text-white rounded' : ''}`}
+          >
+            {search && foldedIndexOf(tok.text, search) !== -1
+              ? highlight(tok.text, search)
+              : tok.text}
+            {revealWords && showDefsInline && w.en && (
+              <span className="ml-1 text-[11px] text-[var(--verm)] font-medium">
+                ({w.en})
+              </span>
+            )}
+          </span>
+        );
+      })}
+    </>
+  );
+}
+
+const NO_WORDS: WordAlign[] = [];
+
+function paragraphWords(para: Paragraph): WordAlign[] {
+  const found = para.sentences.flatMap((s) => primaryTranslation(s)?.words ?? NO_WORDS);
+  return found.length > 0 ? found : NO_WORDS;
+}
+
 function SentenceView({
   doc,
   sentence,
@@ -131,12 +225,18 @@ function SentenceView({
     if (speakOnClick) onSpeak(ch);
   };
   const translation = primaryTranslation(sentence);
-  const words = translation?.words ?? [];
+  const words = translation?.words ?? NO_WORDS;
   const enText = translation?.text ?? '';
   const enPrimary = primaryLang === 'en';
-  const zhTokens = enPrimary
-    ? []
-    : tokenizeChinese(sentence.zh, words, dict ?? undefined);
+  const zhTokens = useMemo(
+    () => tokenizeChinese(sentence.zh, words, dict ?? undefined),
+    [sentence.zh, words, dict],
+  );
+  const alignedGloss = words.filter((w) => w.zh);
+  const glossWords =
+    alignedGloss.length > 0
+      ? alignedGloss
+      : zhTokens.flatMap((t) => (t.word ? [t.word] : []));
   const foldedQuery = canonicalSearchText(search);
   const matched =
     search !== '' &&
@@ -205,83 +305,23 @@ function SentenceView({
               </span>
             );
           })
-        ) : !enPrimary && words.length > 0 ? (
-          <span
-            className={`${zhFont} text-[18px]`}
-            style={{ fontSize: `${charSize}em` }}
-          >
-            {zhTokens.map((tok, i) => {
-              const w = tok.word;
-              if (!w) {
-                return (
-                  <span key={`${sentence.id}_t${i}`}>
-                    {Array.from(tok.text).map((ch, j) => (
-                      <HanChar
-                        key={j}
-                        ch={ch}
-                        inspected={isInspected(inspectedChar, ch)}
-                        onInspect={() => handleCharClick(ch)}
-                      />
-                    ))}
-                  </span>
-                );
-              }
-              const key = `${sentence.id}_t${i}`;
-              const pinned = pinnedKey === key;
-              return (
-                <span
-                  key={key}
-                  onMouseEnter={(e) => {
-                    if (!reveal.words) return;
-                    onHover({
-                      key,
-                      rect: e.currentTarget.getBoundingClientRect(),
-                      data: w,
-                    });
-                  }}
-                  onMouseLeave={() => {
-                    if (pinnedKey !== key) onHover(null);
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (pinnedKey === key) {
-                      onPin(null);
-                    } else {
-                      onPin(key);
-                      onHover({
-                        key,
-                        rect: e.currentTarget.getBoundingClientRect(),
-                        data: w,
-                      });
-                    }
-                  }}
-                  className={`cursor-pointer transition relative ${reveal.words ? 'border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm px-0.5' : 'px-0.5'} ${pinned ? '!bg-[var(--verm)] !text-white rounded' : ''}`}
-                >
-                  {search && foldedIndexOf(tok.text, search) !== -1
-                    ? highlight(tok.text, search)
-                    : tok.text}
-                  {reveal.words && showDefsInline && w.en && (
-                    <span className="ml-1 text-[11px] text-[var(--verm)] font-medium">
-                      ({w.en})
-                    </span>
-                  )}
-                </span>
-              );
-            })}
-          </span>
         ) : !enPrimary ? (
           <span
             className={`${zhFont} text-[18px]`}
             style={{ fontSize: `${charSize}em` }}
           >
-            {Array.from(sentence.zh).map((ch, i) => (
-              <HanChar
-                key={i}
-                ch={ch}
-                inspected={isInspected(inspectedChar, ch)}
-                onInspect={() => handleCharClick(ch)}
-              />
-            ))}
+            <ZhHoverText
+              tokens={zhTokens}
+              idPrefix={sentence.id}
+              revealWords={reveal.words}
+              showDefsInline={showDefsInline}
+              search={search}
+              pinnedKey={pinnedKey}
+              onPin={onPin}
+              onHover={onHover}
+              inspectedChar={inspectedChar}
+              onCharClick={handleCharClick}
+            />
           </span>
         ) : (
           <span className="text-[16px] md:text-[18px]">
@@ -332,14 +372,18 @@ function SentenceView({
                 className={`${zhFont} leading-[1.9] text-[18px]`}
                 style={{ fontSize: `${0.95 * charSize}em` }}
               >
-                {Array.from(sentence.zh).map((ch, i) => (
-                  <HanChar
-                    key={i}
-                    ch={ch}
-                    inspected={isInspected(inspectedChar, ch)}
-                    onInspect={() => handleCharClick(ch)}
-                  />
-                ))}
+                <ZhHoverText
+                  tokens={zhTokens}
+                  idPrefix={`${sentence.id}_chip`}
+                  revealWords={reveal.words}
+                  showDefsInline={showDefsInline}
+                  search={search}
+                  pinnedKey={pinnedKey}
+                  onPin={onPin}
+                  onHover={onHover}
+                  inspectedChar={inspectedChar}
+                  onCharClick={handleCharClick}
+                />
               </div>
               {canSpeak && (
               <button
@@ -353,28 +397,40 @@ function SentenceView({
             </div>
             {(showPinyin || showZhuyin) && (
               <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[12px]">
-                {words
-                  .filter((w) => w.zh)
-                  .map((w, i) => {
-                    const zhuyin = showZhuyin ? zhuyinForWord(w.pinyin) : null;
+                {glossWords.map((w, i) => {
+                    const senses =
+                      w.senses && w.senses.length > 0
+                        ? w.senses
+                        : [{ pinyin: w.pinyin, def: w.def }];
                     return (
-                      <span key={i} className="inline-flex items-center gap-1">
+                      <span key={i} className="inline-flex items-baseline gap-1">
                         <span className={zhFont}>{w.zh}</span>
-                        {showPinyin && (
-                          <span
-                            style={{ color: toneColor(w.pinyin, toneColors) }}
-                            className="font-mono text-[11px]"
-                          >
-                            {w.pinyin}
-                          </span>
-                        )}
-                        {zhuyin && (
-                          <span className="font-mono text-[11px] text-[var(--ink-mute)]">
-                            {zhuyin}
-                          </span>
-                        )}
-                        <span className="text-[var(--ink-mute)] text-[11px]">
-                          {w.def}
+                        <span className="inline-flex flex-col">
+                          {senses.map((s, j) => {
+                            const zhuyin = showZhuyin ? zhuyinForWord(s.pinyin) : null;
+                            return (
+                              <span key={j} className="inline-flex items-center gap-1">
+                                {showPinyin && s.pinyin && (
+                                  <span
+                                    style={{ color: toneColor(s.pinyin, toneColors) }}
+                                    className="font-mono text-[11px]"
+                                  >
+                                    {s.pinyin}
+                                  </span>
+                                )}
+                                {zhuyin && (
+                                  <span className="font-mono text-[11px] text-[var(--ink-mute)]">
+                                    {zhuyin}
+                                  </span>
+                                )}
+                                {s.def && (
+                                  <span className="text-[var(--ink-mute)] text-[11px]">
+                                    {s.def}
+                                  </span>
+                                )}
+                              </span>
+                            );
+                          })}
                         </span>
                       </span>
                     );
@@ -393,8 +449,18 @@ function SentenceView({
 const NOISE_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
 
 export function Reader(props: Props) {
-  const { doc, reveal, primaryLang, fontScale, charSize, inspectedChar, onInspectChar, onSpeak, showSpeakerButtons, speakOnClick } = props;
+  const { doc, reveal, primaryLang, fontScale, charSize, inspectedChar, onInspectChar, onSpeak, showSpeakerButtons, speakOnClick, dict } = props;
   const zhFont = zhFontClass(doc);
+  const paragraphTokens = useMemo(() => {
+    const map = new Map<string, ZhToken[]>();
+    for (const p of allParagraphs(doc)) {
+      map.set(
+        p.id,
+        tokenizeChinese(p.zh, paragraphWords(p), dict ?? undefined),
+      );
+    }
+    return map;
+  }, [doc, dict]);
   const enPrimary = primaryLang === 'en';
   const canSpeak = brand.features.speech && showSpeakerButtons;
   const handleCharClick = (ch: string) => {
@@ -529,15 +595,18 @@ export function Reader(props: Props) {
                       className={`${zhFont} text-[20px] leading-[2] tracking-wide`}
                       style={{ fontSize: `${charSize}em` }}
                     >
-                      {Array.from(para.zh).map((ch, i) => (
-                        <HanChar
-                          key={i}
-                          ch={ch}
-                          inspected={isInspected(inspectedChar, ch)}
-                          onInspect={() => handleCharClick(ch)}
-                          className="cursor-pointer rounded hover:bg-[#FFE0D2]"
-                        />
-                      ))}
+                      <ZhHoverText
+                        tokens={paragraphTokens.get(para.id) ?? []}
+                        idPrefix={para.id}
+                        revealWords={reveal.words}
+                        showDefsInline={props.showDefsInline}
+                        search={props.search}
+                        pinnedKey={props.pinnedKey}
+                        onPin={props.onPin}
+                        onHover={props.onHover}
+                        inspectedChar={inspectedChar}
+                        onCharClick={handleCharClick}
+                      />
                     </p>
                   ) : (
                     <p className="text-[16px] leading-[1.9]">
@@ -580,15 +649,18 @@ export function Reader(props: Props) {
               >
                 {allParagraphs(doc).map((p) => (
                   <p key={`${p.id}zh`}>
-                    {Array.from(p.zh).map((ch, i) => (
-                      <span
-                        key={i}
-                        onClick={() => handleCharClick(ch)}
-                        className={`cursor-pointer rounded px-0.5 hover:bg-[#FFE0D2] ${isInspected(inspectedChar, ch) ? 'bg-[var(--verm)] text-white' : ''}`}
-                      >
-                        {ch}
-                      </span>
-                    ))}
+                    <ZhHoverText
+                      tokens={paragraphTokens.get(p.id) ?? []}
+                      idPrefix={`${p.id}_full`}
+                      revealWords={reveal.words}
+                      showDefsInline={props.showDefsInline}
+                      search={props.search}
+                      pinnedKey={props.pinnedKey}
+                      onPin={props.onPin}
+                      onHover={props.onHover}
+                      inspectedChar={inspectedChar}
+                      onCharClick={handleCharClick}
+                    />
                   </p>
                 ))}
               </div>

@@ -89,16 +89,13 @@ export default function App() {
   // tokens render wordless until then and gain readings on re-render.
   const [dict, setDict] = useState<DictIndex | null>(null);
   const [dictFailed, setDictFailed] = useState(false);
-  const dictLoadStarted = useRef(false);
   const needsDict =
     brand.features.words &&
     (primaryLang === 'zh' ||
       docScript(doc) === 'traditional' ||
       inspectedChar !== null);
   useEffect(() => {
-    if (!needsDict) return;
-    if (dict || dictFailed || dictLoadStarted.current) return;
-    dictLoadStarted.current = true;
+    if (!needsDict || dict || dictFailed) return;
     let live = true;
     loadDictionary().then((d) => {
       if (!live) return;

@@ -296,12 +296,9 @@ const sections = chapters.map((paras, i) => {
             translator: TRANSLATOR,
             license: LICENSE,
             text: en,
-            // P0-4 decision: sentence-level only (words: []). Dictionary
-            // glosses must not masquerade as Feng/English translation
-            // alignment in English-primary mode, and the reader's runtime
-            // CC-CEDICT fallback already supplies Chinese-primary hover
-            // tokens from these same sentences. Revisit only with
-            // translation-aligned word data.
+            // P0-4: keep words: [] so English-primary still renders the
+            // Feng/English verse. Chinese word spans come from
+            // Intl.Segmenter, then an exact CC-CEDICT lookup of that span.
             words: [],
           },
         ],

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { brand } from '../brand';
-import type { WordAlign } from '../data/types';
+import type { WordAlign, WordSense } from '../data/types';
 import type { ReadingProvider } from '../lib/dictionary';
 import { toneColor } from '../lib/pinyin';
 import { resolveCharReading } from '../lib/reading';
@@ -49,20 +49,40 @@ export function CharMiniDetail({
           {ch}
         </div>
         <div className="flex-1 min-w-0">
-          <div
-            className="text-[16px] font-semibold leading-tight"
-            style={{ color: toneColor(resolved.pinyin, toneColors) }}
-          >
-            {resolved.pinyin || '—'}
-          </div>
-          {showZhuyin && resolved.zhuyin && (
-            <div className="font-mono text-[11px] text-[var(--ink-mute)]">
-              {resolved.zhuyin}
+          {resolved.dicts.length <= 1 && (
+            <>
+              <div
+                className="text-[16px] font-semibold leading-tight"
+                style={{ color: toneColor(resolved.pinyin, toneColors) }}
+              >
+                {resolved.pinyin || '—'}
+              </div>
+              {showZhuyin && resolved.zhuyin && (
+                <div className="font-mono text-[11px] text-[var(--ink-mute)]">
+                  {resolved.zhuyin}
+                </div>
+              )}
+            </>
+          )}
+          {resolved.dicts.length > 1 ? (
+            <div className="mt-0.5 space-y-0.5">
+              {resolved.dicts.map((rec, i) => (
+                <div key={i} className="text-[12px] leading-snug truncate">
+                  <span
+                    className="font-mono text-[11px]"
+                    style={{ color: toneColor(rec.pinyin, toneColors) }}
+                  >
+                    {rec.pinyin}
+                  </span>
+                  <span className="text-[var(--ink-mute)]"> · {rec.def}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-[12px] leading-snug mt-0.5 truncate">
+              {resolved.meaning || 'No definition yet'}
             </div>
           )}
-          <div className="text-[12px] leading-snug mt-0.5 truncate">
-            {resolved.meaning || 'No definition yet'}
-          </div>
         </div>
       </div>
       <div className="flex flex-wrap gap-1.5">
@@ -109,6 +129,46 @@ export function CharMiniDetail({
   );
 }
 
+function readingsOf(data: WordAlign): WordSense[] {
+  if (data.senses && data.senses.length > 0) return data.senses;
+  if (!data.pinyin && !data.def) return [];
+  return [{ pinyin: data.pinyin, def: data.def }];
+}
+
+function ReadingList({
+  data,
+  toneColors,
+  showZhuyin,
+}: {
+  data: WordAlign;
+  toneColors: boolean;
+  showZhuyin: boolean;
+}) {
+  const senses = readingsOf(data);
+  if (senses.length <= 1) return null;
+  return (
+    <div className="mt-1 space-y-1">
+      {senses.map((s, i) => {
+        const zhuyin = showZhuyin ? zhuyinForWord(s.pinyin) : null;
+        return (
+          <div key={i} className="text-[12px] leading-snug text-[var(--ink-mute)]">
+            <span
+              className="font-mono text-[11px]"
+              style={{ color: toneColor(s.pinyin, toneColors) }}
+            >
+              {s.pinyin}
+            </span>
+            {zhuyin && (
+              <span className="font-mono text-[11px] ml-1.5">{zhuyin}</span>
+            )}
+            <span> · {s.def}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export function WordCard({
   hover,
   pinnedKey,
@@ -123,6 +183,7 @@ export function WordCard({
   dict,
 }: Props) {
   const zhuyin = showZhuyin ? zhuyinForWord(hover.data.pinyin) : null;
+  const several = (hover.data.senses?.length ?? 0) > 1;
   const chars = Array.from(hover.data.zh || '');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [placement, setPlacement] = useState<DrawerPlacement>('right');
@@ -210,7 +271,16 @@ export function WordCard({
               )}
             </div>
             <div className="flex-1 min-w-0">
-              {primaryLang === 'zh' ? (
+              {several ? (
+                <>
+                  <div className="serif-sc font-semibold">{hover.data.zh}</div>
+                  <ReadingList
+                    data={hover.data}
+                    toneColors={toneColors}
+                    showZhuyin={showZhuyin}
+                  />
+                </>
+              ) : primaryLang === 'zh' ? (
                 <>
                   <div className="flex items-baseline gap-2">
                     <span className="font-semibold">{hover.data.en}</span>

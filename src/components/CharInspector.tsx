@@ -43,6 +43,7 @@ function CharDetail({
         </div>
         <div className="flex-1">
           <div className="flex items-center justify-between gap-2">
+            {resolved.dicts.length <= 1 && (
             <div className="flex items-baseline gap-2">
               <span
                 className="text-[22px] font-semibold"
@@ -56,6 +57,7 @@ function CharDetail({
                 </span>
               )}
             </div>
+            )}
             {brand.features.speech && (
               <button
                 type="button"
@@ -67,9 +69,25 @@ function CharDetail({
               </button>
             )}
           </div>
-          <div className="text-[13px] leading-[1.5] mt-1">
-            {resolved.meaning || 'Tap to add definition'}
-          </div>
+          {resolved.dicts.length > 1 ? (
+            <div className="mt-1 space-y-1">
+              {resolved.dicts.map((rec, i) => (
+                <div key={i} className="text-[13px] leading-[1.5]">
+                  <span
+                    className="font-mono text-[12px]"
+                    style={{ color: toneColor(rec.pinyin, toneColors) }}
+                  >
+                    {rec.pinyin}
+                  </span>
+                  <span className="text-[var(--ink-mute)]"> · {rec.def}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-[13px] leading-[1.5] mt-1">
+              {resolved.meaning || 'Tap to add definition'}
+            </div>
+          )}
           <div className="mt-2 flex flex-wrap gap-1.5">
             <span className="text-[11px] px-2 py-0.5 rounded-full bg-[var(--paper-2)] border border-[var(--line)]">
               {info?.radical || '—'}
@@ -101,7 +119,14 @@ function CharDetail({
           Examples · 词组
         </div>
         <div className="space-y-1">
-          {(info?.examples || (resolved.dict ? [`${ch} ${resolved.dict.def}`] : ['暂无例子 — add manually'])).map((ex, i) => (
+          {(info?.examples?.length
+            ? info.examples
+            : resolved.dicts.length === 1
+              ? [`${ch} ${resolved.dicts[0].def}`]
+              : resolved.dicts.length > 1
+                ? []
+                : ['暂无例子 — add manually']
+          ).map((ex, i) => (
             <div
               key={i}
               className="flex justify-between text-[12px] px-2.5 py-1.5 rounded-lg bg-[var(--paper-2)] border border-[var(--line)]"
@@ -112,6 +137,11 @@ function CharDetail({
               </span>
             </div>
           ))}
+          {resolved.dicts.length > 1 && !info?.examples?.length && (
+            <div className="text-[12px] text-[var(--ink-mute)] px-2.5 py-1.5">
+              Every dictionary reading is listed above.
+            </div>
+          )}
         </div>
       </div>
     </div>

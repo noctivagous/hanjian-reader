@@ -1,9 +1,34 @@
-import type { WordAlign } from '../data/types';
-import type { ReadingProvider } from './dictionary';
+import type { WordAlign, WordSense } from '../data/types';
+import type { DictRecord, ReadingProvider } from './dictionary';
 
 export interface ZhToken {
   text: string;
   word?: WordAlign;
+}
+
+const HAN = /\p{Script=Han}/u;
+
+function sensesFrom(recs: DictRecord[]): WordSense[] {
+  const seen = new Set<string>();
+  const senses: WordSense[] = [];
+  for (const rec of recs) {
+    const key = `${rec.pinyin}\0${rec.def}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    senses.push({ pinyin: rec.pinyin, def: rec.def });
+  }
+  return senses;
+}
+
+// Exact headword only. One reading fills pinyin/def/en. Several readings
+// stay on `senses` so the card can list them instead of picking one.
+function wordFromLookup(zh: string, recs: DictRecord[]): WordAlign {
+  const senses = sensesFrom(recs);
+  if (senses.length === 1) {
+    const [en] = senses[0].def.split('; ');
+    return { en: en || '', zh, pinyin: senses[0].pinyin, def: senses[0].def };
+  }
+  return { en: '', zh, pinyin: '', def: '', senses };
 }
 
 interface WordRun {
@@ -64,41 +89,76 @@ function greedyInto(
   }
 }
 
-// Segment Chinese text into hover tokens. Alignment comes first: every
-// entry the old greedy longest-match attached is still attached, so no
-// hover card is ever lost to a segmenter boundary disagreement (e.g.
-// ICU's "杯/中的" versus the aligned word "杯中"). The segmenter only
-// repairs the fallback: consecutive characters the alignment table
-// cannot explain are re-joined along ICU word runs, so an unaligned
-// two-character word keeps its true span instead of collapsing to
-// single characters. When a dictionary is supplied, spans still without
-// a word are looked up there (first record wins for polyphones) and gain
-// a hover card; anything the dictionary also lacks stays wordless.
-export function tokenizeChinese(
-  zh: string,
-  words: WordAlign[],
-  dict?: ReadingProvider,
-): ZhToken[] {
-  const byZh = new Map<string, WordAlign>();
-  for (const w of words) {
-    if (w.zh && !byZh.has(w.zh)) byZh.set(w.zh, w);
+function charTokens(text: string, dict: ReadingProvider): ZhToken[] {
+  const out: ZhToken[] = [];
+  for (const ch of Array.from(text)) {
+    if (!HAN.test(ch)) {
+      out.push({ text: ch });
+      continue;
+    }
+    const recs = dict.lookup(ch);
+    if (recs?.length) out.push({ text: ch, word: wordFromLookup(ch, recs) });
+    else out.push({ text: ch });
   }
-  const candidates = [...byZh.keys()].sort((a, b) => b.length - a.length);
+  return out;
+}
 
-  const greedy: ZhToken[] = [];
-  greedyInto(greedy, zh, byZh, candidates);
+// Segmenter spans, then an exact dictionary hit on that span. A span the
+// dictionary does not list is not given a guessed gloss: each character
+// is looked up on its own.
+function lookupSegmented(text: string, dict: ReadingProvider): ZhToken[] {
+  const runs = icuRuns(text);
+  if (runs === null) return charTokens(text, dict);
+  const out: ZhToken[] = [];
+  for (const run of runs) {
+    const han = HAN.test(run.text);
+    if (!run.wordLike || !han) {
+      out.push({ text: run.text });
+      continue;
+    }
+    const recs = dict.lookup(run.text);
+    if (recs?.length) {
+      out.push({ text: run.text, word: wordFromLookup(run.text, recs) });
+      continue;
+    }
+    if (Array.from(run.text).length === 1) {
+      out.push({ text: run.text });
+      continue;
+    }
+    out.push(...charTokens(run.text, dict));
+  }
+  return out;
+}
 
+function fillWordless(greedy: ZhToken[], dict: ReadingProvider): ZhToken[] {
+  const tokens: ZhToken[] = [];
+  let i = 0;
+  while (i < greedy.length) {
+    if (greedy[i].word !== undefined) {
+      tokens.push(greedy[i]);
+      i += 1;
+      continue;
+    }
+    let text = '';
+    while (i < greedy.length && greedy[i].word === undefined) {
+      text += greedy[i].text;
+      i += 1;
+    }
+    tokens.push(...lookupSegmented(text, dict));
+  }
+  return tokens;
+}
+
+function icuRepair(zh: string, greedy: ZhToken[]): ZhToken[] {
   const runs = icuRuns(zh);
   if (runs === null) return greedy;
 
-  // Map each character offset to its ICU run index.
   const runOf: number[] = [];
   runs.forEach((r, ri) => {
     const n = Array.from(r.text).length;
     for (let k = 0; k < n; k++) runOf.push(ri);
   });
 
-  // Re-join consecutive wordless single characters that share one run.
   const tokens: ZhToken[] = [];
   let pos = 0;
   let i = 0;
@@ -126,14 +186,31 @@ export function tokenizeChinese(
       pos += len;
     }
   }
-  if (dict) {
-    for (const t of tokens) {
-      if (t.word !== undefined || t.text.trim() === '') continue;
-      const [first] = dict.lookup(t.text) ?? [];
-      if (!first) continue;
-      const [en] = first.def.split('; ');
-      t.word = { en: en || '', zh: t.text, pinyin: first.pinyin, def: first.def };
-    }
-  }
   return tokens;
+}
+
+// Segment Chinese text into hover tokens. Authored alignments come
+// first, so a hand-aligned word is never split by the segmenter (e.g.
+// ICU's "杯/中的" versus the aligned word "杯中"). Unaligned text is
+// segmented with Intl.Segmenter, then looked up as that exact headword.
+// Several dictionary readings are all kept. A segmenter span with no
+// dictionary entry is not guessed across; each character is looked up
+// exactly. Without a dictionary, the segmenter still joins unaligned
+// characters so a two-character word keeps its span.
+export function tokenizeChinese(
+  zh: string,
+  words: WordAlign[],
+  dict?: ReadingProvider,
+): ZhToken[] {
+  const byZh = new Map<string, WordAlign>();
+  for (const w of words) {
+    if (w.zh && !byZh.has(w.zh)) byZh.set(w.zh, w);
+  }
+  const candidates = [...byZh.keys()].sort((a, b) => b.length - a.length);
+
+  const greedy: ZhToken[] = [];
+  greedyInto(greedy, zh, byZh, candidates);
+
+  if (dict) return fillWordless(greedy, dict);
+  return icuRepair(zh, greedy);
 }

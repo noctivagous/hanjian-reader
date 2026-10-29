@@ -13,6 +13,8 @@ export interface ResolvedReading {
   hand: CharInfo | null;
   /** First dictionary record when falling back to CC-CEDICT. */
   dict: DictRecord | null;
+  /** Every CC-CEDICT record for this character. Empty when a hand entry wins. */
+  dicts: DictRecord[];
 }
 
 /**
@@ -33,10 +35,12 @@ export function resolveCharReading(
       zhuyin: hand.zhuyin || null,
       hand,
       dict: null,
+      dicts: [],
     };
   }
-  const [first] = dict?.lookup(ch) ?? [];
-  if (first) {
+  const dicts = dict?.lookup(ch) ?? [];
+  const [first] = dicts;
+  if (dicts.length === 1 && first) {
     const [gloss] = first.def.split('; ');
     return {
       pinyin: first.pinyin,
@@ -44,7 +48,15 @@ export function resolveCharReading(
       zhuyin: zhuyinForWord(first.pinyin),
       hand: null,
       dict: first,
+      dicts,
     };
   }
-  return { pinyin: '', meaning: '', zhuyin: null, hand: null, dict: null };
+  return {
+    pinyin: '',
+    meaning: '',
+    zhuyin: null,
+    hand: null,
+    dict: first ?? null,
+    dicts,
+  };
 }

@@ -1,8 +1,19 @@
+export interface WordSense {
+  pinyin: string;
+  def: string;
+}
+
 export interface WordAlign {
   en: string;
   zh: string;
   pinyin: string;
   def: string;
+  /**
+   * Every dictionary reading for this exact headword. Set only for
+   * dictionary-backed tokens. Hand alignments leave it unset and use
+   * pinyin/def as the single authored reading.
+   */
+  senses?: WordSense[];
 }
 
 export interface Translation {
