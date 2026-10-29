@@ -88,6 +88,7 @@ gitignored `private/` directory and are compiled locally into a gitignored
 generated module.
 
 - Put your copy of the Feng & English *Tao Te Ching* translation at
+  `private/tao-te-ching.xlf` (XLIFF 1.2/2.0, preferred) or
   `private/tao-te-ching.en.txt` (81 `---`-separated chapters; see
   [`private/README.md`](private/README.md) for the exact layout), then run
   `node scripts/build-tao-te-ching.mjs`. The app picks up the generated book

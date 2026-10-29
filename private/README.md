@@ -8,6 +8,36 @@ module the build script emits (`src/data/tao-te-ching.generated.*`).
 
 ## What goes here
 
+Two input styles — XLIFF when you have it (preferred: explicit sentence
+alignment plus real tooling support), `.txt` otherwise. If both are present,
+the XLIFF file wins.
+
+- `tao-te-ching.xlf` (or `.xliff`) — XLIFF 1.2 or 2.0 carrying both
+  languages. Either 81 `<file>` elements as chapters, or 1 `<file>` with 81
+  `<group>` (or 81 `<unit>`) chapters. Inside a chapter, `<group>` = paragraph (absent =
+  single paragraph); `<trans-unit>` (1.2) or `<segment>` (2.0) = sentence,
+  with `<source>` = Chinese and `<target>` = English. Every unit needs
+  non-empty `<source>` and `<target>`. Example (1.2):
+
+  ```xml
+  <xliff version="1.2">
+    <file original="tao" source-language="zh" target-language="en">
+      <body>
+        <group>
+          <trans-unit id="ch1-s1">
+            <source>道可道，非常道。</source>
+            <target>The tao that can be told is not the eternal Tao.</target>
+          </trans-unit>
+        </group>
+      </body>
+    </file>
+    <!-- … 80 more <file> chapters … -->
+  </xliff>
+  ```
+
+  Inline tags inside `<source>`/`<target>` (`<g>`, `<x/>`, `<ph/>`, …) are
+  dropped, keeping their text. Keep attributes simple (no `>` inside quotes).
+
 - `tao-te-ching.en.txt` — your copy of the Feng & English translation.
   Chapters 1–81 in order. Each chapter is one block; separate chapters with
   a line containing exactly `---` on its own line. Inside a chapter, a blank
@@ -22,10 +52,12 @@ module the build script emits (`src/data/tao-te-ching.generated.*`).
   other things become ugly.
   ```
 
-- `tao-te-ching.zh.txt` (optional) — the Chinese text, same block layout
-  (81 `---`-separated chapters). When absent, the generator fetches the
-  public-domain Wang Bi received text from Chinese Wikisource at generation
-  time; when present, the local file wins and no network is needed.
+- `tao-te-ching.zh.txt` (optional, `.txt` mode only) — the Chinese text,
+  same block layout (81 `---`-separated chapters). When absent, the
+  generator fetches the public-domain Wang Bi received text from Chinese
+  Wikisource at generation time; when present, the local file wins and no
+  network is needed. XLIFF mode carries both languages, so no zh file
+  is needed there.
 
 ## Building the local book
 
