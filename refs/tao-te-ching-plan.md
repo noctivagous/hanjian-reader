@@ -78,6 +78,7 @@ distinguished from the simplified docs.
 
 ### P0-5. Licensing gate for the translation
 
+- We already have a private/ directory for this issue.
 - The Chinese original is public domain. The Feng/English translation is
   *The Complete Tao Te Ching*, Vintage Books 1972/1989; Jane English
   (b. 1942) is living, so it is in copyright, and Terebess hosting it is not
