@@ -9,16 +9,36 @@ interface StrokeJson {
 const DATA_VERSION = '2.0.1';
 const WRITER_SIZE = 180;
 
-function dataUrl(char: string, base: string): string {
-  return `${base}/${encodeURIComponent(char)}.json`;
+interface StrokeDb {
+  meta?: { characters?: number };
+  strokes?: Record<string, StrokeJson>;
+}
+
+// Single-file DB (public/stroke-data.json), fetched once per session and
+// shared by every StrokeOrder instance — no per-character requests.
+let dbPromise: Promise<StrokeDb | null> | null = null;
+
+function loadStrokeDb(): Promise<StrokeDb | null> {
+  if (!dbPromise) {
+    dbPromise = fetch(`${import.meta.env.BASE_URL}stroke-data.json`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`stroke db HTTP ${res.status}`);
+        return res.json() as Promise<StrokeDb>;
+      })
+      .catch(() => null);
+  }
+  return dbPromise;
+}
+
+function cdnUrl(char: string): string {
+  return `https://cdn.jsdelivr.net/npm/hanzi-writer-data@${DATA_VERSION}/${encodeURIComponent(char)}.json`;
 }
 
 async function loadStrokeJson(char: string): Promise<StrokeJson> {
-  const local = await fetch(dataUrl(char, '/hanzi-data'));
-  if (local.ok) return (await local.json()) as StrokeJson;
-  const cdn = await fetch(
-    dataUrl(char, `https://cdn.jsdelivr.net/npm/hanzi-writer-data@${DATA_VERSION}`),
-  );
+  const db = await loadStrokeDb();
+  const hit = db?.strokes?.[char];
+  if (hit) return hit;
+  const cdn = await fetch(cdnUrl(char));
   if (!cdn.ok) throw new Error(`no stroke data for ${char}`);
   return (await cdn.json()) as StrokeJson;
 }
