@@ -61,6 +61,31 @@ the XLIFF file wins.
   network is needed. XLIFF mode carries both languages, so no zh file
   is needed there.
 
+## Source curations
+
+The `.txt` files were extracted once from the public sources (Terebess HTML,
+Wikisource wikitext) with these cleanups applied at extraction; the same
+rules live in the generator's Wikisource path for future fetches:
+
+- Wikisource `:{...}` commentary lines, `{{...}}` templates, `<ref>` notes,
+  `跋`/音義 appendices, and single-`=` section headings dropped (canon text
+  only); `-{谷}-` variant markers resolved to the shown form; `「」` quotes
+  and stray spaces removed; `﹗` normalized to `！`; one half-width `,`
+  typo fixed to `，`.
+- Terebess orange number-word headings, the post-chapter-81 colophon/essay,
+  and the `[First Vintage Books edition, 1972: …]` collation note in
+  chapter 60 removed (not translation).
+
+## Alignment
+
+- `tao-te-ching.overrides.json` (same directory, also never committed) holds
+  hand alignments per chapter: `{ "<n>": [ [ { zh, en }, … ] ] }`. The
+  automatic clause grouping is positional and drifts wherever translators
+  pack clause boundaries mid-line, so 75 of 81 chapters carry explicit
+  pairings (6 needed none: 1, 9, 11, 40, 47, 79). The generator verifies
+  every override sentence against its chapter's sources and requires full
+  two-sided coverage — additions, losses, and edits fail loudly.
+
 ## Building the local book
 
 ```sh

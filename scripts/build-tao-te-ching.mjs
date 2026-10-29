@@ -98,6 +98,8 @@ function stripWikiMarkup(raw) {
   return raw
     .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/<[^>]+>/g, '')
+    .replace(/-\{([^{}]+)\}-/g, '$1')
+    .replace(/﹗/g, '！')
     .replace(/\{\{[^{}]*\}\}/g, '')
     .replace(/\[\[[^\]|]*\|([^\]]+)\]\]/g, '$1')
     .replace(/\[\[([^\]]+)\]\]/g, '$1')
@@ -147,6 +149,8 @@ async function loadZh() {
 let chapters;
 let enSource;
 let zhSourceLabel = null;
+// Raw per-chapter sources backing the override guards: { zh, en } text.
+let srcChapters = [];
 const warnings = [];
 if (xlfPath) {
   if (!existsSync(xlfPath)) {
@@ -160,6 +164,10 @@ if (xlfPath) {
     process.exit(1);
   }
   enSource = `${xlfPath} (XLIFF)`;
+  srcChapters = chapters.map((paras) => ({
+    zh: paras.flat().map((s) => s.zh).join('\n'),
+    en: paras.flat().map((s) => s.en).join('\n'),
+  }));
 } else {
   if (!existsSync(enPath)) {
     console.error(
@@ -171,6 +179,7 @@ if (xlfPath) {
   const enChapters = splitChapters(readFileSync(enPath, 'utf8'), enPath);
   const { chapters: zhChapters, source: zhSource } = await loadZh();
   enSource = enPath;
+  srcChapters = zhChapters.map((zh, i) => ({ zh, en: enChapters[i] }));
   chapters = zhChapters.map((zhChapter, i) => {
     const n = i + 1;
     const zhParas = splitParas(zhChapter);
@@ -206,6 +215,70 @@ if (xlfPath) {
 const TRANSLATOR = 'Gia-fu Feng & Jane English';
 const LICENSE = 'In copyright — local/private use only, do not distribute';
 let sentences = 0;
+
+// Hand alignment overrides (local-only, gitignored like the sources — they
+// quote the in-copyright translation, so they must never be committed).
+// Shape: { "<chapter>": [ [ { zh, en }, … ], … ] } (paragraphs of pairs).
+// An override replaces the automatic alignment for that chapter wholesale.
+const overridesPath = join(privateDir, 'tao-te-ching.overrides.json');
+let overrides = {};
+if (existsSync(overridesPath)) {
+  try {
+    overrides = JSON.parse(readFileSync(overridesPath, 'utf8'));
+  } catch (err) {
+    console.error(`error: cannot parse ${overridesPath} (${err.message})`);
+    process.exit(1);
+  }
+  for (const [key, paras] of Object.entries(overrides)) {
+    const n = Number(key);
+    if (!Number.isInteger(n) || n < 1 || n > 81 || !Array.isArray(paras)) {
+      console.error(`error: bad override key ${JSON.stringify(key)} (want "1"–"81" mapping to paragraphs of {zh,en} pairs)`);
+      process.exit(1);
+    }
+    const flat = paras.flat();
+    if (flat.length === 0 || flat.some((s) => !s?.zh?.trim() || !s?.en?.trim())) {
+      console.error(`error: override chapter ${n} has an empty Chinese or English side`);
+      process.exit(1);
+    }
+  }
+  // Guards: every override sentence must come from its own chapter's
+  // sources (typos), and together the pairs must account for the whole
+  // chapter (coverage) — no dropped or altered text on either side.
+  // Compared on whitespace-stripped joins, so regrouping and mid-line
+  // splits pass but additions, losses, and edits fail loudly.
+  const norm = (s) => s.replace(/\s+/g, '');
+  for (const [key, paras] of Object.entries(overrides)) {
+    const n = Number(key);
+    const src = norm(srcChapters[n - 1].zh + '\n' + srcChapters[n - 1].en);
+    for (const s of paras.flat()) {
+      for (const side of [s.zh, s.en]) {
+        if (!src.includes(norm(side))) {
+          console.error(`error: override chapter ${key} quotes text not found in its chapter sources: ${JSON.stringify(side.slice(0, 60))}`);
+          process.exit(1);
+        }
+      }
+    }
+    const ovZh = norm(paras.flat().map((s) => s.zh).join(''));
+    const ovEn = norm(paras.flat().map((s) => s.en).join(''));
+    if (ovZh !== norm(srcChapters[n - 1].zh)) {
+      console.error(`error: override chapter ${n} drops or alters Chinese text`);
+      process.exit(1);
+    }
+    if (ovEn !== norm(srcChapters[n - 1].en)) {
+      console.error(`error: override chapter ${n} drops or alters English text`);
+      process.exit(1);
+    }
+  }
+  chapters = chapters.map((paras, i) => overrides[String(i + 1)] ?? paras);
+  // Overridden chapters carry explicit alignments: their auto-split reuse
+  // warnings no longer apply.
+  for (let i = warnings.length - 1; i >= 0; i--) {
+    if (overrides[String(warnings[i].match(/^chapter (\d+):/)?.[1])]) {
+      warnings.splice(i, 1);
+    }
+  }
+  console.log(`hand-aligned chapters: ${Object.keys(overrides).join(', ')}`);
+}
 
 const sections = chapters.map((paras, i) => {
   const n = i + 1;
