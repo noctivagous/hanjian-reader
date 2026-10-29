@@ -83,14 +83,20 @@ export default function App() {
   const [showTip, setShowTip] = useState(true);
   const [toast, setToast] = useState<string | null>(null);
 
-  // Lazy CC-CEDICT: fetched once when Chinese-primary reading needs it.
-  // Null until loaded (or when the fetch fails); tokens render wordless
-  // until then and gain readings on the re-render after load.
+  // Lazy CC-CEDICT: fetched once when Chinese-primary reading needs it,
+  // or when a traditional-script book (Tao Te Ching) or the inspector needs
+  // readings in any mode. Null until loaded (or when the fetch fails);
+  // tokens render wordless until then and gain readings on re-render.
   const [dict, setDict] = useState<DictIndex | null>(null);
   const [dictFailed, setDictFailed] = useState(false);
   const dictLoadStarted = useRef(false);
+  const needsDict =
+    brand.features.words &&
+    (primaryLang === 'zh' ||
+      docScript(doc) === 'traditional' ||
+      inspectedChar !== null);
   useEffect(() => {
-    if (primaryLang !== 'zh' || !brand.features.words) return;
+    if (!needsDict) return;
     if (dict || dictFailed || dictLoadStarted.current) return;
     dictLoadStarted.current = true;
     let live = true;
@@ -102,12 +108,12 @@ export default function App() {
     return () => {
       live = false;
     };
-  }, [primaryLang, dict, dictFailed]);
+  }, [needsDict, dict, dictFailed]);
   const dictStatus: DictStatus = dict
     ? 'ready'
     : dictFailed
       ? 'unavailable'
-      : primaryLang === 'zh' && brand.features.words
+      : needsDict
         ? 'loading'
         : 'idle';
 
@@ -367,6 +373,7 @@ export default function App() {
           onCloseInspector={() => setInspectedChar(null)}
           collapsed={sidebarCollapsed}
           dictStatus={dictStatus}
+          dict={dict}
         />
       </div>
 
@@ -394,6 +401,7 @@ export default function App() {
         onClearInspected={() => setInspectedChar(null)}
         onCopy={handleCopy}
         dictStatus={dictStatus}
+        dict={dict}
       />
 
       {hover && reveal.words && (
@@ -403,6 +411,7 @@ export default function App() {
           pinnedKey={pinnedKey}
           toneColors={toneColors}
           showZhuyin={showZhuyin}
+          dict={dict}
           primaryLang={primaryLang}
           onEnter={setHover}
           onLeave={() => {

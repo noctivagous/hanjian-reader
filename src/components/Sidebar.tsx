@@ -1,7 +1,7 @@
 import { brand } from '../brand';
 import type { Doc } from '../data/types';
 import { bilingualText, chineseText, englishText } from '../lib/doc';
-import type { DictStatus } from '../lib/dictionary';
+import type { DictStatus, ReadingProvider } from '../lib/dictionary';
 import { CharInspector } from './CharInspector';
 import type { PrimaryLang, Reveal } from './Reader';
 
@@ -48,6 +48,7 @@ interface Props {
   onCloseInspector: () => void;
   collapsed: boolean;
   dictStatus: DictStatus;
+  dict?: ReadingProvider | null;
 }
 
 export function Sidebar(p: Props) {
@@ -306,6 +307,7 @@ export function Sidebar(p: Props) {
                 onSpeak={p.onSpeak}
                 onCopy={p.onCopy}
                 onAddToList={p.onAddToList}
+                dict={p.dict}
               />
             )}
           </div>

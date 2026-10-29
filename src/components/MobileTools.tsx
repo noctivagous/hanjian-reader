@@ -1,7 +1,7 @@
 import { brand } from '../brand';
 import type { Doc } from '../data/types';
 import { chineseText, englishText } from '../lib/doc';
-import type { DictStatus } from '../lib/dictionary';
+import type { DictStatus, ReadingProvider } from '../lib/dictionary';
 import { CharInspector } from './CharInspector';
 import type { PrimaryLang, Reveal } from './Reader';
 
@@ -26,6 +26,7 @@ interface Props {
   onClearInspected: () => void;
   onCopy: (text: string, label: string) => void;
   dictStatus: DictStatus;
+  dict?: ReadingProvider | null;
 }
 
 export function MobileTools({
@@ -39,6 +40,7 @@ export function MobileTools({
   onClearInspected,
   onCopy,
   dictStatus,
+  dict,
 }: Props) {
   return (
     <div
@@ -114,6 +116,7 @@ export function MobileTools({
                 onCopy={onCopy}
                 onAddToList={() => {}}
                 compact
+                dict={dict}
               />
             )}
           </div>

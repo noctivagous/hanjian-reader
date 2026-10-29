@@ -1,6 +1,7 @@
 import { brand } from '../brand';
-import { charDict } from '../data/charDict';
+import type { ReadingProvider } from '../lib/dictionary';
 import { toneColor } from '../lib/pinyin';
+import { resolveCharReading } from '../lib/reading';
 import { StrokeOrder } from './StrokeOrder';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
   onCopy: (text: string, label: string) => void;
   onAddToList: () => void;
   compact?: boolean;
+  dict?: ReadingProvider | null;
 }
 
 function CharDetail({
@@ -20,13 +22,16 @@ function CharDetail({
   toneColors,
   showZhuyin,
   onSpeak,
+  dict,
 }: {
   ch: string;
   toneColors: boolean;
   showZhuyin: boolean;
   onSpeak: (text: string) => void;
+  dict?: ReadingProvider | null;
 }) {
-  const info = charDict[ch];
+  const resolved = resolveCharReading(ch, dict);
+  const info = resolved.hand;
   return (
     <div className="space-y-4">
       <div className="flex gap-4">
@@ -41,13 +46,13 @@ function CharDetail({
             <div className="flex items-baseline gap-2">
               <span
                 className="text-[22px] font-semibold"
-                style={{ color: toneColor(info?.pinyin || '', toneColors) }}
+                style={{ color: toneColor(resolved.pinyin, toneColors) }}
               >
-                {info?.pinyin || '—'}
+                {resolved.pinyin || '—'}
               </span>
-              {showZhuyin && info?.zhuyin && (
+              {showZhuyin && resolved.zhuyin && (
                 <span className="text-[12px] text-[var(--ink-mute)] font-mono">
-                  {info.zhuyin}
+                  {resolved.zhuyin}
                 </span>
               )}
             </div>
@@ -63,7 +68,7 @@ function CharDetail({
             )}
           </div>
           <div className="text-[13px] leading-[1.5] mt-1">
-            {info?.meaning || 'Tap to add definition'}
+            {resolved.meaning || 'Tap to add definition'}
           </div>
           <div className="mt-2 flex flex-wrap gap-1.5">
             <span className="text-[11px] px-2 py-0.5 rounded-full bg-[var(--paper-2)] border border-[var(--line)]">
@@ -96,7 +101,7 @@ function CharDetail({
           Examples · 词组
         </div>
         <div className="space-y-1">
-          {(info?.examples || ['暂无例子 — add manually']).map((ex, i) => (
+          {(info?.examples || (resolved.dict ? [`${ch} ${resolved.dict.def}`] : ['暂无例子 — add manually'])).map((ex, i) => (
             <div
               key={i}
               className="flex justify-between text-[12px] px-2.5 py-1.5 rounded-lg bg-[var(--paper-2)] border border-[var(--line)]"
@@ -123,21 +128,22 @@ export function CharInspector({
   onCopy,
   onAddToList,
   compact,
+  dict,
 }: Props) {
   const chars = Array.from(char);
   const isWord = chars.length > 1;
 
   if (compact) {
     if (!isWord) {
-      const info = charDict[char];
+      const resolved = resolveCharReading(char, dict);
       return (
         <div className="flex gap-3">
           <div className="h-20 w-20 rounded-xl bg-[#FFF8F0] flex items-center justify-center text-[48px] serif-sc">
             {char}
           </div>
           <div>
-            <div className="font-semibold">{info?.pinyin}</div>
-            <div className="text-[13px]">{info?.meaning}</div>
+            <div className="font-semibold">{resolved.pinyin || '—'}</div>
+            <div className="text-[13px]">{resolved.meaning}</div>
           </div>
         </div>
       );
@@ -149,12 +155,12 @@ export function CharInspector({
         </div>
         <div className="space-y-2">
           {chars.map((ch, i) => {
-            const info = charDict[ch];
+            const resolved = resolveCharReading(ch, dict);
             return (
               <div key={`${ch}-${i}`} className="flex gap-3 items-baseline">
                 <span className="serif-sc text-[20px]">{ch}</span>
-                <span className="font-semibold text-[13px]">{info?.pinyin || '—'}</span>
-                <span className="text-[13px]">{info?.meaning || ''}</span>
+                <span className="font-semibold text-[13px]">{resolved.pinyin || '—'}</span>
+                <span className="text-[13px]">{resolved.meaning}</span>
               </div>
             );
           })}
@@ -178,7 +184,7 @@ export function CharInspector({
           key={`${ch}-${i}`}
           className={isWord ? 'border-t border-[var(--line)] pt-4 first:border-t-0 first:pt-0' : undefined}
         >
-          <CharDetail ch={ch} toneColors={toneColors} showZhuyin={showZhuyin} onSpeak={onSpeak} />
+          <CharDetail ch={ch} toneColors={toneColors} showZhuyin={showZhuyin} onSpeak={onSpeak} dict={dict} />
         </div>
       ))}
 

@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { brand } from '../brand';
-import { charDict } from '../data/charDict';
 import type { WordAlign } from '../data/types';
+import type { ReadingProvider } from '../lib/dictionary';
 import { toneColor } from '../lib/pinyin';
+import { resolveCharReading } from '../lib/reading';
 import { chooseDrawerPlacement, type DrawerPlacement } from '../lib/placement';
 import { zhuyinForWord } from '../lib/zhuyin';
 
@@ -23,6 +24,7 @@ interface Props {
   onInspect: (zh: string) => void;
   onClose: () => void;
   onSpeak: (text: string) => void;
+  dict?: ReadingProvider | null;
 }
 
 export function CharMiniDetail({
@@ -30,13 +32,16 @@ export function CharMiniDetail({
   toneColors,
   showZhuyin,
   onInspect,
+  dict,
 }: {
   ch: string;
   toneColors: boolean;
   showZhuyin: boolean;
   onInspect: (zh: string) => void;
+  dict?: ReadingProvider | null;
 }) {
-  const info = charDict[ch];
+  const resolved = resolveCharReading(ch, dict);
+  const info = resolved.hand;
   return (
     <div className="space-y-2.5">
       <div className="flex items-center gap-2.5">
@@ -46,17 +51,17 @@ export function CharMiniDetail({
         <div className="flex-1 min-w-0">
           <div
             className="text-[16px] font-semibold leading-tight"
-            style={{ color: toneColor(info?.pinyin || '', toneColors) }}
+            style={{ color: toneColor(resolved.pinyin, toneColors) }}
           >
-            {info?.pinyin || '—'}
+            {resolved.pinyin || '—'}
           </div>
-          {showZhuyin && info?.zhuyin && (
+          {showZhuyin && resolved.zhuyin && (
             <div className="font-mono text-[11px] text-[var(--ink-mute)]">
-              {info.zhuyin}
+              {resolved.zhuyin}
             </div>
           )}
           <div className="text-[12px] leading-snug mt-0.5 truncate">
-            {info?.meaning || 'No definition yet'}
+            {resolved.meaning || 'No definition yet'}
           </div>
         </div>
       </div>
@@ -115,6 +120,7 @@ export function WordCard({
   onInspect,
   onClose,
   onSpeak,
+  dict,
 }: Props) {
   const zhuyin = showZhuyin ? zhuyinForWord(hover.data.pinyin) : null;
   const chars = Array.from(hover.data.zh || '');
@@ -290,6 +296,7 @@ export function WordCard({
               toneColors={toneColors}
               showZhuyin={showZhuyin}
               onInspect={onInspect}
+              dict={dict}
             />
           </div>
         )}
