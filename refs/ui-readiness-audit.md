@@ -76,7 +76,7 @@ clicking away, with state actually cleared in `App.tsx`.
 
 ---
 
-## 2. Left sidebar for the text's divisions (agreed, not built)
+## 2.  Left sidebar for the text's divisions (agreed, not built)
 
 Per `refs/hanjian-format-recommendation.md` ("Left panel") this was
 already decided; the data model landed (`Section` in
