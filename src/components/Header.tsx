@@ -1,6 +1,67 @@
 import { brand } from '../brand';
 import type { PrimaryLang } from './Reader';
 
+const ROUND_ICON_BTN =
+  'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--paper)] p-0 leading-none hover:bg-[var(--line)]';
+
+function ChevronIcon({ direction }: { direction: 'left' | 'right' }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 16 16"
+      className="size-3.5 shrink-0"
+      fill="none"
+    >
+      <path
+        d={direction === 'left' ? 'M10 4 6 8l4 4' : 'M6 4l4 4-4 4'}
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function MenuIcon() {
+  return (
+    <svg aria-hidden viewBox="0 0 16 16" className="size-3.5 shrink-0" fill="none">
+      <path
+        d="M3 4.5h10M3 8h10M3 11.5h10"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function ThemeIcon({ dark }: { dark: boolean }) {
+  if (dark) {
+    return (
+      <svg aria-hidden viewBox="0 0 16 16" className="size-3.5 shrink-0" fill="none">
+        <path
+          d="M8 2.5a5.5 5.5 0 1 0 5.5 5.5 4.25 4.25 0 0 1-5.5-5.5Z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+  return (
+    <svg aria-hidden viewBox="0 0 16 16" className="size-3.5 shrink-0" fill="none">
+      <circle cx="8" cy="8" r="2.75" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M8 1.75v1M8 13.25v1M1.75 8h1M13.25 8h1M3.46 3.46l.7.7M11.84 11.84l.7.7M3.46 12.54l.7-.7M11.84 4.16l.7-.7"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 interface Props {
   onImport: () => void;
   primaryLang: PrimaryLang;
@@ -43,30 +104,30 @@ export function Header({
           aria-label="Toggle contents panel"
           aria-expanded={!navCollapsed}
           onClick={onToggleNav}
-          className="hidden lg:flex h-8 w-8 rounded-full border border-[var(--line)] bg-[var(--paper)] items-center justify-center hover:bg-[var(--line)]"
+          className={`hidden lg:flex ${ROUND_ICON_BTN}`}
         >
-          {navCollapsed ? '▶' : '◀'}
+          <ChevronIcon direction={navCollapsed ? 'right' : 'left'} />
         </button>
         <button
           type="button"
           aria-label="Open contents"
           onClick={onOpenNav}
-          className="lg:hidden h-8 w-8 rounded-full border border-[var(--line)] bg-[var(--paper)] flex items-center justify-center"
+          className={`lg:hidden ${ROUND_ICON_BTN}`}
         >
-          ☰
+          <MenuIcon />
         </button>
         <div className="flex items-center gap-2.5">
           <div className="h-8 w-8 rounded-[10px] bg-[var(--ink)] text-[var(--paper)] flex items-center justify-center font-bold serif-display text-[14px] tracking-tight">
             {brand.texts.logoGlyph}
           </div>
-          <div className="leading-none">
-            <div className="serif-display font-semibold text-[17px] tracking-tight -mb-0.5">
+          <div className="flex min-w-0 flex-col gap-0.5">
+            <div className="serif-display font-semibold text-[17px] leading-tight tracking-tight">
               {brand.texts.appName}{' '}
               <span className="font-normal text-[var(--ink-mute)]">
                 {brand.texts.appNameZh}
               </span>
             </div>
-            <div className="text-[10px] tracking-[0.18em] uppercase text-[var(--ink-mute)]">
+            <div className="text-[10px] leading-none tracking-[0.18em] uppercase text-[var(--ink-mute)]">
               {brand.texts.tagline}
             </div>
           </div>
@@ -135,9 +196,9 @@ export function Header({
         <button
           type="button"
           onClick={onToggleDark}
-          className="h-8 w-8 rounded-full border border-[var(--line)] bg-[var(--paper)] flex items-center justify-center text-[14px] hover:bg-[var(--line)] transition"
+          className={`${ROUND_ICON_BTN} transition`}
         >
-          {dark ? '☾' : '☀'}
+          <ThemeIcon dark={dark} />
         </button>
         )}
         <button
@@ -145,17 +206,17 @@ export function Header({
           aria-label="Toggle tools panel"
           aria-expanded={!sidebarCollapsed}
           onClick={onToggleSidebar}
-          className="hidden lg:flex h-8 w-8 rounded-full border border-[var(--line)] bg-[var(--paper)] items-center justify-center hover:bg-[var(--line)]"
+          className={`hidden lg:flex ${ROUND_ICON_BTN}`}
         >
-          {sidebarCollapsed ? '◀' : '▶'}
+          <ChevronIcon direction={sidebarCollapsed ? 'left' : 'right'} />
         </button>
         <button
           type="button"
           aria-label="Open tools"
           onClick={onOpenTools}
-          className="lg:hidden h-8 w-8 rounded-full bg-[var(--ink)] text-[var(--paper)] flex items-center justify-center"
+          className="lg:hidden flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--ink)] p-0 leading-none text-[var(--paper)]"
         >
-          ≡
+          <MenuIcon />
         </button>
       </div>
     </header>

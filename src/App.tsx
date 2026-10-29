@@ -9,7 +9,7 @@ import { WordCard, type HoverState } from './components/WordCard';
 import { applyBrand, brand, brandStorageKey } from './brand';
 import { docs as seedDocs } from './data/documents';
 import { extraDocs } from './data/localDocs';
-import type { Doc } from './data/types';
+import type { Doc, WordAlign } from './data/types';
 import {
   loadDictionary,
   type DictIndex,
@@ -20,39 +20,99 @@ import { loadPublicDocs } from './lib/publicDocs';
 import { docScript } from './lib/script';
 import { importCustomDoc } from './lib/segment';
 import { copyText, speakChinese } from './lib/speech';
-import { useScrollSpy } from './lib/useScrollSpy';
+import { useScrollObserver } from './lib/useScrollObserver';
 
-const initialDocs: Doc[] = [...seedDocs, ...extraDocs];
+const CUSTOM_DOCS_STORAGE_KEY = brandStorageKey('customDocs');
 
-function readStoredDocId(available: Doc[]): string {
+function readStoredCustomDocs(): Doc[] {
+  try {
+    const value = window.localStorage.getItem(CUSTOM_DOCS_STORAGE_KEY);
+    if (!value) return [];
+    const parsed: unknown = JSON.parse(value);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      (doc): doc is Doc =>
+        typeof doc === 'object' &&
+        doc !== null &&
+        (doc as Doc).format === 'hanjian' &&
+        (doc as Doc).version === 1 &&
+        typeof (doc as Doc).id === 'string' &&
+        Array.isArray((doc as Doc).sections),
+    );
+  } catch {
+    // Storage is unavailable or contains malformed data.
+    return [];
+  }
+}
+
+function readStoredDocId(): string {
   try {
     const v = window.localStorage.getItem(brandStorageKey('activeDoc'));
-    if (v && available.some((d) => d.id === v)) return v;
+    if (v) return v;
   } catch {
     // storage unavailable (private mode)
   }
-  return available[0].id;
+  return brand.defaults.defaultDocId;
+}
+
+function pendingDoc(id: string): Doc {
+  return {
+    format: 'hanjian',
+    version: 1,
+    id,
+    titleEn: 'Loading…',
+    titleZh: '',
+    author: '',
+    sourceLanguage: 'zh',
+    sections: [],
+  };
 }
 
 export default function App() {
-  const [docs, setDocs] = useState<Doc[]>(initialDocs);
+  const [customDocs, setCustomDocs] = useState<Doc[]>(readStoredCustomDocs);
+  const [publicDocs, setPublicDocs] = useState<Doc[]>([]);
+  const [catalogReady, setCatalogReady] = useState(false);
+  const docs = useMemo(
+    () => [...seedDocs, ...publicDocs, ...extraDocs, ...customDocs],
+    [publicDocs, customDocs],
+  );
   // Public-domain XLIFF texts from public/texts/ load at runtime and slot
   // in after the bundled docs; private/ (localDocs) stays last.
   useEffect(() => {
     let live = true;
     loadPublicDocs().then((pub) => {
-      if (!live || pub.length === 0) return;
-      setDocs([...seedDocs, ...pub, ...extraDocs]);
+      if (!live) return;
+      setPublicDocs(pub);
+      setCatalogReady(true);
     });
     return () => {
       live = false;
     };
   }, []);
-  const [activeId, setActiveId] = useState(() => readStoredDocId(initialDocs));
+  const [activeId, setActiveId] = useState(readStoredDocId);
   const doc = useMemo(
-    () => docs.find((d) => d.id === activeId) || docs[0],
+    () => docs.find((d) => d.id === activeId) ?? pendingDoc(activeId),
     [docs, activeId],
   );
+
+  useEffect(() => {
+    if (!catalogReady) return;
+    if (docs.some((d) => d.id === activeId)) return;
+    const preferred = docs.find((d) => d.id === brand.defaults.defaultDocId);
+    const fallback = preferred ?? docs[0];
+    if (fallback) setActiveId(fallback.id);
+  }, [catalogReady, docs, activeId]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(
+        CUSTOM_DOCS_STORAGE_KEY,
+        JSON.stringify(customDocs),
+      );
+    } catch {
+      // Storage is unavailable or full; the imported document stays in-memory.
+    }
+  }, [customDocs]);
 
   // White-label: initial state comes from the brand config, so a rebrand
   // ships its own texts, enabled features, and defaults with no code edits.
@@ -75,12 +135,13 @@ export default function App() {
   }, [primaryLang]);
 
   useEffect(() => {
+    if (!docs.some((d) => d.id === activeId)) return;
     try {
       window.localStorage.setItem(brandStorageKey('activeDoc'), activeId);
     } catch {
       // storage unavailable (private mode); selection stays in-memory
     }
-  }, [activeId]);
+  }, [activeId, docs]);
 
   const [showPinyin, setShowPinyin] = useState(brand.defaults.showPinyin);
   const [showZhuyin, setShowZhuyin] = useState(brand.defaults.showZhuyin);
@@ -98,7 +159,14 @@ export default function App() {
 
   const [inspectedChar, setInspectedChar] = useState<string | null>(null);
   const [pinnedKey, setPinnedKey] = useState<string | null>(null);
+  const [pinnedWord, setPinnedWord] = useState<WordAlign | null>(null);
   const [hover, setHover] = useState<HoverState | null>(null);
+  const linkedAlign = hover?.data ?? pinnedWord ?? null;
+
+  const handlePin = (key: string | null, word?: WordAlign) => {
+    setPinnedKey(key);
+    setPinnedWord(key && word ? word : null);
+  };
   const [openSentences, setOpenSentences] = useState<Set<string>>(new Set());
   const [closedSentences, setClosedSentences] = useState<Set<string>>(
     new Set(),
@@ -172,7 +240,7 @@ export default function App() {
         else if (toolsOpen) setToolsOpen(false);
         else if (inspectedChar) setInspectedChar(null);
         else if (pinnedKey) {
-          setPinnedKey(null);
+          handlePin(null);
           setHover(null);
         } else if (hover) setHover(null);
         else if (showTip) setShowTip(false);
@@ -235,7 +303,7 @@ export default function App() {
     titleZh: string,
   ) => {
     const custom = importCustomDoc(en, zh, titleEn, titleZh);
-    setDocs((prev) => [...prev, custom]);
+    setCustomDocs((prev) => [...prev, custom]);
     setActiveId(custom.id);
     setImportOpen(false);
     flash('Custom document imported', 2000);
@@ -268,7 +336,7 @@ export default function App() {
 
   const clearSelection = () => {
     setInspectedChar(null);
-    setPinnedKey(null);
+    handlePin(null);
     setHover(null);
   };
 
@@ -280,7 +348,7 @@ export default function App() {
       ]),
     [doc],
   );
-  const [activeNavId, setActiveNavId] = useScrollSpy(scrollRef, navIds, doc.id);
+  const [activeNavId, setActiveNavId] = useScrollObserver(scrollRef, navIds, doc.id);
 
   const activeSectionId = useMemo(() => {
     if (!activeNavId) return doc.sections[0]?.id ?? null;
@@ -323,7 +391,7 @@ export default function App() {
         onPrimaryLang={(v) => {
           setPrimaryLang(v);
           setHover(null);
-          setPinnedKey(null);
+          handlePin(null);
         }}
         fontScale={fontScale}
         onFontScale={setFontScale}
@@ -341,7 +409,7 @@ export default function App() {
         <NavSidebar
           doc={doc}
           docs={docs}
-          activeDocId={doc.id}
+          activeDocId={activeId}
           onSelectDoc={setActiveId}
           primaryLang={primaryLang}
           activeSectionId={activeSectionId}
@@ -370,7 +438,8 @@ export default function App() {
             onToggleSentence={toggleSentence}
             search={search}
             pinnedKey={pinnedKey}
-            onPin={setPinnedKey}
+            onPin={handlePin}
+            linkedAlign={linkedAlign}
             hover={hover}
             onHover={setHover}
             inspectedChar={inspectedChar}
@@ -425,7 +494,7 @@ export default function App() {
       <MobileNavDrawer
         doc={doc}
         docs={docs}
-        activeDocId={doc.id}
+        activeDocId={activeId}
         onSelectDoc={setActiveId}
         primaryLang={primaryLang}
         activeSectionId={activeSectionId}
@@ -465,10 +534,10 @@ export default function App() {
           onInspect={(zh) => {
             handleInspectChar(zh);
             setHover(null);
-            setPinnedKey(null);
+            handlePin(null);
           }}
           onClose={() => {
-            setPinnedKey(null);
+            handlePin(null);
             setHover(null);
           }}
           onSpeak={handleSpeak}

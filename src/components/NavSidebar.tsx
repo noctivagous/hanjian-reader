@@ -145,6 +145,9 @@ export function NavContent({
             onChange={(e) => onSelectDoc(e.target.value)}
             className="w-full appearance-none rounded-full border border-[var(--line)] bg-[var(--paper)] py-1.5 pl-3 pr-8 text-[13px] font-medium tracking-tight outline-none transition hover:border-[var(--ink-mute)]"
           >
+            {!docs.some((d) => d.id === activeDocId) && (
+              <option value={activeDocId}>Loading…</option>
+            )}
             {docs.map((d) => (
               <option key={d.id} value={d.id}>
                 {d.titleEn} · {d.titleZh} {scriptTag(d)}

@@ -3,6 +3,7 @@
     {
       "id": "three-character-classic",
       "file": "three-character-classic.xlf",
+      "alignmentFile": "three-character-classic.alignments.json",
       "titleEn": "Three Character Classic",
       "titleZh": "三字經",
       "author": "Wang Yinglin · 王應麟",

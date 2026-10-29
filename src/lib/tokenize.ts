@@ -31,6 +31,42 @@ function wordFromLookup(zh: string, recs: DictRecord[]): WordAlign {
   return { en: '', zh, pinyin: '', def: '', senses };
 }
 
+/** Add dictionary readings to an authored alignment that supplies only spans. */
+export function withDictionaryReading(
+  word: WordAlign,
+  dict?: ReadingProvider,
+): WordAlign {
+  if (!dict || !word.zh || word.pinyin || word.def || word.senses?.length) {
+    return word;
+  }
+  const recs = dict.lookup(word.zh);
+  if (!recs?.length) return word;
+  return { ...word, ...wordFromLookup(word.zh, recs), en: word.en };
+}
+
+const SKIP_GLOSS =
+  /^(surname |Kangxi |variant of |old variant |abbr\. |see |used in |\()/i;
+
+/** Chip label for English-primary hover. Authored `en` wins. Otherwise the first listed gloss that is not a surname / bound-form note; the card still lists every sense. */
+export function englishLabel(w: WordAlign): string {
+  const defs = [
+    ...(w.en ? [w.en] : []),
+    ...(w.def ? [w.def] : []),
+    ...(w.senses ?? []).map((s) => s.def),
+  ];
+  const glosses = defs.flatMap((d) =>
+    d.split('; ').map((g) => g.trim()).filter(Boolean),
+  );
+  const pick =
+    glosses.find((g) => !SKIP_GLOSS.test(g) && !g.startsWith('(')) ||
+    glosses.find((g) => !SKIP_GLOSS.test(g)) ||
+    glosses[0];
+  if (!pick) return w.zh;
+  const trimmed = pick.replace(/\s*CL:.*$/, '').trim();
+  const chunk = trimmed.split(',')[0].trim();
+  return chunk || trimmed || w.zh;
+}
+
 interface WordRun {
   text: string;
   wordLike: boolean;
@@ -106,8 +142,14 @@ function charTokens(text: string, dict: ReadingProvider): ZhToken[] {
 // Segmenter spans, then an exact dictionary hit on that span. A span the
 // dictionary does not list is not given a guessed gloss: each character
 // is looked up on its own.
-function lookupSegmented(text: string, dict: ReadingProvider): ZhToken[] {
-  const runs = icuRuns(text);
+function lookupSegmented(
+  text: string,
+  dict: ReadingProvider,
+  segmentZh?: (zh: string) => string[],
+): ZhToken[] {
+  const runs = segmentZh
+    ? segmentZh(text).map((t) => ({ text: t, wordLike: HAN.test(t) }))
+    : icuRuns(text);
   if (runs === null) return charTokens(text, dict);
   const out: ZhToken[] = [];
   for (const run of runs) {
@@ -130,7 +172,11 @@ function lookupSegmented(text: string, dict: ReadingProvider): ZhToken[] {
   return out;
 }
 
-function fillWordless(greedy: ZhToken[], dict: ReadingProvider): ZhToken[] {
+function fillWordless(
+  greedy: ZhToken[],
+  dict: ReadingProvider,
+  segmentZh?: (zh: string) => string[],
+): ZhToken[] {
   const tokens: ZhToken[] = [];
   let i = 0;
   while (i < greedy.length) {
@@ -144,7 +190,7 @@ function fillWordless(greedy: ZhToken[], dict: ReadingProvider): ZhToken[] {
       text += greedy[i].text;
       i += 1;
     }
-    tokens.push(...lookupSegmented(text, dict));
+    tokens.push(...lookupSegmented(text, dict, segmentZh));
   }
   return tokens;
 }
@@ -192,15 +238,17 @@ function icuRepair(zh: string, greedy: ZhToken[]): ZhToken[] {
 // Segment Chinese text into hover tokens. Authored alignments come
 // first, so a hand-aligned word is never split by the segmenter (e.g.
 // ICU's "杯/中的" versus the aligned word "杯中"). Unaligned text is
-// segmented with Intl.Segmenter, then looked up as that exact headword.
-// Several dictionary readings are all kept. A segmenter span with no
-// dictionary entry is not guessed across; each character is looked up
-// exactly. Without a dictionary, the segmenter still joins unaligned
-// characters so a two-character word keeps its span.
+// segmented with `segmentZh` when given (Jiayan for classical /
+// traditional docs) or Intl.Segmenter, then looked up as that exact
+// headword. Several dictionary readings are all kept. A segmenter span
+// with no dictionary entry is not guessed across; each character is
+// looked up exactly. Without a dictionary, the segmenter still joins
+// unaligned characters so a two-character word keeps its span.
 export function tokenizeChinese(
   zh: string,
   words: WordAlign[],
   dict?: ReadingProvider,
+  segmentZh?: (zh: string) => string[],
 ): ZhToken[] {
   const byZh = new Map<string, WordAlign>();
   for (const w of words) {
@@ -211,6 +259,30 @@ export function tokenizeChinese(
   const greedy: ZhToken[] = [];
   greedyInto(greedy, zh, byZh, candidates);
 
-  if (dict) return fillWordless(greedy, dict);
+  const authoredSidecar = words.some(
+    (w) =>
+      Number.isInteger(w.enStart) &&
+      Number.isInteger(w.enEnd) &&
+      w.enEnd! > w.enStart!,
+  );
+  if (dict && !authoredSidecar) return fillWordless(greedy, dict, segmentZh);
+  if (segmentZh) {
+    const tokens: ZhToken[] = [];
+    let i = 0;
+    while (i < greedy.length) {
+      if (greedy[i].word !== undefined) {
+        tokens.push(greedy[i]);
+        i += 1;
+        continue;
+      }
+      let text = '';
+      while (i < greedy.length && greedy[i].word === undefined) {
+        text += greedy[i].text;
+        i += 1;
+      }
+      for (const t of segmentZh(text)) tokens.push({ text: t });
+    }
+    return tokens;
+  }
   return icuRepair(zh, greedy);
 }

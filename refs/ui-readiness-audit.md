@@ -98,7 +98,7 @@ Required behavior:
 - [ ] Clicking a row scrolls to that section. Sections need anchor
       ids (`id={section.id}`) and `scroll-margin-top` under the
       64px sticky header (`Header.tsx:37`).
-- [ ] Scroll-spy: the section in view is highlighted, driven by the
+- [ ] Scroll observer: the section in view is highlighted, driven by the
       existing scroll container (`App.tsx:160-164`, `scrollRef` is
       currently attached but never read).
 - [ ] Filter/jump box ("chapter 42", 德) filtering the row list.
@@ -396,7 +396,7 @@ and functional on mobile, even if the layout differs.
 
 1. ✅ DONE (2026-10-28) — **Selection escape fixes** (§1):
    char toggle/close/Esc plus the sentence-pill contract (§3 P0 row).
-2. **Left divisions sidebar** (§2) with anchors + scroll-spy.
+2. **Left divisions sidebar** (§2) with anchors + scroll observer.
 3. **Dead-control sweep** (§4 list, §8 mobile no-ops): wire or
    remove every no-op button.
 4. **Persistence + per-document state reset** (§7, §3, §5).

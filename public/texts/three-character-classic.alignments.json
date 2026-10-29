@@ -1,0 +1,3593 @@
+{
+  "version": 1,
+  "units": {
+    "s01": [
+      {
+        "en": "All men are born",
+        "zh": "人之初",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "the same",
+        "zh": "性相近",
+        "pinyin": "",
+        "def": "",
+        "enStart": 22,
+        "enEnd": 30
+      },
+      {
+        "en": "good nature",
+        "zh": "性本善",
+        "pinyin": "",
+        "def": "",
+        "enStart": 31,
+        "enEnd": 42
+      },
+      {
+        "en": "they acquire different habits",
+        "zh": "習相遠",
+        "pinyin": "",
+        "def": "",
+        "enStart": 65,
+        "enEnd": 94
+      }
+    ],
+    "s02": [
+      {
+        "en": "properly taught",
+        "zh": "教",
+        "pinyin": "",
+        "def": "",
+        "enStart": 22,
+        "enEnd": 37
+      },
+      {
+        "en": "his nature will gradually become bad",
+        "zh": "性乃遷",
+        "pinyin": "",
+        "def": "",
+        "enStart": 39,
+        "enEnd": 75
+      },
+      {
+        "en": "The most important thing in education",
+        "zh": "教之道，貴以專",
+        "pinyin": "",
+        "def": "",
+        "enStart": 77,
+        "enEnd": 114
+      }
+    ],
+    "s03": [
+      {
+        "en": "The mother of Mencius",
+        "zh": "孟母",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 21
+      },
+      {
+        "en": "carefully chose her neighbours",
+        "zh": "擇鄰處",
+        "pinyin": "",
+        "def": "",
+        "enStart": 22,
+        "enEnd": 52
+      },
+      {
+        "en": "when her son refused to study",
+        "zh": "子不學",
+        "pinyin": "",
+        "def": "",
+        "enStart": 91,
+        "enEnd": 120
+      },
+      {
+        "en": "she cut the cloth",
+        "zh": "斷機杼",
+        "pinyin": "",
+        "def": "",
+        "enStart": 122,
+        "enEnd": 139
+      }
+    ],
+    "s04": [
+      {
+        "en": "Old Tou Yen Shan",
+        "zh": "竇燕山",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "taught his five sons",
+        "zh": "五子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 17,
+        "enEnd": 37
+      },
+      {
+        "en": "by a good method",
+        "zh": "義方",
+        "pinyin": "",
+        "def": "",
+        "enStart": 38,
+        "enEnd": 54
+      },
+      {
+        "en": "all of them became famous men",
+        "zh": "名俱揚",
+        "pinyin": "",
+        "def": "",
+        "enStart": 60,
+        "enEnd": 89
+      }
+    ],
+    "s05": [
+      {
+        "en": "rear and feed children",
+        "zh": "養",
+        "pinyin": "",
+        "def": "",
+        "enStart": 3,
+        "enEnd": 25
+      },
+      {
+        "en": "giving them an education",
+        "zh": "教",
+        "pinyin": "",
+        "def": "",
+        "enStart": 34,
+        "enEnd": 58
+      },
+      {
+        "en": "is the father's fault",
+        "zh": "父之過",
+        "pinyin": "",
+        "def": "",
+        "enStart": 59,
+        "enEnd": 80
+      },
+      {
+        "en": "If teachers are not strict",
+        "zh": "教不嚴",
+        "pinyin": "",
+        "def": "",
+        "enStart": 82,
+        "enEnd": 108
+      },
+      {
+        "en": "they are idle teachers",
+        "zh": "師之惰",
+        "pinyin": "",
+        "def": "",
+        "enStart": 128,
+        "enEnd": 150
+      }
+    ],
+    "s06": [
+      {
+        "en": "It is wrong",
+        "zh": "非所宜",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 11
+      },
+      {
+        "en": "if children do not study",
+        "zh": "子不學",
+        "pinyin": "",
+        "def": "",
+        "enStart": 12,
+        "enEnd": 36
+      },
+      {
+        "en": "younger days",
+        "zh": "幼",
+        "pinyin": "",
+        "def": "",
+        "enStart": 72,
+        "enEnd": 84
+      },
+      {
+        "en": "older",
+        "zh": "老",
+        "pinyin": "",
+        "def": "",
+        "enStart": 117,
+        "enEnd": 122
+      }
+    ],
+    "s07": [
+      {
+        "en": "Unpolished gems",
+        "zh": "玉不琢",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 15
+      },
+      {
+        "en": "cannot form ornaments",
+        "zh": "成器",
+        "pinyin": "",
+        "def": "",
+        "enStart": 16,
+        "enEnd": 37
+      },
+      {
+        "en": "If a man is untaught",
+        "zh": "人不學",
+        "pinyin": "",
+        "def": "",
+        "enStart": 39,
+        "enEnd": 59
+      },
+      {
+        "en": "can never know his duties",
+        "zh": "知義",
+        "pinyin": "",
+        "def": "",
+        "enStart": 64,
+        "enEnd": 89
+      }
+    ],
+    "s08": [
+      {
+        "en": "In their youth",
+        "zh": "少時",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 14
+      },
+      {
+        "en": "children",
+        "zh": "人子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 16,
+        "enEnd": 24
+      },
+      {
+        "en": "attached to tutors and friends",
+        "zh": "師友",
+        "pinyin": "",
+        "def": "",
+        "enStart": 43,
+        "enEnd": 73
+      },
+      {
+        "en": "learn the rites and observances",
+        "zh": "禮儀",
+        "pinyin": "",
+        "def": "",
+        "enStart": 86,
+        "enEnd": 117
+      }
+    ],
+    "s09": [
+      {
+        "en": "know how to obey his parents",
+        "zh": "孝於親",
+        "pinyin": "",
+        "def": "",
+        "enStart": 15,
+        "enEnd": 43
+      },
+      {
+        "en": "Hsiang",
+        "zh": "香",
+        "pinyin": "",
+        "def": "",
+        "enStart": 50,
+        "enEnd": 56
+      },
+      {
+        "en": "was nine years old",
+        "zh": "九齡",
+        "pinyin": "",
+        "def": "",
+        "enStart": 57,
+        "enEnd": 75
+      },
+      {
+        "en": "he could warm the bed",
+        "zh": "溫席",
+        "pinyin": "",
+        "def": "",
+        "enStart": 77,
+        "enEnd": 98
+      }
+    ],
+    "s10": [
+      {
+        "en": "Children must respect their elders",
+        "zh": "弟於長",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 34
+      },
+      {
+        "en": "Jung",
+        "zh": "融",
+        "pinyin": "",
+        "def": "",
+        "enStart": 41,
+        "enEnd": 45
+      },
+      {
+        "en": "was four years old",
+        "zh": "四歲",
+        "pinyin": "",
+        "def": "",
+        "enStart": 46,
+        "enEnd": 64
+      },
+      {
+        "en": "bigger pear",
+        "zh": "梨",
+        "pinyin": "",
+        "def": "",
+        "enStart": 84,
+        "enEnd": 95
+      },
+      {
+        "en": "elder brother",
+        "zh": "長",
+        "pinyin": "",
+        "def": "",
+        "enStart": 103,
+        "enEnd": 116
+      }
+    ],
+    "s11": [
+      {
+        "en": "First comes duty to parents and superiors",
+        "zh": "孝弟",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 41
+      },
+      {
+        "en": "Study",
+        "zh": "見聞",
+        "pinyin": "",
+        "def": "",
+        "enStart": 43,
+        "enEnd": 48
+      },
+      {
+        "en": "laws of numbers",
+        "zh": "數",
+        "pinyin": "",
+        "def": "",
+        "enStart": 87,
+        "enEnd": 102
+      },
+      {
+        "en": "written texts",
+        "zh": "文",
+        "pinyin": "",
+        "def": "",
+        "enStart": 118,
+        "enEnd": 131
+      }
+    ],
+    "s12": [
+      {
+        "en": "units",
+        "zh": "一",
+        "pinyin": "",
+        "def": "",
+        "enStart": 26,
+        "enEnd": 31
+      },
+      {
+        "en": "tens",
+        "zh": "十",
+        "pinyin": "",
+        "def": "",
+        "enStart": 35,
+        "enEnd": 39
+      },
+      {
+        "en": "hundreds",
+        "zh": "百",
+        "pinyin": "",
+        "def": "",
+        "enStart": 49,
+        "enEnd": 57
+      },
+      {
+        "en": "thousands",
+        "zh": "千",
+        "pinyin": "",
+        "def": "",
+        "enStart": 71,
+        "enEnd": 80
+      },
+      {
+        "en": "ten thousands",
+        "zh": "萬",
+        "pinyin": "",
+        "def": "",
+        "enStart": 99,
+        "enEnd": 112
+      }
+    ],
+    "s13": [
+      {
+        "en": "The three mighty powers",
+        "zh": "三才",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 23
+      },
+      {
+        "en": "Heaven",
+        "zh": "天",
+        "pinyin": "",
+        "def": "",
+        "enStart": 38,
+        "enEnd": 44
+      },
+      {
+        "en": "Earth",
+        "zh": "地",
+        "pinyin": "",
+        "def": "",
+        "enStart": 46,
+        "enEnd": 51
+      },
+      {
+        "en": "Man",
+        "zh": "人",
+        "pinyin": "",
+        "def": "",
+        "enStart": 57,
+        "enEnd": 60
+      }
+    ],
+    "s14": [
+      {
+        "en": "The three great celestial lights",
+        "zh": "三光",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 32
+      },
+      {
+        "en": "Sun",
+        "zh": "日",
+        "pinyin": "",
+        "def": "",
+        "enStart": 41,
+        "enEnd": 44
+      },
+      {
+        "en": "Moon",
+        "zh": "月",
+        "pinyin": "",
+        "def": "",
+        "enStart": 50,
+        "enEnd": 54
+      },
+      {
+        "en": "Stars",
+        "zh": "星",
+        "pinyin": "",
+        "def": "",
+        "enStart": 64,
+        "enEnd": 69
+      }
+    ],
+    "s15": [
+      {
+        "en": "The three binding principles",
+        "zh": "三綱",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 28
+      },
+      {
+        "en": "are these: Prince and minister",
+        "zh": "君臣",
+        "pinyin": "",
+        "def": "",
+        "enStart": 29,
+        "enEnd": 59
+      },
+      {
+        "en": "other fairly; father and son",
+        "zh": "父子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 76,
+        "enEnd": 104
+      },
+      {
+        "en": "each other; husband and wife",
+        "zh": "夫婦",
+        "pinyin": "",
+        "def": "",
+        "enStart": 115,
+        "enEnd": 143
+      }
+    ],
+    "s16": [
+      {
+        "en": "spring",
+        "zh": "春",
+        "pinyin": "",
+        "def": "",
+        "enStart": 21,
+        "enEnd": 27
+      },
+      {
+        "en": "summer",
+        "zh": "夏",
+        "pinyin": "",
+        "def": "",
+        "enStart": 29,
+        "enEnd": 35
+      },
+      {
+        "en": "autumn",
+        "zh": "秋",
+        "pinyin": "",
+        "def": "",
+        "enStart": 37,
+        "enEnd": 43
+      },
+      {
+        "en": "winter",
+        "zh": "冬",
+        "pinyin": "",
+        "def": "",
+        "enStart": 49,
+        "enEnd": 55
+      },
+      {
+        "en": "They succeed one another",
+        "zh": "運不窮",
+        "pinyin": "",
+        "def": "",
+        "enStart": 57,
+        "enEnd": 81
+      }
+    ],
+    "s17": [
+      {
+        "en": "North",
+        "zh": "北",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 5
+      },
+      {
+        "en": "south",
+        "zh": "南",
+        "pinyin": "",
+        "def": "",
+        "enStart": 7,
+        "enEnd": 12
+      },
+      {
+        "en": "east",
+        "zh": "東",
+        "pinyin": "",
+        "def": "",
+        "enStart": 14,
+        "enEnd": 18
+      },
+      {
+        "en": "west",
+        "zh": "西",
+        "pinyin": "",
+        "def": "",
+        "enStart": 24,
+        "enEnd": 28
+      },
+      {
+        "en": "called the four directions",
+        "zh": "四方",
+        "pinyin": "",
+        "def": "",
+        "enStart": 33,
+        "enEnd": 59
+      },
+      {
+        "en": "central point",
+        "zh": "中",
+        "pinyin": "",
+        "def": "",
+        "enStart": 85,
+        "enEnd": 98
+      }
+    ],
+    "s18": [
+      {
+        "en": "Water",
+        "zh": "水",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 5
+      },
+      {
+        "en": "fire",
+        "zh": "火",
+        "pinyin": "",
+        "def": "",
+        "enStart": 7,
+        "enEnd": 11
+      },
+      {
+        "en": "wood",
+        "zh": "木",
+        "pinyin": "",
+        "def": "",
+        "enStart": 13,
+        "enEnd": 17
+      },
+      {
+        "en": "metal",
+        "zh": "金",
+        "pinyin": "",
+        "def": "",
+        "enStart": 19,
+        "enEnd": 24
+      },
+      {
+        "en": "earth",
+        "zh": "土",
+        "pinyin": "",
+        "def": "",
+        "enStart": 30,
+        "enEnd": 35
+      },
+      {
+        "en": "are the five elements",
+        "zh": "五行",
+        "pinyin": "",
+        "def": "",
+        "enStart": 36,
+        "enEnd": 57
+      }
+    ],
+    "s19": [
+      {
+        "en": "Goodwill",
+        "zh": "仁",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 8
+      },
+      {
+        "en": "justice",
+        "zh": "義",
+        "pinyin": "",
+        "def": "",
+        "enStart": 10,
+        "enEnd": 17
+      },
+      {
+        "en": "decorum",
+        "zh": "禮",
+        "pinyin": "",
+        "def": "",
+        "enStart": 19,
+        "enEnd": 26
+      },
+      {
+        "en": "wisdom",
+        "zh": "智",
+        "pinyin": "",
+        "def": "",
+        "enStart": 28,
+        "enEnd": 34
+      },
+      {
+        "en": "truth",
+        "zh": "信",
+        "pinyin": "",
+        "def": "",
+        "enStart": 40,
+        "enEnd": 45
+      },
+      {
+        "en": "are the five principal virtues",
+        "zh": "五常",
+        "pinyin": "",
+        "def": "",
+        "enStart": 46,
+        "enEnd": 76
+      }
+    ],
+    "s20": [
+      {
+        "en": "Paddy",
+        "zh": "稻",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 5
+      },
+      {
+        "en": "millet",
+        "zh": "粱",
+        "pinyin": "",
+        "def": "",
+        "enStart": 7,
+        "enEnd": 13
+      },
+      {
+        "en": "pulse",
+        "zh": "菽",
+        "pinyin": "",
+        "def": "",
+        "enStart": 15,
+        "enEnd": 20
+      },
+      {
+        "en": "wheat",
+        "zh": "麥",
+        "pinyin": "",
+        "def": "",
+        "enStart": 22,
+        "enEnd": 27
+      },
+      {
+        "en": "are the six important grains",
+        "zh": "六穀",
+        "pinyin": "",
+        "def": "",
+        "enStart": 60,
+        "enEnd": 88
+      },
+      {
+        "en": "consumed by mankind",
+        "zh": "人所食",
+        "pinyin": "",
+        "def": "",
+        "enStart": 89,
+        "enEnd": 108
+      }
+    ],
+    "s21": [
+      {
+        "en": "Horses",
+        "zh": "馬",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 6
+      },
+      {
+        "en": "oxen",
+        "zh": "牛",
+        "pinyin": "",
+        "def": "",
+        "enStart": 8,
+        "enEnd": 12
+      },
+      {
+        "en": "sheep",
+        "zh": "羊",
+        "pinyin": "",
+        "def": "",
+        "enStart": 14,
+        "enEnd": 19
+      },
+      {
+        "en": "fowls",
+        "zh": "雞",
+        "pinyin": "",
+        "def": "",
+        "enStart": 21,
+        "enEnd": 26
+      },
+      {
+        "en": "dogs",
+        "zh": "犬",
+        "pinyin": "",
+        "def": "",
+        "enStart": 28,
+        "enEnd": 32
+      },
+      {
+        "en": "pigs",
+        "zh": "豕",
+        "pinyin": "",
+        "def": "",
+        "enStart": 38,
+        "enEnd": 42
+      },
+      {
+        "en": "are the six animals",
+        "zh": "六畜",
+        "pinyin": "",
+        "def": "",
+        "enStart": 43,
+        "enEnd": 62
+      }
+    ],
+    "s22": [
+      {
+        "en": "Joy",
+        "zh": "喜",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 3
+      },
+      {
+        "en": "anger",
+        "zh": "怒",
+        "pinyin": "",
+        "def": "",
+        "enStart": 5,
+        "enEnd": 10
+      },
+      {
+        "en": "grief",
+        "zh": "哀",
+        "pinyin": "",
+        "def": "",
+        "enStart": 12,
+        "enEnd": 17
+      },
+      {
+        "en": "fear",
+        "zh": "懼",
+        "pinyin": "",
+        "def": "",
+        "enStart": 19,
+        "enEnd": 23
+      },
+      {
+        "en": "love",
+        "zh": "愛",
+        "pinyin": "",
+        "def": "",
+        "enStart": 25,
+        "enEnd": 29
+      },
+      {
+        "en": "hatred",
+        "zh": "惡",
+        "pinyin": "",
+        "def": "",
+        "enStart": 31,
+        "enEnd": 37
+      },
+      {
+        "en": "desire",
+        "zh": "欲",
+        "pinyin": "",
+        "def": "",
+        "enStart": 43,
+        "enEnd": 49
+      },
+      {
+        "en": "are the seven human passions",
+        "zh": "七情",
+        "pinyin": "",
+        "def": "",
+        "enStart": 50,
+        "enEnd": 78
+      }
+    ],
+    "s23": [
+      {
+        "en": "gourd",
+        "zh": "匏",
+        "pinyin": "",
+        "def": "",
+        "enStart": 62,
+        "enEnd": 67
+      },
+      {
+        "en": "clay",
+        "zh": "土",
+        "pinyin": "",
+        "def": "",
+        "enStart": 69,
+        "enEnd": 73
+      },
+      {
+        "en": "leather",
+        "zh": "革",
+        "pinyin": "",
+        "def": "",
+        "enStart": 75,
+        "enEnd": 82
+      },
+      {
+        "en": "wood",
+        "zh": "木",
+        "pinyin": "",
+        "def": "",
+        "enStart": 84,
+        "enEnd": 88
+      },
+      {
+        "en": "stone",
+        "zh": "石",
+        "pinyin": "",
+        "def": "",
+        "enStart": 90,
+        "enEnd": 95
+      },
+      {
+        "en": "metal",
+        "zh": "金",
+        "pinyin": "",
+        "def": "",
+        "enStart": 97,
+        "enEnd": 102
+      },
+      {
+        "en": "strings",
+        "zh": "絲",
+        "pinyin": "",
+        "def": "",
+        "enStart": 104,
+        "enEnd": 111
+      },
+      {
+        "en": "bamboo",
+        "zh": "竹",
+        "pinyin": "",
+        "def": "",
+        "enStart": 117,
+        "enEnd": 123
+      }
+    ],
+    "s24": [
+      {
+        "en": "grandfather",
+        "zh": "父",
+        "pinyin": "",
+        "def": "",
+        "enStart": 12,
+        "enEnd": 23
+      },
+      {
+        "en": "oneself",
+        "zh": "身",
+        "pinyin": "",
+        "def": "",
+        "enStart": 65,
+        "enEnd": 72
+      },
+      {
+        "en": "are the nine generations",
+        "zh": "九族",
+        "pinyin": "",
+        "def": "",
+        "enStart": 130,
+        "enEnd": 154
+      },
+      {
+        "en": "the order of family relationships",
+        "zh": "人之倫",
+        "pinyin": "",
+        "def": "",
+        "enStart": 158,
+        "enEnd": 191
+      }
+    ],
+    "s25": [
+      {
+        "en": "The ten moral duties",
+        "zh": "十義",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 20
+      },
+      {
+        "en": "are these: father and son",
+        "zh": "父子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 43,
+        "enEnd": 68
+      },
+      {
+        "en": "other kindly; husband and wife",
+        "zh": "夫婦",
+        "pinyin": "",
+        "def": "",
+        "enStart": 84,
+        "enEnd": 114
+      },
+      {
+        "en": "elder brothers",
+        "zh": "兄",
+        "pinyin": "",
+        "def": "",
+        "enStart": 148,
+        "enEnd": 162
+      },
+      {
+        "en": "younger brothers",
+        "zh": "弟",
+        "pinyin": "",
+        "def": "",
+        "enStart": 188,
+        "enEnd": 204
+      },
+      {
+        "en": "to their ranks; friends",
+        "zh": "友與朋",
+        "pinyin": "",
+        "def": "",
+        "enStart": 275,
+        "enEnd": 298
+      },
+      {
+        "en": "sovereign",
+        "zh": "君",
+        "pinyin": "",
+        "def": "",
+        "enStart": 341,
+        "enEnd": 350
+      },
+      {
+        "en": "courtiers",
+        "zh": "臣",
+        "pinyin": "",
+        "def": "",
+        "enStart": 367,
+        "enEnd": 376
+      }
+    ],
+    "s26": [
+      {
+        "en": "In teaching the young",
+        "zh": "訓蒙",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 21
+      },
+      {
+        "en": "must explain the full meanings of words",
+        "zh": "詳訓詁",
+        "pinyin": "",
+        "def": "",
+        "enStart": 27,
+        "enEnd": 66
+      },
+      {
+        "en": "explain idiomatic expressions",
+        "zh": "訓詁",
+        "pinyin": "",
+        "def": "",
+        "enStart": 68,
+        "enEnd": 97
+      },
+      {
+        "en": "distinguish between commas and full stops",
+        "zh": "句讀",
+        "pinyin": "",
+        "def": "",
+        "enStart": 121,
+        "enEnd": 162
+      }
+    ],
+    "s27": [
+      {
+        "en": "Scholars of Chinese",
+        "zh": "為學者",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 19
+      },
+      {
+        "en": "study the Learning of the Young",
+        "zh": "小學",
+        "pinyin": "",
+        "def": "",
+        "enStart": 33,
+        "enEnd": 64
+      },
+      {
+        "en": "study the Four Books",
+        "zh": "四書",
+        "pinyin": "",
+        "def": "",
+        "enStart": 271,
+        "enEnd": 291
+      }
+    ],
+    "s28": [
+      {
+        "en": "The Analects of Confucius",
+        "zh": "論語",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 25
+      },
+      {
+        "en": "contains twenty chapters",
+        "zh": "二十篇",
+        "pinyin": "",
+        "def": "",
+        "enStart": 26,
+        "enEnd": 50
+      },
+      {
+        "en": "of the Sage's sayings",
+        "zh": "善言",
+        "pinyin": "",
+        "def": "",
+        "enStart": 51,
+        "enEnd": 72
+      },
+      {
+        "en": "recorded by his disciples",
+        "zh": "群弟子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 74,
+        "enEnd": 99
+      }
+    ],
+    "s29": [
+      {
+        "en": "The Works of Mencius",
+        "zh": "孟子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 20
+      },
+      {
+        "en": "contains seven chapters",
+        "zh": "七篇",
+        "pinyin": "",
+        "def": "",
+        "enStart": 21,
+        "enEnd": 44
+      },
+      {
+        "en": "explaining humanity and righteousness",
+        "zh": "仁義",
+        "pinyin": "",
+        "def": "",
+        "enStart": 45,
+        "enEnd": 82
+      },
+      {
+        "en": "and discussing virtuous conduct",
+        "zh": "道德",
+        "pinyin": "",
+        "def": "",
+        "enStart": 83,
+        "enEnd": 114
+      }
+    ],
+    "s30": [
+      {
+        "en": "The Doctrine of the Golden Mean",
+        "zh": "中庸",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 31
+      },
+      {
+        "en": "written by K'ung Chi",
+        "zh": "子思",
+        "pinyin": "",
+        "def": "",
+        "enStart": 36,
+        "enEnd": 56
+      },
+      {
+        "en": "word Chung means impartial principles",
+        "zh": "中不偏",
+        "pinyin": "",
+        "def": "",
+        "enStart": 89,
+        "enEnd": 126
+      },
+      {
+        "en": "and Yung means fixed principles",
+        "zh": "庸不易",
+        "pinyin": "",
+        "def": "",
+        "enStart": 128,
+        "enEnd": 159
+      }
+    ],
+    "s31": [
+      {
+        "en": "The Great Learning",
+        "zh": "大學",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 18
+      },
+      {
+        "en": "by the philosopher Tseng",
+        "zh": "曾子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 31,
+        "enEnd": 55
+      },
+      {
+        "en": "improve our morals",
+        "zh": "修",
+        "pinyin": "",
+        "def": "",
+        "enStart": 103,
+        "enEnd": 121
+      },
+      {
+        "en": "regulate our family life",
+        "zh": "齊",
+        "pinyin": "",
+        "def": "",
+        "enStart": 126,
+        "enEnd": 150
+      },
+      {
+        "en": "state may be properly governed",
+        "zh": "治",
+        "pinyin": "",
+        "def": "",
+        "enStart": 164,
+        "enEnd": 194
+      }
+    ],
+    "s32": [
+      {
+        "en": "learning the Filial Code",
+        "zh": "孝經",
+        "pinyin": "",
+        "def": "",
+        "enStart": 17,
+        "enEnd": 41
+      },
+      {
+        "en": "and the Four Books",
+        "zh": "四書",
+        "pinyin": "",
+        "def": "",
+        "enStart": 42,
+        "enEnd": 60
+      },
+      {
+        "en": "study the Six Classics",
+        "zh": "六經",
+        "pinyin": "",
+        "def": "",
+        "enStart": 80,
+        "enEnd": 102
+      }
+    ],
+    "s33": [
+      {
+        "en": "The Six Classics",
+        "zh": "六經",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "Book of Odes",
+        "zh": "詩",
+        "pinyin": "",
+        "def": "",
+        "enStart": 25,
+        "enEnd": 37
+      },
+      {
+        "en": "Records",
+        "zh": "書",
+        "pinyin": "",
+        "def": "",
+        "enStart": 43,
+        "enEnd": 50
+      },
+      {
+        "en": "Book of Changes",
+        "zh": "易",
+        "pinyin": "",
+        "def": "",
+        "enStart": 56,
+        "enEnd": 71
+      },
+      {
+        "en": "Book of Rites",
+        "zh": "禮",
+        "pinyin": "",
+        "def": "",
+        "enStart": 77,
+        "enEnd": 90
+      },
+      {
+        "en": "and the Spring and Autumn Annals",
+        "zh": "春秋",
+        "pinyin": "",
+        "def": "",
+        "enStart": 111,
+        "enEnd": 143
+      }
+    ],
+    "s34": [
+      {
+        "en": "Book of Changes",
+        "zh": "易",
+        "pinyin": "",
+        "def": "",
+        "enStart": 4,
+        "enEnd": 19
+      },
+      {
+        "en": "includes the Lien Shan",
+        "zh": "連山",
+        "pinyin": "",
+        "def": "",
+        "enStart": 20,
+        "enEnd": 42
+      },
+      {
+        "en": "the Kui Ts'ang",
+        "zh": "歸藏",
+        "pinyin": "",
+        "def": "",
+        "enStart": 64,
+        "enEnd": 78
+      },
+      {
+        "en": "and the Chou Ih",
+        "zh": "周易",
+        "pinyin": "",
+        "def": "",
+        "enStart": 101,
+        "enEnd": 116
+      },
+      {
+        "en": "These are three theories",
+        "zh": "三易",
+        "pinyin": "",
+        "def": "",
+        "enStart": 138,
+        "enEnd": 162
+      }
+    ],
+    "s35": [
+      {
+        "en": "Records",
+        "zh": "書",
+        "pinyin": "",
+        "def": "",
+        "enStart": 4,
+        "enEnd": 11
+      },
+      {
+        "en": "contains the Royal and Ministerial Canons",
+        "zh": "典謨",
+        "pinyin": "",
+        "def": "",
+        "enStart": 12,
+        "enEnd": 53
+      },
+      {
+        "en": "the Instructions",
+        "zh": "訓誥",
+        "pinyin": "",
+        "def": "",
+        "enStart": 55,
+        "enEnd": 71
+      },
+      {
+        "en": "Solemn Vows",
+        "zh": "誓",
+        "pinyin": "",
+        "def": "",
+        "enStart": 94,
+        "enEnd": 105
+      },
+      {
+        "en": "Commands",
+        "zh": "命",
+        "pinyin": "",
+        "def": "",
+        "enStart": 115,
+        "enEnd": 123
+      }
+    ],
+    "s36": [
+      {
+        "en": "The Duke of Chou",
+        "zh": "周公",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "wrote the Rites of Chou",
+        "zh": "周禮",
+        "pinyin": "",
+        "def": "",
+        "enStart": 17,
+        "enEnd": 40
+      },
+      {
+        "en": "appointed the Six Boards",
+        "zh": "六官",
+        "pinyin": "",
+        "def": "",
+        "enStart": 45,
+        "enEnd": 69
+      },
+      {
+        "en": "seasons in governing the affairs of the state",
+        "zh": "治體",
+        "pinyin": "",
+        "def": "",
+        "enStart": 109,
+        "enEnd": 154
+      }
+    ],
+    "s37": [
+      {
+        "en": "Tai Senior and Tai Junior",
+        "zh": "大小戴",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 25
+      },
+      {
+        "en": "on the Book of Rites",
+        "zh": "禮記",
+        "pinyin": "",
+        "def": "",
+        "enStart": 36,
+        "enEnd": 56
+      },
+      {
+        "en": "retold the sayings of the Sages",
+        "zh": "聖言",
+        "pinyin": "",
+        "def": "",
+        "enStart": 61,
+        "enEnd": 92
+      },
+      {
+        "en": "rules of rites",
+        "zh": "禮",
+        "pinyin": "",
+        "def": "",
+        "enStart": 98,
+        "enEnd": 112
+      },
+      {
+        "en": "theory of music",
+        "zh": "樂",
+        "pinyin": "",
+        "def": "",
+        "enStart": 121,
+        "enEnd": 136
+      }
+    ],
+    "s38": [
+      {
+        "en": "Book of Odes",
+        "zh": "詩",
+        "pinyin": "",
+        "def": "",
+        "enStart": 26,
+        "enEnd": 38
+      },
+      {
+        "en": "the Ballads",
+        "zh": "國風",
+        "pinyin": "",
+        "def": "",
+        "enStart": 39,
+        "enEnd": 50
+      },
+      {
+        "en": "Eulogies of the Emperor",
+        "zh": "雅",
+        "pinyin": "",
+        "def": "",
+        "enStart": 56,
+        "enEnd": 79
+      },
+      {
+        "en": "Sacrificial Songs",
+        "zh": "頌",
+        "pinyin": "",
+        "def": "",
+        "enStart": 121,
+        "enEnd": 138
+      },
+      {
+        "en": "should be read by every scholar",
+        "zh": "當諷詠",
+        "pinyin": "",
+        "def": "",
+        "enStart": 139,
+        "enEnd": 170
+      }
+    ],
+    "s39": [
+      {
+        "en": "The Spring and Autumn Annals",
+        "zh": "春秋",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 28
+      },
+      {
+        "en": "praises virtue",
+        "zh": "褒",
+        "pinyin": "",
+        "def": "",
+        "enStart": 170,
+        "enEnd": 184
+      },
+      {
+        "en": "condemns vice",
+        "zh": "貶",
+        "pinyin": "",
+        "def": "",
+        "enStart": 190,
+        "enEnd": 203
+      }
+    ],
+    "s40": [
+      {
+        "en": "The critics Kung Yang",
+        "zh": "公羊",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 21
+      },
+      {
+        "en": "Tsuo Shih",
+        "zh": "左氏",
+        "pinyin": "",
+        "def": "",
+        "enStart": 23,
+        "enEnd": 32
+      },
+      {
+        "en": "and Ku Liang",
+        "zh": "穀梁",
+        "pinyin": "",
+        "def": "",
+        "enStart": 34,
+        "enEnd": 46
+      },
+      {
+        "en": "wrote three different commentaries",
+        "zh": "三傳",
+        "pinyin": "",
+        "def": "",
+        "enStart": 47,
+        "enEnd": 81
+      }
+    ],
+    "s41": [
+      {
+        "en": "After mastering the Classics",
+        "zh": "經既明",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 28
+      },
+      {
+        "en": "great philosophers",
+        "zh": "子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 61,
+        "enEnd": 79
+      },
+      {
+        "en": "choose the important passages",
+        "zh": "其要",
+        "pinyin": "",
+        "def": "",
+        "enStart": 127,
+        "enEnd": 156
+      },
+      {
+        "en": "commit them to memory",
+        "zh": "記",
+        "pinyin": "",
+        "def": "",
+        "enStart": 161,
+        "enEnd": 182
+      }
+    ],
+    "s42": [
+      {
+        "en": "The Five Philosophers",
+        "zh": "五子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 21
+      },
+      {
+        "en": "Hsiin-tzu",
+        "zh": "荀",
+        "pinyin": "",
+        "def": "",
+        "enStart": 27,
+        "enEnd": 36
+      },
+      {
+        "en": "Yang-tzu",
+        "zh": "楊",
+        "pinyin": "",
+        "def": "",
+        "enStart": 38,
+        "enEnd": 46
+      },
+      {
+        "en": "Wen Chung-tzu",
+        "zh": "文中子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 48,
+        "enEnd": 61
+      },
+      {
+        "en": "Lao-tzu",
+        "zh": "老",
+        "pinyin": "",
+        "def": "",
+        "enStart": 63,
+        "enEnd": 70
+      },
+      {
+        "en": "Chuang-tzu",
+        "zh": "莊",
+        "pinyin": "",
+        "def": "",
+        "enStart": 76,
+        "enEnd": 86
+      }
+    ],
+    "s43": [
+      {
+        "en": "Classics",
+        "zh": "經",
+        "pinyin": "",
+        "def": "",
+        "enStart": 19,
+        "enEnd": 27
+      },
+      {
+        "en": "great philosophers",
+        "zh": "子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 57,
+        "enEnd": 75
+      },
+      {
+        "en": "study the history of the successive dynasties",
+        "zh": "諸史",
+        "pinyin": "",
+        "def": "",
+        "enStart": 77,
+        "enEnd": 122
+      },
+      {
+        "en": "trace their beginnings and endings",
+        "zh": "終始",
+        "pinyin": "",
+        "def": "",
+        "enStart": 134,
+        "enEnd": 168
+      },
+      {
+        "en": "understand the rise and fall",
+        "zh": "世系",
+        "pinyin": "",
+        "def": "",
+        "enStart": 174,
+        "enEnd": 202
+      }
+    ],
+    "s44": [
+      {
+        "en": "Emperor Fu-hsi",
+        "zh": "羲",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 14
+      },
+      {
+        "en": "Emperor Shen-nung",
+        "zh": "農",
+        "pinyin": "",
+        "def": "",
+        "enStart": 16,
+        "enEnd": 33
+      },
+      {
+        "en": "and Emperor Huang-ti",
+        "zh": "黃帝",
+        "pinyin": "",
+        "def": "",
+        "enStart": 35,
+        "enEnd": 55
+      },
+      {
+        "en": "were the Three Emperors",
+        "zh": "三皇",
+        "pinyin": "",
+        "def": "",
+        "enStart": 56,
+        "enEnd": 79
+      },
+      {
+        "en": "of High Antiquity",
+        "zh": "上世",
+        "pinyin": "",
+        "def": "",
+        "enStart": 80,
+        "enEnd": 97
+      }
+    ],
+    "s45": [
+      {
+        "en": "Emperor Yao",
+        "zh": "唐",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 11
+      },
+      {
+        "en": "Emperor Shun",
+        "zh": "虞",
+        "pinyin": "",
+        "def": "",
+        "enStart": 16,
+        "enEnd": 28
+      },
+      {
+        "en": "were two celebrated emperors",
+        "zh": "二帝",
+        "pinyin": "",
+        "def": "",
+        "enStart": 29,
+        "enEnd": 57
+      },
+      {
+        "en": "as the Golden Age",
+        "zh": "盛世",
+        "pinyin": "",
+        "def": "",
+        "enStart": 93,
+        "enEnd": 110
+      },
+      {
+        "en": "Both abdicated their thrones",
+        "zh": "揖遜",
+        "pinyin": "",
+        "def": "",
+        "enStart": 112,
+        "enEnd": 140
+      }
+    ],
+    "s46": [
+      {
+        "en": "King Yu",
+        "zh": "禹",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 7
+      },
+      {
+        "en": "Hsia dynasty",
+        "zh": "夏",
+        "pinyin": "",
+        "def": "",
+        "enStart": 15,
+        "enEnd": 27
+      },
+      {
+        "en": "King Tang",
+        "zh": "湯",
+        "pinyin": "",
+        "def": "",
+        "enStart": 29,
+        "enEnd": 38
+      },
+      {
+        "en": "Shang dynasty",
+        "zh": "商",
+        "pinyin": "",
+        "def": "",
+        "enStart": 46,
+        "enEnd": 59
+      },
+      {
+        "en": "and King Wen and King Wu",
+        "zh": "周文武",
+        "pinyin": "",
+        "def": "",
+        "enStart": 61,
+        "enEnd": 85
+      },
+      {
+        "en": "dynasty were celebrated rulers",
+        "zh": "三王",
+        "pinyin": "",
+        "def": "",
+        "enStart": 98,
+        "enEnd": 128
+      }
+    ],
+    "s47": [
+      {
+        "en": "Hsia dynasty",
+        "zh": "夏",
+        "pinyin": "",
+        "def": "",
+        "enStart": 7,
+        "enEnd": 19
+      },
+      {
+        "en": "thrones became hereditary",
+        "zh": "傳子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 21,
+        "enEnd": 46
+      },
+      {
+        "en": "this continued for four centuries",
+        "zh": "四百載",
+        "pinyin": "",
+        "def": "",
+        "enStart": 52,
+        "enEnd": 85
+      },
+      {
+        "en": "before the dynasty was replaced",
+        "zh": "遷夏社",
+        "pinyin": "",
+        "def": "",
+        "enStart": 86,
+        "enEnd": 117
+      }
+    ],
+    "s48": [
+      {
+        "en": "Hsia dynasty",
+        "zh": "夏",
+        "pinyin": "",
+        "def": "",
+        "enStart": 24,
+        "enEnd": 36
+      },
+      {
+        "en": "was conquered by Tang",
+        "zh": "湯伐夏",
+        "pinyin": "",
+        "def": "",
+        "enStart": 37,
+        "enEnd": 58
+      },
+      {
+        "en": "who founded the Shang dynasty",
+        "zh": "國號商",
+        "pinyin": "",
+        "def": "",
+        "enStart": 60,
+        "enEnd": 89
+      },
+      {
+        "en": "for more than six centuries",
+        "zh": "六百載",
+        "pinyin": "",
+        "def": "",
+        "enStart": 111,
+        "enEnd": 138
+      }
+    ],
+    "s49": [
+      {
+        "en": "Emperor Chou",
+        "zh": "紂",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 12
+      },
+      {
+        "en": "tyrant. He was killed by Wu",
+        "zh": "周武王",
+        "pinyin": "",
+        "def": "",
+        "enStart": 19,
+        "enEnd": 46
+      },
+      {
+        "en": "founded the Chou dynasty",
+        "zh": "周",
+        "pinyin": "",
+        "def": "",
+        "enStart": 71,
+        "enEnd": 95
+      },
+      {
+        "en": "dynasty lasted for eight hundred years",
+        "zh": "八百載",
+        "pinyin": "",
+        "def": "",
+        "enStart": 102,
+        "enEnd": 140
+      },
+      {
+        "en": "the longest of all",
+        "zh": "最長久",
+        "pinyin": "",
+        "def": "",
+        "enStart": 142,
+        "enEnd": 160
+      }
+    ],
+    "s50": [
+      {
+        "en": "Ch'in dynasty",
+        "zh": "秦",
+        "pinyin": "",
+        "def": "",
+        "enStart": 32,
+        "enEnd": 45
+      },
+      {
+        "en": "which united the empire",
+        "zh": "始兼並",
+        "pinyin": "",
+        "def": "",
+        "enStart": 47,
+        "enEnd": 70
+      },
+      {
+        "en": "but did not last long",
+        "zh": "傳二世",
+        "pinyin": "",
+        "def": "",
+        "enStart": 71,
+        "enEnd": 92
+      }
+    ],
+    "s51": [
+      {
+        "en": "Han became emperor",
+        "zh": "高祖興",
+        "pinyin": "",
+        "def": "",
+        "enStart": 29,
+        "enEnd": 47
+      },
+      {
+        "en": "known as Emperor Han Kao-tsu",
+        "zh": "高祖",
+        "pinyin": "",
+        "def": "",
+        "enStart": 56,
+        "enEnd": 84
+      },
+      {
+        "en": "Ch'in and founded the Han dynasty",
+        "zh": "漢業建",
+        "pinyin": "",
+        "def": "",
+        "enStart": 114,
+        "enEnd": 147
+      }
+    ],
+    "s52": [
+      {
+        "en": "Emperor Kuang Wu",
+        "zh": "光武",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "Han Empire",
+        "zh": "漢",
+        "pinyin": "",
+        "def": "",
+        "enStart": 55,
+        "enEnd": 65
+      },
+      {
+        "en": "or Later Han dynasty",
+        "zh": "東漢",
+        "pinyin": "",
+        "def": "",
+        "enStart": 97,
+        "enEnd": 117
+      }
+    ],
+    "s53": [
+      {
+        "en": "dynasties of Western Chin",
+        "zh": "兩晉",
+        "pinyin": "",
+        "def": "",
+        "enStart": 4,
+        "enEnd": 29
+      },
+      {
+        "en": "and Eastern Chin",
+        "zh": "兩晉",
+        "pinyin": "",
+        "def": "",
+        "enStart": 30,
+        "enEnd": 46
+      },
+      {
+        "en": "of the Three Kingdoms",
+        "zh": "三國",
+        "pinyin": "",
+        "def": "",
+        "enStart": 67,
+        "enEnd": 88
+      },
+      {
+        "en": "Wei",
+        "zh": "魏",
+        "pinyin": "",
+        "def": "",
+        "enStart": 111,
+        "enEnd": 114
+      },
+      {
+        "en": "Shu",
+        "zh": "蜀",
+        "pinyin": "",
+        "def": "",
+        "enStart": 116,
+        "enEnd": 119
+      },
+      {
+        "en": "Wu",
+        "zh": "吳",
+        "pinyin": "",
+        "def": "",
+        "enStart": 125,
+        "enEnd": 127
+      }
+    ],
+    "s54": [
+      {
+        "en": "Liu Sung",
+        "zh": "宋",
+        "pinyin": "",
+        "def": "",
+        "enStart": 31,
+        "enEnd": 39
+      },
+      {
+        "en": "Chi",
+        "zh": "齊",
+        "pinyin": "",
+        "def": "",
+        "enStart": 41,
+        "enEnd": 44
+      },
+      {
+        "en": "Liang",
+        "zh": "梁",
+        "pinyin": "",
+        "def": "",
+        "enStart": 46,
+        "enEnd": 51
+      },
+      {
+        "en": "Ch'en",
+        "zh": "陳",
+        "pinyin": "",
+        "def": "",
+        "enStart": 57,
+        "enEnd": 62
+      }
+    ],
+    "s55": [
+      {
+        "en": "Yuan Wei",
+        "zh": "元魏",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 8
+      },
+      {
+        "en": "Northern dynasty",
+        "zh": "北",
+        "pinyin": "",
+        "def": "",
+        "enStart": 14,
+        "enEnd": 30
+      },
+      {
+        "en": "Eastern Wei",
+        "zh": "東",
+        "pinyin": "",
+        "def": "",
+        "enStart": 49,
+        "enEnd": 60
+      },
+      {
+        "en": "Western Wei",
+        "zh": "西",
+        "pinyin": "",
+        "def": "",
+        "enStart": 65,
+        "enEnd": 76
+      },
+      {
+        "en": "followed by Northern Chi",
+        "zh": "高齊",
+        "pinyin": "",
+        "def": "",
+        "enStart": 89,
+        "enEnd": 113
+      },
+      {
+        "en": "and Northern Chou",
+        "zh": "宇文周",
+        "pinyin": "",
+        "def": "",
+        "enStart": 114,
+        "enEnd": 131
+      }
+    ],
+    "s56": [
+      {
+        "en": "The empire remained united",
+        "zh": "一土宇",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 26
+      },
+      {
+        "en": "Sui dynasty",
+        "zh": "隋",
+        "pinyin": "",
+        "def": "",
+        "enStart": 37,
+        "enEnd": 48
+      },
+      {
+        "en": "last more than two generations",
+        "zh": "不再傳",
+        "pinyin": "",
+        "def": "",
+        "enStart": 75,
+        "enEnd": 105
+      },
+      {
+        "en": "and the empire was soon in disorder",
+        "zh": "失統緒",
+        "pinyin": "",
+        "def": "",
+        "enStart": 107,
+        "enEnd": 142
+      }
+    ],
+    "s57": [
+      {
+        "en": "Sui",
+        "zh": "隋",
+        "pinyin": "",
+        "def": "",
+        "enStart": 10,
+        "enEnd": 13
+      },
+      {
+        "en": "T'ang dynasty",
+        "zh": "唐",
+        "pinyin": "",
+        "def": "",
+        "enStart": 23,
+        "enEnd": 36
+      },
+      {
+        "en": "which brought peace and order",
+        "zh": "除隋亂",
+        "pinyin": "",
+        "def": "",
+        "enStart": 38,
+        "enEnd": 67
+      },
+      {
+        "en": "empire",
+        "zh": "國",
+        "pinyin": "",
+        "def": "",
+        "enStart": 75,
+        "enEnd": 81
+      }
+    ],
+    "s58": [
+      {
+        "en": "T'ang dynasty",
+        "zh": "唐",
+        "pinyin": "",
+        "def": "",
+        "enStart": 4,
+        "enEnd": 17
+      },
+      {
+        "en": "by the Five Dynasties",
+        "zh": "五代",
+        "pinyin": "",
+        "def": "",
+        "enStart": 31,
+        "enEnd": 52
+      },
+      {
+        "en": "Later Liang",
+        "zh": "梁",
+        "pinyin": "",
+        "def": "",
+        "enStart": 54,
+        "enEnd": 65
+      },
+      {
+        "en": "Later Chin",
+        "zh": "晉",
+        "pinyin": "",
+        "def": "",
+        "enStart": 80,
+        "enEnd": 90
+      },
+      {
+        "en": "Later Han",
+        "zh": "漢",
+        "pinyin": "",
+        "def": "",
+        "enStart": 92,
+        "enEnd": 101
+      },
+      {
+        "en": "Later Chou",
+        "zh": "周",
+        "pinyin": "",
+        "def": "",
+        "enStart": 107,
+        "enEnd": 117
+      }
+    ],
+    "s59": [
+      {
+        "en": "Sung dynasty",
+        "zh": "宋",
+        "pinyin": "",
+        "def": "",
+        "enStart": 4,
+        "enEnd": 16
+      }
+    ],
+    "s60": [
+      {
+        "en": "history",
+        "zh": "史",
+        "pinyin": "",
+        "def": "",
+        "enStart": 4,
+        "enEnd": 11
+      },
+      {
+        "en": "of the successive dynasties",
+        "zh": "十七史",
+        "pinyin": "",
+        "def": "",
+        "enStart": 12,
+        "enEnd": 39
+      },
+      {
+        "en": "understand the rise and fall",
+        "zh": "興衰",
+        "pinyin": "",
+        "def": "",
+        "enStart": 90,
+        "enEnd": 118
+      }
+    ],
+    "s62": [
+      {
+        "en": "Confucius",
+        "zh": "仲尼",
+        "pinyin": "",
+        "def": "",
+        "enStart": 77,
+        "enEnd": 86
+      },
+      {
+        "en": "not hesitate to learn from Hsiang T'uo",
+        "zh": "師項橐",
+        "pinyin": "",
+        "def": "",
+        "enStart": 91,
+        "enEnd": 129
+      }
+    ],
+    "s61": [
+      {
+        "en": "The ancient sages and worthies",
+        "zh": "古聖賢",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 30
+      },
+      {
+        "en": "were diligent",
+        "zh": "勤學",
+        "pinyin": "",
+        "def": "",
+        "enStart": 31,
+        "enEnd": 44
+      },
+      {
+        "en": "studies",
+        "zh": "學",
+        "pinyin": "",
+        "def": "",
+        "enStart": 54,
+        "enEnd": 61
+      }
+    ],
+    "s63": [
+      {
+        "en": "Despite his heavy duties",
+        "zh": "既仕",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 24
+      },
+      {
+        "en": "Mr. Chao",
+        "zh": "趙中令",
+        "pinyin": "",
+        "def": "",
+        "enStart": 26,
+        "enEnd": 34
+      },
+      {
+        "en": "a Cabinet Minister",
+        "zh": "中令",
+        "pinyin": "",
+        "def": "",
+        "enStart": 36,
+        "enEnd": 54
+      },
+      {
+        "en": "loved to study",
+        "zh": "學且勤",
+        "pinyin": "",
+        "def": "",
+        "enStart": 76,
+        "enEnd": 90
+      },
+      {
+        "en": "the Confucian Analects",
+        "zh": "魯論",
+        "pinyin": "",
+        "def": "",
+        "enStart": 91,
+        "enEnd": 113
+      }
+    ],
+    "s64": [
+      {
+        "en": "Having no books",
+        "zh": "無書",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 15
+      },
+      {
+        "en": "shu wove rushes into mats",
+        "zh": "蒲編",
+        "pinyin": "",
+        "def": "",
+        "enStart": 36,
+        "enEnd": 61
+      },
+      {
+        "en": "them as writing materials",
+        "zh": "竹簡",
+        "pinyin": "",
+        "def": "",
+        "enStart": 71,
+        "enEnd": 96
+      },
+      {
+        "en": "Sun-hung studied diligently",
+        "zh": "知勉",
+        "pinyin": "",
+        "def": "",
+        "enStart": 103,
+        "enEnd": 130
+      }
+    ],
+    "s65": [
+      {
+        "en": "afraid of falling asleep",
+        "zh": "頭懸梁",
+        "pinyin": "",
+        "def": "",
+        "enStart": 29,
+        "enEnd": 53
+      },
+      {
+        "en": "over their studies",
+        "zh": "不教",
+        "pinyin": "",
+        "def": "",
+        "enStart": 54,
+        "enEnd": 72
+      },
+      {
+        "en": "who tied his hair to a beam",
+        "zh": "頭懸梁",
+        "pinyin": "",
+        "def": "",
+        "enStart": 143,
+        "enEnd": 170
+      },
+      {
+        "en": "who pricked himself with an awl",
+        "zh": "錐刺股",
+        "pinyin": "",
+        "def": "",
+        "enStart": 196,
+        "enEnd": 227
+      }
+    ],
+    "s66": [
+      {
+        "en": "by the light of fireflies",
+        "zh": "囊螢",
+        "pinyin": "",
+        "def": "",
+        "enStart": 16,
+        "enEnd": 41
+      },
+      {
+        "en": "by the light reflected from snow",
+        "zh": "映雪",
+        "pinyin": "",
+        "def": "",
+        "enStart": 63,
+        "enEnd": 95
+      },
+      {
+        "en": "Both persevered",
+        "zh": "學不輟",
+        "pinyin": "",
+        "def": "",
+        "enStart": 97,
+        "enEnd": 112
+      }
+    ],
+    "s67": [
+      {
+        "en": "studied while carrying firewood",
+        "zh": "負薪",
+        "pinyin": "",
+        "def": "",
+        "enStart": 14,
+        "enEnd": 45
+      },
+      {
+        "en": "from his cow's horn",
+        "zh": "掛角",
+        "pinyin": "",
+        "def": "",
+        "enStart": 71,
+        "enEnd": 90
+      }
+    ],
+    "s68": [
+      {
+        "en": "take one's studies seriously",
+        "zh": "讀書籍",
+        "pinyin": "",
+        "def": "",
+        "enStart": 30,
+        "enEnd": 58
+      },
+      {
+        "en": "it may be too late to learn",
+        "zh": "猶悔遲",
+        "pinyin": "",
+        "def": "",
+        "enStart": 64,
+        "enEnd": 91
+      },
+      {
+        "en": "one is older. Su Lao-ch'uan",
+        "zh": "蘇老泉",
+        "pinyin": "",
+        "def": "",
+        "enStart": 97,
+        "enEnd": 124
+      },
+      {
+        "en": "this and worked hard",
+        "zh": "發憤",
+        "pinyin": "",
+        "def": "",
+        "enStart": 134,
+        "enEnd": 154
+      },
+      {
+        "en": "in his later years",
+        "zh": "既老",
+        "pinyin": "",
+        "def": "",
+        "enStart": 155,
+        "enEnd": 173
+      }
+    ],
+    "s69": [
+      {
+        "en": "Liang Hao",
+        "zh": "梁灝",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 9
+      },
+      {
+        "en": "passed the oral examinations",
+        "zh": "對大廷",
+        "pinyin": "",
+        "def": "",
+        "enStart": 10,
+        "enEnd": 38
+      },
+      {
+        "en": "in the Imperial Court",
+        "zh": "大廷",
+        "pinyin": "",
+        "def": "",
+        "enStart": 39,
+        "enEnd": 60
+      },
+      {
+        "en": "success at an advanced age",
+        "zh": "八十二",
+        "pinyin": "",
+        "def": "",
+        "enStart": 118,
+        "enEnd": 144
+      },
+      {
+        "en": "proving that perseverance brings results",
+        "zh": "彼晚成",
+        "pinyin": "",
+        "def": "",
+        "enStart": 146,
+        "enEnd": 186
+      }
+    ],
+    "s70": [
+      {
+        "en": "Ying",
+        "zh": "瑩",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 4
+      },
+      {
+        "en": "recite the Odes",
+        "zh": "詠詩",
+        "pinyin": "",
+        "def": "",
+        "enStart": 40,
+        "enEnd": 55
+      },
+      {
+        "en": "at the age of eight",
+        "zh": "八歲",
+        "pinyin": "",
+        "def": "",
+        "enStart": 56,
+        "enEnd": 75
+      },
+      {
+        "en": "Pi",
+        "zh": "泌",
+        "pinyin": "",
+        "def": "",
+        "enStart": 81,
+        "enEnd": 83
+      },
+      {
+        "en": "at the age of seven",
+        "zh": "七歲",
+        "pinyin": "",
+        "def": "",
+        "enStart": 134,
+        "enEnd": 153
+      },
+      {
+        "en": "They were talented",
+        "zh": "穎悟",
+        "pinyin": "",
+        "def": "",
+        "enStart": 155,
+        "enEnd": 173
+      },
+      {
+        "en": "admired by everyone. Young people",
+        "zh": "爾幼學",
+        "pinyin": "",
+        "def": "",
+        "enStart": 178,
+        "enEnd": 211
+      }
+    ],
+    "s71": [
+      {
+        "en": "There were two brilliant girls",
+        "zh": "彼女子",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 30
+      },
+      {
+        "en": "are worth following. Ts'ai Wen Chi",
+        "zh": "蔡文姬",
+        "pinyin": "",
+        "def": "",
+        "enStart": 46,
+        "enEnd": 80
+      },
+      {
+        "en": "distinguish the strings of the lute",
+        "zh": "辨琴",
+        "pinyin": "",
+        "def": "",
+        "enStart": 87,
+        "enEnd": 122
+      },
+      {
+        "en": "while Hsieh Taowen",
+        "zh": "謝道韞",
+        "pinyin": "",
+        "def": "",
+        "enStart": 124,
+        "enEnd": 142
+      },
+      {
+        "en": "could compose poetry",
+        "zh": "詠吟",
+        "pinyin": "",
+        "def": "",
+        "enStart": 143,
+        "enEnd": 163
+      }
+    ],
+    "s72": [
+      {
+        "en": "Even at the age of seven",
+        "zh": "方七歲",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 24
+      },
+      {
+        "en": "little Liu Yen",
+        "zh": "劉晏",
+        "pinyin": "",
+        "def": "",
+        "enStart": 26,
+        "enEnd": 40
+      },
+      {
+        "en": "T'ang dynasty",
+        "zh": "唐",
+        "pinyin": "",
+        "def": "",
+        "enStart": 48,
+        "enEnd": 61
+      },
+      {
+        "en": "an exceptionally talented boy",
+        "zh": "神童",
+        "pinyin": "",
+        "def": "",
+        "enStart": 95,
+        "enEnd": 124
+      },
+      {
+        "en": "appointed to high office",
+        "zh": "已仕",
+        "pinyin": "",
+        "def": "",
+        "enStart": 140,
+        "enEnd": 164
+      }
+    ],
+    "s73": [
+      {
+        "en": "Dogs keep watch",
+        "zh": "犬守夜",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 15
+      },
+      {
+        "en": "at night",
+        "zh": "夜",
+        "pinyin": "",
+        "def": "",
+        "enStart": 16,
+        "enEnd": 24
+      },
+      {
+        "en": "and cocks announce the dawn",
+        "zh": "雞司晨",
+        "pinyin": "",
+        "def": "",
+        "enStart": 26,
+        "enEnd": 53
+      },
+      {
+        "en": "If children do not learn",
+        "zh": "不學",
+        "pinyin": "",
+        "def": "",
+        "enStart": 55,
+        "enEnd": 79
+      },
+      {
+        "en": "they grow up? Silkworms spin silk",
+        "zh": "蠶吐絲",
+        "pinyin": "",
+        "def": "",
+        "enStart": 116,
+        "enEnd": 149
+      },
+      {
+        "en": "and bees make honey",
+        "zh": "蜂釀蜜",
+        "pinyin": "",
+        "def": "",
+        "enStart": 151,
+        "enEnd": 170
+      },
+      {
+        "en": "they are inferior to these creatures",
+        "zh": "不如物",
+        "pinyin": "",
+        "def": "",
+        "enStart": 197,
+        "enEnd": 233
+      }
+    ],
+    "s74": [
+      {
+        "en": "Learn diligently",
+        "zh": "幼而學",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "young",
+        "zh": "幼",
+        "pinyin": "",
+        "def": "",
+        "enStart": 31,
+        "enEnd": 36
+      }
+    ],
+    "s75": [
+      {
+        "en": "teachers and parents",
+        "zh": "父母",
+        "pinyin": "",
+        "def": "",
+        "enStart": 90,
+        "enEnd": 110
+      }
+    ],
+    "s76": [
+      {
+        "en": "Diligence brings merit",
+        "zh": "勤有功",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 22
+      },
+      {
+        "en": "be prepared and strive hard",
+        "zh": "宜勉力",
+        "pinyin": "",
+        "def": "",
+        "enStart": 52,
+        "enEnd": 79
+      }
+    ],
+    "sup-50a": [
+      {
+        "en": "When the Chou court moved east",
+        "zh": "周轍東",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 30
+      },
+      {
+        "en": "the feudal bond slackened",
+        "zh": "王綱墜",
+        "pinyin": "",
+        "def": "",
+        "enStart": 32,
+        "enEnd": 57
+      },
+      {
+        "en": "Warfare prevailed",
+        "zh": "逞干戈",
+        "pinyin": "",
+        "def": "",
+        "enStart": 59,
+        "enEnd": 76
+      },
+      {
+        "en": "and wandering persuaders",
+        "zh": "遊說",
+        "pinyin": "",
+        "def": "",
+        "enStart": 78,
+        "enEnd": 102
+      },
+      {
+        "en": "high esteem",
+        "zh": "尚",
+        "pinyin": "",
+        "def": "",
+        "enStart": 116,
+        "enEnd": 127
+      }
+    ],
+    "sup-50b": [
+      {
+        "en": "began with",
+        "zh": "始",
+        "pinyin": "",
+        "def": "",
+        "enStart": 9,
+        "enEnd": 19
+      },
+      {
+        "en": "the Spring and Autumn period",
+        "zh": "春秋",
+        "pinyin": "",
+        "def": "",
+        "enStart": 20,
+        "enEnd": 48
+      },
+      {
+        "en": "ended with",
+        "zh": "終",
+        "pinyin": "",
+        "def": "",
+        "enStart": 53,
+        "enEnd": 63
+      },
+      {
+        "en": "the Warring States",
+        "zh": "戰國",
+        "pinyin": "",
+        "def": "",
+        "enStart": 64,
+        "enEnd": 82
+      },
+      {
+        "en": "The Five Hegemons",
+        "zh": "五霸",
+        "pinyin": "",
+        "def": "",
+        "enStart": 84,
+        "enEnd": 101
+      },
+      {
+        "en": "and the Seven Mighty States",
+        "zh": "七雄",
+        "pinyin": "",
+        "def": "",
+        "enStart": 117,
+        "enEnd": 144
+      }
+    ],
+    "sup-54a": [
+      {
+        "en": "were the Southern dynasties",
+        "zh": "南朝",
+        "pinyin": "",
+        "def": "",
+        "enStart": 6,
+        "enEnd": 33
+      },
+      {
+        "en": "capital",
+        "zh": "都",
+        "pinyin": "",
+        "def": "",
+        "enStart": 46,
+        "enEnd": 53
+      },
+      {
+        "en": "at Chin-ling",
+        "zh": "金陵",
+        "pinyin": "",
+        "def": "",
+        "enStart": 54,
+        "enEnd": 66
+      }
+    ],
+    "sup-58a": [
+      {
+        "en": "The throne passed twenty times",
+        "zh": "二十傳",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 30
+      },
+      {
+        "en": "over three hundred years",
+        "zh": "三百載",
+        "pinyin": "",
+        "def": "",
+        "enStart": 31,
+        "enEnd": 55
+      },
+      {
+        "en": "until the Liang destroyed the T'ang",
+        "zh": "梁滅之",
+        "pinyin": "",
+        "def": "",
+        "enStart": 57,
+        "enEnd": 92
+      },
+      {
+        "en": "and changed the dynastic title",
+        "zh": "國乃改",
+        "pinyin": "",
+        "def": "",
+        "enStart": 93,
+        "enEnd": 123
+      }
+    ],
+    "sup-60a": [
+      {
+        "en": "Readers of history",
+        "zh": "讀史者",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 18
+      },
+      {
+        "en": "study the true records",
+        "zh": "實錄",
+        "pinyin": "",
+        "def": "",
+        "enStart": 26,
+        "enEnd": 48
+      },
+      {
+        "en": "and understand all ages",
+        "zh": "通古今",
+        "pinyin": "",
+        "def": "",
+        "enStart": 50,
+        "enEnd": 73
+      },
+      {
+        "en": "with their own eyes",
+        "zh": "親目",
+        "pinyin": "",
+        "def": "",
+        "enStart": 96,
+        "enEnd": 115
+      }
+    ],
+    "sup-60b": [
+      {
+        "en": "Recite",
+        "zh": "口而誦",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 6
+      },
+      {
+        "en": "mouth",
+        "zh": "口",
+        "pinyin": "",
+        "def": "",
+        "enStart": 16,
+        "enEnd": 21
+      },
+      {
+        "en": "and reflect",
+        "zh": "心而惟",
+        "pinyin": "",
+        "def": "",
+        "enStart": 22,
+        "enEnd": 33
+      },
+      {
+        "en": "heart",
+        "zh": "心",
+        "pinyin": "",
+        "def": "",
+        "enStart": 41,
+        "enEnd": 46
+      },
+      {
+        "en": "morning",
+        "zh": "朝",
+        "pinyin": "",
+        "def": "",
+        "enStart": 63,
+        "enEnd": 70
+      },
+      {
+        "en": "evening",
+        "zh": "夕",
+        "pinyin": "",
+        "def": "",
+        "enStart": 82,
+        "enEnd": 89
+      }
+    ],
+    "sup-69a": [
+      {
+        "en": "You young students",
+        "zh": "爾小生",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 18
+      },
+      {
+        "en": "should take thought",
+        "zh": "宜早思",
+        "pinyin": "",
+        "def": "",
+        "enStart": 19,
+        "enEnd": 38
+      },
+      {
+        "en": "betimes",
+        "zh": "早",
+        "pinyin": "",
+        "def": "",
+        "enStart": 39,
+        "enEnd": 46
+      }
+    ],
+    "sup-70a": [
+      {
+        "en": "You young students",
+        "zh": "爾小生",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 18
+      },
+      {
+        "en": "should set your resolve",
+        "zh": "宜立志",
+        "pinyin": "",
+        "def": "",
+        "enStart": 19,
+        "enEnd": 42
+      }
+    ],
+    "sup-72a": [
+      {
+        "en": "You who learn in youth",
+        "zh": "幼學",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 22
+      },
+      {
+        "en": "strive",
+        "zh": "勉",
+        "pinyin": "",
+        "def": "",
+        "enStart": 30,
+        "enEnd": 36
+      },
+      {
+        "en": "this end",
+        "zh": "致",
+        "pinyin": "",
+        "def": "",
+        "enStart": 40,
+        "enEnd": 48
+      },
+      {
+        "en": "those who have achieved",
+        "zh": "有為者",
+        "pinyin": "",
+        "def": "",
+        "enStart": 50,
+        "enEnd": 73
+      },
+      {
+        "en": "did likewise",
+        "zh": "亦若是",
+        "pinyin": "",
+        "def": "",
+        "enStart": 74,
+        "enEnd": 86
+      }
+    ],
+    "sup-h1": [
+      {
+        "en": "Liao",
+        "zh": "遼",
+        "pinyin": "",
+        "def": "",
+        "enStart": 4,
+        "enEnd": 8
+      },
+      {
+        "en": "Chin",
+        "zh": "金",
+        "pinyin": "",
+        "def": "",
+        "enStart": 17,
+        "enEnd": 21
+      },
+      {
+        "en": "both claimed imperial title",
+        "zh": "皆稱帝",
+        "pinyin": "",
+        "def": "",
+        "enStart": 22,
+        "enEnd": 49
+      },
+      {
+        "en": "The Yuan destroyed the Chin",
+        "zh": "元滅金",
+        "pinyin": "",
+        "def": "",
+        "enStart": 51,
+        "enEnd": 78
+      },
+      {
+        "en": "and ended the Sung line",
+        "zh": "絕宋世",
+        "pinyin": "",
+        "def": "",
+        "enStart": 79,
+        "enEnd": 102
+      }
+    ],
+    "sup-h2": [
+      {
+        "en": "Its territory",
+        "zh": "輿圖",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 13
+      },
+      {
+        "en": "wider",
+        "zh": "廣",
+        "pinyin": "",
+        "def": "",
+        "enStart": 18,
+        "enEnd": 23
+      },
+      {
+        "en": "than any former age",
+        "zh": "前代",
+        "pinyin": "",
+        "def": "",
+        "enStart": 24,
+        "enEnd": 43
+      },
+      {
+        "en": "yet after ninety years",
+        "zh": "九十年",
+        "pinyin": "",
+        "def": "",
+        "enStart": 45,
+        "enEnd": 67
+      },
+      {
+        "en": "its mandate was spent",
+        "zh": "國祚廢",
+        "pinyin": "",
+        "def": "",
+        "enStart": 68,
+        "enEnd": 89
+      }
+    ],
+    "sup-h3": [
+      {
+        "en": "The Grand Progenitor",
+        "zh": "太祖",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 20
+      },
+      {
+        "en": "arose and founded the Great Ming",
+        "zh": "國大明",
+        "pinyin": "",
+        "def": "",
+        "enStart": 21,
+        "enEnd": 53
+      },
+      {
+        "en": "reign title",
+        "zh": "號",
+        "pinyin": "",
+        "def": "",
+        "enStart": 59,
+        "enEnd": 70
+      },
+      {
+        "en": "was Hung-wu",
+        "zh": "洪武",
+        "pinyin": "",
+        "def": "",
+        "enStart": 71,
+        "enEnd": 82
+      },
+      {
+        "en": "with Nanking",
+        "zh": "金陵",
+        "pinyin": "",
+        "def": "",
+        "enStart": 84,
+        "enEnd": 96
+      },
+      {
+        "en": "capital",
+        "zh": "都",
+        "pinyin": "",
+        "def": "",
+        "enStart": 104,
+        "enEnd": 111
+      }
+    ],
+    "sup-h4": [
+      {
+        "en": "Under Ch'eng-tsu",
+        "zh": "成祖",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "capital moved",
+        "zh": "遷",
+        "pinyin": "",
+        "def": "",
+        "enStart": 21,
+        "enEnd": 34
+      },
+      {
+        "en": "to Yen-ching",
+        "zh": "燕京",
+        "pinyin": "",
+        "def": "",
+        "enStart": 35,
+        "enEnd": 47
+      },
+      {
+        "en": "Sixteen reigns",
+        "zh": "十六世",
+        "pinyin": "",
+        "def": "",
+        "enStart": 49,
+        "enEnd": 63
+      },
+      {
+        "en": "later came Ch'ung-chen",
+        "zh": "崇禎",
+        "pinyin": "",
+        "def": "",
+        "enStart": 64,
+        "enEnd": 86
+      }
+    ],
+    "sup-h5": [
+      {
+        "en": "Powerful eunuchs",
+        "zh": "權閹",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "ran riot",
+        "zh": "肆",
+        "pinyin": "",
+        "def": "",
+        "enStart": 17,
+        "enEnd": 25
+      },
+      {
+        "en": "and rebels rose",
+        "zh": "寇如林",
+        "pinyin": "",
+        "def": "",
+        "enStart": 26,
+        "enEnd": 41
+      },
+      {
+        "en": "like forests. Li Ch'uang",
+        "zh": "李闖",
+        "pinyin": "",
+        "def": "",
+        "enStart": 42,
+        "enEnd": 66
+      },
+      {
+        "en": "and the sacred throne",
+        "zh": "神器",
+        "pinyin": "",
+        "def": "",
+        "enStart": 79,
+        "enEnd": 100
+      },
+      {
+        "en": "consumed in flames",
+        "zh": "焚",
+        "pinyin": "",
+        "def": "",
+        "enStart": 105,
+        "enEnd": 123
+      }
+    ],
+    "sup-h6": [
+      {
+        "en": "Shih-tsu",
+        "zh": "清世祖",
+        "pinyin": "",
+        "def": "",
+        "enStart": 0,
+        "enEnd": 8
+      },
+      {
+        "en": "Ch'ing",
+        "zh": "清",
+        "pinyin": "",
+        "def": "",
+        "enStart": 16,
+        "enEnd": 22
+      },
+      {
+        "en": "received the great mandate",
+        "zh": "景命",
+        "pinyin": "",
+        "def": "",
+        "enStart": 23,
+        "enEnd": 49
+      },
+      {
+        "en": "pacified the four quarters",
+        "zh": "四方",
+        "pinyin": "",
+        "def": "",
+        "enStart": 54,
+        "enEnd": 80
+      },
+      {
+        "en": "and secured the realm",
+        "zh": "克大定",
+        "pinyin": "",
+        "def": "",
+        "enStart": 81,
+        "enEnd": 102
+      }
+    ],
+    "sup-h7": [
+      {
+        "en": "K'ang-hsi",
+        "zh": "康",
+        "pinyin": "",
+        "def": "",
+        "enStart": 5,
+        "enEnd": 14
+      },
+      {
+        "en": "Yung-cheng",
+        "zh": "雍",
+        "pinyin": "",
+        "def": "",
+        "enStart": 19,
+        "enEnd": 29
+      },
+      {
+        "en": "Ch'ien-lung",
+        "zh": "乾",
+        "pinyin": "",
+        "def": "",
+        "enStart": 38,
+        "enEnd": 49
+      },
+      {
+        "en": "Chia-ch'ing",
+        "zh": "嘉",
+        "pinyin": "",
+        "def": "",
+        "enStart": 54,
+        "enEnd": 65
+      },
+      {
+        "en": "the people lived in wealth",
+        "zh": "民安富",
+        "pinyin": "",
+        "def": "",
+        "enStart": 67,
+        "enEnd": 93
+      },
+      {
+        "en": "and the government won praise",
+        "zh": "治績誇",
+        "pinyin": "",
+        "def": "",
+        "enStart": 94,
+        "enEnd": 123
+      }
+    ],
+    "sup-h8": [
+      {
+        "en": "Tao-kuang",
+        "zh": "道",
+        "pinyin": "",
+        "def": "",
+        "enStart": 7,
+        "enEnd": 16
+      },
+      {
+        "en": "Hsien-feng",
+        "zh": "咸",
+        "pinyin": "",
+        "def": "",
+        "enStart": 21,
+        "enEnd": 31
+      },
+      {
+        "en": "years rebellions arose",
+        "zh": "變亂起",
+        "pinyin": "",
+        "def": "",
+        "enStart": 32,
+        "enEnd": 54
+      },
+      {
+        "en": "first England and France",
+        "zh": "英法",
+        "pinyin": "",
+        "def": "",
+        "enStart": 56,
+        "enEnd": 80
+      },
+      {
+        "en": "troubled the capital region",
+        "zh": "都鄙",
+        "pinyin": "",
+        "def": "",
+        "enStart": 81,
+        "enEnd": 108
+      }
+    ],
+    "sup-h9": [
+      {
+        "en": "T'ung-chih",
+        "zh": "同",
+        "pinyin": "",
+        "def": "",
+        "enStart": 6,
+        "enEnd": 16
+      },
+      {
+        "en": "Kuang-hsu",
+        "zh": "光",
+        "pinyin": "",
+        "def": "",
+        "enStart": 21,
+        "enEnd": 30
+      },
+      {
+        "en": "the balance of power shifted",
+        "zh": "政權移",
+        "pinyin": "",
+        "def": "",
+        "enStart": 31,
+        "enEnd": 59
+      },
+      {
+        "en": "New reforms",
+        "zh": "新法",
+        "pinyin": "",
+        "def": "",
+        "enStart": 61,
+        "enEnd": 72
+      },
+      {
+        "en": "in the quest for strength",
+        "zh": "自強",
+        "pinyin": "",
+        "def": "",
+        "enStart": 88,
+        "enEnd": 113
+      }
+    ]
+  }
+}

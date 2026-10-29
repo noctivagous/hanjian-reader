@@ -156,6 +156,18 @@ export function MobileTools({
                   ? ' · unavailable offline'
                   : ''}
           </div>
+          <div className="text-[11px] text-[var(--ink-mute)] leading-[1.6] text-center">
+            Classical word breaks{' '}
+            <a
+              href="https://github.com/jiaeyan/Jiayan"
+              target="_blank"
+              rel="noreferrer"
+              className="underline decoration-dotted underline-offset-2"
+            >
+              Jiayan
+            </a>{' '}
+            (MIT)
+          </div>
         </div>
       </div>
     </div>

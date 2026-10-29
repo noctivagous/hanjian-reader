@@ -24,11 +24,15 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import ALIGNMENTS_PART_1 from './three-character-classic-alignments-part1.mjs';
+import ALIGNMENTS_PART_2 from './three-character-classic-alignments-part2.mjs';
+import { locateTccAlignments } from './tcc-locate-alignments.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const enPath = join(root, 'public', 'threeCharacterClassic.txt');
 const outDir = join(root, 'public', 'texts');
 const outPath = join(outDir, 'three-character-classic.xlf');
+const alignmentPath = join(outDir, 'three-character-classic.alignments.json');
 const manifestPath = join(outDir, 'manifest.json');
 
 // 356 triplets in document order (Giles 1900 sequence; normalized forms).
@@ -339,9 +343,82 @@ ${groups}
   mkdirSync(outDir, { recursive: true });
   writeFileSync(outPath, xlf);
 
+  const authoredAlignments = {
+    ...ALIGNMENTS_PART_1,
+    ...ALIGNMENTS_PART_2,
+  };
+  const expectedIds = Object.keys(zhById);
+  const unexpectedIds = Object.keys(authoredAlignments).filter(
+    (id) => !expectedIds.includes(id),
+  );
+  const missingIds = expectedIds.filter((id) => !authoredAlignments[id]?.length);
+  if (unexpectedIds.length || missingIds.length) {
+    console.error(
+      `error: alignment coverage invalid (unexpected: ${unexpectedIds.join(', ') || 'none'}; missing: ${missingIds.join(', ') || 'none'}).`,
+    );
+    process.exit(1);
+  }
+  const alignmentUnits = {};
+  for (const id of expectedIds) {
+    const pairs = authoredAlignments[id];
+    const en = enById[id] ?? enSupplement[id];
+    const zh = zhById[id];
+    for (const pair of pairs) {
+      if (
+        !pair ||
+        typeof pair.en !== 'string' ||
+        typeof pair.zh !== 'string' ||
+        !pair.en ||
+        !pair.zh
+      ) {
+        console.error(`error: alignment ${id} has an empty or invalid pair.`);
+        process.exit(1);
+      }
+      if (!zh.includes(pair.zh)) {
+        console.error(`error: alignment ${id} Chinese span "${pair.zh}" is not in its source.`);
+        process.exit(1);
+      }
+      const hasHand =
+        Number.isInteger(pair.enStart) && Number.isInteger(pair.enEnd);
+      if (hasHand) {
+        const slice = en.slice(pair.enStart, pair.enEnd);
+        if (pair.enStart < 0 || pair.enEnd > en.length || pair.enStart >= pair.enEnd) {
+          console.error(`error: alignment ${id} invalid hand span on "${pair.zh}".`);
+          process.exit(1);
+        }
+        if (pair.en && slice !== pair.en) {
+          console.error(
+            `error: alignment ${id} hand span "${slice}" ≠ "${pair.en}" for "${pair.zh}".`,
+          );
+          process.exit(1);
+        }
+      } else if (en.indexOf(pair.en) < 0) {
+        console.error(`error: alignment ${id} cannot find "${pair.en}" in its target.`);
+        process.exit(1);
+      }
+    }
+    let words;
+    try {
+      words = locateTccAlignments(en, pairs, zh);
+    } catch (err) {
+      console.error(`error: alignment ${id}: ${err.message}`);
+      process.exit(1);
+    }
+    if (words.length === 0) {
+      console.error(`error: alignment ${id} has no word pairs.`);
+      process.exit(1);
+    }
+    alignmentUnits[id] = words;
+  }
+  writeFileSync(
+    alignmentPath,
+    `${JSON.stringify({ version: 1, units: alignmentUnits }, null, 2)}\n`,
+  );
+
   const entry = {
     id: 'three-character-classic',
     file: 'three-character-classic.xlf',
+    alignmentFile: 'three-character-classic.alignments.json',
     titleEn: 'Three Character Classic',
     titleZh: '三字經',
     author: 'Wang Yinglin · 王應麟',
@@ -369,6 +446,7 @@ ${groups}
   const units = SECTIONS.reduce((n, [, , ids]) => n + ids.length, 0);
   console.log(`units: ${units} (76 base + ${units - 76} supplement), sections: ${SECTIONS.length}`);
   console.log(`out: ${outPath}`);
+  console.log(`alignments: ${alignmentPath}`);
   console.log(`manifest: ${manifestPath}`);
 }
 

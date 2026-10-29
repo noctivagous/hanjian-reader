@@ -1,16 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { brand } from '../brand';
 import type { WordAlign, WordSense } from '../data/types';
 import type { ReadingProvider } from '../lib/dictionary';
 import { toneColor } from '../lib/pinyin';
 import { resolveCharReading } from '../lib/reading';
-import { chooseDrawerPlacement, type DrawerPlacement } from '../lib/placement';
+import {
+  chooseDrawerPlacement,
+  choosePopoverVerticalPlacement,
+  popoverCoords,
+  type DrawerPlacement,
+} from '../lib/placement';
 import { zhuyinForWord } from '../lib/zhuyin';
 
 export interface HoverState {
   key: string;
   rect: DOMRect;
   data: WordAlign;
+  /** Viewport Y of expanded sentence chip; popover avoids covering it when possible. */
+  avoidBelowY?: number;
 }
 
 interface Props {
@@ -187,20 +194,44 @@ export function WordCard({
   const chars = Array.from(hover.data.zh || '');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [placement, setPlacement] = useState<DrawerPlacement>('right');
+  const [coords, setCoords] = useState({ top: 0, left: 0 });
   const anchorRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const compute = () => {
-      const rect = anchorRef.current?.getBoundingClientRect();
-      if (!rect) return;
+  const layoutPopover = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    const { width, height } = card.getBoundingClientRect();
+    const vertical = choosePopoverVerticalPlacement(
+      hover.rect,
+      height,
+      window.innerHeight,
+      hover.avoidBelowY,
+    );
+    setCoords(
+      popoverCoords(hover.rect, width, height, vertical, window.innerWidth),
+    );
+    const rect = anchorRef.current?.getBoundingClientRect();
+    if (rect) {
       setPlacement(
         chooseDrawerPlacement(rect.left, rect.right, window.innerWidth),
       );
+    }
+  };
+
+  useLayoutEffect(() => {
+    layoutPopover();
+  }, [hover.key, hover.rect, hover.avoidBelowY]);
+
+  useEffect(() => {
+    const onResize = () => layoutPopover();
+    window.addEventListener('resize', onResize);
+    window.addEventListener('scroll', onResize, true);
+    return () => {
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('scroll', onResize, true);
     };
-    compute();
-    window.addEventListener('resize', compute);
-    return () => window.removeEventListener('resize', compute);
-  }, [hover.key, hover.rect]);
+  }, [hover.key, hover.rect, hover.avoidBelowY]);
 
   const selectedChar =
     selectedIndex != null && selectedIndex < chars.length
@@ -217,15 +248,15 @@ export function WordCard({
   return (
     <div
       className="fixed z-50 pointer-events-auto"
-      style={{
-        left: Math.min(window.innerWidth - 280, hover.rect.left),
-        top: hover.rect.bottom + 8,
-      }}
+      style={{ left: coords.left, top: coords.top }}
       onMouseEnter={() => onEnter(hover)}
       onMouseLeave={onLeave}
     >
       <div ref={anchorRef} className="relative">
-        <div className="relative w-[260px] rounded-[14px] border border-[#EAD9C8] bg-white dark:bg-[#1E1C18] shadow-[0_12px_32px_rgba(0,0,0,0.18)] overflow-hidden anim-rise">
+        <div
+          ref={cardRef}
+          className="relative w-[260px] rounded-[14px] border border-[#EAD9C8] bg-white dark:bg-[#1E1C18] shadow-[0_12px_32px_rgba(0,0,0,0.18)] overflow-hidden anim-rise"
+        >
           <button
             type="button"
             aria-label="Close word card"

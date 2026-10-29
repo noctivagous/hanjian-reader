@@ -29,7 +29,9 @@ Ideal for translated literature, business docs, classical texts, or any Chinese 
 ### Reading Experience
 - Warm paper theme (`#FFFEFB`), serif typography (Fraunces/Newsreader + Noto Serif SC)
 - Centered 760px column, generous line-height, focus mode
-- Two fully-aligned sample documents included:
+- **Three Character Classic / 三字經** (traditional) ships in `public/texts/`
+  (committed, not gitignored) and opens by default (`defaults.defaultDocId`).
+- Two demo documents bundled in the app bundle:
   - *The Courtyard Rain / 庭院里的雨*
   - *Mending Clothes Under Lamplight / 灯下缝衣*
 - Optional local-only books from `private/` (never committed), e.g. the
@@ -118,6 +120,33 @@ credit in the toolbar footer):
   to the dictionary's first entry. The Taiwan-reading gap noted in
   [`refs/chinese-dictionary.md`](refs/chinese-dictionary.md) still stands.
 
+## Classical segmentation (Jiayan)
+
+Traditional-script books (the local Tao Te Ching) are word-broken with a
+browser port of Jiayan's `WordNgramTokenizer` ([jiaeyan/Jiayan](https://github.com/jiaeyan/Jiayan),
+MIT — Jiajie Yan). ICU's modern Chinese word breaker is kept for the
+simplified sample docs.
+
+- `scripts/build-jiayan-dict.mjs` copies Jiayan's frequency lexicon into
+  `public/dict/jiayan.json` (~27k simplified headwords). Regenerate with
+  `node scripts/build-jiayan-dict.mjs` (fetches upstream `dict.txt`) or
+  pass a local path.
+- The asset is fetched only when a traditional-script book is open.
+  Traditional characters are folded 1:1 to simplified for the DAG, then
+  token offsets are mapped back onto the original display text.
+- Authored `words` alignments still win over the segmenter (so sample-doc
+  hover like 杯中 is unchanged). Dictionary lookup stays exact-headword:
+  Jiayan decides the span, CC-CEDICT supplies every listed sense.
+- The local **Tao Te Ching** uses Courtyard-style **`words` overrides** in
+  `private/tao-te-ching.overrides.json` (regenerate hover rows with
+  `node scripts/generate-tao-hover-overrides.mjs`, then
+  `node scripts/build-tao-te-ching.mjs`). Committed
+  `scripts/tao-te-ching-glossary.mjs` supplies Feng/English surface forms
+  (e.g. *Tao* → 道); only matched English gets underlines.
+
+The heavier `CharHMMTokenizer` (KenLM + `jiayan.klm`) stays in Python and
+is not used at runtime.
+
 ## How It Works — Data Model
 
 ```ts
@@ -189,8 +218,8 @@ feature set — no code edits beyond one file:
      search, font scaling, dark mode), and tools (import, speech,
      character inspector) are offered. Disabled features are hidden from
      the UI and forced off.
-   - `defaults` — startup state: primary language, enabled reveal modes,
-     display toggles, sizes, dark mode.
+   - `defaults` — startup state: `defaultDocId`, primary language, enabled
+     reveal modes, display toggles, sizes, dark mode.
    - `id` — bundle slug; also namespaces `localStorage` so white-labels
      deployed side by side don't share settings.
 2. Run `npm run build`.

@@ -85,6 +85,11 @@ rules live in the generator's Wikisource path for future fetches:
   pairings (6 needed none: 1, 9, 11, 40, 47, 79). The generator verifies
   every override sentence against its chapter's sources and requires full
   two-sided coverage — additions, losses, and edits fail loudly.
+- Each override sentence may include **`words`**: `[ { "en": "Tao", "zh": "道" },
+  … ]` (Courtyard Rain style — omit English with no Chinese). Regenerate with
+  `node scripts/generate-tao-hover-overrides.mjs` (Jiayan +
+  `scripts/tao-te-ching-glossary.mjs` + CC-CEDICT). The build resolves
+  `enStart`/`enEnd` and writes `tao-te-ching.alignments.json`.
 
 ## Building the local book
 

@@ -375,6 +375,18 @@ export function Sidebar(p: Props) {
                 ? ' · unavailable offline'
                 : ''}
         </div>
+        <div className="text-[11px] text-[var(--ink-mute)] leading-[1.6]">
+          Classical word breaks{' '}
+          <a
+            href="https://github.com/jiaeyan/Jiayan"
+            target="_blank"
+            rel="noreferrer"
+            className="underline decoration-dotted underline-offset-2 hover:text-[var(--verm)]"
+          >
+            Jiayan
+          </a>{' '}
+          (MIT)
+        </div>
       </div>
     </aside>
   );

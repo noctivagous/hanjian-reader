@@ -62,6 +62,8 @@ export interface BrandFeatures {
 }
 
 export interface BrandDefaults {
+  /** Document `id` to open when nothing is stored in localStorage. */
+  defaultDocId: string;
   primaryLang: PrimaryLang;
   reveal: Reveal;
   showPinyin: boolean;
@@ -132,6 +134,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     inspector: true,
   },
   defaults: {
+    defaultDocId: 'three-character-classic',
     primaryLang: 'en',
     reveal: { words: true, sentences: false, paragraphs: false, full: false },
     showPinyin: true,
@@ -219,6 +222,12 @@ function mergeBrand(override: BrandOverride | undefined): BrandConfig {
   if (!merged.features.speakOnClick) merged.defaults.speakOnClick = false;
   if (merged.defaults.primaryLang !== 'en' && merged.defaults.primaryLang !== 'zh') {
     merged.defaults.primaryLang = 'en';
+  }
+  if (
+    typeof merged.defaults.defaultDocId !== 'string' ||
+    !merged.defaults.defaultDocId.trim()
+  ) {
+    merged.defaults.defaultDocId = DEFAULT_BRAND.defaults.defaultDocId;
   }
   return merged;
 }

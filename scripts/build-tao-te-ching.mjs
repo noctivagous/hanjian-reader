@@ -25,6 +25,13 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+  loadTaoDictLookup,
+  loadTaoSegmenter,
+  locateAuthoredWords,
+  proposeHoverWords,
+} from './tao-sentence-alignments.mjs';
+import { TAO_GLOSSARY } from './tao-te-ching-glossary.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const privateDir = join(root, 'private');
@@ -35,6 +42,7 @@ const defaultXlf =
     .map((f) => join(privateDir, f))
     .find((p) => existsSync(p)) ?? null;
 const outPath = join(root, 'src', 'data', 'tao-te-ching.generated.ts');
+const alignmentPath = join(privateDir, 'tao-te-ching.alignments.json');
 
 const WIKISOURCE_RAW =
   'https://zh.wikisource.org/w/index.php?title=%E9%81%93%E5%BE%B7%E7%B6%93_(%E7%8E%8B%E5%BC%BC%E6%9C%AC)&action=raw';
@@ -215,10 +223,14 @@ if (xlfPath) {
 const TRANSLATOR = 'Gia-fu Feng & Jane English';
 const LICENSE = 'In copyright — local/private use only, do not distribute';
 let sentences = 0;
+const segmentZh = await loadTaoSegmenter();
+const dictLookup = await loadTaoDictLookup();
+const alignmentUnits = {};
 
 // Hand alignment overrides (local-only, gitignored like the sources — they
 // quote the in-copyright translation, so they must never be committed).
-// Shape: { "<chapter>": [ [ { zh, en }, … ], … ] } (paragraphs of pairs).
+// Shape: { "<chapter>": [ [ { zh, en, words? }, … ], … ] } (paragraphs of pairs).
+// Optional `words`: [{ en, zh, pinyin?, def? }] hover rows (offsets computed at build).
 // An override replaces the automatic alignment for that chapter wholesale.
 const overridesPath = join(privateDir, 'tao-te-ching.overrides.json');
 let overrides = {};
@@ -239,6 +251,12 @@ if (existsSync(overridesPath)) {
     if (flat.length === 0 || flat.some((s) => !s?.zh?.trim() || !s?.en?.trim())) {
       console.error(`error: override chapter ${n} has an empty Chinese or English side`);
       process.exit(1);
+    }
+    for (const s of flat) {
+      if (s.words !== undefined && !Array.isArray(s.words)) {
+        console.error(`error: override chapter ${n} has invalid words field`);
+        process.exit(1);
+      }
     }
   }
   // Guards: every override sentence must come from its own chapter's
@@ -284,9 +302,16 @@ const sections = chapters.map((paras, i) => {
   const n = i + 1;
   let k = 0;
   const paragraphs = paras.map((sents, p) => {
-    const paraSents = sents.map(({ zh, en }) => {
+    const paraSents = sents.map(({ zh, en, words: handWords }) => {
+      const id = `tao-ch${n}-p${p + 1}s${k + 1}`;
+      const proposed =
+        handWords?.length > 0
+          ? handWords
+          : proposeHoverWords(zh, en, segmentZh, dictLookup, TAO_GLOSSARY);
+      const words = locateAuthoredWords(en, proposed);
+      alignmentUnits[id] = words;
       const s = {
-        id: `tao-ch${n}-p${p + 1}s${k + 1}`,
+        id,
         zh,
         translations: [
           {
@@ -296,10 +321,7 @@ const sections = chapters.map((paras, i) => {
             translator: TRANSLATOR,
             license: LICENSE,
             text: en,
-            // P0-4: keep words: [] so English-primary still renders the
-            // Feng/English verse. Chinese word spans come from
-            // Intl.Segmenter, then an exact CC-CEDICT lookup of that span.
-            words: [],
+            words,
           },
         ],
       };
@@ -342,7 +364,13 @@ writeFileSync(
   `// GENERATED — do not edit or commit. Local-only book data emitted by\n// scripts/build-tao-te-ching.mjs from in-copyright private/ sources.\n// The Feng & English translation is ${LICENSE}.\nimport type { Doc } from './types';\n\nexport const taoTeChing: Doc = ${JSON.stringify(doc)};\n`,
 );
 
+writeFileSync(
+  alignmentPath,
+  `${JSON.stringify({ version: 1, units: alignmentUnits }, null, 2)}\n`,
+);
+
 console.log(`81 chapters, ${sentences} sentences, 0 empty sides, 0 unaccounted source lines`);
+console.log(`alignments: ${alignmentPath} (${Object.keys(alignmentUnits).length} units)`);
 console.log(`distinct Chinese characters: ${distinct} (check P0-2 readings + P0-3 stroke coverage)`);
 console.log(`en source: ${enSource}`);
 if (!xlfPath) console.log(`zh source: ${zhSourceLabel}`);

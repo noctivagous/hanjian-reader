@@ -125,7 +125,7 @@ reader | tools 360px.
   title, sentence count.
 - Click scrolls to that section (sections need anchor IDs and
   `scroll-margin-top` under the 64px header); highlight the chapter currently
-  in view via scroll-spy.
+  in view via scroll observer.
 - A filter box for jumping ("chapter 42", 德).
 - Collapsible on desktop, reusing the existing collapse pattern; a slide-over
   drawer on mobile, since the right panel already becomes a bottom sheet
@@ -178,7 +178,7 @@ Design for it now, cheaply:
 
 1. New types (`Section`, `Translation`, `words` relocation) + migrate the two
    sample docs.
-2. Left nav panel with scroll-spy, driven by `sections`.
+2. Left nav panel with scroll observer, driven by `sections`.
 3. Tao Te Ching as the first real book: 81 sections, Chinese source + Legge to
    start, curated as a data file loaded on demand rather than bundled into the
    main JS.

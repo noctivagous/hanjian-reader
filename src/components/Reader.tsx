@@ -1,4 +1,4 @@
-import { useMemo, type ReactNode } from 'react';
+import { useCallback, useMemo, useRef, type ReactNode } from 'react';
 import { brand } from '../brand';
 import type { Doc, Paragraph, Sentence, WordAlign } from '../data/types';
 import { allParagraphs, chineseText, paragraphEn, primaryTranslation } from '../lib/doc';
@@ -10,7 +10,13 @@ import {
   scriptTag,
   zhFontClass,
 } from '../lib/script';
-import { tokenizeChinese, type ZhToken } from '../lib/tokenize';
+import { isLinkedAlign } from '../lib/alignLink';
+import {
+  englishLabel,
+  tokenizeChinese,
+  withDictionaryReading,
+  type ZhToken,
+} from '../lib/tokenize';
 import { zhuyinForWord } from '../lib/zhuyin';
 import type { HoverState } from './WordCard';
 
@@ -40,7 +46,9 @@ interface Props {
   onToggleSentence: (id: string) => void;
   search: string;
   pinnedKey: string | null;
-  onPin: (key: string | null) => void;
+  onPin: (key: string | null, word?: WordAlign) => void;
+  /** Active word pair for cross-highlight when a sentence chip is open. */
+  linkedAlign: WordAlign | null;
   hover: HoverState | null;
   onHover: (h: HoverState | null) => void;
   inspectedChar: string | null;
@@ -49,11 +57,36 @@ interface Props {
   showSpeakerButtons: boolean;
   speakOnClick: boolean;
   dict: ReadingProvider | null;
+  /** Classical word breaker (Jiayan). Used for traditional-script docs. */
+  segmentZh?: (zh: string) => string[];
 }
 
 /** True when `ch` is the inspected character or part of the inspected word. */
 function isInspected(inspectedChar: string | null, ch: string): boolean {
   return inspectedChar !== null && Array.from(inspectedChar).includes(ch);
+}
+
+function hoverSpanClasses({
+  revealWords,
+  hasZh,
+  pinned,
+  linked,
+}: {
+  revealWords: boolean;
+  hasZh: boolean;
+  pinned: boolean;
+  linked: boolean;
+}): string {
+  let c = 'cursor-pointer transition relative px-0.5';
+  if (revealWords && hasZh) {
+    c +=
+      ' border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm';
+  }
+  if (pinned) c += ' !bg-[var(--verm)] !text-white rounded';
+  else if (linked) {
+    c += ' bg-[#FFE8DE] dark:bg-[#3A221C] ring-1 ring-[var(--verm)]/40 rounded-sm';
+  }
+  return c;
 }
 
 function highlight(text: string, query: string): ReactNode {
@@ -109,6 +142,8 @@ function ZhHoverText({
   pinnedKey,
   onPin,
   onHover,
+  linkedAlign,
+  crossLink,
   inspectedChar,
   onCharClick,
 }: {
@@ -118,8 +153,10 @@ function ZhHoverText({
   showDefsInline: boolean;
   search: string;
   pinnedKey: string | null;
-  onPin: (key: string | null) => void;
+  onPin: (key: string | null, word?: WordAlign) => void;
   onHover: (h: HoverState | null) => void;
+  linkedAlign: WordAlign | null;
+  crossLink: boolean;
   inspectedChar: string | null;
   onCharClick: (ch: string) => void;
 }) {
@@ -143,6 +180,8 @@ function ZhHoverText({
         }
         const key = `${idPrefix}_t${i}`;
         const pinned = pinnedKey === key;
+        const linked =
+          !pinned && isLinkedAlign(w, linkedAlign, crossLink);
         return (
           <span
             key={key}
@@ -162,7 +201,7 @@ function ZhHoverText({
               if (pinnedKey === key) {
                 onPin(null);
               } else {
-                onPin(key);
+                onPin(key, w);
                 onHover({
                   key,
                   rect: e.currentTarget.getBoundingClientRect(),
@@ -170,7 +209,12 @@ function ZhHoverText({
                 });
               }
             }}
-            className={`cursor-pointer transition relative ${revealWords ? 'border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm px-0.5' : 'px-0.5'} ${pinned ? '!bg-[var(--verm)] !text-white rounded' : ''}`}
+            className={hoverSpanClasses({
+              revealWords,
+              hasZh: true,
+              pinned,
+              linked,
+            })}
           >
             {search && foldedIndexOf(tok.text, search) !== -1
               ? highlight(tok.text, search)
@@ -194,6 +238,111 @@ function paragraphWords(para: Paragraph): WordAlign[] {
   return found.length > 0 ? found : NO_WORDS;
 }
 
+function EnglishAlignedText({
+  text,
+  words,
+  idPrefix,
+  revealWords,
+  showDefsInline,
+  search,
+  pinnedKey,
+  onPin,
+  onHover,
+  linkedAlign,
+  crossLink,
+  dict,
+}: {
+  text: string;
+  words: WordAlign[];
+  idPrefix: string;
+  revealWords: boolean;
+  showDefsInline: boolean;
+  search: string;
+  pinnedKey: string | null;
+  onPin: (key: string | null, word?: WordAlign) => void;
+  onHover: (h: HoverState | null) => void;
+  linkedAlign: WordAlign | null;
+  crossLink: boolean;
+  dict: ReadingProvider | null;
+}) {
+  const aligned = words.filter(
+    (word): word is WordAlign & { enStart: number; enEnd: number } =>
+      typeof word.enStart === 'number' &&
+      typeof word.enEnd === 'number' &&
+      Number.isInteger(word.enStart) &&
+      Number.isInteger(word.enEnd) &&
+      word.enStart >= 0 &&
+      word.enEnd > word.enStart &&
+      word.enEnd <= text.length,
+  );
+  const parts: ReactNode[] = [];
+  let cursor = 0;
+  for (let i = 0; i < aligned.length; i++) {
+    const word = aligned[i];
+    if (word.enStart < cursor) continue;
+    if (word.enStart > cursor) {
+      parts.push(
+        <span key={`plain-${cursor}`}>{highlight(text.slice(cursor, word.enStart), search)}</span>,
+      );
+    }
+    const key = `${idPrefix}_${i}`;
+    const pinned = pinnedKey === key;
+    const reading = withDictionaryReading(word, dict ?? undefined);
+    const linked =
+      !pinned &&
+      !!reading.zh &&
+      isLinkedAlign(reading, linkedAlign, crossLink);
+    parts.push(
+      <span
+        key={key}
+        onMouseEnter={(e) => {
+          if (!revealWords) return;
+          onHover({
+            key,
+            rect: e.currentTarget.getBoundingClientRect(),
+            data: reading,
+          });
+        }}
+        onMouseLeave={() => {
+          if (pinnedKey !== key) onHover(null);
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (!reading.zh) return;
+          if (pinnedKey === key) {
+            onPin(null);
+          } else {
+            onPin(key, reading);
+            onHover({
+              key,
+              rect: e.currentTarget.getBoundingClientRect(),
+              data: reading,
+            });
+          }
+        }}
+        className={hoverSpanClasses({
+          revealWords,
+          hasZh: !!reading.zh,
+          pinned,
+          linked,
+        })}
+      >
+        {highlight(text.slice(word.enStart, word.enEnd), search)}
+        {revealWords && showDefsInline && reading.zh && (
+          <span className="ml-1 text-[11px] text-[var(--verm)] font-medium">
+            ({reading.zh})
+          </span>
+        )}
+      </span>,
+    );
+    cursor = word.enEnd;
+  }
+  if (cursor < text.length) {
+    parts.push(<span key={`plain-${cursor}`}>{highlight(text.slice(cursor), search)}</span>);
+  }
+  return <>{parts}</>;
+}
+
 function SentenceView({
   doc,
   sentence,
@@ -211,13 +360,16 @@ function SentenceView({
   pinnedKey,
   onPin,
   onHover,
+  linkedAlign,
   inspectedChar,
   onInspectChar,
   onSpeak,
   showSpeakerButtons,
   speakOnClick,
   dict,
+  segmentZh,
 }: Props & { sentence: Sentence; open: boolean; onToggle: () => void }) {
+  const crossLink = open && reveal.words;
   const canSpeak = brand.features.speech && showSpeakerButtons;
   const zhFont = zhFontClass(doc);
   const handleCharClick = (ch: string) => {
@@ -225,12 +377,16 @@ function SentenceView({
     if (speakOnClick) onSpeak(ch);
   };
   const translation = primaryTranslation(sentence);
-  const words = translation?.words ?? NO_WORDS;
+  const rawWords = translation?.words ?? NO_WORDS;
   const enText = translation?.text ?? '';
   const enPrimary = primaryLang === 'en';
+  const hasEnglishOffsets = rawWords.some(
+    (word) => Number.isInteger(word.enStart) && Number.isInteger(word.enEnd),
+  );
+  const words = rawWords;
   const zhTokens = useMemo(
-    () => tokenizeChinese(sentence.zh, words, dict ?? undefined),
-    [sentence.zh, words, dict],
+    () => tokenizeChinese(sentence.zh, words, dict ?? undefined, segmentZh),
+    [sentence.zh, words, dict, segmentZh],
   );
   const alignedGloss = words.filter((w) => w.zh);
   const glossWords =
@@ -242,6 +398,35 @@ function SentenceView({
     search !== '' &&
     (canonicalSearchText(enText).includes(foldedQuery) ||
       canonicalSearchText(sentence.zh).includes(foldedQuery));
+
+  const chipPanelRef = useRef<HTMLDivElement>(null);
+
+  const isRevealPanelHover = useCallback(
+    (key: string) => {
+      if (key.includes('_chip')) return true;
+      if (!enPrimary && key.startsWith(`${sentence.id}_en`)) return true;
+      return false;
+    },
+    [enPrimary, sentence.id],
+  );
+
+  const handleHover = useCallback(
+    (h: HoverState | null) => {
+      if (!h || !open || !showSentenceChips) {
+        onHover(h);
+        return;
+      }
+      if (isRevealPanelHover(h.key)) {
+        onHover(h);
+        return;
+      }
+      const chipTop = chipPanelRef.current?.getBoundingClientRect().top;
+      onHover(
+        chipTop != null ? { ...h, avoidBelowY: chipTop } : h,
+      );
+    },
+    [open, showSentenceChips, isRevealPanelHover, onHover],
+  );
 
   return (
     <div
@@ -259,24 +444,43 @@ function SentenceView({
               />
             ))}
           </span>
+        ) : enPrimary && hasEnglishOffsets ? (
+          <span className="text-[16px] md:text-[18px]">
+            <EnglishAlignedText
+              text={enText}
+              words={words}
+              idPrefix={sentence.id}
+              revealWords={reveal.words}
+              showDefsInline={showDefsInline}
+              search={search}
+              pinnedKey={pinnedKey}
+              onPin={onPin}
+              onHover={handleHover}
+              linkedAlign={linkedAlign}
+              crossLink={crossLink}
+              dict={dict}
+            />
+          </span>
         ) : enPrimary && words.length > 0 ? (
           words.map((w, i) => {
             const key = `${sentence.id}_${i}`;
             const hasZh = !!w.zh;
             const pinned = pinnedKey === key;
+            const linked =
+              !pinned && isLinkedAlign(w, linkedAlign, crossLink);
             return (
               <span className="inline" key={key}>
                 <span
                   onMouseEnter={(e) => {
                     if (!reveal.words || !w.zh) return;
-                    onHover({
+                    handleHover({
                       key,
                       rect: e.currentTarget.getBoundingClientRect(),
                       data: w,
                     });
                   }}
                   onMouseLeave={() => {
-                    if (pinnedKey !== key) onHover(null);
+                    if (pinnedKey !== key) handleHover(null);
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -284,15 +488,20 @@ function SentenceView({
                     if (pinnedKey === key) {
                       onPin(null);
                     } else {
-                      onPin(key);
-                      onHover({
+                      onPin(key, w);
+                      handleHover({
                         key,
                         rect: e.currentTarget.getBoundingClientRect(),
                         data: w,
                       });
                     }
                   }}
-                  className={`cursor-pointer transition relative ${hasZh && reveal.words ? 'border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm px-0.5' : 'px-0.5'} ${pinned ? '!bg-[var(--verm)] !text-white rounded' : ''}`}
+                  className={hoverSpanClasses({
+                    revealWords: reveal.words,
+                    hasZh,
+                    pinned,
+                    linked,
+                  })}
                 >
                   {search ? highlight(w.en, search) : w.en}
                   {hasZh && reveal.words && showDefsInline && (
@@ -318,15 +527,78 @@ function SentenceView({
               search={search}
               pinnedKey={pinnedKey}
               onPin={onPin}
-              onHover={onHover}
+              onHover={handleHover}
+              linkedAlign={linkedAlign}
+              crossLink={crossLink}
               inspectedChar={inspectedChar}
               onCharClick={handleCharClick}
             />
           </span>
         ) : (
-          <span className="text-[16px] md:text-[18px]">
-            {highlight(enText, search)}
-          </span>
+          // English-primary, no authored word alignments. Keep the
+          // literary English. When Words is on, Jiayan/ICU spans plus
+          // CEDICT supply hoverable English gloss chips (English → Chinese).
+          // That does not map the prose onto the Chinese; it uses each
+          // dictionary headword's English label.
+          <>
+            <span className="text-[16px] md:text-[18px]">
+              {highlight(enText, search)}
+            </span>
+            {reveal.words && glossWords.length > 0 && (
+              <span className="mt-1 block text-[16px] md:text-[18px] leading-[1.9]">
+                {glossWords.map((w, i) => {
+                  const key = `${sentence.id}_g${i}`;
+                  const label = englishLabel(w);
+                  const pinned = pinnedKey === key;
+                  const linked =
+                    !pinned && isLinkedAlign(w, linkedAlign, crossLink);
+                  return (
+                    <span className="inline" key={key}>
+                      <span
+                        onMouseEnter={(e) => {
+                          handleHover({
+                            key,
+                            rect: e.currentTarget.getBoundingClientRect(),
+                            data: w,
+                          });
+                        }}
+                        onMouseLeave={() => {
+                          if (pinnedKey !== key) handleHover(null);
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (pinnedKey === key) {
+                            onPin(null);
+                          } else {
+                            onPin(key, w);
+                            handleHover({
+                              key,
+                              rect: e.currentTarget.getBoundingClientRect(),
+                              data: w,
+                            });
+                          }
+                        }}
+                        className={hoverSpanClasses({
+                          revealWords: true,
+                          hasZh: true,
+                          pinned,
+                          linked,
+                        })}
+                      >
+                        {search ? highlight(label, search) : label}
+                        {showDefsInline && (
+                          <span className="ml-1 text-[11px] text-[var(--verm)] font-medium">
+                            ({w.zh})
+                          </span>
+                        )}
+                      </span>
+                      <span className="inline"> </span>
+                    </span>
+                  );
+                })}
+              </span>
+            )}
+          </>
         )}
       </span>
       {showSentenceChips && (
@@ -349,12 +621,32 @@ function SentenceView({
         className={`grid transition-all duration-300 ease-out ${open ? 'grid-rows-[1fr] opacity-100 mt-3' : 'grid-rows-[0fr] opacity-0'}`}
       >
         <div className="overflow-hidden">
-          <div className="rounded-[12px] bg-[#FFF8F0] dark:bg-[#1C1A16] border border-[#F2E6D6] dark:border-[#2A2722] border-l-2 border-l-[var(--verm)] p-4">
+          <div
+            ref={chipPanelRef}
+            className="rounded-[12px] bg-[#FFF8F0] dark:bg-[#1C1A16] border border-[#F2E6D6] dark:border-[#2A2722] border-l-2 border-l-[var(--verm)] p-4"
+          >
             {!enPrimary ? (
               <div className="flex items-start justify-between gap-3">
-                <p className="text-[16px] leading-[1.8]">
-                  {highlight(enText, search)}
-                </p>
+                <div className="text-[16px] leading-[1.8]">
+                  {hasEnglishOffsets && words.length > 0 ? (
+                    <EnglishAlignedText
+                      text={enText}
+                      words={words}
+                      idPrefix={`${sentence.id}_en`}
+                      revealWords={reveal.words}
+                      showDefsInline={showDefsInline}
+                      search={search}
+                      pinnedKey={pinnedKey}
+                      onPin={onPin}
+                      onHover={handleHover}
+                      linkedAlign={linkedAlign}
+                      crossLink={crossLink}
+                      dict={dict}
+                    />
+                  ) : (
+                    highlight(enText, search)
+                  )}
+                </div>
                 {canSpeak && (
                 <button
                   type="button"
@@ -380,7 +672,9 @@ function SentenceView({
                   search={search}
                   pinnedKey={pinnedKey}
                   onPin={onPin}
-                  onHover={onHover}
+                  onHover={handleHover}
+                  linkedAlign={linkedAlign}
+                  crossLink={crossLink}
                   inspectedChar={inspectedChar}
                   onCharClick={handleCharClick}
                 />
@@ -449,18 +743,18 @@ function SentenceView({
 const NOISE_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
 
 export function Reader(props: Props) {
-  const { doc, reveal, primaryLang, fontScale, charSize, inspectedChar, onInspectChar, onSpeak, showSpeakerButtons, speakOnClick, dict } = props;
+  const { doc, reveal, primaryLang, fontScale, charSize, inspectedChar, onInspectChar, onSpeak, showSpeakerButtons, speakOnClick, dict, segmentZh } = props;
   const zhFont = zhFontClass(doc);
   const paragraphTokens = useMemo(() => {
     const map = new Map<string, ZhToken[]>();
     for (const p of allParagraphs(doc)) {
       map.set(
         p.id,
-        tokenizeChinese(p.zh, paragraphWords(p), dict ?? undefined),
+        tokenizeChinese(p.zh, paragraphWords(p), dict ?? undefined, segmentZh),
       );
     }
     return map;
-  }, [doc, dict]);
+  }, [doc, dict, segmentZh]);
   const enPrimary = primaryLang === 'en';
   const canSpeak = brand.features.speech && showSpeakerButtons;
   const handleCharClick = (ch: string) => {
@@ -604,6 +898,8 @@ export function Reader(props: Props) {
                         pinnedKey={props.pinnedKey}
                         onPin={props.onPin}
                         onHover={props.onHover}
+                        linkedAlign={props.linkedAlign}
+                        crossLink={false}
                         inspectedChar={inspectedChar}
                         onCharClick={handleCharClick}
                       />
@@ -658,6 +954,8 @@ export function Reader(props: Props) {
                       pinnedKey={props.pinnedKey}
                       onPin={props.onPin}
                       onHover={props.onHover}
+                      linkedAlign={props.linkedAlign}
+                      crossLink={false}
                       inspectedChar={inspectedChar}
                       onCharClick={handleCharClick}
                     />

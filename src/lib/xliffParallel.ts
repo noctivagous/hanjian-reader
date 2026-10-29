@@ -18,7 +18,7 @@
 //                     the translation credit for that unit.
 
 import { XMLParser } from 'fast-xml-parser';
-import type { Doc } from '../data/types';
+import type { Doc, WordAlign } from '../data/types';
 
 export interface ParallelSentenceUnit {
   /** Stable unit id (trans-unit id when present, else generated). */
@@ -48,6 +48,9 @@ export interface ParallelDocMeta {
   /** Credit applied to every unit without its own "translator:" note. */
   translator?: string;
 }
+
+/** Authored English range alignments, keyed by XLIFF trans-unit ID. */
+export type ParallelWordAlignments = Record<string, WordAlign[]>;
 
 interface Node {
   kind: string;
@@ -240,6 +243,7 @@ export function parseParallelXliff(xml: string, label: string): ParallelSection[
 export function parallelDocFromSections(
   meta: ParallelDocMeta,
   sections: ParallelSection[],
+  alignments: ParallelWordAlignments = {},
 ): Doc {
   const defaultTranslator = meta.translator ?? '';
   return {
@@ -274,9 +278,7 @@ export function parallelDocFromSections(
                   label: 'English',
                   translator: u.translator ?? defaultTranslator,
                   text: u.en,
-                  // Words resolve at runtime (Intl.Segmenter + CC-CEDICT),
-                  // same as the Tao Te Ching local book.
-                  words: [],
+                  words: alignments[u.id] ?? [],
                 },
               ],
             };
@@ -292,6 +294,7 @@ export function parallelDocFromXml(
   meta: ParallelDocMeta,
   xml: string,
   label: string,
+  alignments?: ParallelWordAlignments,
 ): Doc {
-  return parallelDocFromSections(meta, parseParallelXliff(xml, label));
+  return parallelDocFromSections(meta, parseParallelXliff(xml, label), alignments);
 }

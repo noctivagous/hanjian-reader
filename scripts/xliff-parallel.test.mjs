@@ -15,6 +15,12 @@ import {
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const xlfPath = join(root, 'public', 'texts', 'three-character-classic.xlf');
+const alignmentPath = join(
+  root,
+  'public',
+  'texts',
+  'three-character-classic.alignments.json',
+);
 const manifestPath = join(root, 'public', 'texts', 'manifest.json');
 const enPath = join(root, 'public', 'threeCharacterClassic.txt');
 
@@ -58,6 +64,33 @@ describe('parseParallelXliff', () => {
     );
     assert.equal(t1.translator, 'Ed');
     assert.equal(t2.translator, 'Base');
+  });
+
+  it('attaches authored English range alignments without changing target text', () => {
+    const xml =
+      '<xliff><file><trans-unit id="s1"><source>人之初。</source><target>At the beginning of man.</target></trans-unit></file></xliff>';
+    const doc = parallelDocFromXml(META, xml, 't', {
+      s1: [
+        {
+          en: 'beginning',
+          zh: '初',
+          pinyin: '',
+          def: '',
+          enStart: 7,
+          enEnd: 16,
+        },
+      ],
+    });
+    const translation = doc.sections[0].paragraphs[0].sentences[0].translations[0];
+    assert.equal(translation.text, 'At the beginning of man.');
+    assert.deepEqual(translation.words[0], {
+      en: 'beginning',
+      zh: '初',
+      pinyin: '',
+      def: '',
+      enStart: 7,
+      enEnd: 16,
+    });
   });
 
   it('reads XLIFF 2.0 units/segments, namespaces, CDATA, entities', () => {
@@ -111,6 +144,56 @@ describe('three-character-classic.xlf', () => {
       (s) => s.translations[0].translator === 'Editorial supplement',
     );
     assert.equal(supplements.length, 18);
+  });
+
+  it('ships complete non-overlapping English range alignments', () => {
+    assert.ok(existsSync(alignmentPath), 'generated alignment sidecar exists');
+    const { units } = JSON.parse(readFileSync(alignmentPath, 'utf8'));
+    const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+    const entry = manifest.texts.find((t) => t.id === 'three-character-classic');
+    assert.equal(entry.alignmentFile, 'three-character-classic.alignments.json');
+    const doc = parallelDocFromXml(
+      entry,
+      readFileSync(xlfPath, 'utf8'),
+      xlfPath,
+      units,
+    );
+    for (const sentence of doc.sections.flatMap((s) =>
+      s.paragraphs.flatMap((p) => p.sentences),
+    )) {
+      const translation = sentence.translations[0];
+      assert.ok(translation.words.length > 0, `${sentence.id} has alignments`);
+      let end = 0;
+      for (const word of translation.words) {
+        assert.equal(
+          translation.text.slice(word.enStart, word.enEnd),
+          word.en,
+          `${sentence.id} span matches English`,
+        );
+        assert.ok(word.enStart >= end, `${sentence.id} spans do not overlap`);
+        assert.ok(sentence.zh.includes(word.zh), `${sentence.id} span matches Chinese`);
+        end = word.enEnd;
+      }
+    }
+  });
+
+  it('keeps alignments sparse (curated ranges only, not full-sentence hover)', () => {
+    const { units } = JSON.parse(readFileSync(alignmentPath, 'utf8'));
+    const en = readFileSync(xlfPath, 'utf8').match(
+      /<trans-unit id="s01">[\s\S]*?<target>([\s\S]*?)<\/target>/,
+    )[1];
+    const covered = new Set();
+    for (const w of units.s01) {
+      for (let i = w.enStart; i < w.enEnd; i++) {
+        if (/[\p{L}\p{N}]/u.test(en[i])) covered.add(i);
+      }
+    }
+    let total = 0;
+    for (let i = 0; i < en.length; i++) {
+      if (/[\p{L}\p{N}]/u.test(en[i])) total += 1;
+    }
+    assert.ok(covered.size < total, 's01 does not hover every English word');
+    assert.ok(covered.size >= 3, 's01 still has curated anchors');
   });
 
   it('keeps the base English verbatim', () => {

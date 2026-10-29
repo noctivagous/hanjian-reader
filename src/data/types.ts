@@ -9,6 +9,13 @@ export interface WordAlign {
   pinyin: string;
   def: string;
   /**
+   * Character offsets into Translation.text. When both are present, the
+   * reader preserves the original English and makes only this exact range
+   * hoverable. Legacy alignments omit them and render as a word list.
+   */
+  enStart?: number;
+  enEnd?: number;
+  /**
    * Every dictionary reading for this exact headword. Set only for
    * dictionary-backed tokens. Hand alignments leave it unset and use
    * pinyin/def as the single authored reading.

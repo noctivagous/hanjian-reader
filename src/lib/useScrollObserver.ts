@@ -5,7 +5,7 @@ import { useEffect, useState, type RefObject } from 'react';
  * container. Returns [activeId, setActiveId] so click navigation can
  * set the active entry optimistically before the scroll settles.
  */
-export function useScrollSpy(
+export function useScrollObserver(
   containerRef: RefObject<HTMLElement | null>,
   ids: string[],
   resetKey: string,
