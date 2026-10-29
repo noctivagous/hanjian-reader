@@ -9,6 +9,11 @@ import { WordCard, type HoverState } from './components/WordCard';
 import { applyBrand, brand, brandStorageKey } from './brand';
 import { docs as seedDocs } from './data/documents';
 import type { Doc } from './data/types';
+import {
+  loadDictionary,
+  type DictIndex,
+  type DictStatus,
+} from './lib/dictionary';
 import { importCustomDoc } from './lib/segment';
 import { copyText, speakChinese } from './lib/speech';
 import { useScrollSpy } from './lib/useScrollSpy';
@@ -73,6 +78,34 @@ export default function App() {
   const [importOpen, setImportOpen] = useState(false);
   const [showTip, setShowTip] = useState(true);
   const [toast, setToast] = useState<string | null>(null);
+
+  // Lazy CC-CEDICT: fetched once when Chinese-primary reading needs it.
+  // Null until loaded (or when the fetch fails); tokens render wordless
+  // until then and gain readings on the re-render after load.
+  const [dict, setDict] = useState<DictIndex | null>(null);
+  const [dictFailed, setDictFailed] = useState(false);
+  const dictLoadStarted = useRef(false);
+  useEffect(() => {
+    if (primaryLang !== 'zh' || !brand.features.words) return;
+    if (dict || dictFailed || dictLoadStarted.current) return;
+    dictLoadStarted.current = true;
+    let live = true;
+    loadDictionary().then((d) => {
+      if (!live) return;
+      if (d) setDict(d);
+      else setDictFailed(true);
+    });
+    return () => {
+      live = false;
+    };
+  }, [primaryLang, dict, dictFailed]);
+  const dictStatus: DictStatus = dict
+    ? 'ready'
+    : dictFailed
+      ? 'unavailable'
+      : primaryLang === 'zh' && brand.features.words
+        ? 'loading'
+        : 'idle';
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const toastTimer = useRef<number | undefined>(undefined);
@@ -288,6 +321,7 @@ export default function App() {
             showSpeakerButtons={showSpeakerButtons}
             speakOnClick={speakOnClick}
             onSpeak={handleSpeak}
+            dict={dict}
           />
         </div>
 
@@ -325,6 +359,7 @@ export default function App() {
           onImport={() => setImportOpen(true)}
           onCloseInspector={() => setInspectedChar(null)}
           collapsed={sidebarCollapsed}
+          dictStatus={dictStatus}
         />
       </div>
 
@@ -351,6 +386,7 @@ export default function App() {
         inspectedChar={inspectedChar}
         onClearInspected={() => setInspectedChar(null)}
         onCopy={handleCopy}
+        dictStatus={dictStatus}
       />
 
       {hover && reveal.words && (

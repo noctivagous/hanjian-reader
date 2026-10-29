@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { brand } from '../brand';
 import type { Doc, Sentence } from '../data/types';
 import { allParagraphs, chineseText, paragraphEn, primaryTranslation } from '../lib/doc';
+import type { ReadingProvider } from '../lib/dictionary';
 import { toneColor } from '../lib/pinyin';
 import { tokenizeChinese } from '../lib/tokenize';
 import { zhuyinForWord } from '../lib/zhuyin';
@@ -41,6 +42,7 @@ interface Props {
   onSpeak: (text: string) => void;
   showSpeakerButtons: boolean;
   speakOnClick: boolean;
+  dict: ReadingProvider | null;
 }
 
 /** True when `ch` is the inspected character or part of the inspected word. */
@@ -109,6 +111,7 @@ function SentenceView({
   onSpeak,
   showSpeakerButtons,
   speakOnClick,
+  dict,
 }: Props & { sentence: Sentence; open: boolean; onToggle: () => void }) {
   const canSpeak = brand.features.speech && showSpeakerButtons;
   const handleCharClick = (ch: string) => {
@@ -119,7 +122,9 @@ function SentenceView({
   const words = translation?.words ?? [];
   const enText = translation?.text ?? '';
   const enPrimary = primaryLang === 'en';
-  const zhTokens = enPrimary ? [] : tokenizeChinese(sentence.zh, words);
+  const zhTokens = enPrimary
+    ? []
+    : tokenizeChinese(sentence.zh, words, dict ?? undefined);
   const matched =
     search !== '' &&
     (enText.toLowerCase().includes(search.toLowerCase()) ||

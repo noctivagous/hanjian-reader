@@ -78,6 +78,24 @@ Character dictionary is embedded for ~50 characters from sample docs. Unknown ch
 - Word alignment disabled for custom docs (sentence/paragraph/full + char inspection still work)
 - Export: Copy English, Copy Chinese, Copy Bilingual
 
+## Dictionary
+
+Word hover readings for text the alignment tables don't cover come from
+CC-CEDICT ([cc-cedict.org](https://cc-cedict.org), CC BY-SA 4.0 — see the
+credit in the toolbar footer):
+
+- `scripts/build-dictionary.mjs` parses a raw CC-CEDICT download into
+  `public/dict/cedict.json` (trimmed to headword → marked pinyin + first
+  three glosses, both simplified and traditional headwords indexed).
+  Regenerate with `node scripts/build-dictionary.mjs /path/to/cedict.txt`
+  (raw file from <https://www.mdbg.net/chinese/dictionary?page=cedict>;
+  the release and retrieval date are recorded in the asset's `meta` block).
+- The 10.5 MB asset is fetched lazily on first Chinese-primary use, never
+  in the initial bundle. A failed fetch leaves tokens wordless, as before.
+- Readings follow mainland Putonghua norms; polyphonic characters resolve
+  to the dictionary's first entry. The Taiwan-reading gap noted in
+  [`refs/chinese-dictionary.md`](refs/chinese-dictionary.md) still stands.
+
 ## How It Works — Data Model
 
 ```ts
@@ -164,7 +182,7 @@ this keeps every white-label a single static build with no backend.
 
 ## Roadmap
 
-- [ ] CEDICT integration for full dictionary coverage
+- [x] CC-CEDICT integration for full dictionary coverage (lazy-loaded trimmed asset + word hover readings)
 - [ ] True word-alignment editor (drag to align)
 - [ ] Stroke order data via HanziWriter
 - [ ] Anki / Pleco export

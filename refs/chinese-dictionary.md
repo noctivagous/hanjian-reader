@@ -117,3 +117,19 @@ later edits.
 - How ShareAlike interacts with our per-book hand-reviewed readings if
   they are derived from CC-CEDICT (keep them independently sourced, or
   accept and document the ShareAlike obligation).
+
+## Shipped 2026-10-29 (stage 3, ahead of the Tao book)
+
+- Release `2026-10-29 01:05:57 GMT`, 125,324 entries, retrieved 2026-10-29
+  (recorded in the asset `meta` block).
+- Decisions on the open questions above: single JSON asset
+  (`public/dict/cedict.json`, 10.5 MB raw / ~4 MB gz transfer), lazy-loaded
+  on first Chinese-primary use; both headword sets indexed (simplified
+  primary keys + full traditional alias map); glosses capped at the first
+  three per record (p95); first record wins for polyphones.
+- Mainland Putonghua readings kept; the Taiwan gap stands as documented.
+- Attribution: credit line in the desktop sidebar and mobile tools footer,
+  `meta` block in the asset, `README.md` Dictionary section. Plain-text
+  copy exports embed no dictionary data, so no export-side credit needed.
+- `scripts/build-dictionary.mjs` regenerates the asset; the raw download
+  is intentionally not committed.

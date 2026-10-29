@@ -1,6 +1,7 @@
 import { brand } from '../brand';
 import type { Doc } from '../data/types';
 import { bilingualText, chineseText, englishText } from '../lib/doc';
+import type { DictStatus } from '../lib/dictionary';
 import { CharInspector } from './CharInspector';
 import type { PrimaryLang, Reveal } from './Reader';
 
@@ -46,6 +47,7 @@ interface Props {
   onImport: () => void;
   onCloseInspector: () => void;
   collapsed: boolean;
+  dictStatus: DictStatus;
 }
 
 export function Sidebar(p: Props) {
@@ -351,6 +353,25 @@ export function Sidebar(p: Props) {
         <div className="text-[11px] text-[var(--ink-mute)] leading-[1.6] border-t border-[var(--line)] pt-4">
           <div className="font-semibold text-[var(--ink)]">How to read</div>
           {enPrimary ? brand.texts.howToReadEn : brand.texts.howToReadZh}
+        </div>
+        <div className="text-[11px] text-[var(--ink-mute)] leading-[1.6]">
+          Word readings{' '}
+          <a
+            href="https://cc-cedict.org"
+            target="_blank"
+            rel="noreferrer"
+            className="underline decoration-dotted underline-offset-2 hover:text-[var(--verm)]"
+          >
+            CC-CEDICT
+          </a>{' '}
+          (CC BY-SA 4.0)
+          {p.dictStatus === 'loading'
+            ? ' · loading…'
+            : p.dictStatus === 'ready'
+              ? ' · ready'
+              : p.dictStatus === 'unavailable'
+                ? ' · unavailable offline'
+                : ''}
         </div>
       </div>
     </aside>

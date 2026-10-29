@@ -1,4 +1,5 @@
 import type { WordAlign } from '../data/types';
+import type { ReadingProvider } from './dictionary';
 
 export interface ZhToken {
   text: string;
@@ -70,9 +71,14 @@ function greedyInto(
 // repairs the fallback: consecutive characters the alignment table
 // cannot explain are re-joined along ICU word runs, so an unaligned
 // two-character word keeps its true span instead of collapsing to
-// single characters. Characters with no aligned word become tokens
-// without a word.
-export function tokenizeChinese(zh: string, words: WordAlign[]): ZhToken[] {
+// single characters. When a dictionary is supplied, spans still without
+// a word are looked up there (first record wins for polyphones) and gain
+// a hover card; anything the dictionary also lacks stays wordless.
+export function tokenizeChinese(
+  zh: string,
+  words: WordAlign[],
+  dict?: ReadingProvider,
+): ZhToken[] {
   const byZh = new Map<string, WordAlign>();
   for (const w of words) {
     if (w.zh && !byZh.has(w.zh)) byZh.set(w.zh, w);
@@ -118,6 +124,15 @@ export function tokenizeChinese(zh: string, words: WordAlign[]): ZhToken[] {
       tokens.push(t);
       i += 1;
       pos += len;
+    }
+  }
+  if (dict) {
+    for (const t of tokens) {
+      if (t.word !== undefined || t.text.trim() === '') continue;
+      const [first] = dict.lookup(t.text) ?? [];
+      if (!first) continue;
+      const [en] = first.def.split('; ');
+      t.word = { en: en || '', zh: t.text, pinyin: first.pinyin, def: first.def };
     }
   }
   return tokens;

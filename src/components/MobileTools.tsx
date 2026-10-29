@@ -1,6 +1,7 @@
 import { brand } from '../brand';
 import type { Doc } from '../data/types';
 import { chineseText, englishText } from '../lib/doc';
+import type { DictStatus } from '../lib/dictionary';
 import { CharInspector } from './CharInspector';
 import type { PrimaryLang, Reveal } from './Reader';
 
@@ -24,6 +25,7 @@ interface Props {
   inspectedChar: string | null;
   onClearInspected: () => void;
   onCopy: (text: string, label: string) => void;
+  dictStatus: DictStatus;
 }
 
 export function MobileTools({
@@ -36,6 +38,7 @@ export function MobileTools({
   inspectedChar,
   onClearInspected,
   onCopy,
+  dictStatus,
 }: Props) {
   return (
     <div
@@ -130,6 +133,25 @@ export function MobileTools({
             >
               Copy 中文
             </button>
+          </div>
+          <div className="text-[11px] text-[var(--ink-mute)] leading-[1.6] text-center">
+            Word readings{' '}
+            <a
+              href="https://cc-cedict.org"
+              target="_blank"
+              rel="noreferrer"
+              className="underline decoration-dotted underline-offset-2"
+            >
+              CC-CEDICT
+            </a>{' '}
+            (CC BY-SA 4.0)
+            {dictStatus === 'loading'
+              ? ' · loading…'
+              : dictStatus === 'ready'
+                ? ' · ready'
+                : dictStatus === 'unavailable'
+                  ? ' · unavailable offline'
+                  : ''}
           </div>
         </div>
       </div>
