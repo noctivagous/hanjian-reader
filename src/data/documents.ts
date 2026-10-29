@@ -9,6 +9,7 @@ export const docs: Doc[] = [
     "titleZh": "庭院里的雨",
     "author": "Lin Wei · 林微",
     "sourceLanguage": "zh",
+    "script": "simplified",
     "sections": [
       {
         "id": "courtyard-rain-main",
@@ -411,6 +412,7 @@ export const docs: Doc[] = [
     "titleZh": "灯下缝衣",
     "author": "Chen Yu · 陈予",
     "sourceLanguage": "zh",
+    "script": "simplified",
     "sections": [
       {
         "id": "mending-lamplight-main",

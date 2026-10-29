@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Local-only book sources (in-copyright translations live here, never committed)
+private/*
+!private/README.md
+!private/.gitkeep
+# Generated local-only book modules (emitted by scripts/build-tao-te-ching.mjs)
+src/data/tao-te-ching.generated.*
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

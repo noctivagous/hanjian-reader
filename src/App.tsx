@@ -8,6 +8,7 @@ import { Sidebar } from './components/Sidebar';
 import { WordCard, type HoverState } from './components/WordCard';
 import { applyBrand, brand, brandStorageKey } from './brand';
 import { docs as seedDocs } from './data/documents';
+import { extraDocs } from './data/localDocs';
 import type { Doc } from './data/types';
 import {
   loadDictionary,
@@ -18,9 +19,11 @@ import { importCustomDoc } from './lib/segment';
 import { copyText, speakChinese } from './lib/speech';
 import { useScrollSpy } from './lib/useScrollSpy';
 
+const initialDocs: Doc[] = [...seedDocs, ...extraDocs];
+
 export default function App() {
-  const [docs, setDocs] = useState<Doc[]>(seedDocs);
-  const [activeId, setActiveId] = useState(seedDocs[0].id);
+  const [docs, setDocs] = useState<Doc[]>(initialDocs);
+  const [activeId, setActiveId] = useState(initialDocs[0].id);
   const doc = useMemo(
     () => docs.find((d) => d.id === activeId) || docs[0],
     [docs, activeId],

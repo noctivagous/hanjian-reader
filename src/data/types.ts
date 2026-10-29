@@ -42,5 +42,9 @@ export interface Doc {
   titleZh: string;
   author: string;
   sourceLanguage: string;
+  /** Script of the Chinese text. Optional so older docs still typecheck. */
+  script?: 'simplified' | 'traditional';
+  /** Distribution/licensing note (e.g. private-only in-copyright text). */
+  license?: string;
   sections: Section[];
 }

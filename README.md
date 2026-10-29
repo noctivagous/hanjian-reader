@@ -32,6 +32,8 @@ Ideal for translated literature, business docs, classical texts, or any Chinese 
 - Two fully-aligned sample documents included:
   - *The Courtyard Rain / 庭院里的雨*
   - *Mending Clothes Under Lamplight / 灯下缝衣*
+- Optional local-only books from `private/` (never committed), e.g. the
+  *Tao Te Ching / 道德經* (traditional script) — see [Private Texts](#private-texts)
 
 ### Right Toolbar — Reveal Controls
 
@@ -77,6 +79,25 @@ Character dictionary is embedded for ~50 characters from sample docs. Unknown ch
 - Auto-aligns by paragraph/sentence index
 - Word alignment disabled for custom docs (sentence/paragraph/full + char inspection still work)
 - Export: Copy English, Copy Chinese, Copy Bilingual
+
+## Private Texts
+
+Some books pair a public-domain Chinese original with an in-copyright
+translation. Those translations are never committed: they live in the
+gitignored `private/` directory and are compiled locally into a gitignored
+generated module.
+
+- Put your copy of the Feng & English *Tao Te Ching* translation at
+  `private/tao-te-ching.en.txt` (81 `---`-separated chapters; see
+  [`private/README.md`](private/README.md) for the exact layout), then run
+  `node scripts/build-tao-te-ching.mjs`. The app picks up the generated book
+  automatically; with no generated file it builds and runs with just the two
+  sample docs.
+- The generated book records `translator: 'Gia-fu Feng & Jane English'` and a
+  `license: 'In copyright — local/private use only, do not distribute'` flag.
+  Do not deploy a build containing it publicly without permission from the
+  rights holder (`refs/tao-te-ching-plan.md` P0-5). The Wang Bi Chinese text
+  itself is public domain.
 
 ## Dictionary
 
