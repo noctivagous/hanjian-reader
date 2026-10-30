@@ -2,8 +2,10 @@ import { brand } from '../brand';
 import type { Doc } from '../data/types';
 import { chineseText, englishText } from '../lib/doc';
 import type { DictStatus, ReadingProvider } from '../lib/dictionary';
+import type { AlignRole } from '../data/types';
+import { AlignRoleToggle } from './AlignRoleToggle';
 import { CharInspector } from './CharInspector';
-import type { PrimaryLang, Reveal } from './Reader';
+import type { HoverMode, PrimaryLang, Reveal } from './Reader';
 
 const ALL_MODES: { k: keyof Reveal; l: string }[] = [
   { k: 'words', l: 'Words 词语' },
@@ -22,6 +24,10 @@ interface Props {
   reveal: Reveal;
   primaryLang: PrimaryLang;
   onToggleReveal: (k: keyof Reveal) => void;
+  hoverMode: HoverMode;
+  onHoverMode: (mode: HoverMode) => void;
+  alignRole: AlignRole;
+  onAlignRole: (role: AlignRole) => void;
   inspectedChar: string | null;
   onClearInspected: () => void;
   onCopy: (text: string, label: string) => void;
@@ -36,6 +42,10 @@ export function MobileTools({
   reveal,
   primaryLang,
   onToggleReveal,
+  hoverMode,
+  onHoverMode,
+  alignRole,
+  onAlignRole,
   inspectedChar,
   onClearInspected,
   onCopy,
@@ -65,11 +75,40 @@ export function MobileTools({
           </button>
         </div>
         <div className="p-5 space-y-6">
-          <div className="text-[12px] text-[var(--ink-mute)]">
-            {primaryLang === 'en'
-              ? 'Reading English · revealing 中文'
-              : 'Reading 中文 · revealing English'}
+          <div className="flex items-center justify-between gap-3">
+            <div className="text-[12px] text-[var(--ink-mute)]">
+              {primaryLang === 'en'
+                ? 'Reading English · revealing 中文'
+                : 'Reading 中文 · revealing English'}
+            </div>
+            {brand.features.words && (
+              <AlignRoleToggle value={alignRole} onChange={onAlignRole} />
+            )}
           </div>
+          {brand.features.words && (
+            <div
+              className="flex rounded-full border border-[var(--line)] bg-[var(--paper-2)] p-0.5 w-fit"
+              role="group"
+              aria-label="Hover granularity"
+            >
+              <button
+                type="button"
+                aria-pressed={hoverMode === 'word'}
+                onClick={() => onHoverMode('word')}
+                className={`rounded-full px-3 py-1 text-[11px] transition ${hoverMode === 'word' ? 'bg-[var(--ink)] text-[var(--paper)]' : ''}`}
+              >
+                Word hover
+              </button>
+              <button
+                type="button"
+                aria-pressed={hoverMode === 'character'}
+                onClick={() => onHoverMode('character')}
+                className={`rounded-full px-3 py-1 text-[11px] transition ${hoverMode === 'character' ? 'bg-[var(--ink)] text-[var(--paper)]' : ''}`}
+              >
+                Character hover
+              </button>
+            </div>
+          )}
           <div className="grid grid-cols-2 gap-2">
             {MODES.map((m) => (
               <button

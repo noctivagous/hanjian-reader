@@ -45,7 +45,11 @@ function asAlignments(value: unknown): ParallelWordAlignments {
       ) {
         throw new Error(`alignment ${id} has an invalid word`);
       }
-      words.push(item as WordAlign);
+      const word = item as WordAlign;
+      words.push({
+        ...word,
+        role: word.role === 'gloss' ? 'gloss' : 'span',
+      });
     }
     out[id] = words;
   }

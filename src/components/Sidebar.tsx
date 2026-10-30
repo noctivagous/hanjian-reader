@@ -2,13 +2,25 @@ import { brand } from '../brand';
 import type { Doc } from '../data/types';
 import { bilingualText, chineseText, englishText } from '../lib/doc';
 import type { DictStatus, ReadingProvider } from '../lib/dictionary';
+import type { AlignRole } from '../data/types';
+import { AlignRoleToggle } from './AlignRoleToggle';
 import { CharInspector } from './CharInspector';
-import type { PrimaryLang, Reveal } from './Reader';
+import type { HoverMode, PrimaryLang, Reveal } from './Reader';
 
-function modesFor(primaryLang: PrimaryLang): { k: keyof Reveal; label: string; sub: string; icon: string; hint: string }[] {
+function modesFor(
+  primaryLang: PrimaryLang,
+  hoverMode: HoverMode,
+): { k: keyof Reveal; label: string; sub: string; icon: string; hint: string }[] {
   const enPrimary = primaryLang === 'en';
+  const wordSub = enPrimary
+    ? hoverMode === 'word'
+      ? 'Hover English words to see Chinese words'
+      : 'Hover English words to see one Chinese character'
+    : hoverMode === 'word'
+      ? 'Hover Chinese words to see English'
+      : 'Hover Chinese characters to see English';
   return [
-    { k: 'words', label: 'Words / 词语', sub: enPrimary ? 'Hover English words to see Chinese' : 'Hover Chinese words to see English', icon: 'Aa→字', hint: 'W' },
+    { k: 'words', label: 'Words / 词语', sub: wordSub, icon: 'Aa→字', hint: 'W' },
     { k: 'sentences', label: 'Sentences / 句子', sub: enPrimary ? 'Toggle per-sentence Chinese' : 'Toggle per-sentence English', icon: 'S', hint: 'S' },
     { k: 'paragraphs', label: 'Paragraphs / 段落', sub: enPrimary ? 'Show Chinese paragraph cards' : 'Show English paragraph cards', icon: '¶', hint: 'P' },
     { k: 'full', label: 'Full Document / 全文', sub: 'Side-by-side full view', icon: 'Doc', hint: 'F' },
@@ -20,6 +32,10 @@ interface Props {
   reveal: Reveal;
   primaryLang: PrimaryLang;
   onToggleReveal: (k: keyof Reveal) => void;
+  hoverMode: HoverMode;
+  onHoverMode: (mode: HoverMode) => void;
+  alignRole: AlignRole;
+  onAlignRole: (role: AlignRole) => void;
   showPinyin: boolean;
   onShowPinyin: (v: boolean) => void;
   showZhuyin: boolean;
@@ -52,10 +68,11 @@ interface Props {
 }
 
 export function Sidebar(p: Props) {
-  const activeCount = Object.values(p.reveal).filter(Boolean).length;
   const enPrimary = p.primaryLang === 'en';
   // White-label: only the reveal modes enabled by the brand are offered.
-  const MODES = modesFor(p.primaryLang).filter((m) => brand.features[m.k]);
+  const MODES = modesFor(p.primaryLang, p.hoverMode).filter(
+    (m) => brand.features[m.k],
+  );
 
   return (
     <aside
@@ -63,13 +80,13 @@ export function Sidebar(p: Props) {
     >
       <div className="p-6 space-y-8">
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-4 gap-2">
             <h2 className="serif-display text-[18px] font-semibold tracking-tight">
               {enPrimary ? 'Reveal 中文' : 'Reveal English'}
             </h2>
-            <span className="text-[11px] px-2 py-0.5 rounded-full bg-[var(--verm-soft)] text-[var(--verm)] border border-[#F2C4B8]">
-              {activeCount}/4 active
-            </span>
+            {brand.features.words && (
+              <AlignRoleToggle value={p.alignRole} onChange={p.onAlignRole} />
+            )}
           </div>
           <div className="space-y-3">
             {MODES.map((m) => (
@@ -93,6 +110,30 @@ export function Sidebar(p: Props) {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
+                  {m.k === 'words' && (
+                    <div
+                      className="flex rounded-full border border-[var(--line)] bg-[var(--paper-2)] p-0.5"
+                      role="group"
+                      aria-label="Hover granularity"
+                    >
+                      <button
+                        type="button"
+                        aria-pressed={p.hoverMode === 'word'}
+                        onClick={() => p.onHoverMode('word')}
+                        className={`rounded-full px-1.5 py-0.5 text-[10px] transition ${p.hoverMode === 'word' ? 'bg-[var(--ink)] text-[var(--paper)]' : 'hover:text-[var(--verm)]'}`}
+                      >
+                        Word
+                      </button>
+                      <button
+                        type="button"
+                        aria-pressed={p.hoverMode === 'character'}
+                        onClick={() => p.onHoverMode('character')}
+                        className={`rounded-full px-1.5 py-0.5 text-[10px] transition ${p.hoverMode === 'character' ? 'bg-[var(--ink)] text-[var(--paper)]' : 'hover:text-[var(--verm)]'}`}
+                      >
+                        Char
+                      </button>
+                    </div>
+                  )}
                   <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--line)]">
                     {m.hint}
                   </span>

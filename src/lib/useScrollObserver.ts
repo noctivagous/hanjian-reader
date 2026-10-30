@@ -47,34 +47,9 @@ export function useScrollObserver(
       return;
     }
 
-    const visible = new Map<string, number>();
     const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            visible.set(entry.target.id, entry.boundingClientRect.top);
-          } else {
-            visible.delete(entry.target.id);
-          }
-        }
-        if (visible.size > 0) {
-          let best: string | null = null;
-          let bestTop = Infinity;
-          for (const [id, top] of visible) {
-            // Refresh top: entries carry current positions.
-            const el = byId.get(id);
-            const currentTop = el
-              ? el.getBoundingClientRect().top
-              : top;
-            if (currentTop < bestTop) {
-              bestTop = currentTop;
-              best = id;
-            }
-          }
-          if (best) setActiveId(best);
-        } else {
-          fallback();
-        }
+      () => {
+        fallback();
       },
       {
         root,

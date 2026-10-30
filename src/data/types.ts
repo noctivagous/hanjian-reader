@@ -3,15 +3,23 @@ export interface WordSense {
   def: string;
 }
 
+/** How a pair is used in the reader. Omitted records are inferred. */
+export type AlignRole = 'span' | 'gloss';
+
 export interface WordAlign {
   en: string;
   zh: string;
   pinyin: string;
   def: string;
   /**
-   * Character offsets into Translation.text. When both are present, the
-   * reader preserves the original English and makes only this exact range
-   * hoverable. Legacy alignments omit them and render as a word list.
+   * `span` underlines a range of Translation.text. `gloss` is a lexical
+   * chip (not required to appear in the English sentence). When omitted:
+   * offsets ⇒ span, otherwise gloss.
+   */
+  role?: AlignRole;
+  /**
+   * Character offsets into Translation.text. Required for the span
+   * surface; ignored on gloss-only records.
    */
   enStart?: number;
   enEnd?: number;

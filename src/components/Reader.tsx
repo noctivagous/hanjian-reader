@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, type ReactNode } from 'react';
 import { brand } from '../brand';
-import type { Doc, Paragraph, Sentence, WordAlign } from '../data/types';
+import type { AlignRole, Doc, Paragraph, Sentence, WordAlign } from '../data/types';
 import { allParagraphs, chineseText, paragraphEn, primaryTranslation } from '../lib/doc';
 import type { ReadingProvider } from '../lib/dictionary';
 import { toneColor } from '../lib/pinyin';
@@ -11,8 +11,8 @@ import {
   zhFontClass,
 } from '../lib/script';
 import { isLinkedAlign } from '../lib/alignLink';
+import { underlinesFor } from '../lib/alignRoles';
 import {
-  englishLabel,
   tokenizeChinese,
   withDictionaryReading,
   type ZhToken,
@@ -29,6 +29,8 @@ export interface Reveal {
 
 /** Language shown as the main text; the other language is revealed. */
 export type PrimaryLang = 'en' | 'zh';
+/** Granularity used by the Words reveal surface. */
+export type HoverMode = 'word' | 'character';
 
 interface Props {
   doc: Doc;
@@ -59,11 +61,22 @@ interface Props {
   dict: ReadingProvider | null;
   /** Classical word breaker (Jiayan). Used for traditional-script docs. */
   segmentZh?: (zh: string) => string[];
+  /** Which word-alignment surface is interactive. */
+  alignRole: AlignRole;
+  /** Whether an alignment reveals its full Chinese word or one character. */
+  hoverMode: HoverMode;
 }
 
 /** True when `ch` is the inspected character or part of the inspected word. */
 function isInspected(inspectedChar: string | null, ch: string): boolean {
   return inspectedChar !== null && Array.from(inspectedChar).includes(ch);
+}
+
+function characterAlignments(words: WordAlign[]): WordAlign[] {
+  return words.flatMap((word) => {
+    const ch = Array.from(word.zh).find((part) => /\p{Script=Han}/u.test(part));
+    return ch ? [{ ...word, zh: ch }] : [];
+  });
 }
 
 function hoverSpanClasses({
@@ -168,12 +181,16 @@ function ZhHoverText({
           return (
             <span key={`${idPrefix}_t${i}`}>
               {Array.from(tok.text).map((ch, j) => (
-                <HanChar
-                  key={j}
-                  ch={ch}
-                  inspected={isInspected(inspectedChar, ch)}
-                  onInspect={() => onCharClick(ch)}
-                />
+                /\p{Script=Han}/u.test(ch) ? (
+                  <HanChar
+                    key={j}
+                    ch={ch}
+                    inspected={isInspected(inspectedChar, ch)}
+                    onInspect={() => onCharClick(ch)}
+                  />
+                ) : (
+                  <span key={j}>{ch}</span>
+                )
               ))}
             </span>
           );
@@ -228,6 +245,70 @@ function ZhHoverText({
         );
       })}
     </>
+  );
+}
+
+function chromeTokens(
+  text: string,
+  dict: ReadingProvider | null,
+  segmentZh?: (zh: string) => string[],
+  hoverMode: HoverMode = 'word',
+): ZhToken[] {
+  const tokens = tokenizeChinese(text, [], dict ?? undefined, segmentZh);
+  return tokens.flatMap((token) => {
+    if (token.word) {
+      return hoverMode === 'character'
+        ? characterAlignments([token.word]).map((word) => ({ text: word.zh, word }))
+        : [token];
+    }
+    return Array.from(token.text).map((ch) =>
+      /\p{Script=Han}/u.test(ch)
+        ? { text: ch, word: { en: '', zh: ch, pinyin: '', def: '' } }
+        : { text: ch },
+    );
+  });
+}
+
+export function ChineseHoverText({
+  text,
+  idPrefix,
+  revealWords,
+  showDefsInline,
+  search,
+  pinnedKey,
+  onPin,
+  onHover,
+  linkedAlign,
+  inspectedChar,
+  onCharClick,
+  dict,
+  segmentZh,
+  hoverMode,
+}: Omit<Parameters<typeof ZhHoverText>[0], 'tokens' | 'crossLink'> & {
+  text: string;
+  dict: ReadingProvider | null;
+  segmentZh?: (zh: string) => string[];
+  hoverMode: HoverMode;
+}) {
+  const tokens = useMemo(
+    () => chromeTokens(text, dict, segmentZh, hoverMode),
+    [text, dict, segmentZh, hoverMode],
+  );
+  return (
+    <ZhHoverText
+      tokens={tokens}
+      idPrefix={idPrefix}
+      revealWords={revealWords}
+      showDefsInline={showDefsInline}
+      search={search}
+      pinnedKey={pinnedKey}
+      onPin={onPin}
+      onHover={onHover}
+      linkedAlign={linkedAlign}
+      crossLink={false}
+      inspectedChar={inspectedChar}
+      onCharClick={onCharClick}
+    />
   );
 }
 
@@ -368,6 +449,8 @@ function SentenceView({
   speakOnClick,
   dict,
   segmentZh,
+  alignRole,
+  hoverMode,
 }: Props & { sentence: Sentence; open: boolean; onToggle: () => void }) {
   const crossLink = open && reveal.words;
   const canSpeak = brand.features.speech && showSpeakerButtons;
@@ -380,19 +463,20 @@ function SentenceView({
   const rawWords = translation?.words ?? NO_WORDS;
   const enText = translation?.text ?? '';
   const enPrimary = primaryLang === 'en';
-  const hasEnglishOffsets = rawWords.some(
-    (word) => Number.isInteger(word.enStart) && Number.isInteger(word.enEnd),
+  const hoverWords = useMemo(
+    () => underlinesFor(enText, sentence.zh, rawWords, alignRole),
+    [enText, sentence.zh, rawWords, alignRole],
   );
-  const words = rawWords;
+  const interactiveWords = useMemo(
+    () =>
+      hoverMode === 'character' ? characterAlignments(hoverWords) : hoverWords,
+    [hoverMode, hoverWords],
+  );
   const zhTokens = useMemo(
-    () => tokenizeChinese(sentence.zh, words, dict ?? undefined, segmentZh),
-    [sentence.zh, words, dict, segmentZh],
+    () =>
+      tokenizeChinese(sentence.zh, interactiveWords, dict ?? undefined, segmentZh),
+    [sentence.zh, interactiveWords, dict, segmentZh],
   );
-  const alignedGloss = words.filter((w) => w.zh);
-  const glossWords =
-    alignedGloss.length > 0
-      ? alignedGloss
-      : zhTokens.flatMap((t) => (t.word ? [t.word] : []));
   const foldedQuery = canonicalSearchText(search);
   const matched =
     search !== '' &&
@@ -430,9 +514,11 @@ function SentenceView({
 
   return (
     <div
-      className={`relative leading-[1.9] ${matched ? 'bg-[#FFF6E8] dark:bg-[#2A2214] rounded' : ''}`}
+      id={sentence.id}
+      className={`relative leading-[1.9] scroll-mt-[76px] ${matched ? 'bg-[#FFF6E8] dark:bg-[#2A2214] rounded' : ''}`}
     >
-      <span className="sentence">
+      <div className="flex items-start gap-1">
+      <div className="sentence min-w-0 flex-1">
         {!translation ? (
           <span className={`${zhFont} text-[18px]`}>
             {Array.from(sentence.zh).map((ch, i) => (
@@ -444,77 +530,28 @@ function SentenceView({
               />
             ))}
           </span>
-        ) : enPrimary && hasEnglishOffsets ? (
+        ) : enPrimary ? (
           <span className="text-[16px] md:text-[18px]">
-            <EnglishAlignedText
-              text={enText}
-              words={words}
-              idPrefix={sentence.id}
-              revealWords={reveal.words}
-              showDefsInline={showDefsInline}
-              search={search}
-              pinnedKey={pinnedKey}
-              onPin={onPin}
-              onHover={handleHover}
-              linkedAlign={linkedAlign}
-              crossLink={crossLink}
-              dict={dict}
-            />
+            {hoverWords.length > 0 ? (
+              <EnglishAlignedText
+                text={enText}
+                words={interactiveWords}
+                idPrefix={sentence.id}
+                revealWords={reveal.words}
+                showDefsInline={showDefsInline}
+                search={search}
+                pinnedKey={pinnedKey}
+                onPin={onPin}
+                onHover={handleHover}
+                linkedAlign={linkedAlign}
+                crossLink={crossLink}
+                dict={dict}
+              />
+            ) : (
+              highlight(enText, search)
+            )}
           </span>
-        ) : enPrimary && words.length > 0 ? (
-          words.map((w, i) => {
-            const key = `${sentence.id}_${i}`;
-            const hasZh = !!w.zh;
-            const pinned = pinnedKey === key;
-            const linked =
-              !pinned && isLinkedAlign(w, linkedAlign, crossLink);
-            return (
-              <span className="inline" key={key}>
-                <span
-                  onMouseEnter={(e) => {
-                    if (!reveal.words || !w.zh) return;
-                    handleHover({
-                      key,
-                      rect: e.currentTarget.getBoundingClientRect(),
-                      data: w,
-                    });
-                  }}
-                  onMouseLeave={() => {
-                    if (pinnedKey !== key) handleHover(null);
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (!w.zh) return;
-                    if (pinnedKey === key) {
-                      onPin(null);
-                    } else {
-                      onPin(key, w);
-                      handleHover({
-                        key,
-                        rect: e.currentTarget.getBoundingClientRect(),
-                        data: w,
-                      });
-                    }
-                  }}
-                  className={hoverSpanClasses({
-                    revealWords: reveal.words,
-                    hasZh,
-                    pinned,
-                    linked,
-                  })}
-                >
-                  {search ? highlight(w.en, search) : w.en}
-                  {hasZh && reveal.words && showDefsInline && (
-                    <span className="ml-1 text-[11px] text-[var(--verm)] font-medium">
-                      ({w.zh})
-                    </span>
-                  )}
-                </span>
-                <span className="inline"> </span>
-              </span>
-            );
-          })
-        ) : !enPrimary ? (
+        ) : (
           <span
             className={`${zhFont} text-[18px]`}
             style={{ fontSize: `${charSize}em` }}
@@ -534,73 +571,8 @@ function SentenceView({
               onCharClick={handleCharClick}
             />
           </span>
-        ) : (
-          // English-primary, no authored word alignments. Keep the
-          // literary English. When Words is on, Jiayan/ICU spans plus
-          // CEDICT supply hoverable English gloss chips (English → Chinese).
-          // That does not map the prose onto the Chinese; it uses each
-          // dictionary headword's English label.
-          <>
-            <span className="text-[16px] md:text-[18px]">
-              {highlight(enText, search)}
-            </span>
-            {reveal.words && glossWords.length > 0 && (
-              <span className="mt-1 block text-[16px] md:text-[18px] leading-[1.9]">
-                {glossWords.map((w, i) => {
-                  const key = `${sentence.id}_g${i}`;
-                  const label = englishLabel(w);
-                  const pinned = pinnedKey === key;
-                  const linked =
-                    !pinned && isLinkedAlign(w, linkedAlign, crossLink);
-                  return (
-                    <span className="inline" key={key}>
-                      <span
-                        onMouseEnter={(e) => {
-                          handleHover({
-                            key,
-                            rect: e.currentTarget.getBoundingClientRect(),
-                            data: w,
-                          });
-                        }}
-                        onMouseLeave={() => {
-                          if (pinnedKey !== key) handleHover(null);
-                        }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (pinnedKey === key) {
-                            onPin(null);
-                          } else {
-                            onPin(key, w);
-                            handleHover({
-                              key,
-                              rect: e.currentTarget.getBoundingClientRect(),
-                              data: w,
-                            });
-                          }
-                        }}
-                        className={hoverSpanClasses({
-                          revealWords: true,
-                          hasZh: true,
-                          pinned,
-                          linked,
-                        })}
-                      >
-                        {search ? highlight(label, search) : label}
-                        {showDefsInline && (
-                          <span className="ml-1 text-[11px] text-[var(--verm)] font-medium">
-                            ({w.zh})
-                          </span>
-                        )}
-                      </span>
-                      <span className="inline"> </span>
-                    </span>
-                  );
-                })}
-              </span>
-            )}
-          </>
         )}
-      </span>
+      </div>
       {showSentenceChips && (
       <button
         type="button"
@@ -617,6 +589,7 @@ function SentenceView({
         <span className="opacity-70">{open ? '−' : '+'}</span>
       </button>
       )}
+      </div>
       <div
         className={`grid transition-all duration-300 ease-out ${open ? 'grid-rows-[1fr] opacity-100 mt-3' : 'grid-rows-[0fr] opacity-0'}`}
       >
@@ -628,10 +601,10 @@ function SentenceView({
             {!enPrimary ? (
               <div className="flex items-start justify-between gap-3">
                 <div className="text-[16px] leading-[1.8]">
-                  {hasEnglishOffsets && words.length > 0 ? (
+                  {hoverWords.length > 0 ? (
                     <EnglishAlignedText
                       text={enText}
-                      words={words}
+                      words={interactiveWords}
                       idPrefix={`${sentence.id}_en`}
                       revealWords={reveal.words}
                       showDefsInline={showDefsInline}
@@ -691,7 +664,7 @@ function SentenceView({
             </div>
             {(showPinyin || showZhuyin) && (
               <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[12px]">
-                {glossWords.map((w, i) => {
+                {interactiveWords.map((w, i) => {
                     const senses =
                       w.senses && w.senses.length > 0
                         ? w.senses
@@ -743,18 +716,38 @@ function SentenceView({
 const NOISE_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
 
 export function Reader(props: Props) {
-  const { doc, reveal, primaryLang, fontScale, charSize, inspectedChar, onInspectChar, onSpeak, showSpeakerButtons, speakOnClick, dict, segmentZh } = props;
+  const {
+    doc,
+    reveal,
+    primaryLang,
+    fontScale,
+    charSize,
+    inspectedChar,
+    onInspectChar,
+    onSpeak,
+    showSpeakerButtons,
+    speakOnClick,
+    dict,
+    segmentZh,
+    hoverMode,
+  } = props;
   const zhFont = zhFontClass(doc);
   const paragraphTokens = useMemo(() => {
     const map = new Map<string, ZhToken[]>();
     for (const p of allParagraphs(doc)) {
+      const words = paragraphWords(p);
       map.set(
         p.id,
-        tokenizeChinese(p.zh, paragraphWords(p), dict ?? undefined, segmentZh),
+        tokenizeChinese(
+          p.zh,
+          hoverMode === 'character' ? characterAlignments(words) : words,
+          dict ?? undefined,
+          segmentZh,
+        ),
       );
     }
     return map;
-  }, [doc, dict, segmentZh]);
+  }, [doc, dict, segmentZh, hoverMode]);
   const enPrimary = primaryLang === 'en';
   const canSpeak = brand.features.speech && showSpeakerButtons;
   const handleCharClick = (ch: string) => {
@@ -789,16 +782,65 @@ export function Reader(props: Props) {
           </span>
         </div>
         <h1 className="serif-display text-[42px] md:text-[52px] leading-[0.95] tracking-tight font-[700]">
-          {enPrimary ? doc.titleEn : doc.titleZh}
+          {enPrimary ? doc.titleEn : (
+            <ChineseHoverText
+              text={doc.titleZh}
+              idPrefix={`${doc.id}_title`}
+              revealWords={reveal.words}
+              showDefsInline={false}
+              search=""
+              pinnedKey={props.pinnedKey}
+              onPin={props.onPin}
+              onHover={props.onHover}
+              linkedAlign={props.linkedAlign}
+              inspectedChar={inspectedChar}
+              onCharClick={handleCharClick}
+              dict={dict}
+              segmentZh={segmentZh}
+              hoverMode={hoverMode}
+            />
+          )}
         </h1>
         <div className="mt-2 flex items-baseline gap-3">
           <span
             className={`${zhFont} text-[20px] text-[var(--ink-mute)] transition-all ${reveal.paragraphs || reveal.full ? 'opacity-100' : 'opacity-70'}`}
           >
-            {enPrimary ? doc.titleZh : doc.titleEn}
+            {enPrimary ? (
+              <ChineseHoverText
+                text={doc.titleZh}
+                idPrefix={`${doc.id}_title_secondary`}
+                revealWords={reveal.words}
+                showDefsInline={false}
+                search=""
+                pinnedKey={props.pinnedKey}
+                onPin={props.onPin}
+                onHover={props.onHover}
+                linkedAlign={props.linkedAlign}
+                inspectedChar={inspectedChar}
+                onCharClick={handleCharClick}
+                dict={dict}
+                segmentZh={segmentZh}
+                hoverMode={hoverMode}
+              />
+            ) : doc.titleEn}
           </span>
           <span className="text-[13px] text-[var(--ink-mute)]">
-            {doc.author ? `— ${doc.author} ` : ''}
+            {doc.author && <>— <ChineseHoverText
+              text={doc.author}
+              idPrefix={`${doc.id}_author`}
+              revealWords={reveal.words}
+              showDefsInline={false}
+              search=""
+              pinnedKey={props.pinnedKey}
+              onPin={props.onPin}
+              onHover={props.onHover}
+              linkedAlign={props.linkedAlign}
+              inspectedChar={inspectedChar}
+              onCharClick={handleCharClick}
+              dict={dict}
+              segmentZh={segmentZh}
+              hoverMode={hoverMode}
+            /> </>}
             {scriptTag(doc)}
           </span>
         </div>
@@ -816,12 +858,46 @@ export function Reader(props: Props) {
                 <div>
                   {(enPrimary ? section.titleEn : section.titleZh) && (
                     <h2 className="serif-display text-[28px] font-semibold tracking-tight">
-                      {enPrimary ? section.titleEn : section.titleZh}
+                      {enPrimary ? section.titleEn : (
+                        <ChineseHoverText
+                          text={section.titleZh}
+                          idPrefix={`${section.id}_title`}
+                          revealWords={reveal.words}
+                          showDefsInline={false}
+                          search=""
+                          pinnedKey={props.pinnedKey}
+                          onPin={props.onPin}
+                          onHover={props.onHover}
+                          linkedAlign={props.linkedAlign}
+                          inspectedChar={inspectedChar}
+                          onCharClick={handleCharClick}
+                          dict={dict}
+                          segmentZh={segmentZh}
+                          hoverMode={hoverMode}
+                        />
+                      )}
                     </h2>
                   )}
                   {(enPrimary ? section.titleZh : section.titleEn) && (
                     <div className={`${zhFont} text-[18px] text-[var(--ink-mute)]`}>
-                      {enPrimary ? section.titleZh : section.titleEn}
+                      {enPrimary ? (
+                        <ChineseHoverText
+                          text={section.titleZh}
+                          idPrefix={`${section.id}_title_secondary`}
+                          revealWords={reveal.words}
+                          showDefsInline={false}
+                          search=""
+                          pinnedKey={props.pinnedKey}
+                          onPin={props.onPin}
+                          onHover={props.onHover}
+                          linkedAlign={props.linkedAlign}
+                          inspectedChar={inspectedChar}
+                          onCharClick={handleCharClick}
+                          dict={dict}
+                          segmentZh={segmentZh}
+                          hoverMode={hoverMode}
+                        />
+                      ) : section.titleEn}
                     </div>
                   )}
                 </div>

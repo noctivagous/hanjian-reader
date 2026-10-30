@@ -3,13 +3,18 @@ import { Header } from './components/Header';
 import { ImportModal } from './components/ImportModal';
 import { MobileTools } from './components/MobileTools';
 import { MobileNavDrawer, NavSidebar } from './components/NavSidebar';
-import { Reader, type PrimaryLang, type Reveal } from './components/Reader';
+import {
+  Reader,
+  type HoverMode,
+  type PrimaryLang,
+  type Reveal,
+} from './components/Reader';
 import { Sidebar } from './components/Sidebar';
 import { WordCard, type HoverState } from './components/WordCard';
 import { applyBrand, brand, brandStorageKey } from './brand';
 import { docs as seedDocs } from './data/documents';
 import { extraDocs } from './data/localDocs';
-import type { Doc, WordAlign } from './data/types';
+import type { AlignRole, Doc, WordAlign } from './data/types';
 import {
   loadDictionary,
   type DictIndex,
@@ -20,6 +25,15 @@ import { loadPublicDocs } from './lib/publicDocs';
 import { docScript } from './lib/script';
 import { importCustomDoc } from './lib/segment';
 import { copyText, speakChinese } from './lib/speech';
+import {
+  buildDocPath,
+  completeDocRoute,
+  locateInDoc,
+  parseDocRoute,
+  resolveRouteTarget,
+  sameRoute,
+  type DocRoute,
+} from './lib/docRoute';
 import { useScrollObserver } from './lib/useScrollObserver';
 
 const CUSTOM_DOCS_STORAGE_KEY = brandStorageKey('customDocs');
@@ -53,6 +67,22 @@ function readStoredDocId(): string {
     // storage unavailable (private mode)
   }
   return brand.defaults.defaultDocId;
+}
+
+const ROUTE_BASE = import.meta.env.BASE_URL;
+
+function currentDocRoute(): DocRoute | null {
+  return parseDocRoute(window.location.pathname, ROUTE_BASE);
+}
+
+function writeDocRoute(route: DocRoute, mode: 'push' | 'replace'): void {
+  const path = buildDocPath(route, ROUTE_BASE);
+  const url = `${path}${window.location.search}${window.location.hash}`;
+  const here =
+    window.location.pathname + window.location.search + window.location.hash;
+  if (here === url) return;
+  if (mode === 'push') window.history.pushState(route, '', url);
+  else window.history.replaceState(route, '', url);
 }
 
 function pendingDoc(id: string): Doc {
@@ -89,7 +119,11 @@ export default function App() {
       live = false;
     };
   }, []);
-  const [activeId, setActiveId] = useState(readStoredDocId);
+  const [activeId, setActiveId] = useState(
+    () => currentDocRoute()?.docId ?? readStoredDocId(),
+  );
+  const routeIntent = useRef<DocRoute | null>(currentDocRoute());
+  const skipRouteSync = useRef(false);
   const doc = useMemo(
     () => docs.find((d) => d.id === activeId) ?? pendingDoc(activeId),
     [docs, activeId],
@@ -134,6 +168,42 @@ export default function App() {
     }
   }, [primaryLang]);
 
+  const [alignRole, setAlignRole] = useState<AlignRole>(() => {
+    try {
+      const v = window.localStorage.getItem(brandStorageKey('alignRole'));
+      return v === 'gloss' || v === 'span' ? v : 'span';
+    } catch {
+      return 'span';
+    }
+  });
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(brandStorageKey('alignRole'), alignRole);
+    } catch {
+      // storage unavailable (private mode); alignment role stays in-memory
+    }
+  }, [alignRole]);
+
+  const [hoverMode, setHoverMode] = useState<HoverMode>(() => {
+    try {
+      return window.localStorage.getItem(brandStorageKey('hoverMode')) ===
+        'character'
+        ? 'character'
+        : 'word';
+    } catch {
+      return 'word';
+    }
+  });
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(brandStorageKey('hoverMode'), hoverMode);
+    } catch {
+      // storage unavailable (private mode); mode stays in-memory
+    }
+  }, [hoverMode]);
+
   useEffect(() => {
     if (!docs.some((d) => d.id === activeId)) return;
     try {
@@ -167,6 +237,17 @@ export default function App() {
     setPinnedKey(key);
     setPinnedWord(key && word ? word : null);
   };
+  const handleAlignRole = (role: AlignRole) => {
+    setAlignRole(role);
+    handlePin(null);
+    setHover(null);
+  };
+  const handleHoverMode = (mode: HoverMode) => {
+    setHoverMode(mode);
+    setReveal((r) => ({ ...r, words: true }));
+    handlePin(null);
+    setHover(null);
+  };
   const [openSentences, setOpenSentences] = useState<Set<string>>(new Set());
   const [closedSentences, setClosedSentences] = useState<Set<string>>(
     new Set(),
@@ -191,7 +272,8 @@ export default function App() {
   const [dictFailed, setDictFailed] = useState(false);
   const needsDict =
     brand.features.words &&
-    (primaryLang === 'zh' ||
+    (reveal.words ||
+      primaryLang === 'zh' ||
       docScript(doc) === 'traditional' ||
       inspectedChar !== null);
   useEffect(() => {
@@ -344,38 +426,114 @@ export default function App() {
     () =>
       doc.sections.flatMap((s) => [
         s.id,
-        ...s.paragraphs.map((p) => p.id),
+        ...s.paragraphs.flatMap((p) => [p.id, ...p.sentences.map((sent) => sent.id)]),
       ]),
     [doc],
   );
   const [activeNavId, setActiveNavId] = useScrollObserver(scrollRef, navIds, doc.id);
 
-  const activeSectionId = useMemo(() => {
-    if (!activeNavId) return doc.sections[0]?.id ?? null;
-    const direct = doc.sections.find((s) => s.id === activeNavId);
-    if (direct) return direct.id;
-    return (
-      doc.sections.find((s) =>
-        s.paragraphs.some((p) => p.id === activeNavId),
-      )?.id ?? doc.sections[0]?.id ?? null
-    );
-  }, [doc, activeNavId]);
+  const activeLocation = useMemo(
+    () =>
+      completeDocRoute(
+        doc,
+        activeNavId ? locateInDoc(doc, activeNavId) : { docId: doc.id },
+      ),
+    [doc, activeNavId],
+  );
 
-  const activeParagraphId = useMemo(() => {
-    if (!activeNavId) return null;
-    const isParagraph = doc.sections.some((s) =>
-      s.paragraphs.some((p) => p.id === activeNavId),
+  const activeSectionId = useMemo(() => {
+    return (
+      activeLocation.sectionId ??
+      doc.sections[0]?.id ??
+      null
     );
-    return isParagraph ? activeNavId : null;
-  }, [doc, activeNavId]);
+  }, [doc, activeLocation.sectionId]);
+
+  const activeParagraphId = activeLocation.paragraphId ?? null;
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: 0 });
-  }, [doc.id]);
+    const onPop = () => {
+      const route = currentDocRoute();
+      skipRouteSync.current = true;
+      if (!route) {
+        setActiveId(readStoredDocId());
+        routeIntent.current = null;
+        return;
+      }
+      setActiveId(route.docId);
+      routeIntent.current = route;
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  useEffect(() => {
+    if (skipRouteSync.current) {
+      skipRouteSync.current = false;
+      return;
+    }
+    if (routeIntent.current) return;
+    if (!docs.some((d) => d.id === activeId)) return;
+    const route: DocRoute = { docId: activeId };
+    if (doc.id === activeId && doc.sections.length > 0) {
+      route.sectionId = activeLocation.sectionId;
+      route.paragraphId = activeLocation.paragraphId;
+      route.sentenceId = activeLocation.sentenceId;
+    }
+    writeDocRoute(route, 'replace');
+  }, [activeId, docs, doc, activeLocation]);
+
+  useEffect(() => {
+    const intent = routeIntent.current;
+    if (!intent || intent.docId !== doc.id || doc.sections.length === 0) return;
+    writeDocRoute(completeDocRoute(doc, intent), 'replace');
+    const targetId = resolveRouteTarget(doc, intent);
+    let cancelled = false;
+    let tries = 0;
+    const scroll = () => {
+      if (cancelled) return;
+      if (!targetId) {
+        scrollRef.current?.scrollTo({ top: 0 });
+        return;
+      }
+      const el = scrollRef.current?.querySelector(`#${CSS.escape(targetId)}`);
+      if (el) {
+        el.scrollIntoView({ block: 'start' });
+        return;
+      }
+      if (tries++ < 40) requestAnimationFrame(scroll);
+    };
+    requestAnimationFrame(scroll);
+    return () => {
+      cancelled = true;
+    };
+  }, [doc]);
+
+  useEffect(() => {
+    const intent = routeIntent.current;
+    if (!intent || intent.docId !== doc.id || doc.sections.length === 0) return;
+    const completed = completeDocRoute(doc, intent);
+    if (sameRoute(completed, activeLocation)) {
+      routeIntent.current = null;
+      return;
+    }
+    const t = window.setTimeout(() => {
+      if (routeIntent.current === intent) routeIntent.current = null;
+    }, 800);
+    return () => window.clearTimeout(t);
+  }, [doc, activeLocation]);
+
+  const handleSelectDoc = (id: string) => {
+    setActiveId(id);
+    routeIntent.current = { docId: id };
+    writeDocRoute({ docId: id }, 'push');
+  };
 
   const handleNavigate = (id: string) => {
     setActiveNavId(id);
     setNavOpen(false);
+    const loc = locateInDoc(doc, id);
+    writeDocRoute(loc, 'push');
     const el = scrollRef.current?.querySelector(`#${CSS.escape(id)}`);
     el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
@@ -383,7 +541,7 @@ export default function App() {
   return (
     <div
       data-script={docScript(doc)}
-      className="min-h-screen flex flex-col bg-[var(--paper)] text-[var(--ink)] selection:bg-[var(--verm-soft)]"
+      className="h-screen min-h-0 overflow-hidden flex flex-col bg-[var(--paper)] text-[var(--ink)] selection:bg-[var(--verm-soft)]"
     >
       <Header
         onImport={() => setImportOpen(true)}
@@ -410,11 +568,22 @@ export default function App() {
           doc={doc}
           docs={docs}
           activeDocId={activeId}
-          onSelectDoc={setActiveId}
+          onSelectDoc={handleSelectDoc}
           primaryLang={primaryLang}
           activeSectionId={activeSectionId}
           activeParagraphId={activeParagraphId}
           onNavigate={handleNavigate}
+          wordHover={{
+            enabled: reveal.words,
+            mode: hoverMode,
+            dict,
+            pinnedKey,
+            onPin: handlePin,
+            onHover: setHover,
+            linkedAlign,
+            inspectedChar,
+            onInspectChar: handleInspectChar,
+          }}
           collapsed={navCollapsed}
         />
         <div
@@ -449,6 +618,8 @@ export default function App() {
             onSpeak={handleSpeak}
             dict={dict}
             segmentZh={segmentZh}
+            alignRole={alignRole}
+            hoverMode={hoverMode}
           />
         </div>
 
@@ -488,6 +659,10 @@ export default function App() {
           collapsed={sidebarCollapsed}
           dictStatus={dictStatus}
           dict={dict}
+          alignRole={alignRole}
+          onAlignRole={handleAlignRole}
+          hoverMode={hoverMode}
+          onHoverMode={handleHoverMode}
         />
       </div>
 
@@ -495,11 +670,22 @@ export default function App() {
         doc={doc}
         docs={docs}
         activeDocId={activeId}
-        onSelectDoc={setActiveId}
+        onSelectDoc={handleSelectDoc}
         primaryLang={primaryLang}
         activeSectionId={activeSectionId}
         activeParagraphId={activeParagraphId}
         onNavigate={handleNavigate}
+        wordHover={{
+          enabled: reveal.words,
+          mode: hoverMode,
+          dict,
+          pinnedKey,
+          onPin: handlePin,
+          onHover: setHover,
+          linkedAlign,
+          inspectedChar,
+          onInspectChar: handleInspectChar,
+        }}
         open={navOpen}
         onClose={() => setNavOpen(false)}
       />
@@ -516,6 +702,10 @@ export default function App() {
         onCopy={handleCopy}
         dictStatus={dictStatus}
         dict={dict}
+        alignRole={alignRole}
+        onAlignRole={handleAlignRole}
+        hoverMode={hoverMode}
+        onHoverMode={handleHoverMode}
       />
 
       {hover && reveal.words && (

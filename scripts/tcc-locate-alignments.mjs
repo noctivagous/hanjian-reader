@@ -54,6 +54,35 @@ function expandSpanLeft(en, start, end, extraWords) {
   return { start: s, end, text: en.slice(s, end) };
 }
 
+function pushSpanAndGloss(words, en, pair, hit) {
+  words.push({
+    en: hit.text,
+    zh: pair.zh,
+    pinyin: '',
+    def: '',
+    role: 'span',
+    enStart: hit.start,
+    enEnd: hit.end,
+  });
+  const glosses = pair.glosses ?? [
+    { en: pair.gloss ?? pair.en, zh: pair.zh },
+  ];
+  for (const gloss of glosses) {
+    if (!gloss.en || !gloss.zh) continue;
+    const gStart = en.indexOf(gloss.en, hit.start);
+    if (gStart < 0 || gStart + gloss.en.length > hit.end) continue;
+    words.push({
+      en: gloss.en,
+      zh: gloss.zh,
+      pinyin: '',
+      def: '',
+      role: 'gloss',
+      enStart: gStart,
+      enEnd: gStart + gloss.en.length,
+    });
+  }
+}
+
 function handSpan(en, pair) {
   const { enStart, enEnd } = pair;
   if (enStart < 0 || enEnd > en.length || enStart >= enEnd) {
@@ -70,7 +99,7 @@ function handSpan(en, pair) {
 
 /**
  * @param {string} en
- * @param {{ en: string; zh: string; exact?: boolean; enStart?: number; enEnd?: number }[]} pairs
+ * @param {{ en: string; zh: string; gloss?: string; glosses?: { en: string; zh: string }[]; exact?: boolean; enStart?: number; enEnd?: number }[]} pairs
  * @param {string} zh full Chinese unit (for source order)
  */
 export function locateTccAlignments(en, pairs, zh) {
@@ -114,14 +143,7 @@ export function locateTccAlignments(en, pairs, zh) {
       }
       placed.add(pair);
       used.push([hit.start, hit.end]);
-      words.push({
-        en: hit.text,
-        zh: pair.zh,
-        pinyin: '',
-        def: '',
-        enStart: hit.start,
-        enEnd: hit.end,
-      });
+      pushSpanAndGloss(words, en, pair, hit);
       continue;
     }
 
@@ -148,14 +170,7 @@ export function locateTccAlignments(en, pairs, zh) {
     }
     placed.add(pair);
     used.push([hit.start, hit.end]);
-    words.push({
-      en: hit.text,
-      zh: pair.zh,
-      pinyin: '',
-      def: '',
-      enStart: hit.start,
-      enEnd: hit.end,
-    });
+    pushSpanAndGloss(words, en, pair, hit);
   }
 
   words.sort((a, b) => a.enStart - b.enStart || a.enEnd - b.enEnd);

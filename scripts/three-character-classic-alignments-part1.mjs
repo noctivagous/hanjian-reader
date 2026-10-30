@@ -1,12 +1,36 @@
-// Pair fields: `en` + `zh` (required). Optional `exact: true` uses `en` verbatim
-// (no left expansion). Optional `enStart` / `enEnd` pin character offsets in the
-// unit English when a phrase is ambiguous or overlaps another gloss.
+// Pair fields: `en` + `zh` (required). `en` seeds the phrase-level span.
+// Optional `glosses` maps several smaller lexical English ranges to Chinese
+// words in Gloss mode. `gloss` is the single-range shorthand. Optional
+// `exact: true` uses `en` verbatim (no left expansion). Optional `enStart` /
+// `enEnd` pin character offsets in the unit English when a phrase is
+// ambiguous or overlaps another gloss.
 export const ALIGNMENTS_PART_1 = {
   s01: [
-    { en: 'All men are born', zh: '人之初', exact: true },
-    { en: 'good nature', zh: '性本善', exact: true },
-    { en: 'the same', zh: '性相近', exact: true },
-    { en: 'they acquire different habits', zh: '習相遠', exact: true },
+    {
+      en: 'All men are born',
+      zh: '人之初',
+      glosses: [
+        { en: 'men', zh: '人' },
+        { en: 'born', zh: '初' },
+      ],
+    },
+    {
+      en: 'good nature',
+      zh: '性本善',
+      glosses: [
+        { en: 'good', zh: '善' },
+        { en: 'nature', zh: '性' },
+      ],
+    },
+    { en: 'the same', zh: '性相近', gloss: 'same' },
+    {
+      en: 'they acquire different habits',
+      zh: '習相遠',
+      glosses: [
+        { en: 'different', zh: '遠' },
+        { en: 'habits', zh: '習' },
+      ],
+    },
   ],
   s02: [
     { en: 'properly taught', zh: '教' },

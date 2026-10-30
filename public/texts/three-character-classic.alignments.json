@@ -7,23 +7,71 @@
         "zh": "人之初",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
         "enEnd": 16
       },
       {
-        "en": "the same",
+        "en": "men",
+        "zh": "人",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
+        "enEnd": 7
+      },
+      {
+        "en": "born",
+        "zh": "初",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 12,
+        "enEnd": 16
+      },
+      {
+        "en": "with the same",
         "zh": "性相近",
         "pinyin": "",
         "def": "",
-        "enStart": 22,
+        "role": "span",
+        "enStart": 17,
         "enEnd": 30
+      },
+      {
+        "en": "same",
+        "zh": "性相近",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 26,
+        "enEnd": 30
+      },
+      {
+        "en": "good",
+        "zh": "善",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 31,
+        "enEnd": 35
       },
       {
         "en": "good nature",
         "zh": "性本善",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 31,
+        "enEnd": 42
+      },
+      {
+        "en": "nature",
+        "zh": "性",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 36,
         "enEnd": 42
       },
       {
@@ -31,7 +79,26 @@
         "zh": "習相遠",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 65,
+        "enEnd": 94
+      },
+      {
+        "en": "different",
+        "zh": "遠",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 78,
+        "enEnd": 87
+      },
+      {
+        "en": "habits",
+        "zh": "習",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 88,
         "enEnd": 94
       }
     ],
@@ -41,6 +108,16 @@
         "zh": "教",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 22,
+        "enEnd": 37
+      },
+      {
+        "en": "properly taught",
+        "zh": "教",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 22,
         "enEnd": 37
       },
@@ -49,7 +126,17 @@
         "zh": "性乃遷",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 39,
+        "enEnd": 75
+      },
+      {
+        "en": "gradually become bad",
+        "zh": "性乃遷",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 55,
         "enEnd": 75
       },
       {
@@ -57,7 +144,17 @@
         "zh": "教之道，貴以專",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 77,
+        "enEnd": 114
+      },
+      {
+        "en": "most important thing in education",
+        "zh": "教之道，貴以專",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 81,
         "enEnd": 114
       }
     ],
@@ -67,7 +164,17 @@
         "zh": "孟母",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 21
+      },
+      {
+        "en": "mother of Mencius",
+        "zh": "孟母",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 21
       },
       {
@@ -75,7 +182,17 @@
         "zh": "擇鄰處",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 22,
+        "enEnd": 52
+      },
+      {
+        "en": "chose her neighbours",
+        "zh": "擇鄰處",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 32,
         "enEnd": 52
       },
       {
@@ -83,7 +200,17 @@
         "zh": "子不學",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 91,
+        "enEnd": 120
+      },
+      {
+        "en": "refused to study",
+        "zh": "子不學",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 104,
         "enEnd": 120
       },
       {
@@ -91,7 +218,17 @@
         "zh": "斷機杼",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 122,
+        "enEnd": 139
+      },
+      {
+        "en": "cut the cloth",
+        "zh": "斷機杼",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 126,
         "enEnd": 139
       }
     ],
@@ -101,7 +238,17 @@
         "zh": "竇燕山",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "Tou Yen Shan",
+        "zh": "竇燕山",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 16
       },
       {
@@ -109,7 +256,17 @@
         "zh": "五子",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 17,
+        "enEnd": 37
+      },
+      {
+        "en": "five sons",
+        "zh": "五子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 28,
         "enEnd": 37
       },
       {
@@ -117,7 +274,17 @@
         "zh": "義方",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 38,
+        "enEnd": 54
+      },
+      {
+        "en": "good method",
+        "zh": "義方",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 43,
         "enEnd": 54
       },
       {
@@ -125,7 +292,17 @@
         "zh": "名俱揚",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 60,
+        "enEnd": 89
+      },
+      {
+        "en": "became famous men",
+        "zh": "名俱揚",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 72,
         "enEnd": 89
       }
     ],
@@ -135,6 +312,16 @@
         "zh": "養",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 3,
+        "enEnd": 25
+      },
+      {
+        "en": "rear and feed children",
+        "zh": "養",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 3,
         "enEnd": 25
       },
@@ -143,6 +330,16 @@
         "zh": "教",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 34,
+        "enEnd": 58
+      },
+      {
+        "en": "giving them an education",
+        "zh": "教",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 34,
         "enEnd": 58
       },
@@ -151,7 +348,17 @@
         "zh": "父之過",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 59,
+        "enEnd": 80
+      },
+      {
+        "en": "father's fault",
+        "zh": "父之過",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 66,
         "enEnd": 80
       },
       {
@@ -159,7 +366,17 @@
         "zh": "教不嚴",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 82,
+        "enEnd": 108
+      },
+      {
+        "en": "teachers are not strict",
+        "zh": "教不嚴",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 85,
         "enEnd": 108
       },
       {
@@ -167,7 +384,17 @@
         "zh": "師之惰",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 128,
+        "enEnd": 150
+      },
+      {
+        "en": "idle teachers",
+        "zh": "師之惰",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 137,
         "enEnd": 150
       }
     ],
@@ -177,7 +404,17 @@
         "zh": "非所宜",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 11
+      },
+      {
+        "en": "wrong",
+        "zh": "非所宜",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 6,
         "enEnd": 11
       },
       {
@@ -185,7 +422,17 @@
         "zh": "子不學",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 12,
+        "enEnd": 36
+      },
+      {
+        "en": "children do not study",
+        "zh": "子不學",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 15,
         "enEnd": 36
       },
       {
@@ -193,6 +440,16 @@
         "zh": "幼",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 72,
+        "enEnd": 84
+      },
+      {
+        "en": "younger days",
+        "zh": "幼",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 72,
         "enEnd": 84
       },
@@ -201,6 +458,16 @@
         "zh": "老",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 117,
+        "enEnd": 122
+      },
+      {
+        "en": "older",
+        "zh": "老",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 117,
         "enEnd": 122
       }
@@ -211,6 +478,16 @@
         "zh": "玉不琢",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 15
+      },
+      {
+        "en": "Unpolished gems",
+        "zh": "玉不琢",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 15
       },
@@ -219,7 +496,17 @@
         "zh": "成器",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 16,
+        "enEnd": 37
+      },
+      {
+        "en": "form ornaments",
+        "zh": "成器",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 23,
         "enEnd": 37
       },
       {
@@ -227,7 +514,17 @@
         "zh": "人不學",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 39,
+        "enEnd": 59
+      },
+      {
+        "en": "a man is untaught",
+        "zh": "人不學",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 42,
         "enEnd": 59
       },
       {
@@ -235,7 +532,17 @@
         "zh": "知義",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 64,
+        "enEnd": 89
+      },
+      {
+        "en": "know his duties",
+        "zh": "知義",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 74,
         "enEnd": 89
       }
     ],
@@ -245,7 +552,17 @@
         "zh": "少時",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 14
+      },
+      {
+        "en": "youth",
+        "zh": "少時",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 9,
         "enEnd": 14
       },
       {
@@ -253,6 +570,16 @@
         "zh": "人子",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 16,
+        "enEnd": 24
+      },
+      {
+        "en": "children",
+        "zh": "人子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 16,
         "enEnd": 24
       },
@@ -261,7 +588,17 @@
         "zh": "師友",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 43,
+        "enEnd": 73
+      },
+      {
+        "en": "tutors and friends",
+        "zh": "師友",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 55,
         "enEnd": 73
       },
       {
@@ -269,7 +606,17 @@
         "zh": "禮儀",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 86,
+        "enEnd": 117
+      },
+      {
+        "en": "rites and observances",
+        "zh": "禮儀",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 96,
         "enEnd": 117
       }
     ],
@@ -279,7 +626,17 @@
         "zh": "孝於親",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 15,
+        "enEnd": 43
+      },
+      {
+        "en": "obey his parents",
+        "zh": "孝於親",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 27,
         "enEnd": 43
       },
       {
@@ -287,6 +644,16 @@
         "zh": "香",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 50,
+        "enEnd": 56
+      },
+      {
+        "en": "Hsiang",
+        "zh": "香",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 50,
         "enEnd": 56
       },
@@ -295,7 +662,17 @@
         "zh": "九齡",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 57,
+        "enEnd": 75
+      },
+      {
+        "en": "nine years old",
+        "zh": "九齡",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 61,
         "enEnd": 75
       },
       {
@@ -303,7 +680,17 @@
         "zh": "溫席",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 77,
+        "enEnd": 98
+      },
+      {
+        "en": "warm the bed",
+        "zh": "溫席",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 86,
         "enEnd": 98
       }
     ],
@@ -313,7 +700,17 @@
         "zh": "弟於長",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 34
+      },
+      {
+        "en": "respect their elders",
+        "zh": "弟於長",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 14,
         "enEnd": 34
       },
       {
@@ -321,6 +718,16 @@
         "zh": "融",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 41,
+        "enEnd": 45
+      },
+      {
+        "en": "Jung",
+        "zh": "融",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 41,
         "enEnd": 45
       },
@@ -329,7 +736,17 @@
         "zh": "四歲",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 46,
+        "enEnd": 64
+      },
+      {
+        "en": "four years old",
+        "zh": "四歲",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 50,
         "enEnd": 64
       },
       {
@@ -337,6 +754,16 @@
         "zh": "梨",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 84,
+        "enEnd": 95
+      },
+      {
+        "en": "bigger pear",
+        "zh": "梨",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 84,
         "enEnd": 95
       },
@@ -345,6 +772,16 @@
         "zh": "長",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 103,
+        "enEnd": 116
+      },
+      {
+        "en": "elder brother",
+        "zh": "長",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 103,
         "enEnd": 116
       }
@@ -355,7 +792,17 @@
         "zh": "孝弟",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 41
+      },
+      {
+        "en": "duty to parents and superiors",
+        "zh": "孝弟",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 12,
         "enEnd": 41
       },
       {
@@ -363,6 +810,16 @@
         "zh": "見聞",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 43,
+        "enEnd": 48
+      },
+      {
+        "en": "Study",
+        "zh": "見聞",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 43,
         "enEnd": 48
       },
@@ -371,6 +828,16 @@
         "zh": "數",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 87,
+        "enEnd": 102
+      },
+      {
+        "en": "laws of numbers",
+        "zh": "數",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 87,
         "enEnd": 102
       },
@@ -379,6 +846,16 @@
         "zh": "文",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 118,
+        "enEnd": 131
+      },
+      {
+        "en": "written texts",
+        "zh": "文",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 118,
         "enEnd": 131
       }
@@ -389,6 +866,16 @@
         "zh": "一",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 26,
+        "enEnd": 31
+      },
+      {
+        "en": "units",
+        "zh": "一",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 26,
         "enEnd": 31
       },
@@ -397,6 +884,16 @@
         "zh": "十",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 35,
+        "enEnd": 39
+      },
+      {
+        "en": "tens",
+        "zh": "十",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 35,
         "enEnd": 39
       },
@@ -405,6 +902,16 @@
         "zh": "百",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 49,
+        "enEnd": 57
+      },
+      {
+        "en": "hundreds",
+        "zh": "百",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 49,
         "enEnd": 57
       },
@@ -413,6 +920,16 @@
         "zh": "千",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 71,
+        "enEnd": 80
+      },
+      {
+        "en": "thousands",
+        "zh": "千",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 71,
         "enEnd": 80
       },
@@ -421,6 +938,16 @@
         "zh": "萬",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 99,
+        "enEnd": 112
+      },
+      {
+        "en": "ten thousands",
+        "zh": "萬",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 99,
         "enEnd": 112
       }
@@ -431,7 +958,17 @@
         "zh": "三才",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 23
+      },
+      {
+        "en": "three mighty powers",
+        "zh": "三才",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 23
       },
       {
@@ -439,6 +976,16 @@
         "zh": "天",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 38,
+        "enEnd": 44
+      },
+      {
+        "en": "Heaven",
+        "zh": "天",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 38,
         "enEnd": 44
       },
@@ -447,6 +994,16 @@
         "zh": "地",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 46,
+        "enEnd": 51
+      },
+      {
+        "en": "Earth",
+        "zh": "地",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 46,
         "enEnd": 51
       },
@@ -455,6 +1012,16 @@
         "zh": "人",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 57,
+        "enEnd": 60
+      },
+      {
+        "en": "Man",
+        "zh": "人",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 57,
         "enEnd": 60
       }
@@ -465,7 +1032,17 @@
         "zh": "三光",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 32
+      },
+      {
+        "en": "three great celestial lights",
+        "zh": "三光",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 32
       },
       {
@@ -473,6 +1050,16 @@
         "zh": "日",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 41,
+        "enEnd": 44
+      },
+      {
+        "en": "Sun",
+        "zh": "日",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 41,
         "enEnd": 44
       },
@@ -481,6 +1068,16 @@
         "zh": "月",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 50,
+        "enEnd": 54
+      },
+      {
+        "en": "Moon",
+        "zh": "月",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 50,
         "enEnd": 54
       },
@@ -489,6 +1086,16 @@
         "zh": "星",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 64,
+        "enEnd": 69
+      },
+      {
+        "en": "Stars",
+        "zh": "星",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 64,
         "enEnd": 69
       }
@@ -499,7 +1106,17 @@
         "zh": "三綱",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 28
+      },
+      {
+        "en": "three binding principles",
+        "zh": "三綱",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 28
       },
       {
@@ -507,7 +1124,17 @@
         "zh": "君臣",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 29,
+        "enEnd": 59
+      },
+      {
+        "en": "Prince and minister",
+        "zh": "君臣",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 40,
         "enEnd": 59
       },
       {
@@ -515,7 +1142,17 @@
         "zh": "父子",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 76,
+        "enEnd": 104
+      },
+      {
+        "en": "father and son",
+        "zh": "父子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 90,
         "enEnd": 104
       },
       {
@@ -523,7 +1160,17 @@
         "zh": "夫婦",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 115,
+        "enEnd": 143
+      },
+      {
+        "en": "husband and wife",
+        "zh": "夫婦",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 127,
         "enEnd": 143
       }
     ],
@@ -533,6 +1180,16 @@
         "zh": "春",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 21,
+        "enEnd": 27
+      },
+      {
+        "en": "spring",
+        "zh": "春",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 21,
         "enEnd": 27
       },
@@ -541,6 +1198,16 @@
         "zh": "夏",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 29,
+        "enEnd": 35
+      },
+      {
+        "en": "summer",
+        "zh": "夏",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 29,
         "enEnd": 35
       },
@@ -549,6 +1216,16 @@
         "zh": "秋",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 37,
+        "enEnd": 43
+      },
+      {
+        "en": "autumn",
+        "zh": "秋",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 37,
         "enEnd": 43
       },
@@ -557,6 +1234,16 @@
         "zh": "冬",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 49,
+        "enEnd": 55
+      },
+      {
+        "en": "winter",
+        "zh": "冬",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 49,
         "enEnd": 55
       },
@@ -565,7 +1252,17 @@
         "zh": "運不窮",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 57,
+        "enEnd": 81
+      },
+      {
+        "en": "succeed one another",
+        "zh": "運不窮",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 62,
         "enEnd": 81
       }
     ],
@@ -575,6 +1272,16 @@
         "zh": "北",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 5
+      },
+      {
+        "en": "North",
+        "zh": "北",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 5
       },
@@ -583,6 +1290,16 @@
         "zh": "南",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 7,
+        "enEnd": 12
+      },
+      {
+        "en": "south",
+        "zh": "南",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 7,
         "enEnd": 12
       },
@@ -591,6 +1308,16 @@
         "zh": "東",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 14,
+        "enEnd": 18
+      },
+      {
+        "en": "east",
+        "zh": "東",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 14,
         "enEnd": 18
       },
@@ -599,6 +1326,16 @@
         "zh": "西",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 24,
+        "enEnd": 28
+      },
+      {
+        "en": "west",
+        "zh": "西",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 24,
         "enEnd": 28
       },
@@ -607,7 +1344,17 @@
         "zh": "四方",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 33,
+        "enEnd": 59
+      },
+      {
+        "en": "four directions",
+        "zh": "四方",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 44,
         "enEnd": 59
       },
       {
@@ -615,6 +1362,16 @@
         "zh": "中",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 85,
+        "enEnd": 98
+      },
+      {
+        "en": "central point",
+        "zh": "中",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 85,
         "enEnd": 98
       }
@@ -625,6 +1382,16 @@
         "zh": "水",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 5
+      },
+      {
+        "en": "Water",
+        "zh": "水",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 5
       },
@@ -633,6 +1400,16 @@
         "zh": "火",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 7,
+        "enEnd": 11
+      },
+      {
+        "en": "fire",
+        "zh": "火",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 7,
         "enEnd": 11
       },
@@ -641,6 +1418,16 @@
         "zh": "木",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 13,
+        "enEnd": 17
+      },
+      {
+        "en": "wood",
+        "zh": "木",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 13,
         "enEnd": 17
       },
@@ -649,6 +1436,16 @@
         "zh": "金",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 19,
+        "enEnd": 24
+      },
+      {
+        "en": "metal",
+        "zh": "金",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 19,
         "enEnd": 24
       },
@@ -657,6 +1454,16 @@
         "zh": "土",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 30,
+        "enEnd": 35
+      },
+      {
+        "en": "earth",
+        "zh": "土",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 30,
         "enEnd": 35
       },
@@ -665,7 +1472,17 @@
         "zh": "五行",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 36,
+        "enEnd": 57
+      },
+      {
+        "en": "five elements",
+        "zh": "五行",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 44,
         "enEnd": 57
       }
     ],
@@ -675,6 +1492,16 @@
         "zh": "仁",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 8
+      },
+      {
+        "en": "Goodwill",
+        "zh": "仁",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 8
       },
@@ -683,6 +1510,16 @@
         "zh": "義",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 10,
+        "enEnd": 17
+      },
+      {
+        "en": "justice",
+        "zh": "義",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 10,
         "enEnd": 17
       },
@@ -691,6 +1528,16 @@
         "zh": "禮",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 19,
+        "enEnd": 26
+      },
+      {
+        "en": "decorum",
+        "zh": "禮",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 19,
         "enEnd": 26
       },
@@ -699,6 +1546,16 @@
         "zh": "智",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 28,
+        "enEnd": 34
+      },
+      {
+        "en": "wisdom",
+        "zh": "智",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 28,
         "enEnd": 34
       },
@@ -707,6 +1564,16 @@
         "zh": "信",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 40,
+        "enEnd": 45
+      },
+      {
+        "en": "truth",
+        "zh": "信",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 40,
         "enEnd": 45
       },
@@ -715,7 +1582,17 @@
         "zh": "五常",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 46,
+        "enEnd": 76
+      },
+      {
+        "en": "five principal virtues",
+        "zh": "五常",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 54,
         "enEnd": 76
       }
     ],
@@ -725,6 +1602,16 @@
         "zh": "稻",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 5
+      },
+      {
+        "en": "Paddy",
+        "zh": "稻",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 5
       },
@@ -733,6 +1620,16 @@
         "zh": "粱",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 7,
+        "enEnd": 13
+      },
+      {
+        "en": "millet",
+        "zh": "粱",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 7,
         "enEnd": 13
       },
@@ -741,6 +1638,16 @@
         "zh": "菽",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 15,
+        "enEnd": 20
+      },
+      {
+        "en": "pulse",
+        "zh": "菽",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 15,
         "enEnd": 20
       },
@@ -749,6 +1656,16 @@
         "zh": "麥",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 22,
+        "enEnd": 27
+      },
+      {
+        "en": "wheat",
+        "zh": "麥",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 22,
         "enEnd": 27
       },
@@ -757,7 +1674,17 @@
         "zh": "六穀",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 60,
+        "enEnd": 88
+      },
+      {
+        "en": "six important grains",
+        "zh": "六穀",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 68,
         "enEnd": 88
       },
       {
@@ -765,6 +1692,16 @@
         "zh": "人所食",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 89,
+        "enEnd": 108
+      },
+      {
+        "en": "consumed by mankind",
+        "zh": "人所食",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 89,
         "enEnd": 108
       }
@@ -775,6 +1712,16 @@
         "zh": "馬",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 6
+      },
+      {
+        "en": "Horses",
+        "zh": "馬",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 6
       },
@@ -783,6 +1730,16 @@
         "zh": "牛",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 8,
+        "enEnd": 12
+      },
+      {
+        "en": "oxen",
+        "zh": "牛",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 8,
         "enEnd": 12
       },
@@ -791,6 +1748,16 @@
         "zh": "羊",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 14,
+        "enEnd": 19
+      },
+      {
+        "en": "sheep",
+        "zh": "羊",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 14,
         "enEnd": 19
       },
@@ -799,6 +1766,16 @@
         "zh": "雞",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 21,
+        "enEnd": 26
+      },
+      {
+        "en": "fowls",
+        "zh": "雞",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 21,
         "enEnd": 26
       },
@@ -807,6 +1784,16 @@
         "zh": "犬",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 28,
+        "enEnd": 32
+      },
+      {
+        "en": "dogs",
+        "zh": "犬",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 28,
         "enEnd": 32
       },
@@ -815,6 +1802,16 @@
         "zh": "豕",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 38,
+        "enEnd": 42
+      },
+      {
+        "en": "pigs",
+        "zh": "豕",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 38,
         "enEnd": 42
       },
@@ -823,7 +1820,17 @@
         "zh": "六畜",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 43,
+        "enEnd": 62
+      },
+      {
+        "en": "six animals",
+        "zh": "六畜",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 51,
         "enEnd": 62
       }
     ],
@@ -833,6 +1840,16 @@
         "zh": "喜",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 3
+      },
+      {
+        "en": "Joy",
+        "zh": "喜",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 3
       },
@@ -841,6 +1858,16 @@
         "zh": "怒",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 5,
+        "enEnd": 10
+      },
+      {
+        "en": "anger",
+        "zh": "怒",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 5,
         "enEnd": 10
       },
@@ -849,6 +1876,16 @@
         "zh": "哀",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 12,
+        "enEnd": 17
+      },
+      {
+        "en": "grief",
+        "zh": "哀",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 12,
         "enEnd": 17
       },
@@ -857,6 +1894,16 @@
         "zh": "懼",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 19,
+        "enEnd": 23
+      },
+      {
+        "en": "fear",
+        "zh": "懼",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 19,
         "enEnd": 23
       },
@@ -865,6 +1912,16 @@
         "zh": "愛",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 25,
+        "enEnd": 29
+      },
+      {
+        "en": "love",
+        "zh": "愛",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 25,
         "enEnd": 29
       },
@@ -873,6 +1930,16 @@
         "zh": "惡",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 31,
+        "enEnd": 37
+      },
+      {
+        "en": "hatred",
+        "zh": "惡",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 31,
         "enEnd": 37
       },
@@ -881,6 +1948,16 @@
         "zh": "欲",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 43,
+        "enEnd": 49
+      },
+      {
+        "en": "desire",
+        "zh": "欲",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 43,
         "enEnd": 49
       },
@@ -889,7 +1966,17 @@
         "zh": "七情",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 50,
+        "enEnd": 78
+      },
+      {
+        "en": "seven human passions",
+        "zh": "七情",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 58,
         "enEnd": 78
       }
     ],
@@ -899,6 +1986,16 @@
         "zh": "匏",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 62,
+        "enEnd": 67
+      },
+      {
+        "en": "gourd",
+        "zh": "匏",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 62,
         "enEnd": 67
       },
@@ -907,6 +2004,16 @@
         "zh": "土",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 69,
+        "enEnd": 73
+      },
+      {
+        "en": "clay",
+        "zh": "土",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 69,
         "enEnd": 73
       },
@@ -915,6 +2022,16 @@
         "zh": "革",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 75,
+        "enEnd": 82
+      },
+      {
+        "en": "leather",
+        "zh": "革",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 75,
         "enEnd": 82
       },
@@ -923,6 +2040,16 @@
         "zh": "木",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 84,
+        "enEnd": 88
+      },
+      {
+        "en": "wood",
+        "zh": "木",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 84,
         "enEnd": 88
       },
@@ -931,6 +2058,16 @@
         "zh": "石",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 90,
+        "enEnd": 95
+      },
+      {
+        "en": "stone",
+        "zh": "石",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 90,
         "enEnd": 95
       },
@@ -939,6 +2076,16 @@
         "zh": "金",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 97,
+        "enEnd": 102
+      },
+      {
+        "en": "metal",
+        "zh": "金",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 97,
         "enEnd": 102
       },
@@ -947,6 +2094,16 @@
         "zh": "絲",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 104,
+        "enEnd": 111
+      },
+      {
+        "en": "strings",
+        "zh": "絲",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 104,
         "enEnd": 111
       },
@@ -955,6 +2112,16 @@
         "zh": "竹",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 117,
+        "enEnd": 123
+      },
+      {
+        "en": "bamboo",
+        "zh": "竹",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 117,
         "enEnd": 123
       }
@@ -965,7 +2132,17 @@
         "zh": "父",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 12,
+        "enEnd": 23
+      },
+      {
+        "en": "father",
+        "zh": "父",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 17,
         "enEnd": 23
       },
       {
@@ -973,6 +2150,16 @@
         "zh": "身",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 65,
+        "enEnd": 72
+      },
+      {
+        "en": "oneself",
+        "zh": "身",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 65,
         "enEnd": 72
       },
@@ -981,7 +2168,17 @@
         "zh": "九族",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 130,
+        "enEnd": 154
+      },
+      {
+        "en": "nine generations",
+        "zh": "九族",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 138,
         "enEnd": 154
       },
       {
@@ -989,7 +2186,17 @@
         "zh": "人之倫",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 158,
+        "enEnd": 191
+      },
+      {
+        "en": "family relationships",
+        "zh": "人之倫",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 171,
         "enEnd": 191
       }
     ],
@@ -999,7 +2206,17 @@
         "zh": "十義",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 20
+      },
+      {
+        "en": "ten moral duties",
+        "zh": "十義",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 20
       },
       {
@@ -1007,7 +2224,17 @@
         "zh": "父子",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 43,
+        "enEnd": 68
+      },
+      {
+        "en": "father and son",
+        "zh": "父子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 54,
         "enEnd": 68
       },
       {
@@ -1015,7 +2242,17 @@
         "zh": "夫婦",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 84,
+        "enEnd": 114
+      },
+      {
+        "en": "husband and wife",
+        "zh": "夫婦",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 98,
         "enEnd": 114
       },
       {
@@ -1023,6 +2260,16 @@
         "zh": "兄",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 148,
+        "enEnd": 162
+      },
+      {
+        "en": "elder brothers",
+        "zh": "兄",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 148,
         "enEnd": 162
       },
@@ -1031,6 +2278,16 @@
         "zh": "弟",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 188,
+        "enEnd": 204
+      },
+      {
+        "en": "younger brothers",
+        "zh": "弟",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 188,
         "enEnd": 204
       },
@@ -1039,7 +2296,17 @@
         "zh": "友與朋",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 275,
+        "enEnd": 298
+      },
+      {
+        "en": "friends",
+        "zh": "友與朋",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 291,
         "enEnd": 298
       },
       {
@@ -1047,6 +2314,16 @@
         "zh": "君",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 341,
+        "enEnd": 350
+      },
+      {
+        "en": "sovereign",
+        "zh": "君",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 341,
         "enEnd": 350
       },
@@ -1055,6 +2332,16 @@
         "zh": "臣",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 367,
+        "enEnd": 376
+      },
+      {
+        "en": "courtiers",
+        "zh": "臣",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 367,
         "enEnd": 376
       }
@@ -1065,7 +2352,17 @@
         "zh": "訓蒙",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 21
+      },
+      {
+        "en": "teaching the young",
+        "zh": "訓蒙",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 3,
         "enEnd": 21
       },
       {
@@ -1073,7 +2370,17 @@
         "zh": "詳訓詁",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 27,
+        "enEnd": 66
+      },
+      {
+        "en": "full meanings of words",
+        "zh": "詳訓詁",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 44,
         "enEnd": 66
       },
       {
@@ -1081,7 +2388,17 @@
         "zh": "訓詁",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 68,
+        "enEnd": 97
+      },
+      {
+        "en": "idiomatic expressions",
+        "zh": "訓詁",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 76,
         "enEnd": 97
       },
       {
@@ -1089,7 +2406,17 @@
         "zh": "句讀",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 121,
+        "enEnd": 162
+      },
+      {
+        "en": "commas and full stops",
+        "zh": "句讀",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 141,
         "enEnd": 162
       }
     ],
@@ -1099,6 +2426,16 @@
         "zh": "為學者",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 19
+      },
+      {
+        "en": "Scholars of Chinese",
+        "zh": "為學者",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 19
       },
@@ -1107,7 +2444,17 @@
         "zh": "小學",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 33,
+        "enEnd": 64
+      },
+      {
+        "en": "Learning of the Young",
+        "zh": "小學",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 43,
         "enEnd": 64
       },
       {
@@ -1115,7 +2462,17 @@
         "zh": "四書",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 271,
+        "enEnd": 291
+      },
+      {
+        "en": "Four Books",
+        "zh": "四書",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 281,
         "enEnd": 291
       }
     ],
@@ -1125,7 +2482,17 @@
         "zh": "論語",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 25
+      },
+      {
+        "en": "Analects of Confucius",
+        "zh": "論語",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 25
       },
       {
@@ -1133,7 +2500,17 @@
         "zh": "二十篇",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 26,
+        "enEnd": 50
+      },
+      {
+        "en": "twenty chapters",
+        "zh": "二十篇",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 35,
         "enEnd": 50
       },
       {
@@ -1141,7 +2518,17 @@
         "zh": "善言",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 51,
+        "enEnd": 72
+      },
+      {
+        "en": "Sage's sayings",
+        "zh": "善言",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 58,
         "enEnd": 72
       },
       {
@@ -1149,7 +2536,17 @@
         "zh": "群弟子",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 74,
+        "enEnd": 99
+      },
+      {
+        "en": "disciples",
+        "zh": "群弟子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 90,
         "enEnd": 99
       }
     ],
@@ -1159,7 +2556,17 @@
         "zh": "孟子",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 20
+      },
+      {
+        "en": "Works of Mencius",
+        "zh": "孟子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 20
       },
       {
@@ -1167,7 +2574,17 @@
         "zh": "七篇",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 21,
+        "enEnd": 44
+      },
+      {
+        "en": "seven chapters",
+        "zh": "七篇",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 30,
         "enEnd": 44
       },
       {
@@ -1175,7 +2592,17 @@
         "zh": "仁義",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 45,
+        "enEnd": 82
+      },
+      {
+        "en": "humanity and righteousness",
+        "zh": "仁義",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 56,
         "enEnd": 82
       },
       {
@@ -1183,7 +2610,17 @@
         "zh": "道德",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 83,
+        "enEnd": 114
+      },
+      {
+        "en": "virtuous conduct",
+        "zh": "道德",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 98,
         "enEnd": 114
       }
     ],
@@ -1193,7 +2630,17 @@
         "zh": "中庸",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 31
+      },
+      {
+        "en": "Doctrine of the Golden Mean",
+        "zh": "中庸",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 31
       },
       {
@@ -1201,7 +2648,17 @@
         "zh": "子思",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 36,
+        "enEnd": 56
+      },
+      {
+        "en": "K'ung Chi",
+        "zh": "子思",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 47,
         "enEnd": 56
       },
       {
@@ -1209,7 +2666,17 @@
         "zh": "中不偏",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 89,
+        "enEnd": 126
+      },
+      {
+        "en": "impartial principles",
+        "zh": "中不偏",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 106,
         "enEnd": 126
       },
       {
@@ -1217,7 +2684,17 @@
         "zh": "庸不易",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 128,
+        "enEnd": 159
+      },
+      {
+        "en": "fixed principles",
+        "zh": "庸不易",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 143,
         "enEnd": 159
       }
     ],
@@ -1227,7 +2704,17 @@
         "zh": "大學",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 18
+      },
+      {
+        "en": "Great Learning",
+        "zh": "大學",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 18
       },
       {
@@ -1235,7 +2722,17 @@
         "zh": "曾子",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 31,
+        "enEnd": 55
+      },
+      {
+        "en": "philosopher Tseng",
+        "zh": "曾子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 38,
         "enEnd": 55
       },
       {
@@ -1243,6 +2740,16 @@
         "zh": "修",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 103,
+        "enEnd": 121
+      },
+      {
+        "en": "improve our morals",
+        "zh": "修",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 103,
         "enEnd": 121
       },
@@ -1251,6 +2758,16 @@
         "zh": "齊",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 126,
+        "enEnd": 150
+      },
+      {
+        "en": "regulate our family life",
+        "zh": "齊",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 126,
         "enEnd": 150
       },
@@ -1259,6 +2776,16 @@
         "zh": "治",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 164,
+        "enEnd": 194
+      },
+      {
+        "en": "state may be properly governed",
+        "zh": "治",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 164,
         "enEnd": 194
       }
@@ -1269,7 +2796,17 @@
         "zh": "孝經",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 17,
+        "enEnd": 41
+      },
+      {
+        "en": "Filial Code",
+        "zh": "孝經",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 30,
         "enEnd": 41
       },
       {
@@ -1277,7 +2814,17 @@
         "zh": "四書",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 42,
+        "enEnd": 60
+      },
+      {
+        "en": "Four Books",
+        "zh": "四書",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 50,
         "enEnd": 60
       },
       {
@@ -1285,7 +2832,17 @@
         "zh": "六經",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 80,
+        "enEnd": 102
+      },
+      {
+        "en": "Six Classics",
+        "zh": "六經",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 90,
         "enEnd": 102
       }
     ],
@@ -1295,7 +2852,17 @@
         "zh": "六經",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "Six Classics",
+        "zh": "六經",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 16
       },
       {
@@ -1303,6 +2870,16 @@
         "zh": "詩",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 25,
+        "enEnd": 37
+      },
+      {
+        "en": "Book of Odes",
+        "zh": "詩",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 25,
         "enEnd": 37
       },
@@ -1311,6 +2888,16 @@
         "zh": "書",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 43,
+        "enEnd": 50
+      },
+      {
+        "en": "Records",
+        "zh": "書",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 43,
         "enEnd": 50
       },
@@ -1319,6 +2906,16 @@
         "zh": "易",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 56,
+        "enEnd": 71
+      },
+      {
+        "en": "Book of Changes",
+        "zh": "易",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 56,
         "enEnd": 71
       },
@@ -1327,6 +2924,16 @@
         "zh": "禮",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 77,
+        "enEnd": 90
+      },
+      {
+        "en": "Book of Rites",
+        "zh": "禮",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 77,
         "enEnd": 90
       },
@@ -1335,7 +2942,17 @@
         "zh": "春秋",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 111,
+        "enEnd": 143
+      },
+      {
+        "en": "Spring and Autumn Annals",
+        "zh": "春秋",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 119,
         "enEnd": 143
       }
     ],
@@ -1345,6 +2962,16 @@
         "zh": "易",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 4,
+        "enEnd": 19
+      },
+      {
+        "en": "Book of Changes",
+        "zh": "易",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 4,
         "enEnd": 19
       },
@@ -1353,7 +2980,17 @@
         "zh": "連山",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 20,
+        "enEnd": 42
+      },
+      {
+        "en": "Lien Shan",
+        "zh": "連山",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 33,
         "enEnd": 42
       },
       {
@@ -1361,7 +2998,17 @@
         "zh": "歸藏",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 64,
+        "enEnd": 78
+      },
+      {
+        "en": "Kui Ts'ang",
+        "zh": "歸藏",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 68,
         "enEnd": 78
       },
       {
@@ -1369,7 +3016,17 @@
         "zh": "周易",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 101,
+        "enEnd": 116
+      },
+      {
+        "en": "Chou Ih",
+        "zh": "周易",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 109,
         "enEnd": 116
       },
       {
@@ -1377,7 +3034,17 @@
         "zh": "三易",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 138,
+        "enEnd": 162
+      },
+      {
+        "en": "three theories",
+        "zh": "三易",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 148,
         "enEnd": 162
       }
     ],
@@ -1387,6 +3054,16 @@
         "zh": "書",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 4,
+        "enEnd": 11
+      },
+      {
+        "en": "Records",
+        "zh": "書",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 4,
         "enEnd": 11
       },
@@ -1395,7 +3072,17 @@
         "zh": "典謨",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 12,
+        "enEnd": 53
+      },
+      {
+        "en": "Royal and Ministerial Canons",
+        "zh": "典謨",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 25,
         "enEnd": 53
       },
       {
@@ -1403,7 +3090,17 @@
         "zh": "訓誥",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 55,
+        "enEnd": 71
+      },
+      {
+        "en": "Instructions",
+        "zh": "訓誥",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 59,
         "enEnd": 71
       },
       {
@@ -1411,6 +3108,16 @@
         "zh": "誓",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 94,
+        "enEnd": 105
+      },
+      {
+        "en": "Solemn Vows",
+        "zh": "誓",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 94,
         "enEnd": 105
       },
@@ -1419,6 +3126,16 @@
         "zh": "命",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 115,
+        "enEnd": 123
+      },
+      {
+        "en": "Commands",
+        "zh": "命",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 115,
         "enEnd": 123
       }
@@ -1429,7 +3146,17 @@
         "zh": "周公",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "Duke of Chou",
+        "zh": "周公",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 16
       },
       {
@@ -1437,7 +3164,17 @@
         "zh": "周禮",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 17,
+        "enEnd": 40
+      },
+      {
+        "en": "Rites of Chou",
+        "zh": "周禮",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 27,
         "enEnd": 40
       },
       {
@@ -1445,7 +3182,17 @@
         "zh": "六官",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 45,
+        "enEnd": 69
+      },
+      {
+        "en": "Six Boards",
+        "zh": "六官",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 59,
         "enEnd": 69
       },
       {
@@ -1453,7 +3200,17 @@
         "zh": "治體",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 109,
+        "enEnd": 154
+      },
+      {
+        "en": "governing the affairs of the state",
+        "zh": "治體",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 120,
         "enEnd": 154
       }
     ],
@@ -1463,6 +3220,16 @@
         "zh": "大小戴",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 25
+      },
+      {
+        "en": "Tai Senior and Tai Junior",
+        "zh": "大小戴",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 25
       },
@@ -1471,7 +3238,17 @@
         "zh": "禮記",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 36,
+        "enEnd": 56
+      },
+      {
+        "en": "Book of Rites",
+        "zh": "禮記",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 43,
         "enEnd": 56
       },
       {
@@ -1479,7 +3256,17 @@
         "zh": "聖言",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 61,
+        "enEnd": 92
+      },
+      {
+        "en": "sayings of the Sages",
+        "zh": "聖言",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 72,
         "enEnd": 92
       },
       {
@@ -1487,6 +3274,16 @@
         "zh": "禮",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 98,
+        "enEnd": 112
+      },
+      {
+        "en": "rules of rites",
+        "zh": "禮",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 98,
         "enEnd": 112
       },
@@ -1495,6 +3292,16 @@
         "zh": "樂",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 121,
+        "enEnd": 136
+      },
+      {
+        "en": "theory of music",
+        "zh": "樂",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 121,
         "enEnd": 136
       }
@@ -1505,6 +3312,16 @@
         "zh": "詩",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 26,
+        "enEnd": 38
+      },
+      {
+        "en": "Book of Odes",
+        "zh": "詩",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 26,
         "enEnd": 38
       },
@@ -1513,7 +3330,17 @@
         "zh": "國風",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 39,
+        "enEnd": 50
+      },
+      {
+        "en": "Ballads",
+        "zh": "國風",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 43,
         "enEnd": 50
       },
       {
@@ -1521,6 +3348,16 @@
         "zh": "雅",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 56,
+        "enEnd": 79
+      },
+      {
+        "en": "Eulogies of the Emperor",
+        "zh": "雅",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 56,
         "enEnd": 79
       },
@@ -1529,6 +3366,16 @@
         "zh": "頌",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 121,
+        "enEnd": 138
+      },
+      {
+        "en": "Sacrificial Songs",
+        "zh": "頌",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 121,
         "enEnd": 138
       },
@@ -1537,7 +3384,17 @@
         "zh": "當諷詠",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 139,
+        "enEnd": 170
+      },
+      {
+        "en": "read by every scholar",
+        "zh": "當諷詠",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 149,
         "enEnd": 170
       }
     ],
@@ -1547,7 +3404,17 @@
         "zh": "春秋",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 28
+      },
+      {
+        "en": "Spring and Autumn Annals",
+        "zh": "春秋",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 28
       },
       {
@@ -1555,6 +3422,16 @@
         "zh": "褒",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 170,
+        "enEnd": 184
+      },
+      {
+        "en": "praises virtue",
+        "zh": "褒",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 170,
         "enEnd": 184
       },
@@ -1563,6 +3440,16 @@
         "zh": "貶",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 190,
+        "enEnd": 203
+      },
+      {
+        "en": "condemns vice",
+        "zh": "貶",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 190,
         "enEnd": 203
       }
@@ -1573,7 +3460,17 @@
         "zh": "公羊",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 21
+      },
+      {
+        "en": "Kung Yang",
+        "zh": "公羊",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 12,
         "enEnd": 21
       },
       {
@@ -1581,6 +3478,16 @@
         "zh": "左氏",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 23,
+        "enEnd": 32
+      },
+      {
+        "en": "Tsuo Shih",
+        "zh": "左氏",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 23,
         "enEnd": 32
       },
@@ -1589,7 +3496,17 @@
         "zh": "穀梁",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 34,
+        "enEnd": 46
+      },
+      {
+        "en": "Ku Liang",
+        "zh": "穀梁",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 38,
         "enEnd": 46
       },
       {
@@ -1597,7 +3514,17 @@
         "zh": "三傳",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 47,
+        "enEnd": 81
+      },
+      {
+        "en": "three different commentaries",
+        "zh": "三傳",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 53,
         "enEnd": 81
       }
     ],
@@ -1607,7 +3534,17 @@
         "zh": "經既明",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 28
+      },
+      {
+        "en": "mastering the Classics",
+        "zh": "經既明",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 6,
         "enEnd": 28
       },
       {
@@ -1615,6 +3552,16 @@
         "zh": "子",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 61,
+        "enEnd": 79
+      },
+      {
+        "en": "great philosophers",
+        "zh": "子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 61,
         "enEnd": 79
       },
@@ -1623,7 +3570,17 @@
         "zh": "其要",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 127,
+        "enEnd": 156
+      },
+      {
+        "en": "important passages",
+        "zh": "其要",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 138,
         "enEnd": 156
       },
       {
@@ -1631,6 +3588,16 @@
         "zh": "記",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 161,
+        "enEnd": 182
+      },
+      {
+        "en": "commit them to memory",
+        "zh": "記",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 161,
         "enEnd": 182
       }
@@ -1641,7 +3608,17 @@
         "zh": "五子",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 21
+      },
+      {
+        "en": "Five Philosophers",
+        "zh": "五子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 21
       },
       {
@@ -1649,6 +3626,16 @@
         "zh": "荀",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 27,
+        "enEnd": 36
+      },
+      {
+        "en": "Hsiin-tzu",
+        "zh": "荀",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 27,
         "enEnd": 36
       },
@@ -1657,6 +3644,16 @@
         "zh": "楊",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 38,
+        "enEnd": 46
+      },
+      {
+        "en": "Yang-tzu",
+        "zh": "楊",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 38,
         "enEnd": 46
       },
@@ -1665,6 +3662,16 @@
         "zh": "文中子",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 48,
+        "enEnd": 61
+      },
+      {
+        "en": "Wen Chung-tzu",
+        "zh": "文中子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 48,
         "enEnd": 61
       },
@@ -1673,6 +3680,16 @@
         "zh": "老",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 63,
+        "enEnd": 70
+      },
+      {
+        "en": "Lao-tzu",
+        "zh": "老",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 63,
         "enEnd": 70
       },
@@ -1681,6 +3698,16 @@
         "zh": "莊",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 76,
+        "enEnd": 86
+      },
+      {
+        "en": "Chuang-tzu",
+        "zh": "莊",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 76,
         "enEnd": 86
       }
@@ -1691,6 +3718,16 @@
         "zh": "經",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 19,
+        "enEnd": 27
+      },
+      {
+        "en": "Classics",
+        "zh": "經",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 19,
         "enEnd": 27
       },
@@ -1699,6 +3736,16 @@
         "zh": "子",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 57,
+        "enEnd": 75
+      },
+      {
+        "en": "great philosophers",
+        "zh": "子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 57,
         "enEnd": 75
       },
@@ -1707,7 +3754,17 @@
         "zh": "諸史",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 77,
+        "enEnd": 122
+      },
+      {
+        "en": "history of the successive dynasties",
+        "zh": "諸史",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 87,
         "enEnd": 122
       },
       {
@@ -1715,7 +3772,17 @@
         "zh": "終始",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 134,
+        "enEnd": 168
+      },
+      {
+        "en": "beginnings and endings",
+        "zh": "終始",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 146,
         "enEnd": 168
       },
       {
@@ -1723,7 +3790,17 @@
         "zh": "世系",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 174,
+        "enEnd": 202
+      },
+      {
+        "en": "rise and fall",
+        "zh": "世系",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 189,
         "enEnd": 202
       }
     ],
@@ -1733,6 +3810,16 @@
         "zh": "羲",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 14
+      },
+      {
+        "en": "Emperor Fu-hsi",
+        "zh": "羲",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 14
       },
@@ -1741,6 +3828,16 @@
         "zh": "農",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 16,
+        "enEnd": 33
+      },
+      {
+        "en": "Emperor Shen-nung",
+        "zh": "農",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 16,
         "enEnd": 33
       },
@@ -1749,7 +3846,17 @@
         "zh": "黃帝",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 35,
+        "enEnd": 55
+      },
+      {
+        "en": "Emperor Huang-ti",
+        "zh": "黃帝",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 39,
         "enEnd": 55
       },
       {
@@ -1757,7 +3864,17 @@
         "zh": "三皇",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 56,
+        "enEnd": 79
+      },
+      {
+        "en": "Three Emperors",
+        "zh": "三皇",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 65,
         "enEnd": 79
       },
       {
@@ -1765,7 +3882,17 @@
         "zh": "上世",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 80,
+        "enEnd": 97
+      },
+      {
+        "en": "High Antiquity",
+        "zh": "上世",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 83,
         "enEnd": 97
       }
     ],
@@ -1775,6 +3902,16 @@
         "zh": "唐",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 11
+      },
+      {
+        "en": "Emperor Yao",
+        "zh": "唐",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 11
       },
@@ -1783,6 +3920,16 @@
         "zh": "虞",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 16,
+        "enEnd": 28
+      },
+      {
+        "en": "Emperor Shun",
+        "zh": "虞",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 16,
         "enEnd": 28
       },
@@ -1791,7 +3938,17 @@
         "zh": "二帝",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 29,
+        "enEnd": 57
+      },
+      {
+        "en": "two celebrated emperors",
+        "zh": "二帝",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 34,
         "enEnd": 57
       },
       {
@@ -1799,7 +3956,17 @@
         "zh": "盛世",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 93,
+        "enEnd": 110
+      },
+      {
+        "en": "Golden Age",
+        "zh": "盛世",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 100,
         "enEnd": 110
       },
       {
@@ -1807,7 +3974,17 @@
         "zh": "揖遜",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 112,
+        "enEnd": 140
+      },
+      {
+        "en": "abdicated their thrones",
+        "zh": "揖遜",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 117,
         "enEnd": 140
       }
     ],
@@ -1817,6 +3994,16 @@
         "zh": "禹",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 7
+      },
+      {
+        "en": "King Yu",
+        "zh": "禹",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 7
       },
@@ -1825,6 +4012,16 @@
         "zh": "夏",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 15,
+        "enEnd": 27
+      },
+      {
+        "en": "Hsia dynasty",
+        "zh": "夏",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 15,
         "enEnd": 27
       },
@@ -1833,6 +4030,16 @@
         "zh": "湯",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 29,
+        "enEnd": 38
+      },
+      {
+        "en": "King Tang",
+        "zh": "湯",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 29,
         "enEnd": 38
       },
@@ -1841,6 +4048,16 @@
         "zh": "商",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 46,
+        "enEnd": 59
+      },
+      {
+        "en": "Shang dynasty",
+        "zh": "商",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 46,
         "enEnd": 59
       },
@@ -1849,7 +4066,17 @@
         "zh": "周文武",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 61,
+        "enEnd": 85
+      },
+      {
+        "en": "King Wen and King Wu",
+        "zh": "周文武",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 65,
         "enEnd": 85
       },
       {
@@ -1857,7 +4084,17 @@
         "zh": "三王",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 98,
+        "enEnd": 128
+      },
+      {
+        "en": "celebrated rulers",
+        "zh": "三王",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 111,
         "enEnd": 128
       }
     ],
@@ -1867,6 +4104,16 @@
         "zh": "夏",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 7,
+        "enEnd": 19
+      },
+      {
+        "en": "Hsia dynasty",
+        "zh": "夏",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 7,
         "enEnd": 19
       },
@@ -1875,6 +4122,16 @@
         "zh": "傳子",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 21,
+        "enEnd": 46
+      },
+      {
+        "en": "thrones became hereditary",
+        "zh": "傳子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 21,
         "enEnd": 46
       },
@@ -1883,7 +4140,17 @@
         "zh": "四百載",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 52,
+        "enEnd": 85
+      },
+      {
+        "en": "four centuries",
+        "zh": "四百載",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 71,
         "enEnd": 85
       },
       {
@@ -1891,7 +4158,17 @@
         "zh": "遷夏社",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 86,
+        "enEnd": 117
+      },
+      {
+        "en": "dynasty was replaced",
+        "zh": "遷夏社",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 97,
         "enEnd": 117
       }
     ],
@@ -1901,6 +4178,16 @@
         "zh": "夏",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 24,
+        "enEnd": 36
+      },
+      {
+        "en": "Hsia dynasty",
+        "zh": "夏",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 24,
         "enEnd": 36
       },
@@ -1909,7 +4196,17 @@
         "zh": "湯伐夏",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 37,
+        "enEnd": 58
+      },
+      {
+        "en": "conquered by Tang",
+        "zh": "湯伐夏",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 41,
         "enEnd": 58
       },
       {
@@ -1917,7 +4214,17 @@
         "zh": "國號商",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 60,
+        "enEnd": 89
+      },
+      {
+        "en": "founded the Shang dynasty",
+        "zh": "國號商",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 64,
         "enEnd": 89
       },
       {
@@ -1925,7 +4232,17 @@
         "zh": "六百載",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 111,
+        "enEnd": 138
+      },
+      {
+        "en": "six centuries",
+        "zh": "六百載",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 125,
         "enEnd": 138
       }
     ],
@@ -1935,6 +4252,16 @@
         "zh": "紂",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 12
+      },
+      {
+        "en": "Emperor Chou",
+        "zh": "紂",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 12
       },
@@ -1943,7 +4270,17 @@
         "zh": "周武王",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 19,
+        "enEnd": 46
+      },
+      {
+        "en": "killed by Wu",
+        "zh": "周武王",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 34,
         "enEnd": 46
       },
       {
@@ -1951,6 +4288,16 @@
         "zh": "周",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 71,
+        "enEnd": 95
+      },
+      {
+        "en": "founded the Chou dynasty",
+        "zh": "周",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 71,
         "enEnd": 95
       },
@@ -1959,7 +4306,17 @@
         "zh": "八百載",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 102,
+        "enEnd": 140
+      },
+      {
+        "en": "eight hundred years",
+        "zh": "八百載",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 121,
         "enEnd": 140
       },
       {
@@ -1967,7 +4324,17 @@
         "zh": "最長久",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 142,
+        "enEnd": 160
+      },
+      {
+        "en": "longest of all",
+        "zh": "最長久",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 146,
         "enEnd": 160
       }
     ],
@@ -1977,6 +4344,16 @@
         "zh": "秦",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 32,
+        "enEnd": 45
+      },
+      {
+        "en": "Ch'in dynasty",
+        "zh": "秦",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 32,
         "enEnd": 45
       },
@@ -1985,7 +4362,17 @@
         "zh": "始兼並",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 47,
+        "enEnd": 70
+      },
+      {
+        "en": "united the empire",
+        "zh": "始兼並",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 53,
         "enEnd": 70
       },
       {
@@ -1993,7 +4380,17 @@
         "zh": "傳二世",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 71,
+        "enEnd": 92
+      },
+      {
+        "en": "did not last long",
+        "zh": "傳二世",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 75,
         "enEnd": 92
       }
     ],
@@ -2003,6 +4400,16 @@
         "zh": "高祖興",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 29,
+        "enEnd": 47
+      },
+      {
+        "en": "Han became emperor",
+        "zh": "高祖興",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 29,
         "enEnd": 47
       },
@@ -2011,7 +4418,17 @@
         "zh": "高祖",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 56,
+        "enEnd": 84
+      },
+      {
+        "en": "Emperor Han Kao-tsu",
+        "zh": "高祖",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 65,
         "enEnd": 84
       },
       {
@@ -2019,7 +4436,17 @@
         "zh": "漢業建",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 114,
+        "enEnd": 147
+      },
+      {
+        "en": "founded the Han dynasty",
+        "zh": "漢業建",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 124,
         "enEnd": 147
       }
     ],
@@ -2029,6 +4456,16 @@
         "zh": "光武",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "Emperor Kuang Wu",
+        "zh": "光武",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 16
       },
@@ -2037,6 +4474,16 @@
         "zh": "漢",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 55,
+        "enEnd": 65
+      },
+      {
+        "en": "Han Empire",
+        "zh": "漢",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 55,
         "enEnd": 65
       },
@@ -2045,7 +4492,17 @@
         "zh": "東漢",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 97,
+        "enEnd": 117
+      },
+      {
+        "en": "Later Han dynasty",
+        "zh": "東漢",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 100,
         "enEnd": 117
       }
     ],
@@ -2055,7 +4512,17 @@
         "zh": "兩晉",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 4,
+        "enEnd": 29
+      },
+      {
+        "en": "Western Chin",
+        "zh": "兩晉",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 17,
         "enEnd": 29
       },
       {
@@ -2063,7 +4530,17 @@
         "zh": "兩晉",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 30,
+        "enEnd": 46
+      },
+      {
+        "en": "Eastern Chin",
+        "zh": "兩晉",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 34,
         "enEnd": 46
       },
       {
@@ -2071,7 +4548,17 @@
         "zh": "三國",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 67,
+        "enEnd": 88
+      },
+      {
+        "en": "Three Kingdoms",
+        "zh": "三國",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 74,
         "enEnd": 88
       },
       {
@@ -2079,6 +4566,16 @@
         "zh": "魏",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 111,
+        "enEnd": 114
+      },
+      {
+        "en": "Wei",
+        "zh": "魏",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 111,
         "enEnd": 114
       },
@@ -2087,6 +4584,16 @@
         "zh": "蜀",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 116,
+        "enEnd": 119
+      },
+      {
+        "en": "Shu",
+        "zh": "蜀",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 116,
         "enEnd": 119
       },
@@ -2095,6 +4602,16 @@
         "zh": "吳",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 125,
+        "enEnd": 127
+      },
+      {
+        "en": "Wu",
+        "zh": "吳",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 125,
         "enEnd": 127
       }
@@ -2105,6 +4622,16 @@
         "zh": "宋",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 31,
+        "enEnd": 39
+      },
+      {
+        "en": "Liu Sung",
+        "zh": "宋",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 31,
         "enEnd": 39
       },
@@ -2113,6 +4640,16 @@
         "zh": "齊",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 41,
+        "enEnd": 44
+      },
+      {
+        "en": "Chi",
+        "zh": "齊",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 41,
         "enEnd": 44
       },
@@ -2121,6 +4658,16 @@
         "zh": "梁",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 46,
+        "enEnd": 51
+      },
+      {
+        "en": "Liang",
+        "zh": "梁",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 46,
         "enEnd": 51
       },
@@ -2129,6 +4676,16 @@
         "zh": "陳",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 57,
+        "enEnd": 62
+      },
+      {
+        "en": "Ch'en",
+        "zh": "陳",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 57,
         "enEnd": 62
       }
@@ -2139,6 +4696,16 @@
         "zh": "元魏",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 8
+      },
+      {
+        "en": "Yuan Wei",
+        "zh": "元魏",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 8
       },
@@ -2147,6 +4714,16 @@
         "zh": "北",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 14,
+        "enEnd": 30
+      },
+      {
+        "en": "Northern dynasty",
+        "zh": "北",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 14,
         "enEnd": 30
       },
@@ -2155,6 +4732,16 @@
         "zh": "東",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 49,
+        "enEnd": 60
+      },
+      {
+        "en": "Eastern Wei",
+        "zh": "東",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 49,
         "enEnd": 60
       },
@@ -2163,6 +4750,16 @@
         "zh": "西",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 65,
+        "enEnd": 76
+      },
+      {
+        "en": "Western Wei",
+        "zh": "西",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 65,
         "enEnd": 76
       },
@@ -2171,7 +4768,17 @@
         "zh": "高齊",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 89,
+        "enEnd": 113
+      },
+      {
+        "en": "Northern Chi",
+        "zh": "高齊",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 101,
         "enEnd": 113
       },
       {
@@ -2179,7 +4786,17 @@
         "zh": "宇文周",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 114,
+        "enEnd": 131
+      },
+      {
+        "en": "Northern Chou",
+        "zh": "宇文周",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 118,
         "enEnd": 131
       }
     ],
@@ -2189,7 +4806,17 @@
         "zh": "一土宇",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 26
+      },
+      {
+        "en": "empire remained united",
+        "zh": "一土宇",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 26
       },
       {
@@ -2197,6 +4824,16 @@
         "zh": "隋",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 37,
+        "enEnd": 48
+      },
+      {
+        "en": "Sui dynasty",
+        "zh": "隋",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 37,
         "enEnd": 48
       },
@@ -2205,7 +4842,17 @@
         "zh": "不再傳",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 75,
+        "enEnd": 105
+      },
+      {
+        "en": "two generations",
+        "zh": "不再傳",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 90,
         "enEnd": 105
       },
       {
@@ -2213,7 +4860,17 @@
         "zh": "失統緒",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 107,
+        "enEnd": 142
+      },
+      {
+        "en": "empire was soon in disorder",
+        "zh": "失統緒",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 115,
         "enEnd": 142
       }
     ],
@@ -2223,6 +4880,16 @@
         "zh": "隋",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 10,
+        "enEnd": 13
+      },
+      {
+        "en": "Sui",
+        "zh": "隋",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 10,
         "enEnd": 13
       },
@@ -2231,6 +4898,16 @@
         "zh": "唐",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 23,
+        "enEnd": 36
+      },
+      {
+        "en": "T'ang dynasty",
+        "zh": "唐",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 23,
         "enEnd": 36
       },
@@ -2239,7 +4916,17 @@
         "zh": "除隋亂",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 38,
+        "enEnd": 67
+      },
+      {
+        "en": "peace and order",
+        "zh": "除隋亂",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 52,
         "enEnd": 67
       },
       {
@@ -2247,6 +4934,16 @@
         "zh": "國",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 75,
+        "enEnd": 81
+      },
+      {
+        "en": "empire",
+        "zh": "國",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 75,
         "enEnd": 81
       }
@@ -2257,6 +4954,16 @@
         "zh": "唐",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 4,
+        "enEnd": 17
+      },
+      {
+        "en": "T'ang dynasty",
+        "zh": "唐",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 4,
         "enEnd": 17
       },
@@ -2265,7 +4972,17 @@
         "zh": "五代",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 31,
+        "enEnd": 52
+      },
+      {
+        "en": "Five Dynasties",
+        "zh": "五代",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 38,
         "enEnd": 52
       },
       {
@@ -2273,6 +4990,16 @@
         "zh": "梁",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 54,
+        "enEnd": 65
+      },
+      {
+        "en": "Later Liang",
+        "zh": "梁",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 54,
         "enEnd": 65
       },
@@ -2281,6 +5008,16 @@
         "zh": "晉",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 80,
+        "enEnd": 90
+      },
+      {
+        "en": "Later Chin",
+        "zh": "晉",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 80,
         "enEnd": 90
       },
@@ -2289,6 +5026,16 @@
         "zh": "漢",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 92,
+        "enEnd": 101
+      },
+      {
+        "en": "Later Han",
+        "zh": "漢",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 92,
         "enEnd": 101
       },
@@ -2297,6 +5044,16 @@
         "zh": "周",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 107,
+        "enEnd": 117
+      },
+      {
+        "en": "Later Chou",
+        "zh": "周",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 107,
         "enEnd": 117
       }
@@ -2307,6 +5064,16 @@
         "zh": "宋",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 4,
+        "enEnd": 16
+      },
+      {
+        "en": "Sung dynasty",
+        "zh": "宋",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 4,
         "enEnd": 16
       }
@@ -2317,6 +5084,16 @@
         "zh": "史",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 4,
+        "enEnd": 11
+      },
+      {
+        "en": "history",
+        "zh": "史",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 4,
         "enEnd": 11
       },
@@ -2325,7 +5102,17 @@
         "zh": "十七史",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 12,
+        "enEnd": 39
+      },
+      {
+        "en": "successive dynasties",
+        "zh": "十七史",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 19,
         "enEnd": 39
       },
       {
@@ -2333,7 +5120,17 @@
         "zh": "興衰",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 90,
+        "enEnd": 118
+      },
+      {
+        "en": "rise and fall",
+        "zh": "興衰",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 105,
         "enEnd": 118
       }
     ],
@@ -2343,6 +5140,16 @@
         "zh": "仲尼",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 77,
+        "enEnd": 86
+      },
+      {
+        "en": "Confucius",
+        "zh": "仲尼",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 77,
         "enEnd": 86
       },
@@ -2351,7 +5158,17 @@
         "zh": "師項橐",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 91,
+        "enEnd": 129
+      },
+      {
+        "en": "learn from Hsiang T'uo",
+        "zh": "師項橐",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 107,
         "enEnd": 129
       }
     ],
@@ -2361,7 +5178,17 @@
         "zh": "古聖賢",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 30
+      },
+      {
+        "en": "ancient sages and worthies",
+        "zh": "古聖賢",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 30
       },
       {
@@ -2369,7 +5196,17 @@
         "zh": "勤學",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 31,
+        "enEnd": 44
+      },
+      {
+        "en": "diligent",
+        "zh": "勤學",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 36,
         "enEnd": 44
       },
       {
@@ -2377,6 +5214,16 @@
         "zh": "學",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 54,
+        "enEnd": 61
+      },
+      {
+        "en": "studies",
+        "zh": "學",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 54,
         "enEnd": 61
       }
@@ -2387,7 +5234,17 @@
         "zh": "既仕",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 24
+      },
+      {
+        "en": "heavy duties",
+        "zh": "既仕",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 12,
         "enEnd": 24
       },
       {
@@ -2395,6 +5252,16 @@
         "zh": "趙中令",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 26,
+        "enEnd": 34
+      },
+      {
+        "en": "Mr. Chao",
+        "zh": "趙中令",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 26,
         "enEnd": 34
       },
@@ -2403,7 +5270,17 @@
         "zh": "中令",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 36,
+        "enEnd": 54
+      },
+      {
+        "en": "Cabinet Minister",
+        "zh": "中令",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 38,
         "enEnd": 54
       },
       {
@@ -2411,6 +5288,16 @@
         "zh": "學且勤",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 76,
+        "enEnd": 90
+      },
+      {
+        "en": "loved to study",
+        "zh": "學且勤",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 76,
         "enEnd": 90
       },
@@ -2419,7 +5306,17 @@
         "zh": "魯論",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 91,
+        "enEnd": 113
+      },
+      {
+        "en": "Confucian Analects",
+        "zh": "魯論",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 95,
         "enEnd": 113
       }
     ],
@@ -2429,7 +5326,17 @@
         "zh": "無書",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 15
+      },
+      {
+        "en": "no books",
+        "zh": "無書",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 7,
         "enEnd": 15
       },
       {
@@ -2437,7 +5344,17 @@
         "zh": "蒲編",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 36,
+        "enEnd": 61
+      },
+      {
+        "en": "rushes into mats",
+        "zh": "蒲編",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 45,
         "enEnd": 61
       },
       {
@@ -2445,7 +5362,17 @@
         "zh": "竹簡",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 71,
+        "enEnd": 96
+      },
+      {
+        "en": "writing materials",
+        "zh": "竹簡",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 79,
         "enEnd": 96
       },
       {
@@ -2453,7 +5380,17 @@
         "zh": "知勉",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 103,
+        "enEnd": 130
+      },
+      {
+        "en": "studied diligently",
+        "zh": "知勉",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 112,
         "enEnd": 130
       }
     ],
@@ -2463,7 +5400,17 @@
         "zh": "頭懸梁",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 29,
+        "enEnd": 53
+      },
+      {
+        "en": "falling asleep",
+        "zh": "頭懸梁",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 39,
         "enEnd": 53
       },
       {
@@ -2471,7 +5418,17 @@
         "zh": "不教",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 54,
+        "enEnd": 72
+      },
+      {
+        "en": "studies",
+        "zh": "不教",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 65,
         "enEnd": 72
       },
       {
@@ -2479,7 +5436,17 @@
         "zh": "頭懸梁",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 143,
+        "enEnd": 170
+      },
+      {
+        "en": "tied his hair to a beam",
+        "zh": "頭懸梁",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 147,
         "enEnd": 170
       },
       {
@@ -2487,7 +5454,17 @@
         "zh": "錐刺股",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 196,
+        "enEnd": 227
+      },
+      {
+        "en": "pricked himself with an awl",
+        "zh": "錐刺股",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 200,
         "enEnd": 227
       }
     ],
@@ -2497,7 +5474,17 @@
         "zh": "囊螢",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 16,
+        "enEnd": 41
+      },
+      {
+        "en": "light of fireflies",
+        "zh": "囊螢",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 23,
         "enEnd": 41
       },
       {
@@ -2505,7 +5492,17 @@
         "zh": "映雪",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 63,
+        "enEnd": 95
+      },
+      {
+        "en": "light reflected from snow",
+        "zh": "映雪",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 70,
         "enEnd": 95
       },
       {
@@ -2513,7 +5510,17 @@
         "zh": "學不輟",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 97,
+        "enEnd": 112
+      },
+      {
+        "en": "persevered",
+        "zh": "學不輟",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 102,
         "enEnd": 112
       }
     ],
@@ -2523,7 +5530,17 @@
         "zh": "負薪",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 14,
+        "enEnd": 45
+      },
+      {
+        "en": "carrying firewood",
+        "zh": "負薪",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 28,
         "enEnd": 45
       },
       {
@@ -2531,7 +5548,17 @@
         "zh": "掛角",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 71,
+        "enEnd": 90
+      },
+      {
+        "en": "cow's horn",
+        "zh": "掛角",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 80,
         "enEnd": 90
       }
     ],
@@ -2541,7 +5568,17 @@
         "zh": "讀書籍",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 30,
+        "enEnd": 58
+      },
+      {
+        "en": "studies seriously",
+        "zh": "讀書籍",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 41,
         "enEnd": 58
       },
       {
@@ -2549,7 +5586,17 @@
         "zh": "猶悔遲",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 64,
+        "enEnd": 91
+      },
+      {
+        "en": "too late to learn",
+        "zh": "猶悔遲",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 74,
         "enEnd": 91
       },
       {
@@ -2557,7 +5604,17 @@
         "zh": "蘇老泉",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 97,
+        "enEnd": 124
+      },
+      {
+        "en": "Su Lao-ch'uan",
+        "zh": "蘇老泉",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 111,
         "enEnd": 124
       },
       {
@@ -2565,7 +5622,17 @@
         "zh": "發憤",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 134,
+        "enEnd": 154
+      },
+      {
+        "en": "worked hard",
+        "zh": "發憤",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 143,
         "enEnd": 154
       },
       {
@@ -2573,7 +5640,17 @@
         "zh": "既老",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 155,
+        "enEnd": 173
+      },
+      {
+        "en": "later years",
+        "zh": "既老",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 162,
         "enEnd": 173
       }
     ],
@@ -2583,6 +5660,16 @@
         "zh": "梁灝",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 9
+      },
+      {
+        "en": "Liang Hao",
+        "zh": "梁灝",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 9
       },
@@ -2591,7 +5678,17 @@
         "zh": "對大廷",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 10,
+        "enEnd": 38
+      },
+      {
+        "en": "oral examinations",
+        "zh": "對大廷",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 21,
         "enEnd": 38
       },
       {
@@ -2599,7 +5696,17 @@
         "zh": "大廷",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 39,
+        "enEnd": 60
+      },
+      {
+        "en": "Imperial Court",
+        "zh": "大廷",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 46,
         "enEnd": 60
       },
       {
@@ -2607,7 +5714,17 @@
         "zh": "八十二",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 118,
+        "enEnd": 144
+      },
+      {
+        "en": "advanced age",
+        "zh": "八十二",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 132,
         "enEnd": 144
       },
       {
@@ -2615,7 +5732,17 @@
         "zh": "彼晚成",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 146,
+        "enEnd": 186
+      },
+      {
+        "en": "perseverance brings results",
+        "zh": "彼晚成",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 159,
         "enEnd": 186
       }
     ],
@@ -2625,6 +5752,16 @@
         "zh": "瑩",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 4
+      },
+      {
+        "en": "Ying",
+        "zh": "瑩",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 4
       },
@@ -2633,7 +5770,17 @@
         "zh": "詠詩",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 40,
+        "enEnd": 55
+      },
+      {
+        "en": "Odes",
+        "zh": "詠詩",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 51,
         "enEnd": 55
       },
       {
@@ -2641,7 +5788,17 @@
         "zh": "八歲",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 56,
+        "enEnd": 75
+      },
+      {
+        "en": "age of eight",
+        "zh": "八歲",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 63,
         "enEnd": 75
       },
       {
@@ -2649,6 +5806,16 @@
         "zh": "泌",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 81,
+        "enEnd": 83
+      },
+      {
+        "en": "Pi",
+        "zh": "泌",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 81,
         "enEnd": 83
       },
@@ -2657,7 +5824,17 @@
         "zh": "七歲",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 134,
+        "enEnd": 153
+      },
+      {
+        "en": "age of seven",
+        "zh": "七歲",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 141,
         "enEnd": 153
       },
       {
@@ -2665,7 +5842,17 @@
         "zh": "穎悟",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 155,
+        "enEnd": 173
+      },
+      {
+        "en": "talented",
+        "zh": "穎悟",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 165,
         "enEnd": 173
       },
       {
@@ -2673,7 +5860,17 @@
         "zh": "爾幼學",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 178,
+        "enEnd": 211
+      },
+      {
+        "en": "Young people",
+        "zh": "爾幼學",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 199,
         "enEnd": 211
       }
     ],
@@ -2683,7 +5880,17 @@
         "zh": "彼女子",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 30
+      },
+      {
+        "en": "two brilliant girls",
+        "zh": "彼女子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 11,
         "enEnd": 30
       },
       {
@@ -2691,7 +5898,17 @@
         "zh": "蔡文姬",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 46,
+        "enEnd": 80
+      },
+      {
+        "en": "Ts'ai Wen Chi",
+        "zh": "蔡文姬",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 67,
         "enEnd": 80
       },
       {
@@ -2699,7 +5916,17 @@
         "zh": "辨琴",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 87,
+        "enEnd": 122
+      },
+      {
+        "en": "strings of the lute",
+        "zh": "辨琴",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 103,
         "enEnd": 122
       },
       {
@@ -2707,7 +5934,17 @@
         "zh": "謝道韞",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 124,
+        "enEnd": 142
+      },
+      {
+        "en": "Hsieh Taowen",
+        "zh": "謝道韞",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 130,
         "enEnd": 142
       },
       {
@@ -2715,7 +5952,17 @@
         "zh": "詠吟",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 143,
+        "enEnd": 163
+      },
+      {
+        "en": "compose poetry",
+        "zh": "詠吟",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 149,
         "enEnd": 163
       }
     ],
@@ -2725,7 +5972,17 @@
         "zh": "方七歲",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 24
+      },
+      {
+        "en": "age of seven",
+        "zh": "方七歲",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 12,
         "enEnd": 24
       },
       {
@@ -2733,6 +5990,16 @@
         "zh": "劉晏",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 26,
+        "enEnd": 40
+      },
+      {
+        "en": "little Liu Yen",
+        "zh": "劉晏",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 26,
         "enEnd": 40
       },
@@ -2741,6 +6008,16 @@
         "zh": "唐",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 48,
+        "enEnd": 61
+      },
+      {
+        "en": "T'ang dynasty",
+        "zh": "唐",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 48,
         "enEnd": 61
       },
@@ -2749,7 +6026,17 @@
         "zh": "神童",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 95,
+        "enEnd": 124
+      },
+      {
+        "en": "talented boy",
+        "zh": "神童",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 112,
         "enEnd": 124
       },
       {
@@ -2757,7 +6044,17 @@
         "zh": "已仕",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 140,
+        "enEnd": 164
+      },
+      {
+        "en": "high office",
+        "zh": "已仕",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 153,
         "enEnd": 164
       }
     ],
@@ -2767,6 +6064,16 @@
         "zh": "犬守夜",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 15
+      },
+      {
+        "en": "Dogs keep watch",
+        "zh": "犬守夜",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 15
       },
@@ -2775,6 +6082,16 @@
         "zh": "夜",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 16,
+        "enEnd": 24
+      },
+      {
+        "en": "at night",
+        "zh": "夜",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 16,
         "enEnd": 24
       },
@@ -2783,7 +6100,17 @@
         "zh": "雞司晨",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 26,
+        "enEnd": 53
+      },
+      {
+        "en": "cocks announce the dawn",
+        "zh": "雞司晨",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 30,
         "enEnd": 53
       },
       {
@@ -2791,7 +6118,17 @@
         "zh": "不學",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 55,
+        "enEnd": 79
+      },
+      {
+        "en": "do not learn",
+        "zh": "不學",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 67,
         "enEnd": 79
       },
       {
@@ -2799,7 +6136,17 @@
         "zh": "蠶吐絲",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 116,
+        "enEnd": 149
+      },
+      {
+        "en": "Silkworms spin silk",
+        "zh": "蠶吐絲",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 130,
         "enEnd": 149
       },
       {
@@ -2807,7 +6154,17 @@
         "zh": "蜂釀蜜",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 151,
+        "enEnd": 170
+      },
+      {
+        "en": "bees make honey",
+        "zh": "蜂釀蜜",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 155,
         "enEnd": 170
       },
       {
@@ -2815,7 +6172,17 @@
         "zh": "不如物",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 197,
+        "enEnd": 233
+      },
+      {
+        "en": "inferior to these creatures",
+        "zh": "不如物",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 206,
         "enEnd": 233
       }
     ],
@@ -2825,6 +6192,16 @@
         "zh": "幼而學",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "Learn diligently",
+        "zh": "幼而學",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 16
       },
@@ -2833,6 +6210,16 @@
         "zh": "幼",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 31,
+        "enEnd": 36
+      },
+      {
+        "en": "young",
+        "zh": "幼",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 31,
         "enEnd": 36
       }
@@ -2843,7 +6230,17 @@
         "zh": "父母",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 90,
+        "enEnd": 110
+      },
+      {
+        "en": "parents",
+        "zh": "父母",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 103,
         "enEnd": 110
       }
     ],
@@ -2853,6 +6250,16 @@
         "zh": "勤有功",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 22
+      },
+      {
+        "en": "Diligence brings merit",
+        "zh": "勤有功",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 22
       },
@@ -2861,7 +6268,17 @@
         "zh": "宜勉力",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 52,
+        "enEnd": 79
+      },
+      {
+        "en": "strive hard",
+        "zh": "宜勉力",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 68,
         "enEnd": 79
       }
     ],
@@ -2871,7 +6288,17 @@
         "zh": "周轍東",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 30
+      },
+      {
+        "en": "Chou court moved east",
+        "zh": "周轍東",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 9,
         "enEnd": 30
       },
       {
@@ -2879,7 +6306,17 @@
         "zh": "王綱墜",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 32,
+        "enEnd": 57
+      },
+      {
+        "en": "feudal bond slackened",
+        "zh": "王綱墜",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 36,
         "enEnd": 57
       },
       {
@@ -2887,6 +6324,16 @@
         "zh": "逞干戈",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 59,
+        "enEnd": 76
+      },
+      {
+        "en": "Warfare prevailed",
+        "zh": "逞干戈",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 59,
         "enEnd": 76
       },
@@ -2895,7 +6342,17 @@
         "zh": "遊說",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 78,
+        "enEnd": 102
+      },
+      {
+        "en": "wandering persuaders",
+        "zh": "遊說",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 82,
         "enEnd": 102
       },
       {
@@ -2903,6 +6360,16 @@
         "zh": "尚",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 116,
+        "enEnd": 127
+      },
+      {
+        "en": "high esteem",
+        "zh": "尚",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 116,
         "enEnd": 127
       }
@@ -2913,6 +6380,16 @@
         "zh": "始",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 9,
+        "enEnd": 19
+      },
+      {
+        "en": "began with",
+        "zh": "始",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 9,
         "enEnd": 19
       },
@@ -2921,7 +6398,17 @@
         "zh": "春秋",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 20,
+        "enEnd": 48
+      },
+      {
+        "en": "Spring and Autumn period",
+        "zh": "春秋",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 24,
         "enEnd": 48
       },
       {
@@ -2929,6 +6416,16 @@
         "zh": "終",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 53,
+        "enEnd": 63
+      },
+      {
+        "en": "ended with",
+        "zh": "終",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 53,
         "enEnd": 63
       },
@@ -2937,7 +6434,17 @@
         "zh": "戰國",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 64,
+        "enEnd": 82
+      },
+      {
+        "en": "Warring States",
+        "zh": "戰國",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 68,
         "enEnd": 82
       },
       {
@@ -2945,7 +6452,17 @@
         "zh": "五霸",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 84,
+        "enEnd": 101
+      },
+      {
+        "en": "Five Hegemons",
+        "zh": "五霸",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 88,
         "enEnd": 101
       },
       {
@@ -2953,7 +6470,17 @@
         "zh": "七雄",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 117,
+        "enEnd": 144
+      },
+      {
+        "en": "Seven Mighty States",
+        "zh": "七雄",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 125,
         "enEnd": 144
       }
     ],
@@ -2963,7 +6490,17 @@
         "zh": "南朝",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 6,
+        "enEnd": 33
+      },
+      {
+        "en": "Southern dynasties",
+        "zh": "南朝",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 15,
         "enEnd": 33
       },
       {
@@ -2971,6 +6508,16 @@
         "zh": "都",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 46,
+        "enEnd": 53
+      },
+      {
+        "en": "capital",
+        "zh": "都",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 46,
         "enEnd": 53
       },
@@ -2979,7 +6526,17 @@
         "zh": "金陵",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 54,
+        "enEnd": 66
+      },
+      {
+        "en": "Chin-ling",
+        "zh": "金陵",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 57,
         "enEnd": 66
       }
     ],
@@ -2989,7 +6546,17 @@
         "zh": "二十傳",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 30
+      },
+      {
+        "en": "twenty times",
+        "zh": "二十傳",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 18,
         "enEnd": 30
       },
       {
@@ -2997,7 +6564,17 @@
         "zh": "三百載",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 31,
+        "enEnd": 55
+      },
+      {
+        "en": "three hundred years",
+        "zh": "三百載",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 36,
         "enEnd": 55
       },
       {
@@ -3005,7 +6582,17 @@
         "zh": "梁滅之",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 57,
+        "enEnd": 92
+      },
+      {
+        "en": "Liang destroyed the T'ang",
+        "zh": "梁滅之",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 67,
         "enEnd": 92
       },
       {
@@ -3013,7 +6600,17 @@
         "zh": "國乃改",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 93,
+        "enEnd": 123
+      },
+      {
+        "en": "changed the dynastic title",
+        "zh": "國乃改",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 97,
         "enEnd": 123
       }
     ],
@@ -3023,6 +6620,16 @@
         "zh": "讀史者",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 18
+      },
+      {
+        "en": "Readers of history",
+        "zh": "讀史者",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 18
       },
@@ -3031,7 +6638,17 @@
         "zh": "實錄",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 26,
+        "enEnd": 48
+      },
+      {
+        "en": "true records",
+        "zh": "實錄",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 36,
         "enEnd": 48
       },
       {
@@ -3039,7 +6656,17 @@
         "zh": "通古今",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 50,
+        "enEnd": 73
+      },
+      {
+        "en": "understand all ages",
+        "zh": "通古今",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 54,
         "enEnd": 73
       },
       {
@@ -3047,7 +6674,17 @@
         "zh": "親目",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 96,
+        "enEnd": 115
+      },
+      {
+        "en": "own eyes",
+        "zh": "親目",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 107,
         "enEnd": 115
       }
     ],
@@ -3057,6 +6694,16 @@
         "zh": "口而誦",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 6
+      },
+      {
+        "en": "Recite",
+        "zh": "口而誦",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 6
       },
@@ -3065,6 +6712,16 @@
         "zh": "口",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 16,
+        "enEnd": 21
+      },
+      {
+        "en": "mouth",
+        "zh": "口",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 16,
         "enEnd": 21
       },
@@ -3073,7 +6730,17 @@
         "zh": "心而惟",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 22,
+        "enEnd": 33
+      },
+      {
+        "en": "reflect",
+        "zh": "心而惟",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 26,
         "enEnd": 33
       },
       {
@@ -3081,6 +6748,16 @@
         "zh": "心",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 41,
+        "enEnd": 46
+      },
+      {
+        "en": "heart",
+        "zh": "心",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 41,
         "enEnd": 46
       },
@@ -3089,6 +6766,16 @@
         "zh": "朝",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 63,
+        "enEnd": 70
+      },
+      {
+        "en": "morning",
+        "zh": "朝",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 63,
         "enEnd": 70
       },
@@ -3097,6 +6784,16 @@
         "zh": "夕",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 82,
+        "enEnd": 89
+      },
+      {
+        "en": "evening",
+        "zh": "夕",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 82,
         "enEnd": 89
       }
@@ -3107,7 +6804,17 @@
         "zh": "爾小生",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 18
+      },
+      {
+        "en": "young students",
+        "zh": "爾小生",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 18
       },
       {
@@ -3115,7 +6822,17 @@
         "zh": "宜早思",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 19,
+        "enEnd": 38
+      },
+      {
+        "en": "take thought",
+        "zh": "宜早思",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 26,
         "enEnd": 38
       },
       {
@@ -3123,6 +6840,16 @@
         "zh": "早",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 39,
+        "enEnd": 46
+      },
+      {
+        "en": "betimes",
+        "zh": "早",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 39,
         "enEnd": 46
       }
@@ -3133,7 +6860,17 @@
         "zh": "爾小生",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 18
+      },
+      {
+        "en": "young students",
+        "zh": "爾小生",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 18
       },
       {
@@ -3141,7 +6878,17 @@
         "zh": "宜立志",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 19,
+        "enEnd": 42
+      },
+      {
+        "en": "set your resolve",
+        "zh": "宜立志",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 26,
         "enEnd": 42
       }
     ],
@@ -3151,7 +6898,17 @@
         "zh": "幼學",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 22
+      },
+      {
+        "en": "learn in youth",
+        "zh": "幼學",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 8,
         "enEnd": 22
       },
       {
@@ -3159,6 +6916,16 @@
         "zh": "勉",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 30,
+        "enEnd": 36
+      },
+      {
+        "en": "strive",
+        "zh": "勉",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 30,
         "enEnd": 36
       },
@@ -3167,6 +6934,16 @@
         "zh": "致",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 40,
+        "enEnd": 48
+      },
+      {
+        "en": "this end",
+        "zh": "致",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 40,
         "enEnd": 48
       },
@@ -3175,7 +6952,17 @@
         "zh": "有為者",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 50,
+        "enEnd": 73
+      },
+      {
+        "en": "achieved",
+        "zh": "有為者",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 65,
         "enEnd": 73
       },
       {
@@ -3183,6 +6970,16 @@
         "zh": "亦若是",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 74,
+        "enEnd": 86
+      },
+      {
+        "en": "did likewise",
+        "zh": "亦若是",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 74,
         "enEnd": 86
       }
@@ -3193,6 +6990,16 @@
         "zh": "遼",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 4,
+        "enEnd": 8
+      },
+      {
+        "en": "Liao",
+        "zh": "遼",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 4,
         "enEnd": 8
       },
@@ -3201,6 +7008,16 @@
         "zh": "金",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 17,
+        "enEnd": 21
+      },
+      {
+        "en": "Chin",
+        "zh": "金",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 17,
         "enEnd": 21
       },
@@ -3209,7 +7026,17 @@
         "zh": "皆稱帝",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 22,
+        "enEnd": 49
+      },
+      {
+        "en": "claimed imperial title",
+        "zh": "皆稱帝",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 27,
         "enEnd": 49
       },
       {
@@ -3217,7 +7044,17 @@
         "zh": "元滅金",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 51,
+        "enEnd": 78
+      },
+      {
+        "en": "Yuan destroyed the Chin",
+        "zh": "元滅金",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 55,
         "enEnd": 78
       },
       {
@@ -3225,7 +7062,17 @@
         "zh": "絕宋世",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 79,
+        "enEnd": 102
+      },
+      {
+        "en": "ended the Sung line",
+        "zh": "絕宋世",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 83,
         "enEnd": 102
       }
     ],
@@ -3235,7 +7082,17 @@
         "zh": "輿圖",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 13
+      },
+      {
+        "en": "territory",
+        "zh": "輿圖",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 13
       },
       {
@@ -3243,6 +7100,16 @@
         "zh": "廣",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 18,
+        "enEnd": 23
+      },
+      {
+        "en": "wider",
+        "zh": "廣",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 18,
         "enEnd": 23
       },
@@ -3251,7 +7118,17 @@
         "zh": "前代",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 24,
+        "enEnd": 43
+      },
+      {
+        "en": "former age",
+        "zh": "前代",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 33,
         "enEnd": 43
       },
       {
@@ -3259,7 +7136,17 @@
         "zh": "九十年",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 45,
+        "enEnd": 67
+      },
+      {
+        "en": "ninety years",
+        "zh": "九十年",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 55,
         "enEnd": 67
       },
       {
@@ -3267,7 +7154,17 @@
         "zh": "國祚廢",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 68,
+        "enEnd": 89
+      },
+      {
+        "en": "mandate was spent",
+        "zh": "國祚廢",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 72,
         "enEnd": 89
       }
     ],
@@ -3277,7 +7174,17 @@
         "zh": "太祖",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 20
+      },
+      {
+        "en": "Grand Progenitor",
+        "zh": "太祖",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 4,
         "enEnd": 20
       },
       {
@@ -3285,7 +7192,17 @@
         "zh": "國大明",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 21,
+        "enEnd": 53
+      },
+      {
+        "en": "founded the Great Ming",
+        "zh": "國大明",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 31,
         "enEnd": 53
       },
       {
@@ -3293,6 +7210,16 @@
         "zh": "號",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 59,
+        "enEnd": 70
+      },
+      {
+        "en": "reign title",
+        "zh": "號",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 59,
         "enEnd": 70
       },
@@ -3301,7 +7228,17 @@
         "zh": "洪武",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 71,
+        "enEnd": 82
+      },
+      {
+        "en": "Hung-wu",
+        "zh": "洪武",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 75,
         "enEnd": 82
       },
       {
@@ -3309,7 +7246,17 @@
         "zh": "金陵",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 84,
+        "enEnd": 96
+      },
+      {
+        "en": "Nanking",
+        "zh": "金陵",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 89,
         "enEnd": 96
       },
       {
@@ -3317,6 +7264,16 @@
         "zh": "都",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 104,
+        "enEnd": 111
+      },
+      {
+        "en": "capital",
+        "zh": "都",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 104,
         "enEnd": 111
       }
@@ -3327,7 +7284,17 @@
         "zh": "成祖",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "Ch'eng-tsu",
+        "zh": "成祖",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 6,
         "enEnd": 16
       },
       {
@@ -3335,6 +7302,16 @@
         "zh": "遷",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 21,
+        "enEnd": 34
+      },
+      {
+        "en": "capital moved",
+        "zh": "遷",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 21,
         "enEnd": 34
       },
@@ -3343,7 +7320,17 @@
         "zh": "燕京",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 35,
+        "enEnd": 47
+      },
+      {
+        "en": "Yen-ching",
+        "zh": "燕京",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 38,
         "enEnd": 47
       },
       {
@@ -3351,6 +7338,16 @@
         "zh": "十六世",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 49,
+        "enEnd": 63
+      },
+      {
+        "en": "Sixteen reigns",
+        "zh": "十六世",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 49,
         "enEnd": 63
       },
@@ -3359,7 +7356,17 @@
         "zh": "崇禎",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 64,
+        "enEnd": 86
+      },
+      {
+        "en": "Ch'ung-chen",
+        "zh": "崇禎",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 75,
         "enEnd": 86
       }
     ],
@@ -3369,6 +7376,16 @@
         "zh": "權閹",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 16
+      },
+      {
+        "en": "Powerful eunuchs",
+        "zh": "權閹",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 16
       },
@@ -3377,6 +7394,16 @@
         "zh": "肆",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 17,
+        "enEnd": 25
+      },
+      {
+        "en": "ran riot",
+        "zh": "肆",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 17,
         "enEnd": 25
       },
@@ -3385,7 +7412,17 @@
         "zh": "寇如林",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 26,
+        "enEnd": 41
+      },
+      {
+        "en": "rebels rose",
+        "zh": "寇如林",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 30,
         "enEnd": 41
       },
       {
@@ -3393,7 +7430,17 @@
         "zh": "李闖",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 42,
+        "enEnd": 66
+      },
+      {
+        "en": "Li Ch'uang",
+        "zh": "李闖",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 56,
         "enEnd": 66
       },
       {
@@ -3401,7 +7448,17 @@
         "zh": "神器",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 79,
+        "enEnd": 100
+      },
+      {
+        "en": "sacred throne",
+        "zh": "神器",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 87,
         "enEnd": 100
       },
       {
@@ -3409,6 +7466,16 @@
         "zh": "焚",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 105,
+        "enEnd": 123
+      },
+      {
+        "en": "consumed in flames",
+        "zh": "焚",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 105,
         "enEnd": 123
       }
@@ -3419,6 +7486,16 @@
         "zh": "清世祖",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 0,
+        "enEnd": 8
+      },
+      {
+        "en": "Shih-tsu",
+        "zh": "清世祖",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 0,
         "enEnd": 8
       },
@@ -3427,6 +7504,16 @@
         "zh": "清",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 16,
+        "enEnd": 22
+      },
+      {
+        "en": "Ch'ing",
+        "zh": "清",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 16,
         "enEnd": 22
       },
@@ -3435,7 +7522,17 @@
         "zh": "景命",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 23,
+        "enEnd": 49
+      },
+      {
+        "en": "great mandate",
+        "zh": "景命",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 36,
         "enEnd": 49
       },
       {
@@ -3443,7 +7540,17 @@
         "zh": "四方",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 54,
+        "enEnd": 80
+      },
+      {
+        "en": "four quarters",
+        "zh": "四方",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 67,
         "enEnd": 80
       },
       {
@@ -3451,7 +7558,17 @@
         "zh": "克大定",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 81,
+        "enEnd": 102
+      },
+      {
+        "en": "secured the realm",
+        "zh": "克大定",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 85,
         "enEnd": 102
       }
     ],
@@ -3461,6 +7578,16 @@
         "zh": "康",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 5,
+        "enEnd": 14
+      },
+      {
+        "en": "K'ang-hsi",
+        "zh": "康",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 5,
         "enEnd": 14
       },
@@ -3469,6 +7596,16 @@
         "zh": "雍",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 19,
+        "enEnd": 29
+      },
+      {
+        "en": "Yung-cheng",
+        "zh": "雍",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 19,
         "enEnd": 29
       },
@@ -3477,6 +7614,16 @@
         "zh": "乾",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 38,
+        "enEnd": 49
+      },
+      {
+        "en": "Ch'ien-lung",
+        "zh": "乾",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 38,
         "enEnd": 49
       },
@@ -3485,6 +7632,16 @@
         "zh": "嘉",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 54,
+        "enEnd": 65
+      },
+      {
+        "en": "Chia-ch'ing",
+        "zh": "嘉",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 54,
         "enEnd": 65
       },
@@ -3493,7 +7650,17 @@
         "zh": "民安富",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 67,
+        "enEnd": 93
+      },
+      {
+        "en": "people lived in wealth",
+        "zh": "民安富",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 71,
         "enEnd": 93
       },
       {
@@ -3501,7 +7668,17 @@
         "zh": "治績誇",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 94,
+        "enEnd": 123
+      },
+      {
+        "en": "government won praise",
+        "zh": "治績誇",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 102,
         "enEnd": 123
       }
     ],
@@ -3511,6 +7688,16 @@
         "zh": "道",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 7,
+        "enEnd": 16
+      },
+      {
+        "en": "Tao-kuang",
+        "zh": "道",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 7,
         "enEnd": 16
       },
@@ -3519,6 +7706,16 @@
         "zh": "咸",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 21,
+        "enEnd": 31
+      },
+      {
+        "en": "Hsien-feng",
+        "zh": "咸",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 21,
         "enEnd": 31
       },
@@ -3527,7 +7724,17 @@
         "zh": "變亂起",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 32,
+        "enEnd": 54
+      },
+      {
+        "en": "rebellions arose",
+        "zh": "變亂起",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 38,
         "enEnd": 54
       },
       {
@@ -3535,7 +7742,17 @@
         "zh": "英法",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 56,
+        "enEnd": 80
+      },
+      {
+        "en": "England and France",
+        "zh": "英法",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 62,
         "enEnd": 80
       },
       {
@@ -3543,7 +7760,17 @@
         "zh": "都鄙",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 81,
+        "enEnd": 108
+      },
+      {
+        "en": "capital region",
+        "zh": "都鄙",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 94,
         "enEnd": 108
       }
     ],
@@ -3553,6 +7780,16 @@
         "zh": "同",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 6,
+        "enEnd": 16
+      },
+      {
+        "en": "T'ung-chih",
+        "zh": "同",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 6,
         "enEnd": 16
       },
@@ -3561,6 +7798,16 @@
         "zh": "光",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 21,
+        "enEnd": 30
+      },
+      {
+        "en": "Kuang-hsu",
+        "zh": "光",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 21,
         "enEnd": 30
       },
@@ -3569,7 +7816,17 @@
         "zh": "政權移",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 31,
+        "enEnd": 59
+      },
+      {
+        "en": "balance of power shifted",
+        "zh": "政權移",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 35,
         "enEnd": 59
       },
       {
@@ -3577,6 +7834,16 @@
         "zh": "新法",
         "pinyin": "",
         "def": "",
+        "role": "span",
+        "enStart": 61,
+        "enEnd": 72
+      },
+      {
+        "en": "New reforms",
+        "zh": "新法",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
         "enStart": 61,
         "enEnd": 72
       },
@@ -3585,7 +7852,17 @@
         "zh": "自強",
         "pinyin": "",
         "def": "",
+        "role": "span",
         "enStart": 88,
+        "enEnd": 113
+      },
+      {
+        "en": "quest for strength",
+        "zh": "自強",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 95,
         "enEnd": 113
       }
     ]

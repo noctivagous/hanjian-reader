@@ -21,17 +21,23 @@ never lives here — it is built locally from gitignored `private/` sources.
 
 An entry may set `alignmentFile` to a JSON file in this directory. Its
 `units` object is keyed by XLIFF unit ID, and each value is an ordered array
-of `{ en, zh, pinyin, def, enStart, enEnd }` records. `enStart`/`enEnd` are
-character offsets in the unit's exact target text. Only those English ranges
-and the paired Chinese phrases are hoverable; other characters are left
-untouched (same sparse model as hand-authored `words` on the Tao Te Ching
-local build). **Three Character Classic** (`three-character-classic`) stores
-its curated pairs in `scripts/three-character-classic-alignments-part*.mjs`;
-re-run `node scripts/build-three-character-classic.mjs` after editing them.
-The build resolves glosses in `scripts/tcc-locate-alignments.mjs`: by default
-each `{ en, zh }` anchor expands left into its clause; set `exact: true` on a
-pair to use the authored English verbatim, or pin `enStart` / `enEnd` for a
-hand-tuned span (see `s01` in `three-character-classic-alignments-part1.mjs`).
+of `{ en, zh, pinyin, def, role, enStart, enEnd }` records.
+
+Two roles on the same literary English line (the Span / Gloss pill only
+changes which ranges are underlined):
+
+- **`span`** — phrase/clause offsets into the unit's English `text`.
+  Sidecar files require offsets; missing `role` is treated as `span`.
+- **`gloss`** — the authored lexical English for that Chinese unit (the
+  needle), not every word of the literary clause. Bundled sample docs store
+  both. If a text only has glosses, span underlines are matching
+  comma-clauses.
+
+**Three Character Classic** (`three-character-classic`) stores curated
+pairs in `scripts/three-character-classic-alignments-part*.mjs`; re-run
+`node scripts/build-three-character-classic.mjs` after editing them.
+The build writes a **span** (left-expanded clause, unless `exact: true`)
+and a **gloss** (the authored `en` needle) for each pair.
 
 ## XLIFF contract
 

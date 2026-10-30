@@ -1,8 +1,14 @@
 import { useMemo, useState } from 'react';
-import type { Doc } from '../data/types';
+import type { Doc, WordAlign } from '../data/types';
 import { paragraphEn } from '../lib/doc';
+import type { ReadingProvider } from '../lib/dictionary';
 import { canonicalSearchText, scriptTag, zhFontClass } from '../lib/script';
-import type { PrimaryLang } from './Reader';
+import {
+  ChineseHoverText,
+  type HoverMode,
+  type PrimaryLang,
+} from './Reader';
+import type { HoverState } from './WordCard';
 
 interface NavContentProps {
   idPrefix: string;
@@ -14,6 +20,17 @@ interface NavContentProps {
   activeSectionId: string | null;
   activeParagraphId: string | null;
   onNavigate: (id: string) => void;
+  wordHover: {
+    enabled: boolean;
+    mode: HoverMode;
+    dict: ReadingProvider | null;
+    pinnedKey: string | null;
+    onPin: (key: string | null, word?: WordAlign) => void;
+    onHover: (hover: HoverState | null) => void;
+    linkedAlign: WordAlign | null;
+    inspectedChar: string | null;
+    onInspectChar: (char: string) => void;
+  };
 }
 
 function sentenceCount(section: Doc['sections'][number]): number {
@@ -30,6 +47,7 @@ export function NavContent({
   activeSectionId,
   activeParagraphId,
   onNavigate,
+  wordHover,
 }: NavContentProps) {
   const enPrimary = primaryLang === 'en';
   const [filter, setFilter] = useState('');
@@ -38,6 +56,23 @@ export function NavContent({
 
   const allUntitled = doc.sections.every((s) => !s.titleEn && !s.titleZh);
   const zhFont = zhFontClass(doc);
+  const chromeText = (text: string, idPrefix: string) => (
+    <ChineseHoverText
+      text={text}
+      idPrefix={idPrefix}
+      revealWords={wordHover.enabled}
+      showDefsInline={false}
+      search=""
+      pinnedKey={wordHover.pinnedKey}
+      onPin={wordHover.onPin}
+      onHover={wordHover.onHover}
+      linkedAlign={wordHover.linkedAlign}
+      inspectedChar={wordHover.inspectedChar}
+      onCharClick={wordHover.onInspectChar}
+      dict={wordHover.dict}
+      hoverMode={wordHover.mode}
+    />
+  );
   const query = canonicalSearchText(filter.trim());
 
   // Global paragraph numbering, mirroring Reader's offset numbering.
@@ -121,7 +156,7 @@ export function NavContent({
         </span>
         <span className="min-w-0">
           <span className="block truncate text-[12px] leading-snug">
-            {preview || '—'}
+            {enPrimary ? preview || '—' : chromeText(preview, `${p.id}_preview`)}
           </span>
           <span className="block text-[10px] text-[var(--ink-mute)]">
             {p.sentences.length}{' '}
@@ -159,18 +194,18 @@ export function NavContent({
           </span>
         </div>
         <h2 className="serif-display mt-3 text-[18px] font-semibold leading-tight tracking-tight">
-          {enPrimary ? doc.titleEn : doc.titleZh}{' '}
+          {enPrimary ? doc.titleEn : chromeText(doc.titleZh, `${idPrefix}_title_primary`)}{' '}
           <span className="text-[13px] font-normal text-[var(--ink-mute)]">
             {scriptTag(doc)}
           </span>
         </h2>
         <div className="mt-0.5 flex items-baseline gap-2">
           <span className={`${zhFont} text-[14px] text-[var(--ink-mute)]`}>
-            {enPrimary ? doc.titleZh : doc.titleEn}
+            {enPrimary ? chromeText(doc.titleZh, `${idPrefix}_title`) : doc.titleEn}
           </span>
           {doc.author && (
             <span className="truncate text-[11px] text-[var(--ink-mute)]">
-              — {doc.author}
+              — {chromeText(doc.author, `${idPrefix}_author`)}
             </span>
           )}
         </div>
@@ -240,11 +275,15 @@ export function NavContent({
                         <span
                           className={`block truncate text-[13px] leading-snug ${isActiveSection ? 'font-semibold text-[var(--verm)]' : 'font-medium'}`}
                         >
-                          {titlePrimary || titleSecondary || `Section ${sIdx + 1}`}
+                          {enPrimary
+                            ? titlePrimary || titleSecondary || `Section ${sIdx + 1}`
+                            : chromeText(titlePrimary || titleSecondary, `${section.id}_title`)}
                         </span>
                         {titleSecondary && (
                           <span className={`${zhFont} block truncate text-[11px] text-[var(--ink-mute)]`}>
-                            {titleSecondary}
+                            {enPrimary
+                              ? chromeText(titleSecondary, `${section.id}_secondary`)
+                              : titleSecondary}
                           </span>
                         )}
                         <span className="block text-[10px] text-[var(--ink-mute)]">

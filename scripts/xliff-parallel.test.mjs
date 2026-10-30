@@ -170,8 +170,9 @@ describe('three-character-classic.xlf', () => {
           word.en,
           `${sentence.id} span matches English`,
         );
-        assert.ok(word.enStart >= end, `${sentence.id} spans do not overlap`);
         assert.ok(sentence.zh.includes(word.zh), `${sentence.id} span matches Chinese`);
+        if (word.role === 'gloss') continue;
+        assert.ok(word.enStart >= end, `${sentence.id} spans do not overlap`);
         end = word.enEnd;
       }
     }
