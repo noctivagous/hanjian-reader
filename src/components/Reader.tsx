@@ -4,6 +4,7 @@ import type { AlignRole, Doc, Paragraph, Sentence, WordAlign } from '../data/typ
 import { allParagraphs, chineseText, paragraphEn, primaryTranslation } from '../lib/doc';
 import type { ReadingProvider } from '../lib/dictionary';
 import { toneColor } from '../lib/pinyin';
+import { readerContainerStyle } from '../lib/readerScale';
 import {
   canonicalSearchText,
   foldedIndexOf,
@@ -758,7 +759,7 @@ export function Reader(props: Props) {
   return (
     <div
       className="w-full max-w-[760px] px-6 md:px-10 py-10 md:py-14 bg-[#FFFEFB] dark:bg-[#121210] relative"
-      style={{ fontSize: `${fontScale}em` }}
+      style={readerContainerStyle(fontScale)}
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.025] mix-blend-multiply"
