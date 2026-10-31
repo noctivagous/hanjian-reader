@@ -168,12 +168,15 @@ export default function App() {
     }
   }, [primaryLang]);
 
+  // Gloss is the default reveal mode: lexical chips under each sentence
+  // carry every word's reading, while span only underlines matching
+  // translation ranges. A stored explicit choice always wins.
   const [alignRole, setAlignRole] = useState<AlignRole>(() => {
     try {
       const v = window.localStorage.getItem(brandStorageKey('alignRole'));
-      return v === 'gloss' || v === 'span' ? v : 'span';
+      return v === 'gloss' || v === 'span' ? v : 'gloss';
     } catch {
-      return 'span';
+      return 'gloss';
     }
   });
 

@@ -259,13 +259,11 @@ export function tokenizeChinese(
   const greedy: ZhToken[] = [];
   greedyInto(greedy, zh, byZh, candidates);
 
-  const authoredSidecar = words.some(
-    (w) =>
-      Number.isInteger(w.enStart) &&
-      Number.isInteger(w.enEnd) &&
-      w.enEnd! > w.enStart!,
-  );
-  if (dict && !authoredSidecar) return fillWordless(greedy, dict, segmentZh);
+  // Wordless gaps always gain dictionary readings when a dictionary is
+  // available — even beside authored alignments. Classical particles
+  // (乎, 之, 而, …) never carry an English anchor, so without this fill
+  // they stay hoverless and definition-less in every reveal mode.
+  if (dict) return fillWordless(greedy, dict, segmentZh);
   if (segmentZh) {
     const tokens: ZhToken[] = [];
     let i = 0;

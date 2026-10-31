@@ -47,6 +47,47 @@ describe('sentenceAlignments (Tao Te Ching builder)', () => {
     assert.ok(words.some((w) => w.zh === '道' && w.en.toLowerCase() === 'tao'));
   });
 
+  it('chapter 10 gloss covers every content character', () => {
+    const overridesPath = join(
+      root,
+      'private',
+      'tao-te-ching.overrides.json',
+    );
+    let overrides;
+    try {
+      overrides = JSON.parse(readFileSync(overridesPath, 'utf8'));
+    } catch {
+      return;
+    }
+    // Classical particles never carry an English anchor; the reader
+    // resolves them at runtime via the dictionary (see tokenize.test.mjs).
+    const PARTICLES = new Set([...'乎之而']);
+    const paras = overrides['10'];
+    assert.ok(Array.isArray(paras) && paras.length > 0);
+    for (const para of paras) {
+      for (const sent of para) {
+        assert.ok(sent.zh?.trim() && sent.en?.trim());
+        const covered = new Set(
+          (sent.words ?? []).flatMap((w) => [...(w.zh ?? '')]),
+        );
+        for (const ch of sent.zh) {
+          if (!/\p{Script=Han}/u.test(ch) || PARTICLES.has(ch)) continue;
+          assert.ok(
+            covered.has(ch),
+            `ch10 "${sent.zh}": ${ch} has no gloss entry`,
+          );
+        }
+        for (const w of sent.words ?? []) {
+          assert.ok(w.en?.trim() && w.zh?.trim(), 'gloss rows need en + zh');
+          assert.ok(
+            w.pinyin?.trim() && w.def?.trim(),
+            `ch10 "${w.zh}" needs a reviewed reading, not an empty row`,
+          );
+        }
+      }
+    }
+  });
+
   it('matches generated alignment sidecar when present', () => {
     const alignmentPath = join(root, 'private', 'tao-te-ching.alignments.json');
     try {
