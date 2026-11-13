@@ -13,7 +13,8 @@
   "dependencies": {
     "hanzi-writer": "^3.7.3",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "strokecore": "file:../strokecore"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
