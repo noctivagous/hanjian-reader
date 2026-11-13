@@ -99,13 +99,18 @@ function handSpan(en, pair) {
 
 /**
  * @param {string} en
- * @param {{ en: string; zh: string; gloss?: string; glosses?: { en: string; zh: string }[]; exact?: boolean; enStart?: number; enEnd?: number }[]} pairs
+ * @param {{ en: string; zh?: string; gloss?: string; glosses?: { en: string; zh: string }[]; exact?: boolean; enStart?: number; enEnd?: number; role?: string }[]} pairs
  * @param {string} zh full Chinese unit (for source order)
+ *
+ * A pair with role 'translator' authors no span or gloss: it marks an
+ * English word with no counterpart in the Chinese. Translator pairs must
+ * carry hand offsets (enStart/enEnd) and must not overlap a placed gloss.
  */
 export function locateTccAlignments(en, pairs, zh) {
+  const glossPairs = pairs.filter((p) => p.role !== 'translator');
   const used = [];
   const needleStart = new Map();
-  for (const p of pairs) {
+  for (const p of glossPairs) {
     if (Number.isInteger(p.enStart) && Number.isInteger(p.enEnd)) {
       needleStart.set(p, p.enStart);
       continue;
@@ -114,14 +119,14 @@ export function locateTccAlignments(en, pairs, zh) {
     if (i < 0) throw new Error(`cannot find "${p.en}" in English`);
     needleStart.set(p, i);
   }
-  const sorted = [...pairs].sort(
+  const sorted = [...glossPairs].sort(
     (a, b) => zh.indexOf(a.zh) - zh.indexOf(b.zh) || a.en.localeCompare(b.en),
   );
   const words = [];
   const placed = new Set();
 
   function conflictsOtherNeedle(span, current) {
-    for (const p of pairs) {
+    for (const p of glossPairs) {
       if (p === current || placed.has(p)) continue;
       const n = needleStart.get(p);
       if (n === undefined) continue;
@@ -171,6 +176,29 @@ export function locateTccAlignments(en, pairs, zh) {
     placed.add(pair);
     used.push([hit.start, hit.end]);
     pushSpanAndGloss(words, en, pair, hit);
+  }
+
+  const glossRanges = words
+    .filter((w) => w.role === 'gloss')
+    .map((w) => [w.enStart, w.enEnd]);
+  for (const pair of pairs) {
+    if (pair.role !== 'translator') continue;
+    if (!Number.isInteger(pair.enStart) || !Number.isInteger(pair.enEnd)) {
+      throw new Error(`translator pair "${pair.en}" needs hand offsets`);
+    }
+    const hit = handSpan(en, pair);
+    if (overlaps(hit.start, hit.end, glossRanges)) {
+      throw new Error(`translator mark "${pair.en}" overlaps a gloss`);
+    }
+    words.push({
+      en: hit.text,
+      zh: '',
+      pinyin: '',
+      def: '',
+      role: 'translator',
+      enStart: hit.start,
+      enEnd: hit.end,
+    });
   }
 
   words.sort((a, b) => a.enStart - b.enStart || a.enEnd - b.enEnd);

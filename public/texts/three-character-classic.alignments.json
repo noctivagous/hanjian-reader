@@ -6494,31 +6494,22 @@
     ],
     "s74": [
       {
-        "en": "Learn diligently",
-        "zh": "幼而學",
-        "pinyin": "",
-        "def": "",
-        "role": "span",
-        "enStart": 0,
-        "enEnd": 16
-      },
-      {
-        "en": "Learn diligently",
-        "zh": "幼而學",
+        "en": "Learn",
+        "zh": "學",
         "pinyin": "",
         "def": "",
         "role": "gloss",
         "enStart": 0,
-        "enEnd": 16
+        "enEnd": 5
       },
       {
-        "en": "young",
-        "zh": "幼",
+        "en": "Learn while young",
+        "zh": "幼而學",
         "pinyin": "",
         "def": "",
         "role": "span",
-        "enStart": 31,
-        "enEnd": 36
+        "enStart": 0,
+        "enEnd": 17
       },
       {
         "en": "young",
@@ -6526,19 +6517,154 @@
         "pinyin": "",
         "def": "",
         "role": "gloss",
-        "enStart": 31,
-        "enEnd": 36
+        "enStart": 12,
+        "enEnd": 17
+      },
+      {
+        "en": "and act when grown",
+        "zh": "壯而行",
+        "pinyin": "",
+        "def": "",
+        "role": "span",
+        "enStart": 19,
+        "enEnd": 37
+      },
+      {
+        "en": "act",
+        "zh": "行",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 23,
+        "enEnd": 26
+      },
+      {
+        "en": "grown",
+        "zh": "壯",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 32,
+        "enEnd": 37
+      },
+      {
+        "en": "Above",
+        "zh": "上",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 39,
+        "enEnd": 44
+      },
+      {
+        "en": "Above, serve your ruler",
+        "zh": "上致君",
+        "pinyin": "",
+        "def": "",
+        "role": "span",
+        "enStart": 39,
+        "enEnd": 62
+      },
+      {
+        "en": "serve",
+        "zh": "致",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 46,
+        "enEnd": 51
+      },
+      {
+        "en": "ruler",
+        "zh": "君",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 57,
+        "enEnd": 62
+      },
+      {
+        "en": "below",
+        "zh": "下",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 64,
+        "enEnd": 69
+      },
+      {
+        "en": "below, benefit the people",
+        "zh": "下澤民",
+        "pinyin": "",
+        "def": "",
+        "role": "span",
+        "enStart": 64,
+        "enEnd": 89
+      },
+      {
+        "en": "benefit",
+        "zh": "澤",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 71,
+        "enEnd": 78
+      },
+      {
+        "en": "people",
+        "zh": "民",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 83,
+        "enEnd": 89
       }
     ],
     "s75": [
       {
-        "en": "teachers and parents",
-        "zh": "父母",
+        "en": "Win",
+        "zh": "揚",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 0,
+        "enEnd": 3
+      },
+      {
+        "en": "Win a good name",
+        "zh": "揚名聲",
         "pinyin": "",
         "def": "",
         "role": "span",
-        "enStart": 90,
-        "enEnd": 110
+        "enStart": 0,
+        "enEnd": 15
+      },
+      {
+        "en": "good name",
+        "zh": "名聲",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 6,
+        "enEnd": 15
+      },
+      {
+        "en": "and so glorify your parents",
+        "zh": "顯父母",
+        "pinyin": "",
+        "def": "",
+        "role": "span",
+        "enStart": 17,
+        "enEnd": 44
+      },
+      {
+        "en": "glorify",
+        "zh": "顯",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 24,
+        "enEnd": 31
       },
       {
         "en": "parents",
@@ -6546,8 +6672,143 @@
         "pinyin": "",
         "def": "",
         "role": "gloss",
-        "enStart": 103,
+        "enStart": 37,
+        "enEnd": 44
+      },
+      {
+        "en": "Bring honour to those before you",
+        "zh": "光於前",
+        "pinyin": "",
+        "def": "",
+        "role": "span",
+        "enStart": 46,
+        "enEnd": 78
+      },
+      {
+        "en": "honour",
+        "zh": "光",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 52,
+        "enEnd": 58
+      },
+      {
+        "en": "before you",
+        "zh": "前",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 68,
+        "enEnd": 78
+      },
+      {
+        "en": "and plenty to those who follow",
+        "zh": "裕於後",
+        "pinyin": "",
+        "def": "",
+        "role": "span",
+        "enStart": 80,
         "enEnd": 110
+      },
+      {
+        "en": "plenty",
+        "zh": "裕",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 84,
+        "enEnd": 90
+      },
+      {
+        "en": "follow",
+        "zh": "後",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 104,
+        "enEnd": 110
+      },
+      {
+        "en": "Others",
+        "zh": "人",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 112,
+        "enEnd": 118
+      },
+      {
+        "en": "Others leave their children baskets full of gold",
+        "zh": "人遺子，金滿籯",
+        "pinyin": "",
+        "def": "",
+        "role": "span",
+        "enStart": 112,
+        "enEnd": 160
+      },
+      {
+        "en": "leave their children",
+        "zh": "遺子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 119,
+        "enEnd": 139
+      },
+      {
+        "en": "baskets full of gold",
+        "zh": "金滿籯",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 140,
+        "enEnd": 160
+      },
+      {
+        "en": "I",
+        "zh": "我",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 162,
+        "enEnd": 163
+      },
+      {
+        "en": "I teach my child only the one Classic",
+        "zh": "我教子，惟一經",
+        "pinyin": "",
+        "def": "",
+        "role": "span",
+        "enStart": 162,
+        "enEnd": 199
+      },
+      {
+        "en": "teach my child",
+        "zh": "教子",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 164,
+        "enEnd": 178
+      },
+      {
+        "en": "only",
+        "zh": "惟",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 179,
+        "enEnd": 183
+      },
+      {
+        "en": "the one Classic",
+        "zh": "一經",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 184,
+        "enEnd": 199
       }
     ],
     "s76": [

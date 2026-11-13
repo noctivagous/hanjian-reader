@@ -403,11 +403,13 @@
         </trans-unit>
         <trans-unit id="s74">
           <source>幼而學，壯而行。上致君，下澤民。</source>
-          <target>Learn diligently while you are young. Do not waste your time, for youth passes quickly and opportunities may not return.</target>
+          <target>Learn while young, and act when grown. Above, serve your ruler; below, benefit the people.</target>
+          <note>translator: Editorial supplement</note>
         </trans-unit>
         <trans-unit id="s75">
           <source>揚名聲，顯父母。光於前，裕於後。人遺子，金滿籯。我教子，惟一經。</source>
-          <target>The young should learn from the examples of the ancient sages and worthies, respect their teachers and parents, and cultivate good conduct.</target>
+          <target>Win a good name, and so glorify your parents. Bring honour to those before you, and plenty to those who follow. Others leave their children baskets full of gold; I teach my child only the one Classic.</target>
+          <note>translator: Editorial supplement</note>
         </trans-unit>
         <trans-unit id="s76">
           <source>勤有功，戲無益。戒之哉，宜勉力。</source>

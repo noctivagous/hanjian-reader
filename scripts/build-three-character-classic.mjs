@@ -9,7 +9,10 @@
 // continuation its stanza 59 names. Those are filled in here with new
 // English in the same plain style, each unit marked
 // <note>translator: Editorial supplement</note> so the reader credits them
-// honestly and the base translation stays verbatim.
+// honestly and the base translation stays verbatim. Two base stanzas
+// (74, 75) do not translate their passages at all — they paraphrase
+// generic exhortations — so those passages are filled the same way
+// (MISFIT_SUPPLEMENTS below); the .txt itself is never altered.
 //
 // The Chinese sequence (356 triplets) was verified against Herbert Giles'
 // 1900 edition on English Wikisource (public domain); Qing taboo/variant
@@ -210,6 +213,16 @@ const SUPPLEMENT_HISTORY = [
     "After T'ung-chih and Kuang-hsu the balance of power shifted. New reforms were discussed in the quest for strength."],
 ];
 
+// Base units whose numbered stanza does not translate its passage:
+// stanzas 74 and 75 of the English file are generic exhortations that
+// match no Chinese here (nothing of 上致君，下澤民 or 惟一經 survives in
+// them), so — exactly like the gap passages above — the passages carry
+// editorial English in the same plain style, credited as supplements.
+const MISFIT_SUPPLEMENTS = {
+  s74: 'Learn while young, and act when grown. Above, serve your ruler; below, benefit the people.',
+  s75: 'Win a good name, and so glorify your parents. Bring honour to those before you, and plenty to those who follow. Others leave their children baskets full of gold; I teach my child only the one Classic.',
+};
+
 // Sections in document order: [group id, resname, unit ids in order].
 // "sup-h*" units sit between s59 and s60; s62 precedes s61 (see BASE note).
 const SECTIONS = [
@@ -298,10 +311,13 @@ function main() {
     zhById[id] = verse(a, b, CONTINUATION);
     enSupplement[id] = en;
   }
+  for (const [id, en] of Object.entries(MISFIT_SUPPLEMENTS)) {
+    enSupplement[id] = en;
+  }
 
   const unitXml = (id) => {
     const zh = zhById[id];
-    const en = enById[id] ?? enSupplement[id];
+    const en = enSupplement[id] ?? enById[id];
     if (!zh || !en) {
       console.error(`error: unit ${id} missing Chinese or English.`);
       process.exit(1);
@@ -361,20 +377,22 @@ ${groups}
   const alignmentUnits = {};
   for (const id of expectedIds) {
     const pairs = authoredAlignments[id];
-    const en = enById[id] ?? enSupplement[id];
+    const en = enSupplement[id] ?? enById[id];
     const zh = zhById[id];
     for (const pair of pairs) {
       if (
         !pair ||
         typeof pair.en !== 'string' ||
-        typeof pair.zh !== 'string' ||
         !pair.en ||
-        !pair.zh
+        (pair.role === 'translator'
+          ? !Number.isInteger(pair.enStart) ||
+            !Number.isInteger(pair.enEnd)
+          : typeof pair.zh !== 'string' || !pair.zh)
       ) {
         console.error(`error: alignment ${id} has an empty or invalid pair.`);
         process.exit(1);
       }
-      if (!zh.includes(pair.zh)) {
+      if (pair.role !== 'translator' && !zh.includes(pair.zh)) {
         console.error(`error: alignment ${id} Chinese span "${pair.zh}" is not in its source.`);
         process.exit(1);
       }

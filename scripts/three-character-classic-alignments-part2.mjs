@@ -11,6 +11,8 @@ export const ALIGNMENTS_PART_2 = {
     { en: "founded the Chou dynasty", zh: "周" },
     { en: "eight hundred years", zh: "八百載" },
     { en: "longest of all", zh: "最長久" },
+    { en: 'tyrant', role: 'translator', enStart: 19, enEnd: 25 },
+    { en: 'lasted', role: 'translator', enStart: 110, enEnd: 116 },
   ],
   "sup-50a": [
     { en: "Chou court moved east", zh: "周轍東" },
@@ -36,6 +38,7 @@ export const ALIGNMENTS_PART_2 = {
     { en: "Han became emperor", zh: "高祖興" },
     { en: "Emperor Han Kao-tsu", zh: "高祖" },
     { en: "founded the Han dynasty", zh: "漢業建" },
+    { en: 'known', role: 'translator', enStart: 56, enEnd: 61 },
   ],
   s52: [
     { en: "Emperor Kuang Wu", zh: "光武" },
@@ -68,6 +71,7 @@ export const ALIGNMENTS_PART_2 = {
     { en: "Western Wei", zh: "西" },
     { en: "Northern Chi", zh: "高齊" },
     { en: "Northern Chou", zh: "宇文周" },
+    { en: 'followed', role: 'translator', enStart: 89, enEnd: 97 },
   ],
   s56: [
     { en: "empire remained united", zh: "一土宇" },
@@ -86,6 +90,7 @@ export const ALIGNMENTS_PART_2 = {
     { en: "three hundred years", zh: "三百載" },
     { en: "Liang destroyed the T'ang", zh: "梁滅之" },
     { en: "changed the dynastic title", zh: "國乃改" },
+    { en: 'until', role: 'translator', enStart: 57, enEnd: 62 },
   ],
   s58: [
     { en: "T'ang dynasty", zh: "唐" },
@@ -111,6 +116,7 @@ export const ALIGNMENTS_PART_2 = {
     { en: "former age", zh: "前代" },
     { en: "ninety years", zh: "九十年" },
     { en: "mandate was spent", zh: "國祚廢" },
+    { en: 'yet', role: 'translator', enStart: 45, enEnd: 48 },
   ],
   "sup-h3": [
     { en: "Grand Progenitor", zh: "太祖" },
@@ -126,6 +132,7 @@ export const ALIGNMENTS_PART_2 = {
     { en: "Yen-ching", zh: "燕京" },
     { en: "Sixteen reigns", zh: "十六世" },
     { en: "Ch'ung-chen", zh: "崇禎" },
+    { en: 'later', role: 'translator', enStart: 64, enEnd: 69 },
   ],
   "sup-h5": [
     { en: "Powerful eunuchs", zh: "權閹" },
@@ -168,6 +175,7 @@ export const ALIGNMENTS_PART_2 = {
     { en: "history", zh: "史" },
     { en: "successive dynasties", zh: "十七史" },
     { en: "rise and fall", zh: "興衰" },
+    { en: 'carefully', role: 'translator', enStart: 58, enEnd: 67 },
   ],
   "sup-60a": [
     { en: "Readers of history", zh: "讀史者" },
@@ -186,6 +194,7 @@ export const ALIGNMENTS_PART_2 = {
   s62: [
     { en: "Confucius", zh: "仲尼" },
     { en: "learn from Hsiang T'uo", zh: "師項橐" },
+    { en: 'hesitate', role: 'translator', enStart: 95, enEnd: 103 },
   ],
   s61: [
     { en: "ancient sages and worthies", zh: "古聖賢" },
@@ -198,18 +207,21 @@ export const ALIGNMENTS_PART_2 = {
     { en: "Cabinet Minister", zh: "中令" },
     { en: "loved to study", zh: "學且勤" },
     { en: "Confucian Analects", zh: "魯論" },
+    { en: 'Despite', role: 'translator', enStart: 0, enEnd: 7 },
   ],
   s64: [
     { en: "no books", zh: "無書" },
     { en: "rushes into mats", zh: "蒲編" },
     { en: "writing materials", zh: "竹簡" },
     { en: "studied diligently", zh: "知勉" },
+    { en: 'Having', role: 'translator', enStart: 0, enEnd: 6 },
   ],
   s65: [
     { en: "falling asleep", zh: "頭懸梁" },
     { en: "studies", zh: "不教" },
     { en: "tied his hair to a beam", zh: "頭懸梁" },
     { en: "pricked himself with an awl", zh: "錐刺股" },
+    { en: 'afraid', role: 'translator', enStart: 29, enEnd: 35 },
   ],
   s66: [
     { en: "light of fireflies", zh: "囊螢" },
@@ -219,6 +231,7 @@ export const ALIGNMENTS_PART_2 = {
   s67: [
     { en: "carrying firewood", zh: "負薪" },
     { en: "cow's horn", zh: "掛角" },
+    { en: 'studied', role: 'translator', enStart: 14, enEnd: 21 },
   ],
   s68: [
     { en: "studies seriously", zh: "讀書籍" },
@@ -226,6 +239,7 @@ export const ALIGNMENTS_PART_2 = {
     { en: "Su Lao-ch'uan", zh: "蘇老泉" },
     { en: "worked hard", zh: "發憤" },
     { en: "later years", zh: "既老" },
+    { en: 'take', role: 'translator', enStart: 30, enEnd: 34 },
   ],
   "sup-69a": [
     { en: "young students", zh: "爾小生" },
@@ -238,6 +252,7 @@ export const ALIGNMENTS_PART_2 = {
     { en: "Imperial Court", zh: "大廷" },
     { en: "advanced age", zh: "八十二" },
     { en: "perseverance brings results", zh: "彼晚成" },
+    { en: 'proving', role: 'translator', enStart: 146, enEnd: 153 },
   ],
   "sup-70a": [
     { en: "young students", zh: "爾小生" },
@@ -258,6 +273,8 @@ export const ALIGNMENTS_PART_2 = {
     { en: "strings of the lute", zh: "辨琴" },
     { en: "Hsieh Taowen", zh: "謝道韞" },
     { en: "compose poetry", zh: "詠吟" },
+    { en: 'worth', role: 'translator', enStart: 50, enEnd: 55 },
+    { en: 'following', role: 'translator', enStart: 56, enEnd: 65 },
   ],
   s72: [
     { en: "age of seven", zh: "方七歲" },
@@ -265,6 +282,8 @@ export const ALIGNMENTS_PART_2 = {
     { en: "T'ang dynasty", zh: "唐" },
     { en: "talented boy", zh: "神童" },
     { en: "high office", zh: "已仕" },
+    { en: 'Even', role: 'translator', enStart: 0, enEnd: 4 },
+    { en: 'exceptionally', role: 'translator', enStart: 98, enEnd: 111 },
   ],
   "sup-72a": [
     { en: "learn in youth", zh: "幼學" },
@@ -281,13 +300,96 @@ export const ALIGNMENTS_PART_2 = {
     { en: "Silkworms spin silk", zh: "蠶吐絲" },
     { en: "bees make honey", zh: "蜂釀蜜" },
     { en: "inferior to these creatures", zh: "不如物" },
+    { en: 'children', role: 'translator', enStart: 58, enEnd: 66 },
   ],
   s74: [
-    { en: "Learn diligently", zh: "幼而學" },
-    { en: "young", zh: "幼" },
+    {
+      en: "Learn while young",
+      zh: "幼而學",
+      glosses: [
+        { en: "young", zh: "幼" },
+        { en: "Learn", zh: "學" },
+      ],
+    },
+    {
+      en: "and act when grown",
+      zh: "壯而行",
+      glosses: [
+        { en: "grown", zh: "壯" },
+        { en: "act", zh: "行" },
+      ],
+    },
+    {
+      en: "Above, serve your ruler",
+      zh: "上致君",
+      glosses: [
+        { en: "Above", zh: "上" },
+        { en: "serve", zh: "致" },
+        { en: "ruler", zh: "君" },
+      ],
+    },
+    {
+      en: "below, benefit the people",
+      zh: "下澤民",
+      glosses: [
+        { en: "below", zh: "下" },
+        { en: "benefit", zh: "澤" },
+        { en: "people", zh: "民" },
+      ],
+    },
   ],
   s75: [
-    { en: "parents", zh: "父母" },
+    {
+      en: "Win a good name",
+      zh: "揚名聲",
+      glosses: [
+        { en: "Win", zh: "揚" },
+        { en: "good name", zh: "名聲" },
+      ],
+    },
+    {
+      en: "and so glorify your parents",
+      zh: "顯父母",
+      glosses: [
+        { en: "glorify", zh: "顯" },
+        { en: "parents", zh: "父母" },
+      ],
+    },
+    {
+      en: "Bring honour to those before you",
+      zh: "光於前",
+      glosses: [
+        { en: "honour", zh: "光" },
+        { en: "before you", zh: "前" },
+      ],
+    },
+    {
+      en: "plenty to those who follow",
+      zh: "裕於後",
+      glosses: [
+        { en: "plenty", zh: "裕" },
+        { en: "follow", zh: "後" },
+      ],
+    },
+    {
+      en: "Others leave their children baskets full of gold",
+      zh: "人遺子，金滿籯",
+      glosses: [
+        { en: "Others", zh: "人" },
+        { en: "leave their children", zh: "遺子" },
+        { en: "baskets full of gold", zh: "金滿籯" },
+      ],
+    },
+    {
+      en: "I teach my child only the one Classic",
+      zh: "我教子，惟一經",
+      glosses: [
+        { en: "I", zh: "我" },
+        { en: "teach my child", zh: "教子" },
+        { en: "only", zh: "惟" },
+        { en: "the one Classic", zh: "一經" },
+      ],
+    },
   ],
   s76: [
     { en: "Diligence brings merit", zh: "勤有功" },

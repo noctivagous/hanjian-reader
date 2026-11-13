@@ -143,7 +143,9 @@ describe('three-character-classic.xlf', () => {
     const supplements = sentences.filter(
       (s) => s.translations[0].translator === 'Editorial supplement',
     );
-    assert.equal(supplements.length, 18);
+    // 18 gap/history supplements + s74/s75, whose base stanzas paraphrase
+    // instead of translating (see MISFIT_SUPPLEMENTS in the generator).
+    assert.equal(supplements.length, 20);
   });
 
   it('ships complete non-overlapping English range alignments', () => {
@@ -216,11 +218,19 @@ describe('three-character-classic.xlf', () => {
     for (const s of doc.sections.flatMap((sec) =>
       sec.paragraphs.flatMap((p) => p.sentences),
     )) {
-      byId[s.id.replace(/^tcc-/, '')] = s.translations[0].text;
+      byId[s.id.replace(/^tcc-/, '')] = s.translations[0];
+    }
+    // Stanzas 74/75 paraphrase instead of translating their passages, so
+    // those two units carry editorial English credited as supplements
+    // (MISFIT_SUPPLEMENTS in the generator) and are exempt from verbatim.
+    const misfits = ['s74', 's75'];
+    for (const id of misfits) {
+      assert.equal(byId[id].translator, 'Editorial supplement');
     }
     for (let i = 1; i <= 76; i++) {
       const id = `s${String(i).padStart(2, '0')}`;
-      assert.equal(byId[id], stanzas[i - 1], `stanza ${i} verbatim`);
+      if (misfits.includes(id)) continue;
+      assert.equal(byId[id].text, stanzas[i - 1], `stanza ${i} verbatim`);
     }
   });
 

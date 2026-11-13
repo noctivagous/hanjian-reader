@@ -42,12 +42,14 @@ export const ALIGNMENTS_PART_1 = {
     { en: 'chose her neighbours', zh: '擇鄰處' },
     { en: 'refused to study', zh: '子不學' },
     { en: 'cut the cloth', zh: '斷機杼' },
+    { en: 'carefully', role: 'translator', enStart: 22, enEnd: 31 },
   ],
   s04: [
     { en: 'Tou Yen Shan', zh: '竇燕山' },
     { en: 'five sons', zh: '五子' },
     { en: 'good method', zh: '義方' },
     { en: 'became famous men', zh: '名俱揚' },
+    { en: 'Old', role: 'translator', enStart: 0, enEnd: 3 },
   ],
   s05: [
     { en: 'rear and feed children', zh: '養' },
@@ -67,6 +69,7 @@ export const ALIGNMENTS_PART_1 = {
     { en: 'form ornaments', zh: '成器' },
     { en: 'a man is untaught', zh: '人不學' },
     { en: 'know his duties', zh: '知義' },
+    { en: 'never', role: 'translator', enStart: 68, enEnd: 73 },
   ],
   s08: [
     { en: 'youth', zh: '少時' },
@@ -79,6 +82,8 @@ export const ALIGNMENTS_PART_1 = {
     { en: 'Hsiang', zh: '香' },
     { en: 'nine years old', zh: '九齡' },
     { en: 'warm the bed', zh: '溫席' },
+    { en: 'know', role: 'translator', enStart: 15, enEnd: 19 },
+    { en: 'how', role: 'translator', enStart: 20, enEnd: 23 },
   ],
   s10: [
     { en: 'respect their elders', zh: '弟於長' },
@@ -86,12 +91,14 @@ export const ALIGNMENTS_PART_1 = {
     { en: 'four years old', zh: '四歲' },
     { en: 'bigger pear', zh: '梨' },
     { en: 'elder brother', zh: '長' },
+    { en: 'Children', role: 'translator', enStart: 0, enEnd: 8 },
   ],
   s11: [
     { en: 'duty to parents and superiors', zh: '孝弟' },
     { en: 'Study', zh: '見聞' },
     { en: 'laws of numbers', zh: '數' },
     { en: 'written texts', zh: '文' },
+    { en: 'comes', role: 'translator', enStart: 6, enEnd: 11 },
   ],
   s12: [
     { en: 'units', zh: '一' },
@@ -218,18 +225,23 @@ export const ALIGNMENTS_PART_1 = {
     { en: 'twenty chapters', zh: '二十篇' },
     { en: "Sage's sayings", zh: '善言' },
     { en: 'disciples', zh: '群弟子' },
+    { en: 'contains', role: 'translator', enStart: 26, enEnd: 34 },
   ],
   s29: [
     { en: 'Works of Mencius', zh: '孟子' },
     { en: 'seven chapters', zh: '七篇' },
     { en: 'humanity and righteousness', zh: '仁義' },
     { en: 'virtuous conduct', zh: '道德' },
+    { en: 'contains', role: 'translator', enStart: 21, enEnd: 29 },
   ],
   s30: [
     { en: 'Doctrine of the Golden Mean', zh: '中庸' },
     { en: "K'ung Chi", zh: '子思' },
     { en: 'impartial principles', zh: '中不偏' },
     { en: 'fixed principles', zh: '庸不易' },
+    { en: 'word', role: 'translator', enStart: 89, enEnd: 93 },
+    { en: 'means', role: 'translator', enStart: 100, enEnd: 105 },
+    { en: 'means', role: 'translator', enStart: 137, enEnd: 142 },
   ],
   s31: [
     { en: 'Great Learning', zh: '大學' },
@@ -270,6 +282,7 @@ export const ALIGNMENTS_PART_1 = {
     { en: 'Rites of Chou', zh: '周禮' },
     { en: 'Six Boards', zh: '六官' },
     { en: 'governing the affairs of the state', zh: '治體' },
+    { en: 'seasons', role: 'translator', enStart: 109, enEnd: 116 },
   ],
   s37: [
     { en: 'Tai Senior and Tai Junior', zh: '大小戴' },
@@ -295,6 +308,8 @@ export const ALIGNMENTS_PART_1 = {
     { en: 'Tsuo Shih', zh: '左氏' },
     { en: 'Ku Liang', zh: '穀梁' },
     { en: 'three different commentaries', zh: '三傳' },
+    { en: 'critics', role: 'translator', enStart: 4, enEnd: 11 },
+    { en: 'wrote', role: 'translator', enStart: 47, enEnd: 52 },
   ],
   s41: [
     { en: 'mastering the Classics', zh: '經既明' },
@@ -316,6 +331,7 @@ export const ALIGNMENTS_PART_1 = {
     { en: 'history of the successive dynasties', zh: '諸史' },
     { en: 'beginnings and endings', zh: '終始' },
     { en: 'rise and fall', zh: '世系' },
+    { en: 'Carefully', role: 'translator', enStart: 124, enEnd: 133 },
   ],
   s44: [
     { en: 'Emperor Fu-hsi', zh: '羲' },
@@ -344,6 +360,7 @@ export const ALIGNMENTS_PART_1 = {
     { en: 'thrones became hereditary', zh: '傳子' },
     { en: 'four centuries', zh: '四百載' },
     { en: 'dynasty was replaced', zh: '遷夏社' },
+    { en: 'continued', role: 'translator', enStart: 57, enEnd: 66 },
   ],
 };
 
