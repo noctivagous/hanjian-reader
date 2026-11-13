@@ -354,6 +354,7 @@ const doc = {
   author: `Laozi · 老子 · trans. ${TRANSLATOR}`,
   sourceLanguage: 'zh',
   script: 'traditional',
+  languageRegister: 'classical',
   license: LICENSE,
   sections,
 };

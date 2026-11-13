@@ -183,7 +183,10 @@ describe('three-character-classic.xlf', () => {
     }
   });
 
-  it('keeps alignments sparse (curated ranges only, not full-sentence hover)', () => {
+  // Design reversal (owner, 2026-11-13): alignments used to be sparse —
+  // curated ranges only. The zero-gap fill now covers every English word:
+  // each word sits in a span and is glossed or translator-marked.
+  it('covers every English word in s01 (zero underline gaps)', () => {
     const { units } = JSON.parse(readFileSync(alignmentPath, 'utf8'));
     const en = readFileSync(xlfPath, 'utf8').match(
       /<trans-unit id="s01">[\s\S]*?<target>([\s\S]*?)<\/target>/,
@@ -198,7 +201,7 @@ describe('three-character-classic.xlf', () => {
     for (let i = 0; i < en.length; i++) {
       if (/[\p{L}\p{N}]/u.test(en[i])) total += 1;
     }
-    assert.ok(covered.size < total, 's01 does not hover every English word');
+    assert.equal(covered.size, total, 's01 hovers every English word');
     assert.ok(covered.size >= 3, 's01 still has curated anchors');
   });
 

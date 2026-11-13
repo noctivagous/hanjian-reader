@@ -15,6 +15,15 @@ export interface ReadingProvider {
   lookup(text: string): DictRecord[] | undefined;
 }
 
+/**
+ * A provider that can also name the source that answered a lookup
+ * (e.g. 'Classical dictionary', 'CC-CEDICT'), so dictionary-supplied
+ * readings can carry their provenance into the word card.
+ */
+export interface SourcedReadingProvider extends ReadingProvider {
+  sourceOf(text: string): string | undefined;
+}
+
 export type DictStatus = 'idle' | 'loading' | 'ready' | 'unavailable';
 
 interface DictFile {

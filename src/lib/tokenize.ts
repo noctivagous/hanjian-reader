@@ -1,5 +1,16 @@
 import type { WordAlign, WordSense } from '../data/types';
-import type { DictRecord, ReadingProvider } from './dictionary';
+import type {
+  DictRecord,
+  ReadingProvider,
+  SourcedReadingProvider,
+} from './dictionary';
+
+/** Provenance label when the provider tracks which source answered. */
+function sourceOf(dict: ReadingProvider, text: string): string | undefined {
+  return 'sourceOf' in dict
+    ? (dict as SourcedReadingProvider).sourceOf(text)
+    : undefined;
+}
 
 export interface ZhToken {
   text: string;
@@ -22,13 +33,24 @@ function sensesFrom(recs: DictRecord[]): WordSense[] {
 
 // Exact headword only. One reading fills pinyin/def/en. Several readings
 // stay on `senses` so the card can list them instead of picking one.
-function wordFromLookup(zh: string, recs: DictRecord[]): WordAlign {
+function wordFromLookup(
+  zh: string,
+  recs: DictRecord[],
+  source?: string,
+): WordAlign {
   const senses = sensesFrom(recs);
+  const provenance = source ? { source } : {};
   if (senses.length === 1) {
     const [en] = senses[0].def.split('; ');
-    return { en: en || '', zh, pinyin: senses[0].pinyin, def: senses[0].def };
+    return {
+      en: en || '',
+      zh,
+      pinyin: senses[0].pinyin,
+      def: senses[0].def,
+      ...provenance,
+    };
   }
-  return { en: '', zh, pinyin: '', def: '', senses };
+  return { en: '', zh, pinyin: '', def: '', senses, ...provenance };
 }
 
 /** Add dictionary readings to an authored alignment that supplies only spans. */
@@ -41,7 +63,11 @@ export function withDictionaryReading(
   }
   const recs = dict.lookup(word.zh);
   if (!recs?.length) return word;
-  return { ...word, ...wordFromLookup(word.zh, recs), en: word.en };
+  return {
+    ...word,
+    ...wordFromLookup(word.zh, recs, sourceOf(dict, word.zh)),
+    en: word.en,
+  };
 }
 
 const SKIP_GLOSS =
@@ -133,8 +159,9 @@ function charTokens(text: string, dict: ReadingProvider): ZhToken[] {
       continue;
     }
     const recs = dict.lookup(ch);
-    if (recs?.length) out.push({ text: ch, word: wordFromLookup(ch, recs) });
-    else out.push({ text: ch });
+    if (recs?.length) {
+      out.push({ text: ch, word: wordFromLookup(ch, recs, sourceOf(dict, ch)) });
+    } else out.push({ text: ch });
   }
   return out;
 }
@@ -160,7 +187,10 @@ function lookupSegmented(
     }
     const recs = dict.lookup(run.text);
     if (recs?.length) {
-      out.push({ text: run.text, word: wordFromLookup(run.text, recs) });
+      out.push({
+        text: run.text,
+        word: wordFromLookup(run.text, recs, sourceOf(dict, run.text)),
+      });
       continue;
     }
     if (Array.from(run.text).length === 1) {

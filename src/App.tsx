@@ -14,13 +14,24 @@ import { WordCard, type HoverState } from './components/WordCard';
 import { applyBrand, brand, brandStorageKey } from './brand';
 import { docs as seedDocs } from './data/documents';
 import { extraDocs } from './data/localDocs';
-import type { Doc, UnderlineMode, WordAlign } from './data/types';
+import type {
+  Doc,
+  LanguageRegister,
+  UnderlineMode,
+  WordAlign,
+} from './data/types';
 import {
   loadDictionary,
   type DictIndex,
   type DictStatus,
+  type SourcedReadingProvider,
 } from './lib/dictionary';
 import { loadJiayan, type JiayanIndex } from './lib/jiayan';
+import {
+  lookupInRegisterOrder,
+  resolveDocLanguageRegister,
+  type RegisterProviders,
+} from './lib/languageRegister';
 import { loadPublicDocs } from './lib/publicDocs';
 import { docScript } from './lib/script';
 import { importCustomDoc } from './lib/segment';
@@ -200,6 +211,9 @@ export default function App() {
   const [translationByDoc, setTranslationByDoc] = useState<
     Record<string, string>
   >(() => bootSettings.translations);
+  const [registerByDoc, setRegisterByDoc] = useState<
+    Record<string, LanguageRegister>
+  >(() => bootSettings.languageRegisters);
   const [compareTranslations, setCompareTranslations] = useState(
     bootSettings.compareTranslations,
   );
@@ -387,6 +401,7 @@ export default function App() {
           notes,
           positions,
           translations: translationByDoc,
+          languageRegisters: registerByDoc,
           compareTranslations,
           pageMode,
         }),
@@ -412,10 +427,27 @@ export default function App() {
     notes,
     positions,
     translationByDoc,
+    registerByDoc,
     compareTranslations,
     pageMode,
   ]);
   const [toast, setToast] = useState<string | null>(null);
+
+  // The document's effective language register: the reader's override
+  // wins, then the register the document declares, then detection.
+  // One resolution (lib/languageRegister) feeds the Register control
+  // and the dictionary order below.
+  const docRegister = useMemo(
+    () => resolveDocLanguageRegister(rawDoc, registerByDoc[rawDoc.id]),
+    [rawDoc, registerByDoc],
+  );
+  const handleRegisterChange = (override: LanguageRegister | null) =>
+    setRegisterByDoc((prev) => {
+      const next = { ...prev };
+      if (override) next[rawDoc.id] = override;
+      else delete next[rawDoc.id];
+      return next;
+    });
 
   // Lazy CC-CEDICT: fetched once when Chinese-primary reading needs it,
   // or when a traditional-script book (Tao Te Ching) or the inspector needs
@@ -450,6 +482,9 @@ export default function App() {
         : 'idle';
 
   const [jiayan, setJiayan] = useState<JiayanIndex | null>(null);
+  // Segmentation stays script-keyed in this slice: Jiayan loads for
+  // traditional-script docs, as before. The register only reorders
+  // dictionary consultation (below).
   const needsJiayan =
     brand.features.words && docScript(rawDoc) === 'traditional';
   useEffect(() => {
@@ -463,6 +498,39 @@ export default function App() {
     };
   }, [needsJiayan, jiayan]);
   const segmentZh = jiayan?.segment;
+
+  // Register-ordered dictionary consultation for word readings. The
+  // classical source is the Jiayan classical lexicon: it attests
+  // headwords (the asset carries frequencies, not glosses), and the
+  // readings themselves come from the CC-CEDICT store — so what the
+  // register changes is which source is consulted first and credited
+  // in the word card, never the readings. In classical register a
+  // Jiayan-attested headword is answered by the classical dictionary;
+  // anything else falls back to CC-CEDICT. In mandarin register
+  // CC-CEDICT answers first.
+  const registerProviders = useMemo<RegisterProviders>(() => {
+    if (!dict) return {};
+    return {
+      cedict: dict,
+      classical: jiayan
+        ? {
+            lookup: (text: string) =>
+              jiayan.hasWord(text) ? dict.lookup(text) : undefined,
+          }
+        : null,
+    };
+  }, [dict, jiayan]);
+  const registerDict = useMemo<SourcedReadingProvider | null>(() => {
+    if (!dict) return null;
+    const register = docRegister.register;
+    return {
+      lookup: (text: string) =>
+        lookupInRegisterOrder(text, register, registerProviders)?.records,
+      sourceOf: (text: string) =>
+        lookupInRegisterOrder(text, register, registerProviders)?.sourceLabel,
+    };
+  }, [dict, registerProviders, docRegister.register]);
+  const readerDict = registerDict ?? dict;
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const toastTimer = useRef<number | undefined>(undefined);
@@ -900,6 +968,10 @@ export default function App() {
           translationOptions={translationOptions}
           activeTranslationId={activeTranslationId}
           onSelectTranslation={handleSelectTranslation}
+          register={docRegister.register}
+          registerSource={docRegister.source}
+          registerOverride={registerByDoc[rawDoc.id]}
+          onRegisterChange={handleRegisterChange}
           primaryLang={primaryLang}
           activeSectionId={activeSectionId}
           activeParagraphId={activeParagraphId}
@@ -907,7 +979,7 @@ export default function App() {
           wordHover={{
             enabled: reveal.words,
             mode: hoverMode,
-            dict,
+            dict: readerDict,
             pinnedKey,
             onPin: handlePin,
             onHover: setHover,
@@ -952,7 +1024,7 @@ export default function App() {
             showSpeakerButtons={showSpeakerButtons}
             speakOnClick={speakOnClick}
             onSpeak={handleSpeak}
-            dict={dict}
+            dict={readerDict}
             segmentZh={segmentZh}
             alignRole={alignRole}
             hoverMode={hoverMode}
@@ -1041,7 +1113,7 @@ export default function App() {
           onCloseInspector={() => setInspectedChar(null)}
           collapsed={sidebarCollapsed}
           dictStatus={dictStatus}
-          dict={dict}
+          dict={readerDict}
           alignRole={alignRole}
           onAlignRole={handleAlignRole}
           hoverMode={hoverMode}
@@ -1060,6 +1132,10 @@ export default function App() {
         translationOptions={translationOptions}
         activeTranslationId={activeTranslationId}
         onSelectTranslation={handleSelectTranslation}
+        register={docRegister.register}
+        registerSource={docRegister.source}
+        registerOverride={registerByDoc[rawDoc.id]}
+        onRegisterChange={handleRegisterChange}
         primaryLang={primaryLang}
         activeSectionId={activeSectionId}
         activeParagraphId={activeParagraphId}
@@ -1067,7 +1143,7 @@ export default function App() {
         wordHover={{
           enabled: reveal.words,
           mode: hoverMode,
-          dict,
+          dict: readerDict,
           pinnedKey,
           onPin: handlePin,
           onHover: setHover,
@@ -1117,7 +1193,7 @@ export default function App() {
         onPageMode={setPageMode}
         onCopy={handleCopy}
         dictStatus={dictStatus}
-        dict={dict}
+        dict={readerDict}
         alignRole={alignRole}
         onAlignRole={handleAlignRole}
         hoverMode={hoverMode}
@@ -1131,7 +1207,7 @@ export default function App() {
           pinnedKey={pinnedKey}
           toneColors={toneColors}
           showZhuyin={showZhuyin}
-          dict={dict}
+          dict={readerDict}
           primaryLang={primaryLang}
           onEnter={setHover}
           onLeave={() => {

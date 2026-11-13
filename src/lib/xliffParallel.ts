@@ -18,7 +18,7 @@
 //                     the translation credit for that unit.
 
 import { XMLParser } from 'fast-xml-parser';
-import type { Doc, WordAlign } from '../data/types';
+import type { Doc, LanguageRegister, WordAlign } from '../data/types';
 
 export interface ParallelSentenceUnit {
   /** Stable unit id (trans-unit id when present, else generated). */
@@ -44,6 +44,7 @@ export interface ParallelDocMeta {
   author: string;
   sourceLanguage: string;
   script?: 'simplified' | 'traditional';
+  languageRegister?: LanguageRegister;
   license?: string;
   /** Credit applied to every unit without its own "translator:" note. */
   translator?: string;
@@ -255,6 +256,9 @@ export function parallelDocFromSections(
     author: meta.author,
     sourceLanguage: meta.sourceLanguage,
     ...(meta.script ? { script: meta.script } : {}),
+    ...(meta.languageRegister
+      ? { languageRegister: meta.languageRegister }
+      : {}),
     ...(meta.license ? { license: meta.license } : {}),
     sections: sections.map((sec) => {
       const sectionId = `${meta.id}-${sec.id}`;

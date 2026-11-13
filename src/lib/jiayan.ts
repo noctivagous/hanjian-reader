@@ -13,6 +13,8 @@ import { foldScriptText } from './script.ts';
 export interface JiayanIndex {
   readonly entries: number;
   segment(zh: string): string[];
+  /** True when the (script-folded) text is a classical headword. */
+  hasWord(text: string): boolean;
 }
 
 interface JiayanFile {
@@ -112,6 +114,17 @@ export function createJiayan(words: Record<string, number>): JiayanIndex {
   const { prefix, total } = buildPrefix(words);
   return {
     entries: Object.keys(words).length,
+    hasWord(text: string): boolean {
+      // Same 1:1 script fold as segment(): the lexicon is simplified,
+      // the text on the page may be traditional.
+      const folded = Array.from(text)
+        .map((ch) => {
+          const s = foldScriptText(ch);
+          return s.length === 1 ? s : ch;
+        })
+        .join('');
+      return (prefix.get(folded) ?? 0) > 0;
+    },
     segment(zh: string): string[] {
       const orig = Array.from(zh);
       const folded = orig.map((ch) => {

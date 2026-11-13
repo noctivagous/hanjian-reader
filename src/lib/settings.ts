@@ -15,6 +15,7 @@
  * instead of breaking the reader. Unknown versions fall back to
  * defaults wholesale (a future version writes a migration here).
  */
+import type { LanguageRegister } from '../data/types';
 export interface RevealSettings {
   words: boolean;
   sentences: boolean;
@@ -43,6 +44,8 @@ export interface ReaderSettings {
   positions: Record<string, string>;
   /** Chosen translation id per document (translator picker). */
   translations: Record<string, string>;
+  /** Language-register override per document (Register control). */
+  languageRegisters: Record<string, LanguageRegister>;
   /** Stack all translations of a sentence under it (compare view). */
   compareTranslations: boolean;
   /** Paginated reading: one section at a time with a stable footer. */
@@ -62,6 +65,15 @@ function stringRecord(v: unknown): Record<string, string> {
   const out: Record<string, string> = {};
   for (const [k, val] of Object.entries(v)) {
     if (typeof val === 'string') out[k] = val;
+  }
+  return out;
+}
+
+function registerRecord(v: unknown): Record<string, LanguageRegister> {
+  if (typeof v !== 'object' || v === null || Array.isArray(v)) return {};
+  const out: Record<string, LanguageRegister> = {};
+  for (const [k, val] of Object.entries(v)) {
+    if (val === 'classical' || val === 'mandarin') out[k] = val;
   }
   return out;
 }
@@ -108,6 +120,7 @@ export function parseSettings(
     notes: stringRecord(p.notes),
     positions: stringRecord(p.positions),
     translations: stringRecord(p.translations),
+    languageRegisters: registerRecord(p.languageRegisters),
     compareTranslations: bool(p.compareTranslations, defaults.compareTranslations),
     pageMode: bool(p.pageMode, defaults.pageMode),
   };
@@ -119,7 +132,17 @@ export function serializeSettings(settings: ReaderSettings): string {
 
 /** The all-defaults record a brand ships, before any stored record applies. */
 export function defaultSettings(
-  partial: Omit<ReaderSettings, 'version' | 'notes' | 'positions' | 'translations'>,
+  partial: Omit<
+    ReaderSettings,
+    'version' | 'notes' | 'positions' | 'translations' | 'languageRegisters'
+  >,
 ): ReaderSettings {
-  return { version: 1, notes: {}, positions: {}, translations: {}, ...partial };
+  return {
+    version: 1,
+    notes: {},
+    positions: {},
+    translations: {},
+    languageRegisters: {},
+    ...partial,
+  };
 }

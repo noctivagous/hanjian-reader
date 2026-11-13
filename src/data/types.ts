@@ -3,6 +3,14 @@ export interface WordSense {
   def: string;
 }
 
+/**
+ * The language variety a document is written in — UI label "Register".
+ * The reader's feature set follows it (first slice: dictionary lookup
+ * order). Optional on Doc: absent means "not declared", and the
+ * effective register falls back to detection, then 'mandarin'.
+ */
+export type LanguageRegister = 'classical' | 'mandarin';
+
 /** How a pair is used in the reader. Omitted records are inferred. */
 export type AlignRole = 'span' | 'gloss';
 
@@ -41,6 +49,13 @@ export interface WordAlign {
    * pinyin/def as the single authored reading.
    */
   senses?: WordSense[];
+  /**
+   * Provenance label for a dictionary-supplied reading (e.g.
+   * 'Classical dictionary', 'CC-CEDICT'), set when a register-ordered
+   * dictionary lookup filled pinyin/def/senses. Authored readings
+   * leave it unset.
+   */
+  source?: string;
 }
 
 export interface Translation {
@@ -82,6 +97,8 @@ export interface Doc {
   sourceLanguage: string;
   /** Script of the Chinese text. Optional so older docs still typecheck. */
   script?: 'simplified' | 'traditional';
+  /** Declared language register (see LanguageRegister). Optional. */
+  languageRegister?: LanguageRegister;
   /** Distribution/licensing note (e.g. private-only in-copyright text). */
   license?: string;
   sections: Section[];

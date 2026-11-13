@@ -45,15 +45,22 @@ describe('layered underlines', () => {
     const { zh, en } = texts.s03;
     for (const mode of ['both', 'gloss']) {
       const layers = layeredUnderlines(en, zh, alignments.units.s03, mode);
-      assert.deepEqual(
-        layers.translators.map((w) => w.en),
-        ['carefully'],
-        `mode ${mode}`,
-      );
+      // Since the zero-gap fill, s03 carries marks for every scaffolding
+      // word; the invariant this test guards is which side of the line
+      // 'carefully' (no counterpart) and 'son' (子) fall on.
+      const mark = layers.translators.find((w) => w.en === 'carefully');
+      assert.ok(mark, `mode ${mode}: 'carefully' is marked`);
       // The mark's range slices exactly the word out of the sentence.
-      const mark = layers.translators[0];
       assert.equal(en.slice(mark.enStart, mark.enEnd), 'carefully');
       assert.equal(mark.zh, '');
+      assert.ok(
+        !layers.translators.some((w) => w.en === 'son'),
+        `mode ${mode}: 'son' is not a translator word`,
+      );
+      assert.ok(
+        layers.glosses.some((w) => w.en === 'son' && w.zh === '子'),
+        `mode ${mode}: 'son' is glossed to 子`,
+      );
     }
   });
 
@@ -81,14 +88,23 @@ describe('layered underlines', () => {
         }
       }
     }
-    assert.equal(total, 37);
+    // 37 hand-picked marks before the zero-gap fill; the fill marks every
+    // English word with no Chinese counterpart, book-wide.
+    assert.equal(total, 949);
   });
 
-  it('sentences without authored marks simply have none (s01)', () => {
+  it('s01 marks its scaffolding words and keeps content words glossed', () => {
     const { zh, en } = texts.s01;
     const layers = layeredUnderlines(en, zh, alignments.units.s01, 'both');
-    assert.deepEqual(layers.translators, []);
     assert.ok(layers.spans.length > 0 && layers.glosses.length > 0);
+    // Since the zero-gap fill every sentence carries authored marks; each
+    // must slice its word exactly, and anchored content words stay glosses.
+    assert.ok(layers.translators.length > 0);
+    for (const mark of layers.translators) {
+      assert.equal(en.slice(mark.enStart, mark.enEnd), mark.en);
+    }
+    assert.ok(!layers.translators.some((w) => w.en === 'nature'));
+    assert.ok(layers.glosses.some((w) => w.en === 'nature'));
   });
 
   it('translator records survive normalization unpinned, and legacy filters exclude them', () => {

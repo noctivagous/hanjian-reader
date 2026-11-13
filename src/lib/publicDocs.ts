@@ -91,7 +91,14 @@ export async function loadPublicDocs(): Promise<Doc[]> {
       const alignments = alignmentRes
         ? asAlignments(await alignmentRes.json())
         : undefined;
-      docs.push(parallelDocFromXml(entry, await textRes.text(), entry.file, alignments));
+      // The manifest is data, not code: drop a malformed register
+      // declaration rather than letting it reach the Doc.
+      const meta =
+        entry.languageRegister === 'classical' ||
+        entry.languageRegister === 'mandarin'
+          ? entry
+          : { ...entry, languageRegister: undefined };
+      docs.push(parallelDocFromXml(meta, await textRes.text(), entry.file, alignments));
     } catch (err) {
       if (import.meta.env.DEV) {
         console.warn(`[publicDocs] ignoring ${entry.file} (${err})`);

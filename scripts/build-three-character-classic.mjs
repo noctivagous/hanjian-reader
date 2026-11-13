@@ -442,6 +442,7 @@ ${groups}
     author: 'Wang Yinglin · 王應麟',
     sourceLanguage: 'zh',
     script: 'traditional',
+    languageRegister: 'classical',
     translator: '',
     license:
       'Chinese text: public domain (Sung original with later continuations). English stanzas 1-76: as provided in public/threeCharacterClassic.txt; passages it skips carry new editorial translations marked per-unit.',

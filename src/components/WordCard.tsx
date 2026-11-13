@@ -379,6 +379,11 @@ export function WordCard({
             </button>
             )}
           </div>
+          {hover.data.source && (
+            <div className="px-3 pb-2 text-[10px] text-[var(--ink-mute)]">
+              Reading: {hover.data.source}
+            </div>
+          )}
           {pinnedKey === hover.key && (
             <div className="px-3 pb-2 text-[10px] text-[var(--ink-mute)]">
               Pinned — click the word again, ✕, or press Esc to unpin

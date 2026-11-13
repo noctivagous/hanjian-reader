@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
-import type { Doc, Translation, WordAlign } from '../data/types';
+import type { Doc, LanguageRegister, Translation, WordAlign } from '../data/types';
 import { paragraphEn } from '../lib/doc';
 import type { ReadingProvider } from '../lib/dictionary';
+import type { RegisterSource } from '../lib/languageRegister';
+import { RegisterControl } from './RegisterControl';
 import { canonicalSearchText, scriptTag, zhFontClass } from '../lib/script';
 import {
   ChineseHoverText,
@@ -23,6 +25,11 @@ interface NavContentProps {
   translationOptions: Translation[];
   activeTranslationId: string;
   onSelectTranslation: (id: string) => void;
+  /** Register control: effective register, its source, and the override. */
+  register: LanguageRegister;
+  registerSource: RegisterSource;
+  registerOverride?: LanguageRegister;
+  onRegisterChange: (override: LanguageRegister | null) => void;
   primaryLang: PrimaryLang;
   activeSectionId: string | null;
   activeParagraphId: string | null;
@@ -56,6 +63,10 @@ export function NavContent({
   translationOptions,
   activeTranslationId,
   onSelectTranslation,
+  register,
+  registerSource,
+  registerOverride,
+  onRegisterChange,
   primaryLang,
   activeSectionId,
   activeParagraphId,
@@ -263,6 +274,13 @@ export function NavContent({
             </span>
           </div>
         )}
+        <RegisterControl
+          idPrefix={idPrefix}
+          register={register}
+          source={registerSource}
+          override={registerOverride}
+          onChange={onRegisterChange}
+        />
         <h2 className="serif-display mt-3 text-[18px] font-semibold leading-tight tracking-tight">
           {enPrimary ? doc.titleEn : chromeText(doc.titleZh, `${idPrefix}_title_primary`)}{' '}
           <span className="text-[13px] font-normal text-[var(--ink-mute)]">
