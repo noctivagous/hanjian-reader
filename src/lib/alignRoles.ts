@@ -1,4 +1,4 @@
-import type { AlignRole, WordAlign } from '../data/types';
+import type { AlignRole, UnderlineMode, WordAlign } from '../data/types';
 
 export function hasOffsets(word: WordAlign): boolean {
   return (
@@ -9,8 +9,10 @@ export function hasOffsets(word: WordAlign): boolean {
   );
 }
 
-export function alignRole(word: WordAlign): AlignRole {
-  if (word.role === 'span' || word.role === 'gloss') return word.role;
+export function alignRole(word: WordAlign): AlignRole | 'translator' {
+  if (word.role === 'span' || word.role === 'gloss' || word.role === 'translator') {
+    return word.role;
+  }
   return hasOffsets(word) ? 'span' : 'gloss';
 }
 
@@ -25,6 +27,9 @@ function nextIndex(hay: string, needle: string, from: number): number {
 export function pinGlossOffsets(text: string, words: WordAlign[]): WordAlign[] {
   let cursor = 0;
   return words.map((word) => {
+    // Translator marks are authored with exact offsets and no Chinese
+    // counterpart; never pin or relabel them.
+    if (word.role === 'translator') return word;
     const role = alignRole(word);
     if (role === 'span' && hasOffsets(word)) return { ...word, role: 'span' };
     const needle = word.en.trim();
@@ -121,6 +126,9 @@ export function normalizeTranslationWords(
   const pinned = pinGlossOffsets(text, words);
   const spans = pinned.filter((w) => alignRole(w) === 'span' && hasOffsets(w));
   const glosses = pinned.filter((w) => w.zh && alignRole(w) === 'gloss');
+  const translators = pinned.filter(
+    (w) => alignRole(w) === 'translator' && hasOffsets(w),
+  );
   const derivedSpans = spans.length ? spans : clauseSpansFromText(text, zh);
   const out = [...derivedSpans];
   const seenGloss = new Set<string>();
@@ -131,6 +139,7 @@ export function normalizeTranslationWords(
     seenGloss.add(key);
     out.push(g);
   }
+  out.push(...translators);
   return out.sort(
     (a, b) =>
       (a.enStart ?? 0) - (b.enStart ?? 0) || (a.enEnd ?? 0) - (b.enEnd ?? 0),
@@ -151,4 +160,37 @@ export function underlinesFor(
   );
   if (role === 'span') return spans;
   return glosses;
+}
+
+export interface UnderlineLayers {
+  spans: WordAlign[];
+  glosses: WordAlign[];
+  /** Authored marks for English words with no Chinese counterpart. */
+  translators: WordAlign[];
+}
+
+/**
+ * The underline layers to draw for a sentence under a display mode.
+ * Unlike the old either/or filter, `both` keeps spans and glosses at
+ * once (the renderer layers them), and translator marks ride along
+ * whenever glosses are shown — in span-only view the span band already
+ * covers those words, so the gray mark would be redundant.
+ */
+export function layeredUnderlines(
+  text: string,
+  zh: string,
+  words: WordAlign[],
+  mode: UnderlineMode,
+): UnderlineLayers {
+  const normalized = normalizeTranslationWords(text, zh, words);
+  const spans = normalized.filter((w) => alignRole(w) === 'span' && hasOffsets(w));
+  const glosses = normalized.filter(
+    (w) => alignRole(w) === 'gloss' && w.zh && hasOffsets(w),
+  );
+  const translators = normalized.filter(
+    (w) => alignRole(w) === 'translator' && hasOffsets(w),
+  );
+  if (mode === 'span') return { spans, glosses: [], translators: [] };
+  if (mode === 'gloss') return { spans: [], glosses, translators };
+  return { spans, glosses, translators };
 }

@@ -178,6 +178,15 @@
         "enEnd": 21
       },
       {
+        "en": "carefully",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 22,
+        "enEnd": 31
+      },
+      {
         "en": "carefully chose her neighbours",
         "zh": "擇鄰處",
         "pinyin": "",
@@ -233,6 +242,15 @@
       }
     ],
     "s04": [
+      {
+        "en": "Old",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 0,
+        "enEnd": 3
+      },
       {
         "en": "Old Tou Yen Shan",
         "zh": "竇燕山",
@@ -537,6 +555,15 @@
         "enEnd": 89
       },
       {
+        "en": "never",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 68,
+        "enEnd": 73
+      },
+      {
         "en": "know his duties",
         "zh": "知義",
         "pinyin": "",
@@ -622,6 +649,15 @@
     ],
     "s09": [
       {
+        "en": "know",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 15,
+        "enEnd": 19
+      },
+      {
         "en": "know how to obey his parents",
         "zh": "孝於親",
         "pinyin": "",
@@ -629,6 +665,15 @@
         "role": "span",
         "enStart": 15,
         "enEnd": 43
+      },
+      {
+        "en": "how",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 20,
+        "enEnd": 23
       },
       {
         "en": "obey his parents",
@@ -695,6 +740,15 @@
       }
     ],
     "s10": [
+      {
+        "en": "Children",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 0,
+        "enEnd": 8
+      },
       {
         "en": "Children must respect their elders",
         "zh": "弟於長",
@@ -795,6 +849,15 @@
         "role": "span",
         "enStart": 0,
         "enEnd": 41
+      },
+      {
+        "en": "comes",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 6,
+        "enEnd": 11
       },
       {
         "en": "duty to parents and superiors",
@@ -2496,6 +2559,15 @@
         "enEnd": 25
       },
       {
+        "en": "contains",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 26,
+        "enEnd": 34
+      },
+      {
         "en": "contains twenty chapters",
         "zh": "二十篇",
         "pinyin": "",
@@ -2568,6 +2640,15 @@
         "role": "gloss",
         "enStart": 4,
         "enEnd": 20
+      },
+      {
+        "en": "contains",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 21,
+        "enEnd": 29
       },
       {
         "en": "contains seven chapters",
@@ -2662,6 +2743,15 @@
         "enEnd": 56
       },
       {
+        "en": "word",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 89,
+        "enEnd": 93
+      },
+      {
         "en": "word Chung means impartial principles",
         "zh": "中不偏",
         "pinyin": "",
@@ -2669,6 +2759,15 @@
         "role": "span",
         "enStart": 89,
         "enEnd": 126
+      },
+      {
+        "en": "means",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 100,
+        "enEnd": 105
       },
       {
         "en": "impartial principles",
@@ -2687,6 +2786,15 @@
         "role": "span",
         "enStart": 128,
         "enEnd": 159
+      },
+      {
+        "en": "means",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 137,
+        "enEnd": 142
       },
       {
         "en": "fixed principles",
@@ -3196,6 +3304,15 @@
         "enEnd": 69
       },
       {
+        "en": "seasons",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 109,
+        "enEnd": 116
+      },
+      {
         "en": "seasons in governing the affairs of the state",
         "zh": "治體",
         "pinyin": "",
@@ -3465,6 +3582,15 @@
         "enEnd": 21
       },
       {
+        "en": "critics",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 4,
+        "enEnd": 11
+      },
+      {
         "en": "Kung Yang",
         "zh": "公羊",
         "pinyin": "",
@@ -3508,6 +3634,15 @@
         "role": "gloss",
         "enStart": 38,
         "enEnd": 46
+      },
+      {
+        "en": "wrote",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 47,
+        "enEnd": 52
       },
       {
         "en": "wrote three different commentaries",
@@ -3766,6 +3901,15 @@
         "role": "gloss",
         "enStart": 87,
         "enEnd": 122
+      },
+      {
+        "en": "Carefully",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 124,
+        "enEnd": 133
       },
       {
         "en": "trace their beginnings and endings",
@@ -4145,6 +4289,15 @@
         "enEnd": 85
       },
       {
+        "en": "continued",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 57,
+        "enEnd": 66
+      },
+      {
         "en": "four centuries",
         "zh": "四百載",
         "pinyin": "",
@@ -4266,6 +4419,15 @@
         "enEnd": 12
       },
       {
+        "en": "tyrant",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 19,
+        "enEnd": 25
+      },
+      {
         "en": "tyrant. He was killed by Wu",
         "zh": "周武王",
         "pinyin": "",
@@ -4309,6 +4471,15 @@
         "role": "span",
         "enStart": 102,
         "enEnd": 140
+      },
+      {
+        "en": "lasted",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 110,
+        "enEnd": 116
       },
       {
         "en": "eight hundred years",
@@ -4412,6 +4583,15 @@
         "role": "gloss",
         "enStart": 29,
         "enEnd": 47
+      },
+      {
+        "en": "known",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 56,
+        "enEnd": 61
       },
       {
         "en": "known as Emperor Han Kao-tsu",
@@ -4762,6 +4942,15 @@
         "role": "gloss",
         "enStart": 65,
         "enEnd": 76
+      },
+      {
+        "en": "followed",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 89,
+        "enEnd": 97
       },
       {
         "en": "followed by Northern Chi",
@@ -5116,6 +5305,15 @@
         "enEnd": 39
       },
       {
+        "en": "carefully",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 58,
+        "enEnd": 67
+      },
+      {
         "en": "understand the rise and fall",
         "zh": "興衰",
         "pinyin": "",
@@ -5161,6 +5359,15 @@
         "role": "span",
         "enStart": 91,
         "enEnd": 129
+      },
+      {
+        "en": "hesitate",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 95,
+        "enEnd": 103
       },
       {
         "en": "learn from Hsiang T'uo",
@@ -5229,6 +5436,15 @@
       }
     ],
     "s63": [
+      {
+        "en": "Despite",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 0,
+        "enEnd": 7
+      },
       {
         "en": "Despite his heavy duties",
         "zh": "既仕",
@@ -5322,6 +5538,15 @@
     ],
     "s64": [
       {
+        "en": "Having",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 0,
+        "enEnd": 6
+      },
+      {
         "en": "Having no books",
         "zh": "無書",
         "pinyin": "",
@@ -5395,6 +5620,15 @@
       }
     ],
     "s65": [
+      {
+        "en": "afraid",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 29,
+        "enEnd": 35
+      },
       {
         "en": "afraid of falling asleep",
         "zh": "頭懸梁",
@@ -5526,6 +5760,15 @@
     ],
     "s67": [
       {
+        "en": "studied",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 14,
+        "enEnd": 21
+      },
+      {
         "en": "studied while carrying firewood",
         "zh": "負薪",
         "pinyin": "",
@@ -5563,6 +5806,15 @@
       }
     ],
     "s68": [
+      {
+        "en": "take",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 30,
+        "enEnd": 34
+      },
       {
         "en": "take one's studies seriously",
         "zh": "讀書籍",
@@ -5726,6 +5978,15 @@
         "role": "gloss",
         "enStart": 132,
         "enEnd": 144
+      },
+      {
+        "en": "proving",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 146,
+        "enEnd": 153
       },
       {
         "en": "proving that perseverance brings results",
@@ -5903,6 +6164,24 @@
         "enEnd": 80
       },
       {
+        "en": "worth",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 50,
+        "enEnd": 55
+      },
+      {
+        "en": "following",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 56,
+        "enEnd": 65
+      },
+      {
         "en": "Ts'ai Wen Chi",
         "zh": "蔡文姬",
         "pinyin": "",
@@ -5968,6 +6247,15 @@
     ],
     "s72": [
       {
+        "en": "Even",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 0,
+        "enEnd": 4
+      },
+      {
         "en": "Even at the age of seven",
         "zh": "方七歲",
         "pinyin": "",
@@ -6029,6 +6317,15 @@
         "role": "span",
         "enStart": 95,
         "enEnd": 124
+      },
+      {
+        "en": "exceptionally",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 98,
+        "enEnd": 111
       },
       {
         "en": "talented boy",
@@ -6121,6 +6418,15 @@
         "role": "span",
         "enStart": 55,
         "enEnd": 79
+      },
+      {
+        "en": "children",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 58,
+        "enEnd": 66
       },
       {
         "en": "do not learn",
@@ -6576,6 +6882,15 @@
         "role": "gloss",
         "enStart": 36,
         "enEnd": 55
+      },
+      {
+        "en": "until",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 57,
+        "enEnd": 62
       },
       {
         "en": "until the Liang destroyed the T'ang",
@@ -7132,6 +7447,15 @@
         "enEnd": 43
       },
       {
+        "en": "yet",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 45,
+        "enEnd": 48
+      },
+      {
         "en": "yet after ninety years",
         "zh": "九十年",
         "pinyin": "",
@@ -7350,6 +7674,15 @@
         "role": "gloss",
         "enStart": 49,
         "enEnd": 63
+      },
+      {
+        "en": "later",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 64,
+        "enEnd": 69
       },
       {
         "en": "later came Ch'ung-chen",

@@ -9,7 +9,7 @@ import {
 import type { DictStatus, ReadingProvider } from '../lib/dictionary';
 import { resolveCharReading } from '../lib/reading';
 import { studyListHas, type StudyItem } from '../lib/studyList';
-import type { AlignRole } from '../data/types';
+import type { UnderlineMode } from '../data/types';
 import { AlignRoleToggle } from './AlignRoleToggle';
 import { CharInspector } from './CharInspector';
 import type { HoverMode, PrimaryLang, Reveal } from './Reader';
@@ -41,8 +41,8 @@ interface Props {
   onToggleReveal: (k: keyof Reveal) => void;
   hoverMode: HoverMode;
   onHoverMode: (mode: HoverMode) => void;
-  alignRole: AlignRole;
-  onAlignRole: (role: AlignRole) => void;
+  alignRole: UnderlineMode;
+  onAlignRole: (role: UnderlineMode) => void;
   showPinyin: boolean;
   onShowPinyin: (v: boolean) => void;
   showZhuyin: boolean;
