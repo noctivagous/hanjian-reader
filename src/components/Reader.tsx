@@ -7,6 +7,7 @@ import { toneColor } from '../lib/pinyin';
 import {
   canonicalSearchText,
   foldedIndexOf,
+  foldedIndexOfAll,
   scriptTag,
   zhFontClass,
 } from '../lib/script';
@@ -47,6 +48,13 @@ interface Props {
   closedSentences: Set<string>;
   onToggleSentence: (id: string) => void;
   search: string;
+  /** Sentence holding the current search match (next/prev navigation). */
+  searchFocusId?: string | null;
+  /** Stack a sentence's other translations under it (compare view). */
+  compareTranslations?: boolean;
+  /** Paginated reading: render only the section named by pageSectionId. */
+  pageMode?: boolean;
+  pageSectionId?: string | null;
   pinnedKey: string | null;
   onPin: (key: string | null, word?: WordAlign) => void;
   /** Active word pair for cross-highlight when a sentence chip is open. */
@@ -106,19 +114,28 @@ function highlight(text: string, query: string): ReactNode {
   if (!query) return text;
   // Cross-script matching (simplified query finds traditional text and
   // vice versa); the original display text is sliced, never rewritten.
-  const idx = foldedIndexOf(text, query);
-  if (idx === -1) return text;
+  // Every occurrence in the run is marked, not just the first.
+  const hits = foldedIndexOfAll(text, query);
+  if (hits.length === 0) return text;
   const chars = Array.from(text);
   const qlen = Array.from(query).length;
-  return (
-    <>
-      {chars.slice(0, idx).join('')}
-      <mark className="bg-[#FFE5B4] dark:bg-[#3A2A16] rounded px-0.5">
+  const parts: ReactNode[] = [];
+  let cursor = 0;
+  hits.forEach((idx, i) => {
+    if (idx > cursor) {
+      parts.push(<span key={`p${i}`}>{chars.slice(cursor, idx).join('')}</span>);
+    }
+    parts.push(
+      <mark key={`m${i}`} className="bg-[#FFE5B4] dark:bg-[#3A2A16] rounded px-0.5">
         {chars.slice(idx, idx + qlen).join('')}
-      </mark>
-      {chars.slice(idx + qlen).join('')}
-    </>
-  );
+      </mark>,
+    );
+    cursor = idx + qlen;
+  });
+  if (cursor < chars.length) {
+    parts.push(<span key="tail">{chars.slice(cursor).join('')}</span>);
+  }
+  return <>{parts}</>;
 }
 
 function HanChar({
@@ -438,6 +455,8 @@ function SentenceView({
   open,
   onToggle,
   search,
+  searchFocusId,
+  compareTranslations,
   pinnedKey,
   onPin,
   onHover,
@@ -515,7 +534,7 @@ function SentenceView({
   return (
     <div
       id={sentence.id}
-      className={`relative leading-[1.9] scroll-mt-[76px] ${matched ? 'bg-[#FFF6E8] dark:bg-[#2A2214] rounded' : ''}`}
+      className={`relative leading-[1.9] scroll-mt-[76px] ${matched ? 'bg-[#FFF6E8] dark:bg-[#2A2214] rounded' : ''} ${searchFocusId === sentence.id ? 'ring-2 ring-[var(--verm)]/60 rounded' : ''}`}
     >
       <div className="flex items-start gap-1">
       <div className="sentence min-w-0 flex-1">
@@ -706,6 +725,19 @@ function SentenceView({
             )}
               </>
             )}
+            {compareTranslations && sentence.translations.length > 1 && (
+              <div className="mt-2 space-y-1.5 border-t border-dashed border-[var(--line)] pt-2">
+                {sentence.translations.slice(1).map((t) => (
+                  <div key={t.id} className="text-[13px] leading-[1.6] text-[var(--ink-mute)]">
+                    <span className="mr-1.5 rounded-full bg-[var(--paper-2)] border border-[var(--line)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--ink)]">
+                      {t.label || t.language}
+                      {t.translator ? ` · ${t.translator}` : ''}
+                    </span>
+                    {t.text}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -849,6 +881,12 @@ export function Reader(props: Props) {
 
       <div className="space-y-10">
         {doc.sections.map((section, sIdx) => {
+          if (
+            props.pageMode &&
+            section.id !== (props.pageSectionId ?? doc.sections[0]?.id)
+          ) {
+            return null;
+          }
           const offset = doc.sections
             .slice(0, sIdx)
             .reduce((n, s) => n + s.paragraphs.length, 0);

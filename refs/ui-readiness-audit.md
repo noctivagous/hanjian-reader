@@ -16,6 +16,50 @@ should close before calling the app ready.
 
 ---
 
+## Status pass — 2026-11-12
+
+Re-checked against the code in the 2026-11-12 audit and the fix arc
+that followed it (repo root: `AUDIT-FIXES.md`). Checkboxes were
+flipped only for items verified fixed in code. Section notes:
+
+- **§2 Left sidebar — built.** NavSidebar with section anchors, a
+  scroll observer, filter/jump, desktop collapse and a mobile drawer;
+  the header `<select>` retired into this panel.
+- **§3 — largely still open** (word-card positioning, keyboard path,
+  char-click in Chinese-primary mode, stale-state reset). The
+  sentence-pill P0 was closed alongside §1.
+- **§4 — mostly closed.** "+ List" is a real, persisted study list;
+  stroke order is real HanziWriter data; notes persist and are wired
+  on mobile; zhuyin/tone-colors have one source; the inspector has a
+  close ✕. Still open: unknown-character definition editing, inert
+  examples.
+- **§5 — position and search closed.** Reading position persists per
+  document and restores on open; search highlights all occurrences
+  with a count, next/previous jump and a no-results state (the box
+  still lives in the right sidebar). Dark mode now persists; its
+  hardcoded-background sweep was not re-audited. Still open:
+  progress bar, full-view linking, TTS gaps, print.
+- **§6 — mostly closed.** Imported docs persist; rename/delete;
+  misalignment preview with warnings; file entry (.txt/.md/
+  .hanjian.json, plus drag-drop); draft preservation; JSON download
+  and re-import round-trip. Still open: Chinese-only import, TMX,
+  modal Esc/focus trap, empty/error states. (EPUB is scheduled in
+  the fix arc.)
+- **§7 — persistence closed.** One versioned settings record covers
+  the listed fields; tip dismissal persists; character size reached
+  mobile. Still open: translator picker (final step of the fix
+  arc), keyboard-shortcut guards and help.
+- **§8 — partly closed.** Display Options and the inspector
+  handlers are wired on mobile. Still open on mobile: search,
+  import entry point, bilingual copy.
+- **§9 — still open** (no accessibility/robustness sweep yet).
+- **§10 — partly closed.** The greedy segmenter is gone
+  (Intl.Segmenter for modern text, Jiayan for classical) and
+  CC-CEDICT ships in the app. An About/credits surface is still
+  missing.
+
+---
+
 ## 1. ✅ DONE (2026-10-28): selection escape paths
 
 > Status: implemented and browser-verified (click toggle, ✕ buttons,
@@ -91,25 +135,25 @@ ambiguity).
 
 Required behavior:
 
-- [ ] Book title/author at top, then one row per `Section`:
+- [x] Book title/author at top, then one row per `Section`:
       number, `titleZh`, `titleEn`, sentence count. Sections with
       empty titles (both sample docs today) collapse to a single
       untitled group — no blank rows.
-- [ ] Clicking a row scrolls to that section. Sections need anchor
+- [x] Clicking a row scrolls to that section. Sections need anchor
       ids (`id={section.id}`) and `scroll-margin-top` under the
       64px sticky header (`Header.tsx:37`).
-- [ ] Scroll observer: the section in view is highlighted, driven by the
+- [x] Scroll observer: the section in view is highlighted, driven by the
       existing scroll container (`App.tsx:160-164`, `scrollRef` is
       currently attached but never read).
-- [ ] Filter/jump box ("chapter 42", 德) filtering the row list.
-- [ ] Collapsible on desktop, reusing the right panel's collapse
+- [x] Filter/jump box ("chapter 42", 德) filtering the row list.
+- [x] Collapsible on desktop, reusing the right panel's collapse
       pattern (`Sidebar.tsx:50`); slide-over drawer on mobile,
       where the right panel is already a bottom sheet
       (`MobileTools.tsx`). Needs its own header button — the
       current sidebar toggle (`Header.tsx:132-138`) toggles the
       *right* panel and its ◀/▶ glyphs will be ambiguous once two
       sidebars exist.
-- [ ] Becomes the document library later (book → chapters is one
+- [x] Becomes the document library later (book → chapters is one
       tree at two depths); the header `<select>` should retire or
       demote to a book switcher inside this panel, not duplicate it.
 
@@ -168,12 +212,12 @@ works collapsed, open, and as a mobile drawer.
 `src/components/CharInspector.tsx`, rendered from
 `Sidebar.tsx:220-231`.
 
-- [ ] **(P0) "+ List" is fake.** `onAddToList` flashes
+- [x] **(P0) "+ List" is fake.** `onAddToList` flashes
       "Added to list (local)" (`App.tsx:212`) and stores nothing.
       Either build the list (collect chars/words, view them, remove
       items, copy/export the list) or remove the button. A study
       list that silently discards is worse than none.
-- [ ] **(P1) Stroke order is placeholder art.** `CharDetail`
+- [x] **(P1) Stroke order is placeholder art.** `CharDetail`
       draws up to 5 invented bezier paths (`CharInspector.tsx:82-96`)
       labeled "Stroke Order · 笔顺". It has no replay button —
       the animation runs once on mount. At minimum label it as
@@ -186,7 +230,7 @@ works collapsed, open, and as a mobile drawer.
       box. Make the note/definition actually editable and saved,
       or change the copy. (Full dictionary coverage is scoped in
       `refs/chinese-dictionary.md`; the UI gap is the dead copy.)
-- [ ] **(P1) Notes are memory-only and mis-keyed on mobile.**
+- [x] **(P1) Notes are memory-only and mis-keyed on mobile.**
       Notes live in `App.tsx:56` state keyed by char string, lost
       on reload; in `MobileTools.tsx:88-91` `onNote` is a no-op
       and `note=""`, so mobile users can't even see them. Persist
@@ -194,17 +238,17 @@ works collapsed, open, and as a mobile drawer.
 - [ ] **(P2) Examples are inert.** Example compounds
       (`CharInspector.tsx:100-117`) can't be clicked to inspect,
       spoken, or copied. Make the word clickable → inspect/speak.
-- [ ] **(P2) Zhuyin defaults disagree.** `CharInspector` defaults
+- [x] **(P2) Zhuyin defaults disagree.** `CharInspector` defaults
       `showZhuyin = true` (`CharInspector.tsx:125`) while the app
       default is `false` (`App.tsx:45`) and `MobileTools` hardcodes
       `toneColors` on (`MobileTools.tsx:88`). One source of truth.
-- [ ] **(P2) No close button** — covered in §1.1, but the fix
+- [x] **(P2) No close button** — covered in §1.1, but the fix
       lands here: an ✕ in the inspector header
       (`Sidebar.tsx:189-196`) that clears `inspectedChar`.
 
 ## 5. Reading experience and navigation
 
-- [ ] **(P1) No reading position memory.** Switching documents
+- [x] **(P1) No reading position memory.** Switching documents
       keeps the old scroll offset mid-text; reload restarts at the
       top. Scroll to top on doc change; persist per-doc scroll
       position (bookmark) and restore it.
@@ -220,7 +264,7 @@ works collapsed, open, and as a mobile drawer.
       doesn't highlight the pair. At minimum apply search
       highlight and scroll-sync/highlight on click; the Chinese
       column's chars hit §1.1's deselect bug too.
-- [ ] **(P1) Search is a partial match highlighter, not search.**
+- [x] **(P1) Search is a partial match highlighter, not search.**
       `highlight()` marks only the *first* occurrence per text run
       (`Reader.tsx:46-59`, single `indexOf`); there's no match
       count, no next/previous, no jump-to-match, no "no results"
@@ -250,13 +294,13 @@ works collapsed, open, and as a mobile drawer.
 
 ## 6. Import, documents, and data UI
 
-- [ ] **(P1) Imported documents vanish on reload.** `docs` is
+- [x] **(P1) Imported documents vanish on reload.** `docs` is
       in-memory (`App.tsx:14`); there's also no way to delete,
       rename, or re-import an imported doc — the `<select>` grows
       forever within a session. Persist imported docs
       (localStorage/IndexedDB) and add remove/rename in the
       document switcher (or left panel, §2).
-- [ ] **(P1) Import silently misaligns.** `importCustomDoc`
+- [x] **(P1) Import silently misaligns.** `importCustomDoc`
       (`src/lib/segment.ts:17-39`) aligns by index: extra Chinese
       paragraphs are dropped, missing ones become empty strings,
       and sentence-count mismatches produce sentences with no
@@ -272,7 +316,7 @@ works collapsed, open, and as a mobile drawer.
       with an explicit "no translation yet" sentence state
       (the reader already has a no-translation branch,
       `Reader.tsx:120-130` — it needs a visible label).
-- [ ] **(P1) No downloads.** Document Tools copy to clipboard
+- [x] **(P1) No downloads.** Document Tools copy to clipboard
       only (`Sidebar.tsx:239-269`). The agreed downloads —
       `.hanjian.json` (lossless, re-importable), then `.tmx`,
       then generated `.epub` — have no UI. Start with JSON
@@ -288,7 +332,7 @@ works collapsed, open, and as a mobile drawer.
 
 ## 7. Settings, persistence, and state hygiene
 
-- [ ] **(P1) Almost nothing persists.** Only `hanjian:primaryLang`
+- [x] **(P1) Almost nothing persists.** Only `hanjian:primaryLang`
       survives reload (`App.tsx:27-42`). Persist as one versioned
       settings record: reveal modes, showPinyin/showZhuyin,
       toneColors, defsInline, fontScale, charSize, dark, sidebar
@@ -305,11 +349,11 @@ works collapsed, open, and as a mobile drawer.
       This is step 4 of the order in
       `refs/hanjian-format-recommendation.md`; the UI audit flags
       it as required-before-Tao, not optional.
-- [ ] **(P2) Tip dismissal not remembered.** `showTip` resets every
+- [x] **(P2) Tip dismissal not remembered.** `showTip` resets every
       load (`App.tsx:62`); with the 6s auto-hide (`App.tsx:93-97`)
       it also vanishes before slow readers finish it. Persist
       dismissal; drop or lengthen the timer.
-- [ ] **(P2) Font-size control is desktop-only and stateless.**
+- [x] **(P2) Font-size control is desktop-only and stateless.**
       Hidden below `md` (`Header.tsx:107`), no numeric readout,
       no reset-to-100%. Mobile readers get no text-size control
       (`MobileTools` lacks it entirely). Move into Display Options
@@ -328,10 +372,10 @@ works collapsed, open, and as a mobile drawer.
 `MobileTools.tsx` is a subset of the desktop sidebar, and some of
 what it does render is wired to no-ops. Missing or dead on mobile:
 
-- [ ] **(P1)** Display Options entirely: pinyin, zhuyin,
+- [x] **(P1)** Display Options entirely: pinyin, zhuyin,
       definitions-inline, tone colors, character size, font size.
 - [ ] **(P1)** Search (see §5).
-- [ ] **(P1)** Inspector speak/notes/add-to-list are `() => {}`
+- [x] **(P1)** Inspector speak/notes/add-to-list are `() => {}`
       (`MobileTools.tsx:90-93`) — the compact inspector shows no
       stroke order, examples, radical/HSK pills either
       (`CharInspector.tsx:136-150`). Wire real handlers; reuse the

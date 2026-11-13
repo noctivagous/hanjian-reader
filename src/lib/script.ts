@@ -101,3 +101,23 @@ export function foldedIndexOf(text: string, query: string): number {
   }
   return -1;
 }
+
+/**
+ * All non-overlapping occurrences of `query` in `text` under the same
+ * folding, as code-point start indices into the original text. After a
+ * hit the scan resumes past the match, so "aaa" in "aaaaa" counts once.
+ */
+export function foldedIndexOfAll(text: string, query: string): number[] {
+  const q = Array.from(canonicalSearchText(query));
+  if (q.length === 0) return [];
+  const hay = Array.from(canonicalSearchText(text));
+  const out: number[] = [];
+  outer: for (let i = 0; i + q.length <= hay.length; i++) {
+    for (let j = 0; j < q.length; j++) {
+      if (hay[i + j] !== q[j]) continue outer;
+    }
+    out.push(i);
+    i += q.length - 1;
+  }
+  return out;
+}
