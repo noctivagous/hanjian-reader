@@ -30,6 +30,29 @@ interface Props {
   onAlignRole: (role: AlignRole) => void;
   inspectedChar: string | null;
   onClearInspected: () => void;
+  onAddToList: () => void;
+  studyListHasChar: boolean;
+  note: string;
+  onNote: (char: string, note: string) => void;
+  onSpeak: (text: string) => void;
+  showPinyin: boolean;
+  onShowPinyin: (v: boolean) => void;
+  showZhuyin: boolean;
+  onShowZhuyin: (v: boolean) => void;
+  showDefsInline: boolean;
+  onShowDefsInline: (v: boolean) => void;
+  toneColors: boolean;
+  onToneColors: (v: boolean) => void;
+  showSentenceChips: boolean;
+  onShowSentenceChips: (v: boolean) => void;
+  showSpeakerButtons: boolean;
+  onShowSpeakerButtons: (v: boolean) => void;
+  speakOnClick: boolean;
+  onSpeakOnClick: (v: boolean) => void;
+  charSize: number;
+  onCharSize: (v: number) => void;
+  pageMode: boolean;
+  onPageMode: (v: boolean) => void;
   onCopy: (text: string, label: string) => void;
   dictStatus: DictStatus;
   dict?: ReadingProvider | null;
@@ -48,6 +71,29 @@ export function MobileTools({
   onAlignRole,
   inspectedChar,
   onClearInspected,
+  onAddToList,
+  studyListHasChar,
+  note,
+  onNote,
+  onSpeak,
+  showPinyin,
+  onShowPinyin,
+  showZhuyin,
+  onShowZhuyin,
+  showDefsInline,
+  onShowDefsInline,
+  toneColors,
+  onToneColors,
+  showSentenceChips,
+  onShowSentenceChips,
+  showSpeakerButtons,
+  onShowSpeakerButtons,
+  speakOnClick,
+  onSpeakOnClick,
+  charSize,
+  onCharSize,
+  pageMode,
+  onPageMode,
   onCopy,
   dictStatus,
   dict,
@@ -124,6 +170,106 @@ export function MobileTools({
               </button>
             ))}
           </div>
+          <div className="rounded-[16px] border p-4 bg-white dark:bg-[#181611] space-y-3">
+            <div className="text-[12px] uppercase tracking-wide font-semibold">
+              Display Options
+            </div>
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-[13px]">Show Pinyin / 拼音</span>
+              <input
+                type="checkbox"
+                checked={showPinyin}
+                onChange={(e) => onShowPinyin(e.target.checked)}
+                className="accent-[var(--verm)]"
+              />
+            </label>
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-[13px]">Show Zhuyin / 注音</span>
+              <input
+                type="checkbox"
+                checked={showZhuyin}
+                onChange={(e) => onShowZhuyin(e.target.checked)}
+                className="accent-[var(--verm)]"
+              />
+            </label>
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-[13px]">Show Definitions Inline</span>
+              <input
+                type="checkbox"
+                checked={showDefsInline}
+                onChange={(e) => onShowDefsInline(e.target.checked)}
+                className="accent-[var(--verm)]"
+              />
+            </label>
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-[13px]">Tone Colors</span>
+              <input
+                type="checkbox"
+                checked={toneColors}
+                onChange={(e) => onToneColors(e.target.checked)}
+                className="accent-[var(--verm)]"
+              />
+            </label>
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-[13px]">Show Sentence-Level Toggles</span>
+              <input
+                type="checkbox"
+                checked={showSentenceChips}
+                onChange={(e) => onShowSentenceChips(e.target.checked)}
+                className="accent-[var(--verm)]"
+              />
+            </label>
+            {brand.features.speech && (
+              <label className="flex items-center justify-between cursor-pointer">
+                <span className="text-[13px]">Show Speaker Button</span>
+                <input
+                  type="checkbox"
+                  checked={showSpeakerButtons}
+                  onChange={(e) => onShowSpeakerButtons(e.target.checked)}
+                  className="accent-[var(--verm)]"
+                />
+              </label>
+            )}
+            {brand.features.speakOnClick && (
+              <label className="flex items-center justify-between cursor-pointer">
+                <span className="text-[13px]">Speak On Click</span>
+                <input
+                  type="checkbox"
+                  checked={speakOnClick}
+                  onChange={(e) => onSpeakOnClick(e.target.checked)}
+                  className="accent-[var(--verm)]"
+                />
+              </label>
+            )}
+            {brand.features.charSize && (
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[13px]">Character Size</span>
+                  <span className="text-[11px] font-mono text-[var(--ink-mute)]">
+                    {Math.round(charSize * 100)}%
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min={0.85}
+                  max={1.6}
+                  step={0.05}
+                  value={charSize}
+                  onChange={(e) => onCharSize(parseFloat(e.target.value))}
+                  className="w-full accent-[var(--verm)]"
+                />
+              </div>
+            )}
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-[13px]">Paginated Reading / 分页</span>
+              <input
+                type="checkbox"
+                checked={pageMode}
+                onChange={(e) => onPageMode(e.target.checked)}
+                className="accent-[var(--verm)]"
+              />
+            </label>
+          </div>
           {brand.features.inspector && (
           <div className="rounded-[16px] border p-4 bg-white dark:bg-[#181611]">
             <div className="flex items-center justify-between mb-3">
@@ -148,12 +294,14 @@ export function MobileTools({
             ) : (
               <CharInspector
                 char={inspectedChar}
-                toneColors
-                note=""
-                onNote={() => {}}
-                onSpeak={() => {}}
+                toneColors={toneColors}
+                showZhuyin={showZhuyin}
+                note={note}
+                onNote={onNote}
+                onSpeak={onSpeak}
                 onCopy={onCopy}
-                onAddToList={() => {}}
+                onAddToList={onAddToList}
+                inList={studyListHasChar}
                 compact
                 dict={dict}
               />

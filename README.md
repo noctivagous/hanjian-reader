@@ -1,329 +1,104 @@
-# HanJian (涵简) — Chinese / English Parallel Reader
+# HanJian Reader · 涵简
 
-A literary reading environment for Chinese documents translated to English. Read in English by default, reveal Chinese progressively at word, sentence, paragraph, and full-document granularity, then inspect any character in depth.
+Read Chinese documents in English by default, and reveal the Chinese
+progressively — a word, a sentence, a paragraph, or the whole document
+at a time. It works in the other direction too: read Chinese and
+reveal English. Built for learners who want to meet real texts early,
+with support that fades as they choose.
 
-> Built as a single-file React artifact — no build step, no backend.
+A Vite + React 19 + TypeScript app. Everything runs client-side;
+your documents, notes, settings and study list never leave the
+browser (localStorage).
 
-**Live Artifact:** `hanjian-reader_agentic_artifact_1_58702b01beec.html`
+## What it does
 
----
+- **Progressive reveal** at word / sentence / paragraph / full-document
+  granularity, in both directions (EN→中 and 中→EN), with word-level
+  hover alignment between the languages.
+- **Contents navigation**: a left panel listing the text's divisions,
+  with filter/jump and highlighting that follows your scroll.
+- **Character inspector**: readings (pinyin, zhuyin), definitions,
+  notes, and real stroke order (HanziWriter over a 796-character
+  local database, CDN fallback beyond it).
+- **Dictionary layer**: CC-CEDICT (125,324 entries), lazy-loaded,
+  both scripts. Segmentation is `Intl.Segmenter` for modern text and
+  a Jiayan port for classical/traditional text.
+- **Study list**: save characters from the inspector to a personal
+  list that persists, and copy it out as tab-separated text.
+- **Real search**: every occurrence highlighted, a match count, and
+  next/previous navigation that scrolls to the match. Matching folds
+  traditional/simplified variants and case, so searching 经 finds 經.
+- **Settings that persist**: display options, dark mode, sizes, notes
+  and your reading position per document, in one versioned record.
+- **Import your own texts**: paste English + Chinese (with a count
+  preview and mismatch warnings before anything is dropped), load
+  text files, or drag-and-drop. Imported documents persist and can be
+  renamed or deleted.
+- **`.hanjian.json` round-trip**: download any document in the app's
+  own format and re-import it later, losslessly.
 
-## Concept
+## Content
 
-Most parallel readers force you to choose: English *or* Chinese, side-by-side. HanJian treats English as primary and Chinese as a progressive disclosure layer:
-
-1.  **You read fluently** in English without interruption.
-2.  **You reveal** Chinese only when you want it, at the granularity you need.
-3.  **You inspect** the exact character that caught your eye.
-
-The header direction control (`EN → 中` / `中 → EN`, left of the `Aa`
-font-size control) chooses which language is shown and which is revealed:
-read the translation and uncover the Chinese, or read the original Chinese
-and reveal the English. The choice is kept in `localStorage`
-(`hanjian:primaryLang`) and defaults to English-first.
-
-Ideal for translated literature, business docs, classical texts, or any Chinese → English workflow where you want comprehension without losing the original.
-
-## Features
-
-### Reading Experience
-- Warm paper theme (`#FFFEFB`), serif typography (Fraunces/Newsreader + Noto Serif SC)
-- Centered 760px column, generous line-height, focus mode
-- **Three Character Classic / 三字經** (traditional) ships in `public/texts/`
-  (committed, not gitignored) and opens by default (`defaults.defaultDocId`).
-- Two demo documents bundled in the app bundle:
-  - *The Courtyard Rain / 庭院里的雨*
-  - *Mending Clothes Under Lamplight / 灯下缝衣*
-- Optional local-only books from `private/` (never committed), e.g. the
-  *Tao Te Ching / 道德經* (traditional script) — see [Private Texts](#private-texts)
-
-### Right Toolbar — Reveal Controls
-
-The toolbar is fixed on desktop (360px), bottom-sheet drawer on mobile.
-
-| Control | Shortcut | What it does |
-|---|---|---|
-| **Words / 词语** | `W` | Dotted underline on translatable words in the shown language. Hover → floating card with the other language, pinyin (tone-colored), definition. Click to pin. |
-| **Sentences / 句子** | `S` | `中文` / `English` pill at end of each sentence. Toggles the other-language sentence block (Chinese block includes pinyin and 🔊 TTS, Web Speech API `zh-CN`). |
-| **Paragraphs / 段落** | `P` | Other-language paragraph card below each paragraph — left vermillion accent, each hanzi clickable in the Chinese card. |
-| **Full Document / 全文** | `F` | Side-by-side split view. Shown language first, revealed language second. |
-
-Modes are independent — combine Words + Sentences for intensive study, or just Paragraphs for light review.
-
-### Display Options
-- Show Pinyin toggle
-- Tone Colors: 1st red, 2nd orange, 3rd green, 4th blue, 5th gray
-- Show Definitions Inline
-- Character size slider (affects all Chinese)
-- Search with highlight
-- Font size Aa-/+
-
-### Character Inspector
-
-Click any visible Chinese character:
-
-- **Big glyph** + stroke count badge + HSK pill
-- **Pinyin + Zhuyin**, tone-colored
-- **Meaning, radical, stroke count, decomposition** (e.g., 庭 = 广 + 廷)
-- **Example compounds** with definitions
-- **Animated stroke order** — SVG path draw animation (placeholder strokes for demo)
-- **Actions:** 🔊 Play, Copy Character, Add to List, personal notes textarea
-- Selection state persists and highlights in text
-
-Character dictionary is embedded for ~50 characters from sample docs. Unknown characters fall back gracefully with `—` and allow user notes.
-
-### Import Custom Documents
-
-`Import Custom` modal:
-
-- Two textareas: English + Chinese
-- Splits by `\n\n` → paragraphs, then by `[.!?。！？]+` → sentences
-- Auto-aligns by paragraph/sentence index
-- Word alignment disabled for custom docs (sentence/paragraph/full + char inspection still work)
-- Export: Copy English, Copy Chinese, Copy Bilingual
-
-## Private Texts
-
-Some books pair a public-domain Chinese original with an in-copyright
-translation. Those translations are never committed: they live in the
-gitignored `private/` directory and are compiled locally into a gitignored
-generated module.
-
-- Put your copy of the Feng & English *Tao Te Ching* translation at
-  `private/tao-te-ching.xlf` (XLIFF 1.2/2.0, preferred) or
-  `private/tao-te-ching.en.txt` (81 `---`-separated chapters; see
-  [`private/README.md`](private/README.md) for the exact layout), then run
-  `node scripts/build-tao-te-ching.mjs`. The app picks up the generated book
-  automatically; with no generated file it builds and runs with just the two
-  sample docs.
-- The generated book records `translator: 'Gia-fu Feng & Jane English'` and a
-  `license: 'In copyright — local/private use only, do not distribute'` flag.
-  Do not deploy a build containing it publicly without permission from the
-  rights holder (`refs/tao-te-ching-plan.md` P0-5). The Wang Bi Chinese text
-  itself is public domain.
-
-## Dictionary
-
-Word hover readings for text the alignment tables don't cover come from
-CC-CEDICT ([cc-cedict.org](https://cc-cedict.org), CC BY-SA 4.0 — see the
-credit in the toolbar footer):
-
-- `scripts/build-dictionary.mjs` parses a raw CC-CEDICT download into
-  `public/dict/cedict.json` (trimmed to headword → marked pinyin + first
-  three glosses, both simplified and traditional headwords indexed).
-  Regenerate with `node scripts/build-dictionary.mjs /path/to/cedict.txt`
-  (raw file from <https://www.mdbg.net/chinese/dictionary?page=cedict>;
-  the release and retrieval date are recorded in the asset's `meta` block).
-- The 10.5 MB asset is fetched lazily on first Chinese-primary use, never
-  in the initial bundle. A failed fetch leaves tokens wordless, as before.
-- Readings follow mainland Putonghua norms; polyphonic characters resolve
-  to the dictionary's first entry. The Taiwan-reading gap noted in
-  [`refs/chinese-dictionary.md`](refs/chinese-dictionary.md) still stands.
-
-## Classical segmentation (Jiayan)
-
-Traditional-script books (the local Tao Te Ching) are word-broken with a
-browser port of Jiayan's `WordNgramTokenizer` ([jiaeyan/Jiayan](https://github.com/jiaeyan/Jiayan),
-MIT — Jiajie Yan). ICU's modern Chinese word breaker is kept for the
-simplified sample docs.
-
-- `scripts/build-jiayan-dict.mjs` copies Jiayan's frequency lexicon into
-  `public/dict/jiayan.json` (~27k simplified headwords). Regenerate with
-  `node scripts/build-jiayan-dict.mjs` (fetches upstream `dict.txt`) or
-  pass a local path.
-- The asset is fetched only when a traditional-script book is open.
-  Traditional characters are folded 1:1 to simplified for the DAG, then
-  token offsets are mapped back onto the original display text.
-- Authored `words` alignments still win over the segmenter (so sample-doc
-  hover like 杯中 is unchanged). Dictionary lookup stays exact-headword:
-  Jiayan decides the span, CC-CEDICT supplies every listed sense.
-- The local **Tao Te Ching** uses Courtyard-style **`words` overrides** in
-  `private/tao-te-ching.overrides.json` (regenerate hover rows with
-  `node scripts/generate-tao-hover-overrides.mjs`, then
-  `node scripts/build-tao-te-ching.mjs`). Committed
-  `scripts/tao-te-ching-glossary.mjs` supplies Feng/English surface forms
-  (e.g. *Tao* → 道); only matched English gets underlines.
-
-The heavier `CharHMMTokenizer` (KenLM + `jiayan.klm`) stays in Python and
-is not used at runtime.
-
-## How It Works — Data Model
-
-```ts
-type WordAlign = { en: string; zh: string; pinyin: string; def: string }
-type Sentence = { en: string; zh: string; words: WordAlign[] }
-type Paragraph = { en: string; zh: string; sentences: Sentence[] }
-type Doc = { id: string; title: { en: string; zh: string }; paragraphs: Paragraph[] }
-
-type CharInfo = {
-  pinyin: string; meaning: string;
-  radical: string; strokes: number; hsk: number;
-  examples: string[]; decom: string;
-}
-```
-
-- English is rendered as `<span class="sentence"><span class="word has-zh">...</span></span>`
-- Chinese reveals are conditional renders based on `reveal = {words, sentences, paragraphs, full}`
-- All Chinese characters wrapped in `<span class="han-char" data-char="X">` for click handling
-- TTS: `speechSynthesis.speak(new SpeechSynthesisUtterance(text))` with `lang='zh-CN'`
-
-No external dependencies. Tailwind via CDN. Single file.
+- **Three Character Classic （三字經）** — the default public book,
+  shipped as XLIFF with curated word alignments
+  (`public/texts/`).
+- **Two demo stories** — bundled sample documents.
+- **Tao Te Ching （道德經）** — fully plumbed but **local-only by
+  design**: the Feng & English translation is in copyright, so the
+  text lives in a gitignored `private/` directory and is not in this
+  repository. Making it public needs a public-domain or permissively
+  licensed translation.
 
 ## Running
 
-Just open the HTML file:
+Requires Node 24 (the test suite uses `node --test` with TypeScript
+sources imported directly).
 
-```bash
-open hanjian-reader_agentic_artifact_1_58702b01beec.html
-# or drag into any browser
+```sh
+npm install
+npm run dev       # dev server
+npm run build     # tsc + production build into dist/
+npm run preview   # serve the production build
+npm test          # node:test suites under scripts/
+npm run lint      # oxlint
 ```
 
-To embed in a repo / GitHub Pages:
+Deployment: a GitHub Actions workflow (`.github/workflows/pages.yml`)
+builds and deploys to GitHub Pages on pushes to `main`; every runtime
+asset is fetched relative to `import.meta.env.BASE_URL`, so the
+project subpath works. CI (`.github/workflows/ci.yml`) runs lint,
+tests and the build on pushes and pull requests.
 
-```
-/docs/index.html  <- copy artifact here
-/README.md
-```
+## Customization (white-label)
 
-## Customization
+The app is brandable from one file: edit `src/brand.config.ts` to
+override the name, tagline, texts, theme, feature flags and defaults
+declared in `src/brand.ts`. Storage keys are namespaced by brand id,
+so differently-branded builds don't collide.
 
-**Add your own documents:** Edit `SAMPLE_DOCS` array in the file:
+## Project layout
 
-```js
-{
-  id: 'my-doc',
-  title: { en: "My Memo", zh: "我的备忘录" },
-  paragraphs: [{ en: "...", zh: "...", sentences: [{ en:"...", zh:"...", words:[...] }] }]
-}
-```
+- `src/components/` — Reader, NavSidebar, Sidebar, CharInspector,
+  MobileTools, ImportModal, …
+- `src/lib/` — document model accessors, dictionary, segmentation,
+  search, settings, study list, import/export, speech
+- `src/data/` — shared types and the curated character dictionary
+- `public/` — text manifest + XLIFF books (`texts/`), CC-CEDICT and
+  Jiayan assets (`dict/`), stroke-order database (`stroke-data.json`)
+- `scripts/` — the `node:test` suites
+- `refs/` — design notes and audits, including the 2026-10-28 UI
+  readiness audit (with a 2026-11-12 status pass)
+- `TASKS.md` — the standing task list; `AUDIT-FIXES.md` — the
+  2026-11-12 audit checklist and what has landed from it
 
-**Extend character dictionary:** Edit `charDict` object. Add entries:
+## Licenses
 
-```js
-"涵": { pinyin:"hán", meaning:"contain; immerse", radical:"氵 (water)", strokes:11, hsk:6, examples:["涵盖 hángài - encompass"], decom:"氵+函" }
-```
+The app itself is MIT (see `LICENSE`). Bundled data keeps its own
+terms:
 
-**Theming:** Change CSS variables at top: `--paper`, `--ink`, `--vermillion`.
-
-## White labeling (private label)
-
-Ship the reader under your own name, on your own site, with your own
-feature set — no code edits beyond one file:
-
-1. Edit [`src/brand.config.ts`](src/brand.config.ts):
-   - `texts` — app name, Chinese name, tagline, logo glyph, tab title, help copy.
-   - `theme` — page background, ink, accent, soft accent.
-   - `features` — which reveal modes (words/sentences/paragraphs/full),
-     display options (pinyin, zhuyin, definitions, tone colors, sizes,
-     search, font scaling, dark mode), and tools (import, speech,
-     character inspector) are offered. Disabled features are hidden from
-     the UI and forced off.
-   - `defaults` — startup state: `defaultDocId`, primary language, enabled
-     reveal modes, display toggles, sizes, dark mode.
-   - `id` — bundle slug; also namespaces `localStorage` so white-labels
-     deployed side by side don't share settings.
-2. Run `npm run build`.
-3. Host the resulting `dist/` folder on any static website.
-
-Every field is optional — delete lines to fall back to the default HanJian
-brand. Unknown keys and mistyped values are ignored safely (see
-[`src/brand.ts`](src/brand.ts)).
-Feature flags gate at runtime, so disabled code still ships in the bundle;
-this keeps every white-label a single static build with no backend.
-
-## Roadmap
-
-- [x] CC-CEDICT integration for full dictionary coverage (lazy-loaded trimmed asset + word hover readings)
-- [ ] True word-alignment editor (drag to align)
-- [ ] Stroke order data via HanziWriter
-- [ ] Anki / Pleco export
-- [ ] Pinyin auto-generation via pinyin-pro
-- [ ] Audio alignment + sentence replay
-- [ ] Collaborative notes / translation comments
-
-## License
-
-MIT — use freely for personal, educational, and commercial translation review workflows.
-
----
-
-*Built with the idea that translation should be readable first, inspectable second. English for flow, Chinese for depth.*
-
-## What does HanJian mean?
-
-AI:
-
-**HanJian — 涵简** is a double pun I picked for this reader:
-
-### 1. The literal characters I used:
-
-**涵 (hán)** — to contain water, to immerse, to be steeped in, to have depth / cultivation. As in 涵养 (cultivation) and 包含 (to contain). It's the "holding" side — keeping the original Chinese inside the English.
-
-**简 (jiǎn)** — simple, brief, concise, clear. As in 简单 (simple) and 简明 (concise). It's the "revealing simply" side — you only reveal what you need.
-
-So **涵简 = "immersive simplicity" / "depth contained simply"** — exactly what the toolbar does: the depth is always there, but shown simply.
-
-### 2. The homophone I was playing on:
-
-**汉简 (hànjiǎn)** — pronounced the same, it means **Han dynasty bamboo slips** — the ancient Chinese documents written on strips of bamboo. That's literally what your artifact is: a viewer for Chinese documents.
-
-Historians still dig up 汉简 in the desert to read old letters and official memos. Your version just lets you read them in English first.
-
-So when you say it:
-- `hán` like in English "hahn" with rising tone
-- `jiǎn` like "jyen" dipping
-
-You can write it either way depending on vibe you want:
-- **涵简** if you want the poetic "contain + simplify" meaning
-- **汉简** if you want the historical "Han slips" reference
-
-I used 涵简 in the app because it matches the interaction better — but the logo holds both meanings at once.
-
-
-## What future features?
-
-AI:
-
-For HanJian, I'd push it in 4 directions — each builds on "English first, Chinese on demand":
-
-### 1. Make the alignment actually smart
-
-**The biggest unlock right now is import.** Instead of manual paste:
-
-- **OCR drop:** Drag a scanned Chinese PDF / photo, it OCRs (PaddleOCR) and auto-segments into paragraphs. You paste English and it auto-aligns by semantic similarity, not just line count.
-- **Visual word-link editor:** Like in translation tools — you see English sentence top, Chinese bottom, and you drag lines between words to fix alignments. That alignment data is what makes the Words mode magical.
-- **Translation diff view:** Load 2-3 English translations of same Chinese doc (human vs DeepL vs your draft) and toggle between them to see where they diverge.
-
-### 2. Make Chinese inspection deeper
-
-This is where you beat every other reader:
-
-- **Graded reveal by HSK:** In toolbar, set "I know HSK 4". Any word above HSK 4 stays highlighted in Chinese, everything you know stays hidden. Instant personalized reading.
-- **HanziWriter + practice canvas:** Right in the inspector, not just an animation — a canvas where you can trace the character and it grades stroke order/direction.
-- **Decomposition tree:** Click 涵 and see: 氵(water) + 函(box) → 函 = 丂 + 了 + 丶 ... interactive, like you're peeling the character.
-- **Grammar lens:** When you reveal a sentence, show a tiny parse: 主语 / 谓语 / 宾语 color underlines so you see *why* the English order flipped.
-
-### 3. Make it a learning loop
-
-- **Shadowing mode:** Sentence TTS plays Chinese, blanks out English, you have to recall. Spacebar to reveal. Auto-loops through paragraphs.
-- **One-click Anki / Pleco export:** Inspector has "Add + context". It saves: character + pinyin + your note + the sentence it appeared in + audio. That's a card you actually remember.
-- **Personal dictionary:** Characters you inspect get frequency-ranked. Toolbar shows "32 characters from this doc are new to you" and lets you pre-study them.
-
-### 4. Make it a work tool, not just a reader
-
-Since you said "Chinese documents that were translated to English" — that sounds like work docs, not just literature:
-
-- **Inline comments / translator notes:** Select any English span, leave a note like "Original says 庭院里, more like 'courtyard inside' not 'garden'". Threaded, resolvable.
-- **Side-by-side edit:** Edit English translation in place while Chinese stays locked. Version history so you can see what changed.
-- **Corpus search:** Upload 20 docs, then search "庭院" across all of them — see every English translation you've used before.
-- **PWA offline:** Save docs locally, works on a plane, syncs later.
-
----
-
-**If I had to pick 3 to build next for you:**
-
-1.  **HSK-graded reveal** — 1 toggle that instantly makes it feel personal.
-2.  **HanziWriter tracing** in inspector — turns inspection from passive to active.
-3.  **OCR + smart auto-align** — so you can drop any real-world doc in, not just my samples.
-
-Which direction are you actually using this for — literature study, or work translation review? I'd spec the next version differently based on that.
+- CC-CEDICT — CC BY-SA 4.0 (https://cc-cedict.org)
+- Stroke-order data — Make Me a Hanzi (Arphic Public License)
+- Jiayan segmentation data — MIT
+- Three Character Classic — Chinese text public domain; English
+  translation provenance is recorded per book in
+  `public/texts/manifest.json`

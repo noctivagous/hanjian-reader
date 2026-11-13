@@ -1,7 +1,14 @@
 import { brand } from '../brand';
 import type { Doc } from '../data/types';
-import { bilingualText, chineseText, englishText } from '../lib/doc';
+import {
+  bilingualText,
+  chineseText,
+  docHasTranslationChoice,
+  englishText,
+} from '../lib/doc';
 import type { DictStatus, ReadingProvider } from '../lib/dictionary';
+import { resolveCharReading } from '../lib/reading';
+import { studyListHas, type StudyItem } from '../lib/studyList';
 import type { AlignRole } from '../data/types';
 import { AlignRoleToggle } from './AlignRoleToggle';
 import { CharInspector } from './CharInspector';
@@ -54,12 +61,27 @@ interface Props {
   onSpeakOnClick: (v: boolean) => void;
   search: string;
   onSearch: (v: string) => void;
+  compareTranslations: boolean;
+  onCompareTranslations: (v: boolean) => void;
+  pageMode: boolean;
+  onPageMode: (v: boolean) => void;
+  searchTotal: number;
+  /** 1-based position of the current match, 0 when there are none. */
+  searchCurrent: number;
+  onSearchPrev: () => void;
+  onSearchNext: () => void;
   inspectedChar: string | null;
   note: string;
   onNote: (char: string, note: string) => void;
   onSpeak: (text: string) => void;
   onCopy: (text: string, label: string) => void;
   onAddToList: () => void;
+  onDownloadDoc: () => void;
+  onDownloadEpub: () => void;
+  onDownloadTmx: () => void;
+  studyList: StudyItem[];
+  onRemoveFromList: (char: string) => void;
+  onSelectStudyChar: (char: string) => void;
   onImport: () => void;
   onCloseInspector: () => void;
   collapsed: boolean;
@@ -243,6 +265,26 @@ export function Sidebar(p: Props) {
               />
             </div>
             )}
+            {docHasTranslationChoice(p.doc) && (
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-[13px]">Compare Translations / 对照译本</span>
+              <input
+                type="checkbox"
+                checked={p.compareTranslations}
+                onChange={(e) => p.onCompareTranslations(e.target.checked)}
+                className="accent-[var(--verm)]"
+              />
+            </label>
+            )}
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-[13px]">Paginated Reading / 分页</span>
+              <input
+                type="checkbox"
+                checked={p.pageMode}
+                onChange={(e) => p.onPageMode(e.target.checked)}
+                className="accent-[var(--verm)]"
+              />
+            </label>
           </div>
         </div>
 
@@ -289,6 +331,33 @@ export function Sidebar(p: Props) {
               </button>
             )}
           </div>
+          {p.search && (
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-[var(--ink-mute)]">
+                {p.searchTotal === 0
+                  ? 'No matches · 无结果'
+                  : `${p.searchCurrent} of ${p.searchTotal} matches`}
+              </span>
+              {p.searchTotal > 0 && (
+                <span className="flex gap-1">
+                  <button
+                    type="button"
+                    onClick={p.onSearchPrev}
+                    className="rounded-full border border-[var(--line)] bg-white dark:bg-[#181611] px-2.5 py-0.5 text-[11px] hover:border-[var(--verm)]"
+                  >
+                    ↑ Prev
+                  </button>
+                  <button
+                    type="button"
+                    onClick={p.onSearchNext}
+                    className="rounded-full border border-[var(--line)] bg-white dark:bg-[#181611] px-2.5 py-0.5 text-[11px] hover:border-[var(--verm)]"
+                  >
+                    Next ↓
+                  </button>
+                </span>
+              )}
+            </div>
+          )}
         </div>
         )}
 
@@ -348,12 +417,85 @@ export function Sidebar(p: Props) {
                 onSpeak={p.onSpeak}
                 onCopy={p.onCopy}
                 onAddToList={p.onAddToList}
+                inList={
+                  p.inspectedChar
+                    ? studyListHas(p.studyList, p.inspectedChar)
+                    : false
+                }
                 dict={p.dict}
               />
             )}
           </div>
         </div>
         )}
+
+        <div className="rounded-[14px] border border-[var(--line)] bg-[var(--paper-2)] p-4 space-y-3">
+          <h3 className="text-[12px] tracking-[0.15em] uppercase font-semibold">
+            Study List · 学习单 ({p.studyList.length})
+          </h3>
+          {p.studyList.length === 0 ? (
+            <div className="text-[12px] text-[var(--ink-mute)]">
+              Characters you save from the inspector collect here, and the
+              list survives reload. 点「+ List」收藏汉字。
+            </div>
+          ) : (
+            <>
+              <div className="space-y-1">
+                {[...p.studyList].reverse().map((item) => {
+                  const r = resolveCharReading(item.char, p.dict);
+                  return (
+                    <div
+                      key={item.char}
+                      className="flex items-center gap-2 rounded-lg bg-white dark:bg-[#181611] border border-[var(--line)] px-2 py-1"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => p.onSelectStudyChar(item.char)}
+                        className="flex items-baseline gap-2 flex-1 text-left min-w-0"
+                        title="Open in the inspector"
+                      >
+                        <span className="serif-sc text-[18px] leading-none">
+                          {item.char}
+                        </span>
+                        <span className="text-[12px] font-medium truncate">
+                          {r.pinyin || '—'}
+                        </span>
+                        <span className="text-[11px] text-[var(--ink-mute)] truncate">
+                          {r.meaning || ''}
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        aria-label={`Remove ${item.char} from study list`}
+                        onClick={() => p.onRemoveFromList(item.char)}
+                        className="h-5 w-5 shrink-0 rounded-full border border-[var(--line)] flex items-center justify-center text-[10px] hover:border-[var(--verm)] hover:text-[var(--verm)]"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  p.onCopy(
+                    p.studyList
+                      .map((item) => {
+                        const r = resolveCharReading(item.char, p.dict);
+                        return `${item.char}\t${r.pinyin}\t${r.meaning ?? ''}`;
+                      })
+                      .join('\n'),
+                    'Study list',
+                  )
+                }
+                className="w-full rounded-full border bg-white dark:bg-[#181611] py-1.5 text-[11px] hover:border-[var(--verm)]"
+              >
+                Copy list (tab-separated)
+              </button>
+            </>
+          )}
+        </div>
 
         <div className="rounded-[14px] border border-[var(--line)] bg-[var(--paper-2)] p-4 space-y-3">
           <h3 className="text-[12px] tracking-[0.15em] uppercase font-semibold">
@@ -380,6 +522,32 @@ export function Sidebar(p: Props) {
               className="rounded-full border bg-white dark:bg-[#181611] py-1.5 text-[11px] hover:border-[var(--verm)]"
             >
               Copy 双语
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={p.onDownloadDoc}
+            className="w-full rounded-full border border-[var(--line)] bg-white dark:bg-[#181611] py-2 text-[12px] hover:border-[var(--verm)]"
+            title="Download this document as a .hanjian.json file (re-importable from the Import dialog)"
+          >
+            ⬇ Download .hanjian.json
+          </button>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={p.onDownloadEpub}
+              className="rounded-full border border-[var(--line)] bg-white dark:bg-[#181611] py-1.5 text-[11px] hover:border-[var(--verm)]"
+              title="Download as an EPUB book (Chinese paragraph, then its translation)"
+            >
+              ⬇ EPUB
+            </button>
+            <button
+              type="button"
+              onClick={p.onDownloadTmx}
+              className="rounded-full border border-[var(--line)] bg-white dark:bg-[#181611] py-1.5 text-[11px] hover:border-[var(--verm)]"
+              title="Download as TMX translation memory (one unit per sentence)"
+            >
+              ⬇ TMX
             </button>
           </div>
           {brand.features.import && (

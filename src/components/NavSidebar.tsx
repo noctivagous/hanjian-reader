@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { Doc, WordAlign } from '../data/types';
+import type { Doc, Translation, WordAlign } from '../data/types';
 import { paragraphEn } from '../lib/doc';
 import type { ReadingProvider } from '../lib/dictionary';
 import { canonicalSearchText, scriptTag, zhFontClass } from '../lib/script';
@@ -16,6 +16,13 @@ interface NavContentProps {
   docs: Doc[];
   activeDocId: string;
   onSelectDoc: (id: string) => void;
+  isCustomDoc: (id: string) => boolean;
+  onRenameDoc: (id: string, titleEn: string) => void;
+  onDeleteDoc: (id: string) => void;
+  /** Translator picker: offered only when the doc has a real choice. */
+  translationOptions: Translation[];
+  activeTranslationId: string;
+  onSelectTranslation: (id: string) => void;
   primaryLang: PrimaryLang;
   activeSectionId: string | null;
   activeParagraphId: string | null;
@@ -43,6 +50,12 @@ export function NavContent({
   docs,
   activeDocId,
   onSelectDoc,
+  isCustomDoc,
+  onRenameDoc,
+  onDeleteDoc,
+  translationOptions,
+  activeTranslationId,
+  onSelectTranslation,
   primaryLang,
   activeSectionId,
   activeParagraphId,
@@ -50,6 +63,7 @@ export function NavContent({
   wordHover,
 }: NavContentProps) {
   const enPrimary = primaryLang === 'en';
+  const [confirmDeleteFor, setConfirmDeleteFor] = useState<string | null>(null);
   const [filter, setFilter] = useState('');
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
@@ -193,6 +207,62 @@ export function NavContent({
             ▼
           </span>
         </div>
+        {isCustomDoc(doc.id) && (
+          <div className="mt-2 flex items-center gap-1.5">
+            <input
+              key={doc.id}
+              defaultValue={doc.titleEn}
+              aria-label="Rename imported document"
+              title="Rename this imported document (Enter or click away to save)"
+              onBlur={(e) => {
+                const v = e.target.value.trim();
+                if (v && v !== doc.titleEn) onRenameDoc(doc.id, v);
+                else e.target.value = doc.titleEn;
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+              }}
+              className="min-w-0 flex-1 rounded-full border border-[var(--line)] bg-[var(--paper)] px-2.5 py-1 text-[11px] outline-none focus:border-[var(--verm)]"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                if (confirmDeleteFor === doc.id) {
+                  setConfirmDeleteFor(null);
+                  onDeleteDoc(doc.id);
+                } else {
+                  setConfirmDeleteFor(doc.id);
+                }
+              }}
+              className={`shrink-0 rounded-full border px-2.5 py-1 text-[11px] ${confirmDeleteFor === doc.id ? 'border-[var(--verm)] text-[var(--verm)] font-medium' : 'border-[var(--line)]'}`}
+            >
+              {confirmDeleteFor === doc.id ? 'Delete for sure?' : 'Delete'}
+            </button>
+          </div>
+        )}
+        {translationOptions.length > 1 && (
+          <div className="relative mt-2">
+            <label className="sr-only" htmlFor={`${idPrefix}-translation-select`}>
+              Translation
+            </label>
+            <select
+              id={`${idPrefix}-translation-select`}
+              value={activeTranslationId}
+              onChange={(e) => onSelectTranslation(e.target.value)}
+              className="w-full appearance-none rounded-full border border-[var(--line)] bg-[var(--paper)] py-1.5 pl-3 pr-8 text-[12px] outline-none transition hover:border-[var(--ink-mute)]"
+            >
+              {translationOptions.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.label || t.language}
+                  {t.translator ? ` — ${t.translator}` : ''}
+                </option>
+              ))}
+            </select>
+            <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px]">
+              ▼
+            </span>
+          </div>
+        )}
         <h2 className="serif-display mt-3 text-[18px] font-semibold leading-tight tracking-tight">
           {enPrimary ? doc.titleEn : chromeText(doc.titleZh, `${idPrefix}_title_primary`)}{' '}
           <span className="text-[13px] font-normal text-[var(--ink-mute)]">

@@ -13,6 +13,8 @@ interface Props {
   onSpeak: (text: string) => void;
   onCopy: (text: string, label: string) => void;
   onAddToList: () => void;
+  /** Whether `char` is already in the study list (button becomes a toggle). */
+  inList?: boolean;
   compact?: boolean;
   dict?: ReadingProvider | null;
 }
@@ -157,6 +159,7 @@ export function CharInspector({
   onSpeak,
   onCopy,
   onAddToList,
+  inList,
   compact,
   dict,
 }: Props) {
@@ -238,9 +241,10 @@ export function CharInspector({
         <button
           type="button"
           onClick={onAddToList}
+          aria-pressed={inList ? true : undefined}
           className="flex-1 rounded-full border border-[var(--line)] bg-[var(--verm-soft)] text-[var(--verm)] py-2 text-[12px] font-medium"
         >
-          + List
+          {inList ? '✓ In list' : '+ List'}
         </button>
       </div>
 

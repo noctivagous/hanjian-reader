@@ -26,6 +26,30 @@ import { docScript } from './lib/script';
 import { importCustomDoc } from './lib/segment';
 import { copyText, speakChinese } from './lib/speech';
 import {
+  addStudyItem,
+  parseStudyList,
+  removeStudyItem,
+  serializeStudyList,
+  studyListHas,
+  type StudyItem,
+} from './lib/studyList';
+import {
+  defaultSettings,
+  parseSettings,
+  serializeSettings,
+  type ReaderSettings,
+} from './lib/settings';
+import { docSearchMatches } from './lib/search';
+import { downloadDoc, isHanjianDoc } from './lib/docFile';
+import { downloadEpub } from './lib/epub';
+import { downloadTmx } from './lib/tmx';
+import {
+  docHasTranslationChoice,
+  docTranslations,
+  selectTranslation,
+} from './lib/doc';
+import type { ImportDraft } from './components/ImportModal';
+import {
   buildDocPath,
   completeDocRoute,
   locateInDoc,
@@ -44,15 +68,7 @@ function readStoredCustomDocs(): Doc[] {
     if (!value) return [];
     const parsed: unknown = JSON.parse(value);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter(
-      (doc): doc is Doc =>
-        typeof doc === 'object' &&
-        doc !== null &&
-        (doc as Doc).format === 'hanjian' &&
-        (doc as Doc).version === 1 &&
-        typeof (doc as Doc).id === 'string' &&
-        Array.isArray((doc as Doc).sections),
-    );
+    return parsed.filter(isHanjianDoc);
   } catch {
     // Storage is unavailable or contains malformed data.
     return [];
@@ -67,6 +83,36 @@ function readStoredDocId(): string {
     // storage unavailable (private mode)
   }
   return brand.defaults.defaultDocId;
+}
+
+/** The versioned settings record (display, dark, sizes, notes, positions). */
+function readStoredSettings(): ReaderSettings {
+  const defaults = defaultSettings({
+    reveal: { ...brand.defaults.reveal },
+    showPinyin: brand.defaults.showPinyin,
+    showZhuyin: brand.defaults.showZhuyin,
+    toneColors: brand.defaults.toneColors,
+    defsInline: brand.defaults.defsInline,
+    showSentenceChips: brand.defaults.showSentenceChips,
+    fontScale: brand.defaults.fontScale,
+    charSize: brand.defaults.charSize,
+    showSpeakerButtons: brand.defaults.showSpeakerButtons,
+    speakOnClick: brand.defaults.speakOnClick,
+    dark: brand.defaults.dark,
+    showTip: true,
+    sidebarCollapsed: false,
+    navCollapsed: false,
+    compareTranslations: false,
+    pageMode: false,
+  });
+  try {
+    return parseSettings(
+      window.localStorage.getItem(brandStorageKey('settings')),
+      defaults,
+    );
+  } catch {
+    return defaults;
+  }
 }
 
 const ROUTE_BASE = import.meta.env.BASE_URL;
@@ -124,7 +170,7 @@ export default function App() {
   );
   const routeIntent = useRef<DocRoute | null>(currentDocRoute());
   const skipRouteSync = useRef(false);
-  const doc = useMemo(
+  const rawDoc = useMemo(
     () => docs.find((d) => d.id === activeId) ?? pendingDoc(activeId),
     [docs, activeId],
   );
@@ -150,7 +196,15 @@ export default function App() {
 
   // White-label: initial state comes from the brand config, so a rebrand
   // ships its own texts, enabled features, and defaults with no code edits.
-  const [reveal, setReveal] = useState<Reveal>(() => ({ ...brand.defaults.reveal }));
+  const [bootSettings] = useState(readStoredSettings);
+  const [translationByDoc, setTranslationByDoc] = useState<
+    Record<string, string>
+  >(() => bootSettings.translations);
+  const [compareTranslations, setCompareTranslations] = useState(
+    bootSettings.compareTranslations,
+  );
+  const [pageMode, setPageMode] = useState(bootSettings.pageMode);
+  const [reveal, setReveal] = useState<Reveal>(() => bootSettings.reveal);
   const [primaryLang, setPrimaryLang] = useState<PrimaryLang>(() => {
     try {
       const v = window.localStorage.getItem(brandStorageKey('primaryLang'));
@@ -216,19 +270,19 @@ export default function App() {
     }
   }, [activeId, docs]);
 
-  const [showPinyin, setShowPinyin] = useState(brand.defaults.showPinyin);
-  const [showZhuyin, setShowZhuyin] = useState(brand.defaults.showZhuyin);
-  const [toneColors, setToneColors] = useState(brand.defaults.toneColors);
-  const [defsInline, setDefsInline] = useState(brand.defaults.defsInline);
+  const [showPinyin, setShowPinyin] = useState(bootSettings.showPinyin);
+  const [showZhuyin, setShowZhuyin] = useState(bootSettings.showZhuyin);
+  const [toneColors, setToneColors] = useState(bootSettings.toneColors);
+  const [defsInline, setDefsInline] = useState(bootSettings.defsInline);
   const [showSentenceChips, setShowSentenceChips] = useState(
-    brand.defaults.showSentenceChips,
+    bootSettings.showSentenceChips,
   );
-  const [fontScale, setFontScale] = useState(brand.defaults.fontScale);
-  const [charSize, setCharSize] = useState(brand.defaults.charSize);
+  const [fontScale, setFontScale] = useState(bootSettings.fontScale);
+  const [charSize, setCharSize] = useState(bootSettings.charSize);
   const [showSpeakerButtons, setShowSpeakerButtons] = useState(
-    brand.defaults.showSpeakerButtons,
+    bootSettings.showSpeakerButtons,
   );
-  const [speakOnClick, setSpeakOnClick] = useState(brand.defaults.speakOnClick);
+  const [speakOnClick, setSpeakOnClick] = useState(bootSettings.speakOnClick);
 
   const [inspectedChar, setInspectedChar] = useState<string | null>(null);
   const [pinnedKey, setPinnedKey] = useState<string | null>(null);
@@ -256,15 +310,110 @@ export default function App() {
     new Set(),
   );
   const [search, setSearch] = useState('');
-  const [notes, setNotes] = useState<Record<string, string>>({});
+  const [notes, setNotes] = useState<Record<string, string>>(
+    () => bootSettings.notes,
+  );
 
-  const [dark, setDark] = useState(brand.defaults.dark);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [navCollapsed, setNavCollapsed] = useState(false);
+  const [studyList, setStudyList] = useState<StudyItem[]>(() => {
+    try {
+      return parseStudyList(
+        window.localStorage.getItem(brandStorageKey('studyList')),
+      );
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(
+        brandStorageKey('studyList'),
+        serializeStudyList(studyList),
+      );
+    } catch {
+      // storage unavailable (private mode); the list stays in-memory
+    }
+  }, [studyList]);
+
+  /** The inspector's + List button: a real toggle over the study list. */
+  const handleAddToList = () => {
+    if (!inspectedChar) return;
+    if (studyListHas(studyList, inspectedChar)) {
+      setStudyList((prev) => removeStudyItem(prev, inspectedChar));
+      flash(`Removed ${inspectedChar} from study list`, 1500);
+    } else {
+      setStudyList((prev) => addStudyItem(prev, inspectedChar, Date.now()).items);
+      flash(`Added ${inspectedChar} to study list`, 1500);
+    }
+  };
+
+  const [dark, setDark] = useState(bootSettings.dark);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(
+    bootSettings.sidebarCollapsed,
+  );
+  const [navCollapsed, setNavCollapsed] = useState(bootSettings.navCollapsed);
   const [navOpen, setNavOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
-  const [showTip, setShowTip] = useState(true);
+  const [showTip, setShowTip] = useState(bootSettings.showTip);
+  const [positions, setPositions] = useState<Record<string, string>>(
+    () => bootSettings.positions,
+  );
+
+  // One write path for the whole settings record: any covered state
+  // change rewrites it, so display options, dark mode, sizes, notes and
+  // reading positions all survive reload together.
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(
+        brandStorageKey('settings'),
+        serializeSettings({
+          version: 1,
+          reveal,
+          showPinyin,
+          showZhuyin,
+          toneColors,
+          defsInline,
+          showSentenceChips,
+          fontScale,
+          charSize,
+          showSpeakerButtons,
+          speakOnClick,
+          dark,
+          showTip,
+          sidebarCollapsed,
+          navCollapsed,
+          notes,
+          positions,
+          translations: translationByDoc,
+          compareTranslations,
+          pageMode,
+        }),
+      );
+    } catch {
+      // storage unavailable (private mode); settings stay in-memory
+    }
+  }, [
+    reveal,
+    showPinyin,
+    showZhuyin,
+    toneColors,
+    defsInline,
+    showSentenceChips,
+    fontScale,
+    charSize,
+    showSpeakerButtons,
+    speakOnClick,
+    dark,
+    showTip,
+    sidebarCollapsed,
+    navCollapsed,
+    notes,
+    positions,
+    translationByDoc,
+    compareTranslations,
+    pageMode,
+  ]);
   const [toast, setToast] = useState<string | null>(null);
 
   // Lazy CC-CEDICT: fetched once when Chinese-primary reading needs it,
@@ -277,7 +426,7 @@ export default function App() {
     brand.features.words &&
     (reveal.words ||
       primaryLang === 'zh' ||
-      docScript(doc) === 'traditional' ||
+      docScript(rawDoc) === 'traditional' ||
       inspectedChar !== null);
   useEffect(() => {
     if (!needsDict || dict || dictFailed) return;
@@ -301,7 +450,7 @@ export default function App() {
 
   const [jiayan, setJiayan] = useState<JiayanIndex | null>(null);
   const needsJiayan =
-    brand.features.words && docScript(doc) === 'traditional';
+    brand.features.words && docScript(rawDoc) === 'traditional';
   useEffect(() => {
     if (!needsJiayan || jiayan) return;
     let live = true;
@@ -381,6 +530,11 @@ export default function App() {
     flash(ok ? `${label} copied` : 'Copy failed');
   };
 
+  const emptyImportDraft: ImportDraft = { en: '', zh: '', titleEn: '', titleZh: '' };
+  const [importDraft, setImportDraft] = useState<ImportDraft>(emptyImportDraft);
+  const patchImportDraft = (patch: Partial<ImportDraft>) =>
+    setImportDraft((prev) => ({ ...prev, ...patch }));
+
   const handleImport = (
     en: string,
     zh: string,
@@ -391,8 +545,45 @@ export default function App() {
     setCustomDocs((prev) => [...prev, custom]);
     setActiveId(custom.id);
     setImportOpen(false);
+    setImportDraft(emptyImportDraft);
     flash('Custom document imported', 2000);
   };
+
+  /** A .hanjian.json file imports back as a custom doc (round-trip). */
+  const handleImportJson = (incoming: Doc) => {
+    const replaces = customDocs.some((d) => d.id === incoming.id);
+    const collidesBuiltin =
+      !replaces && docs.some((d) => d.id === incoming.id);
+    const toAdd = collidesBuiltin
+      ? { ...incoming, id: `custom_${Date.now()}` }
+      : incoming;
+    setCustomDocs((prev) =>
+      replaces
+        ? prev.map((d) => (d.id === toAdd.id ? toAdd : d))
+        : [...prev, toAdd],
+    );
+    setActiveId(toAdd.id);
+    setImportOpen(false);
+    setImportDraft(emptyImportDraft);
+    flash(
+      replaces ? 'Document replaced from file' : 'Document imported from file',
+      2000,
+    );
+  };
+
+  const handleRenameDoc = (id: string, titleEn: string) => {
+    setCustomDocs((prev) =>
+      prev.map((d) => (d.id === id ? { ...d, titleEn } : d)),
+    );
+  };
+
+  const handleDeleteDoc = (id: string) => {
+    setCustomDocs((prev) => prev.filter((d) => d.id !== id));
+    if (activeId === id) handleSelectDoc(brand.defaults.defaultDocId);
+    flash('Imported document deleted', 1500);
+  };
+
+  const isCustomDocId = (id: string) => customDocs.some((d) => d.id === id);
 
   const toggleSentence = (id: string) => {
     const toggle = (prev: Set<string>) => {
@@ -425,6 +616,14 @@ export default function App() {
     setHover(null);
   };
 
+  // The translator picker rotates the chosen translation to the front
+  // of each sentence (selectTranslation), so the whole app — reader,
+  // search, copy tools — follows the per-document choice.
+  const doc = useMemo(
+    () => selectTranslation(rawDoc, translationByDoc[rawDoc.id]),
+    [rawDoc, translationByDoc],
+  );
+
   const navIds = useMemo(
     () =>
       doc.sections.flatMap((s) => [
@@ -453,6 +652,108 @@ export default function App() {
   }, [doc, activeLocation.sectionId]);
 
   const activeParagraphId = activeLocation.paragraphId ?? null;
+
+  // Search navigation: matches are counted over the doc model (both
+  // languages, every occurrence); next/prev steps through them and
+  // scrolls the containing sentence into view.
+  const searchResult = useMemo(
+    () => docSearchMatches(doc, search),
+    [doc, search],
+  );
+  const [searchIndex, setSearchIndex] = useState(0);
+  const searchCurrent =
+    searchResult.total > 0
+      ? Math.min(searchIndex, searchResult.total - 1)
+      : 0;
+  const searchFocusId =
+    searchResult.total > 0 ? searchResult.anchors[searchCurrent] : null;
+
+  const scrollToSearchMatch = (idx: number, smooth = true) => {
+    const id = searchResult.anchors[idx];
+    if (!id) return;
+    setActiveNavId(id);
+    const el = scrollRef.current?.querySelector(`#${CSS.escape(id)}`);
+    el?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+  };
+
+  const goToSearchMatch = (delta: number) => {
+    if (searchResult.total === 0) return;
+    const next =
+      (searchCurrent + delta + searchResult.total) % searchResult.total;
+    setSearchIndex(next);
+    scrollToSearchMatch(next);
+  };
+
+  // A new query (or a new doc under the same query) restarts at the
+  // first match and jumps to it.
+  useEffect(() => {
+    setSearchIndex(0);
+    if (!search || searchResult.total === 0) return;
+    const id = searchResult.anchors[0];
+    let tries = 0;
+    let raf = 0;
+    const jump = () => {
+      const el = scrollRef.current?.querySelector(`#${CSS.escape(id)}`);
+      if (el) {
+        el.scrollIntoView({ block: 'start' });
+        return;
+      }
+      if (tries++ < 40) raf = requestAnimationFrame(jump);
+    };
+    raf = requestAnimationFrame(jump);
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search, doc.id]);
+
+  // Reading position: restore the stored anchor when a doc opens
+  // without an explicit route intent, then track the anchor in view.
+  const restoredFor = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (restoredFor.current === doc.id) return;
+    if (routeIntent.current) {
+      // An explicit navigation (URL route, doc select, click) wins.
+      restoredFor.current = doc.id;
+      return;
+    }
+    const target = positions[doc.id];
+    if (!target) {
+      restoredFor.current = doc.id;
+      return;
+    }
+    // In page mode the target's section renders only once it is the
+    // active one — point the nav at the anchor first, then scroll.
+    if (pageMode) setActiveNavId(target);
+    let cancelled = false;
+    let tries = 0;
+    const scroll = () => {
+      if (cancelled) return;
+      const el = scrollRef.current?.querySelector(`#${CSS.escape(target)}`);
+      if (el) {
+        el.scrollIntoView({ block: 'start' });
+        restoredFor.current = doc.id;
+        return;
+      }
+      if (tries++ < 40) requestAnimationFrame(scroll);
+      else restoredFor.current = doc.id;
+    };
+    requestAnimationFrame(scroll);
+    return () => {
+      cancelled = true;
+    };
+  }, [doc, positions, pageMode]);
+
+  useEffect(() => {
+    // Don't record before the restore ran, or the observer's reset to
+    // the first anchor would overwrite the stored position.
+    if (restoredFor.current !== doc.id) return;
+    if (!activeNavId) return;
+    setPositions((prev) =>
+      prev[doc.id] === activeNavId
+        ? prev
+        : { ...prev, [doc.id]: activeNavId },
+    );
+  }, [activeNavId, doc]);
 
   useEffect(() => {
     const onPop = () => {
@@ -541,6 +842,26 @@ export default function App() {
     el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const translationOptions = docHasTranslationChoice(rawDoc)
+    ? docTranslations(rawDoc)
+    : [];
+  const activeTranslationId =
+    translationByDoc[rawDoc.id] ?? translationOptions[0]?.id ?? '';
+  const handleSelectTranslation = (id: string) =>
+    setTranslationByDoc((prev) => ({ ...prev, [rawDoc.id]: id }));
+
+  // Pagination: a page is one section; the footer steps between them.
+  const pageIdx = Math.max(
+    0,
+    doc.sections.findIndex((s) => s.id === activeSectionId),
+  );
+  const goToPage = (idx: number) => {
+    const section = doc.sections[idx];
+    if (!section) return;
+    handleNavigate(section.id);
+    scrollRef.current?.scrollTo({ top: 0 });
+  };
+
   return (
     <div
       data-script={docScript(doc)}
@@ -572,6 +893,12 @@ export default function App() {
           docs={docs}
           activeDocId={activeId}
           onSelectDoc={handleSelectDoc}
+          isCustomDoc={isCustomDocId}
+          onRenameDoc={handleRenameDoc}
+          onDeleteDoc={handleDeleteDoc}
+          translationOptions={translationOptions}
+          activeTranslationId={activeTranslationId}
+          onSelectTranslation={handleSelectTranslation}
           primaryLang={primaryLang}
           activeSectionId={activeSectionId}
           activeParagraphId={activeParagraphId}
@@ -589,6 +916,7 @@ export default function App() {
           }}
           collapsed={navCollapsed}
         />
+        <div className="flex-1 flex flex-col min-w-0">
         <div
           ref={scrollRef}
           className="flex-1 flex justify-center overflow-auto"
@@ -596,6 +924,8 @@ export default function App() {
         >
           <Reader
             doc={doc}
+            pageMode={pageMode}
+            pageSectionId={activeSectionId}
             reveal={reveal}
             primaryLang={primaryLang}
             showPinyin={showPinyin}
@@ -609,6 +939,8 @@ export default function App() {
             closedSentences={closedSentences}
             onToggleSentence={toggleSentence}
             search={search}
+            searchFocusId={searchFocusId}
+            compareTranslations={compareTranslations}
             pinnedKey={pinnedKey}
             onPin={handlePin}
             linkedAlign={linkedAlign}
@@ -624,6 +956,37 @@ export default function App() {
             alignRole={alignRole}
             hoverMode={hoverMode}
           />
+        </div>
+        {pageMode && (
+          <div className="border-t border-[var(--line)] bg-[var(--paper)] px-4 py-2 flex items-center justify-between gap-3">
+            <button
+              type="button"
+              disabled={pageIdx <= 0}
+              onClick={() => goToPage(pageIdx - 1)}
+              className="rounded-full border border-[var(--line)] px-3.5 py-1.5 text-[12px] disabled:opacity-40 hover:border-[var(--verm)]"
+            >
+              ← Prev
+            </button>
+            <div className="text-[12px] text-[var(--ink-mute)] truncate text-center">
+              {doc.sections[pageIdx]?.titleEn || doc.sections[pageIdx]?.titleZh || ''}
+              {doc.sections.length > 0 && (
+                <>
+                  {' · '}Section {pageIdx + 1} of {doc.sections.length}
+                  {' · '}
+                  {Math.round(((pageIdx + 1) / doc.sections.length) * 100)}%
+                </>
+              )}
+            </div>
+            <button
+              type="button"
+              disabled={pageIdx >= doc.sections.length - 1}
+              onClick={() => goToPage(pageIdx + 1)}
+              className="rounded-full border border-[var(--line)] px-3.5 py-1.5 text-[12px] disabled:opacity-40 hover:border-[var(--verm)]"
+            >
+              Next →
+            </button>
+          </div>
+        )}
         </div>
 
         <Sidebar
@@ -649,6 +1012,14 @@ export default function App() {
           onSpeakOnClick={setSpeakOnClick}
           search={search}
           onSearch={setSearch}
+          compareTranslations={compareTranslations}
+          onCompareTranslations={setCompareTranslations}
+          pageMode={pageMode}
+          onPageMode={setPageMode}
+          searchTotal={searchResult.total}
+          searchCurrent={searchResult.total > 0 ? searchCurrent + 1 : 0}
+          onSearchPrev={() => goToSearchMatch(-1)}
+          onSearchNext={() => goToSearchMatch(1)}
           inspectedChar={inspectedChar}
           note={inspectedChar ? notes[inspectedChar] || '' : ''}
           onNote={(ch, note) =>
@@ -656,7 +1027,15 @@ export default function App() {
           }
           onSpeak={handleSpeak}
           onCopy={handleCopy}
-          onAddToList={() => flash('Added to list (local)', 1500)}
+          onAddToList={handleAddToList}
+          onDownloadDoc={() => downloadDoc(doc)}
+          onDownloadEpub={() => downloadEpub(doc)}
+          onDownloadTmx={() => downloadTmx(doc)}
+          studyList={studyList}
+          onRemoveFromList={(ch) =>
+            setStudyList((prev) => removeStudyItem(prev, ch))
+          }
+          onSelectStudyChar={(ch) => setInspectedChar(ch)}
           onImport={() => setImportOpen(true)}
           onCloseInspector={() => setInspectedChar(null)}
           collapsed={sidebarCollapsed}
@@ -674,6 +1053,12 @@ export default function App() {
         docs={docs}
         activeDocId={activeId}
         onSelectDoc={handleSelectDoc}
+        isCustomDoc={isCustomDocId}
+        onRenameDoc={handleRenameDoc}
+        onDeleteDoc={handleDeleteDoc}
+        translationOptions={translationOptions}
+        activeTranslationId={activeTranslationId}
+        onSelectTranslation={handleSelectTranslation}
         primaryLang={primaryLang}
         activeSectionId={activeSectionId}
         activeParagraphId={activeParagraphId}
@@ -702,6 +1087,33 @@ export default function App() {
         onToggleReveal={toggleReveal}
         inspectedChar={inspectedChar}
         onClearInspected={() => setInspectedChar(null)}
+        onAddToList={handleAddToList}
+        studyListHasChar={
+          inspectedChar ? studyListHas(studyList, inspectedChar) : false
+        }
+        note={inspectedChar ? notes[inspectedChar] || '' : ''}
+        onNote={(ch, note) =>
+          setNotes((prev) => ({ ...prev, [ch]: note }))
+        }
+        onSpeak={handleSpeak}
+        showPinyin={showPinyin}
+        onShowPinyin={setShowPinyin}
+        showZhuyin={showZhuyin}
+        onShowZhuyin={setShowZhuyin}
+        showDefsInline={defsInline}
+        onShowDefsInline={setDefsInline}
+        toneColors={toneColors}
+        onToneColors={setToneColors}
+        showSentenceChips={showSentenceChips}
+        onShowSentenceChips={setShowSentenceChips}
+        showSpeakerButtons={showSpeakerButtons}
+        onShowSpeakerButtons={setShowSpeakerButtons}
+        speakOnClick={speakOnClick}
+        onSpeakOnClick={setSpeakOnClick}
+        charSize={charSize}
+        onCharSize={setCharSize}
+        pageMode={pageMode}
+        onPageMode={setPageMode}
         onCopy={handleCopy}
         dictStatus={dictStatus}
         dict={dict}
@@ -739,7 +1151,10 @@ export default function App() {
 
       {importOpen && brand.features.import && (
         <ImportModal
+          draft={importDraft}
+          onDraftChange={patchImportDraft}
           onImport={handleImport}
+          onImportJson={handleImportJson}
           onClose={() => setImportOpen(false)}
         />
       )}
