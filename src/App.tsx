@@ -14,7 +14,7 @@ import { WordCard, type HoverState } from './components/WordCard';
 import { applyBrand, brand, brandStorageKey } from './brand';
 import { docs as seedDocs } from './data/documents';
 import { extraDocs } from './data/localDocs';
-import type { AlignRole, Doc, WordAlign } from './data/types';
+import type { Doc, UnderlineMode, WordAlign } from './data/types';
 import {
   loadDictionary,
   type DictIndex,
@@ -222,15 +222,16 @@ export default function App() {
     }
   }, [primaryLang]);
 
-  // Gloss is the default reveal mode: lexical chips under each sentence
-  // carry every word's reading, while span only underlines matching
-  // translation ranges. A stored explicit choice always wins.
-  const [alignRole, setAlignRole] = useState<AlignRole>(() => {
+  // Both underline layers show by default: spans as phrase context,
+  // glosses as word-level underlines over them, translator-only words
+  // in dotted gray. Lexical chips under each sentence still carry the
+  // gloss layer's readings. A stored explicit choice always wins.
+  const [alignRole, setAlignRole] = useState<UnderlineMode>(() => {
     try {
       const v = window.localStorage.getItem(brandStorageKey('alignRole'));
-      return v === 'gloss' || v === 'span' ? v : 'gloss';
+      return v === 'gloss' || v === 'span' || v === 'both' ? v : 'both';
     } catch {
-      return 'gloss';
+      return 'both';
     }
   });
 
@@ -294,7 +295,7 @@ export default function App() {
     setPinnedKey(key);
     setPinnedWord(key && word ? word : null);
   };
-  const handleAlignRole = (role: AlignRole) => {
+  const handleAlignRole = (role: UnderlineMode) => {
     setAlignRole(role);
     handlePin(null);
     setHover(null);

@@ -171,7 +171,10 @@ describe('three-character-classic.xlf', () => {
           `${sentence.id} span matches English`,
         );
         assert.ok(sentence.zh.includes(word.zh), `${sentence.id} span matches Chinese`);
-        if (word.role === 'gloss') continue;
+        // Glosses nest inside spans, and translator marks (English
+        // words with no Chinese counterpart, zh '') may too; only the
+        // span layer itself must tile without overlap.
+        if (word.role === 'gloss' || word.role === 'translator') continue;
         assert.ok(word.enStart >= end, `${sentence.id} spans do not overlap`);
         end = word.enEnd;
       }

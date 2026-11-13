@@ -6,6 +6,13 @@ export interface WordSense {
 /** How a pair is used in the reader. Omitted records are inferred. */
 export type AlignRole = 'span' | 'gloss';
 
+/**
+ * Which underline layers the reader shows at once. `both` is the
+ * default: phrase spans as context, word glosses over them, and
+ * translator marks where they exist.
+ */
+export type UnderlineMode = 'both' | AlignRole;
+
 export interface WordAlign {
   en: string;
   zh: string;
@@ -15,8 +22,13 @@ export interface WordAlign {
    * `span` underlines a range of Translation.text. `gloss` is a lexical
    * chip (not required to appear in the English sentence). When omitted:
    * offsets ⇒ span, otherwise gloss.
+   *
+   * `translator` marks an English word with NO counterpart in the
+   * Chinese (the translator's own embroidery or scaffolding). Such
+   * records are authored data only, carry `zh: ''`, and are drawn with
+   * a dotted gray underline so the gap is visible but honest.
    */
-  role?: AlignRole;
+  role?: AlignRole | 'translator';
   /**
    * Character offsets into Translation.text. Required for the span
    * surface; ignored on gloss-only records.

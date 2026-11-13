@@ -48,7 +48,12 @@ function asAlignments(value: unknown): ParallelWordAlignments {
       const word = item as WordAlign;
       words.push({
         ...word,
-        role: word.role === 'gloss' ? 'gloss' : 'span',
+        role:
+          word.role === 'gloss'
+            ? 'gloss'
+            : word.role === 'translator'
+              ? 'translator'
+              : 'span',
       });
     }
     out[id] = words;

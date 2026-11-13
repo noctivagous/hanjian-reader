@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, type ReactNode } from 'react';
 import { brand } from '../brand';
-import type { AlignRole, Doc, Paragraph, Sentence, WordAlign } from '../data/types';
+import type { Doc, Paragraph, Sentence, UnderlineMode, WordAlign } from '../data/types';
 import { allParagraphs, chineseText, paragraphEn, primaryTranslation } from '../lib/doc';
 import type { ReadingProvider } from '../lib/dictionary';
 import { toneColor } from '../lib/pinyin';
@@ -13,7 +13,7 @@ import {
   zhFontClass,
 } from '../lib/script';
 import { isLinkedAlign } from '../lib/alignLink';
-import { underlinesFor } from '../lib/alignRoles';
+import { layeredUnderlines } from '../lib/alignRoles';
 import {
   tokenizeChinese,
   withDictionaryReading,
@@ -71,7 +71,7 @@ interface Props {
   /** Classical word breaker (Jiayan). Used for traditional-script docs. */
   segmentZh?: (zh: string) => string[];
   /** Which word-alignment surface is interactive. */
-  alignRole: AlignRole;
+  alignRole: UnderlineMode;
   /** Whether an alignment reveals its full Chinese word or one character. */
   hoverMode: HoverMode;
 }
@@ -339,7 +339,9 @@ function paragraphWords(para: Paragraph): WordAlign[] {
 
 function EnglishAlignedText({
   text,
-  words,
+  spans,
+  glosses,
+  translators,
   idPrefix,
   revealWords,
   showDefsInline,
@@ -352,7 +354,9 @@ function EnglishAlignedText({
   dict,
 }: {
   text: string;
-  words: WordAlign[];
+  spans: WordAlign[];
+  glosses: WordAlign[];
+  translators: WordAlign[];
   idPrefix: string;
   revealWords: boolean;
   showDefsInline: boolean;
@@ -364,82 +368,158 @@ function EnglishAlignedText({
   crossLink: boolean;
   dict: ReadingProvider | null;
 }) {
-  const aligned = words.filter(
-    (word): word is WordAlign & { enStart: number; enEnd: number } =>
-      typeof word.enStart === 'number' &&
-      typeof word.enEnd === 'number' &&
-      Number.isInteger(word.enStart) &&
-      Number.isInteger(word.enEnd) &&
-      word.enStart >= 0 &&
-      word.enEnd > word.enStart &&
-      word.enEnd <= text.length,
+  const valid = (
+    w: WordAlign,
+  ): w is WordAlign & { enStart: number; enEnd: number } =>
+    typeof w.enStart === 'number' &&
+    typeof w.enEnd === 'number' &&
+    Number.isInteger(w.enStart) &&
+    Number.isInteger(w.enEnd) &&
+    w.enStart >= 0 &&
+    w.enEnd > w.enStart &&
+    w.enEnd <= text.length;
+  const glossList = glosses.filter(valid);
+  const spanList = spans.filter(valid);
+  const translatorList = translators.filter(valid);
+  // Interactive words in reading order; the index is the pin-key suffix,
+  // as it was when a single layer was rendered.
+  const wordList = [...glossList, ...spanList].sort(
+    (a, b) => a.enStart - b.enStart || a.enEnd - b.enEnd,
   );
-  const parts: ReactNode[] = [];
-  let cursor = 0;
-  for (let i = 0; i < aligned.length; i++) {
-    const word = aligned[i];
-    if (word.enStart < cursor) continue;
-    if (word.enStart > cursor) {
-      parts.push(
-        <span key={`plain-${cursor}`}>{highlight(text.slice(cursor, word.enStart), search)}</span>,
-      );
-    }
-    const key = `${idPrefix}_${i}`;
-    const pinned = pinnedKey === key;
-    const reading = withDictionaryReading(word, dict ?? undefined);
-    const linked =
-      !pinned &&
-      !!reading.zh &&
-      isLinkedAlign(reading, linkedAlign, crossLink);
-    parts.push(
-      <span
-        key={key}
-        onMouseEnter={(e) => {
-          if (!revealWords) return;
-          onHover({
-            key,
-            rect: e.currentTarget.getBoundingClientRect(),
-            data: reading,
-          });
-        }}
-        onMouseLeave={() => {
-          if (pinnedKey !== key) onHover(null);
-        }}
-        onClick={(e) => {
-          e.stopPropagation();
-          if (!reading.zh) return;
-          if (pinnedKey === key) {
-            onPin(null);
-          } else {
-            onPin(key, reading);
-            onHover({
-              key,
-              rect: e.currentTarget.getBoundingClientRect(),
-              data: reading,
-            });
-          }
-        }}
-        className={hoverSpanClasses({
-          revealWords,
-          hasZh: !!reading.zh,
-          pinned,
-          linked,
-        })}
-      >
-        {highlight(text.slice(word.enStart, word.enEnd), search)}
-        {revealWords && showDefsInline && reading.zh && (
-          <span className="ml-1 text-[11px] text-[var(--verm)] font-medium">
-            ({reading.zh})
-          </span>
-        )}
-      </span>,
+  const wordIndex = new Map<WordAlign, number>(
+    wordList.map((w, i) => [w, i] as const),
+  );
+
+  // The layers overlap (a gloss sits inside its span; a translator mark
+  // can too), so the text is cut at every range boundary into atomic
+  // runs. Each run takes the most specific layer covering it:
+  // gloss > translator > span > plain.
+  type Kind = 'gloss' | 'span' | 'translator' | 'plain';
+  interface Run {
+    start: number;
+    end: number;
+    kind: Kind;
+    word: WordAlign | null;
+  }
+  const bounds = new Set<number>([0, text.length]);
+  for (const w of [...glossList, ...spanList, ...translatorList]) {
+    bounds.add(w.enStart);
+    bounds.add(w.enEnd);
+  }
+  const pts = [...bounds].sort((a, b) => a - b);
+  const runs: Run[] = [];
+  for (let i = 0; i + 1 < pts.length; i++) {
+    const start = pts[i]!;
+    const end = pts[i + 1]!;
+    if (end <= start) continue;
+    const gloss = glossList.find((w) => w.enStart <= start && end <= w.enEnd);
+    const translator = translatorList.find(
+      (w) => w.enStart <= start && end <= w.enEnd,
     );
-    cursor = word.enEnd;
+    const span = spanList.find((w) => w.enStart <= start && end <= w.enEnd);
+    const kind: Kind = gloss
+      ? 'gloss'
+      : translator
+        ? 'translator'
+        : span
+          ? 'span'
+          : 'plain';
+    const word = gloss ?? span ?? null;
+    const last = runs[runs.length - 1];
+    if (last && last.kind === kind && last.word === word && last.end === start) {
+      last.end = end;
+    } else {
+      runs.push({ start, end, kind, word });
+    }
   }
-  if (cursor < text.length) {
-    parts.push(<span key={`plain-${cursor}`}>{highlight(text.slice(cursor), search)}</span>);
-  }
-  return <>{parts}</>;
+
+  const defShown = new Set<WordAlign>();
+  return (
+    <>
+      {runs.map((run, i) => {
+        const slice = text.slice(run.start, run.end);
+        if (run.kind === 'translator') {
+          return (
+            <span
+              key={i}
+              title={
+                revealWords
+                  ? "Translator's word — no counterpart in the Chinese"
+                  : undefined
+              }
+              className={
+                revealWords
+                  ? 'border-b border-dotted border-neutral-400 dark:border-neutral-500 cursor-help px-0.5'
+                  : undefined
+              }
+            >
+              {highlight(slice, search)}
+            </span>
+          );
+        }
+        const word = run.word;
+        if (!word) {
+          return <span key={i}>{highlight(slice, search)}</span>;
+        }
+        const key = `${idPrefix}_${wordIndex.get(word) ?? 0}`;
+        const pinned = pinnedKey === key;
+        const reading = withDictionaryReading(word, dict ?? undefined);
+        const linked =
+          !pinned && !!reading.zh && isLinkedAlign(reading, linkedAlign, crossLink);
+        const showDef =
+          revealWords && showDefsInline && !!reading.zh && !defShown.has(word);
+        if (showDef) defShown.add(word);
+        return (
+          <span
+            key={`${key}-${run.start}`}
+            onMouseEnter={(e) => {
+              if (!revealWords) return;
+              onHover({
+                key,
+                rect: e.currentTarget.getBoundingClientRect(),
+                data: reading,
+              });
+            }}
+            onMouseLeave={() => {
+              if (pinnedKey !== key) onHover(null);
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!reading.zh) return;
+              if (pinnedKey === key) {
+                onPin(null);
+              } else {
+                onPin(key, reading);
+                onHover({
+                  key,
+                  rect: e.currentTarget.getBoundingClientRect(),
+                  data: reading,
+                });
+              }
+            }}
+            className={hoverSpanClasses({
+              revealWords,
+              hasZh: !!reading.zh,
+              pinned,
+              linked,
+            })}
+            style={
+              run.kind === 'span' && !pinned
+                ? { borderColor: 'rgba(199, 62, 29, 0.30)' }
+                : undefined
+            }
+          >
+            {highlight(slice, search)}
+            {showDef && (
+              <span className="ml-1 text-[11px] text-[var(--verm)] font-medium">
+                ({reading.zh})
+              </span>
+            )}
+          </span>
+        );
+      })}
+    </>
+  );
 }
 
 function SentenceView({
@@ -483,15 +563,30 @@ function SentenceView({
   const rawWords = translation?.words ?? NO_WORDS;
   const enText = translation?.text ?? '';
   const enPrimary = primaryLang === 'en';
-  const hoverWords = useMemo(
-    () => underlinesFor(enText, sentence.zh, rawWords, alignRole),
+  const layers = useMemo(
+    () => layeredUnderlines(enText, sentence.zh, rawWords, alignRole),
     [enText, sentence.zh, rawWords, alignRole],
+  );
+  const hoverWords = useMemo(
+    () =>
+      [...layers.spans, ...layers.glosses].sort(
+        (a, b) =>
+          (a.enStart ?? 0) - (b.enStart ?? 0) || (a.enEnd ?? 0) - (b.enEnd ?? 0),
+      ),
+    [layers],
   );
   const interactiveWords = useMemo(
     () =>
       hoverMode === 'character' ? characterAlignments(hoverWords) : hoverWords,
     [hoverMode, hoverWords],
   );
+  // The pinyin/def row lists one layer's words, as the old either/or
+  // toggle did: spans in span view, glosses in gloss and both views.
+  const chipWords = useMemo(() => {
+    const base = alignRole === 'span' ? layers.spans : layers.glosses;
+    return hoverMode === 'character' ? characterAlignments(base) : base;
+  }, [alignRole, layers, hoverMode]);
+  const hasUnderlines = hoverWords.length > 0 || layers.translators.length > 0;
   const zhTokens = useMemo(
     () =>
       tokenizeChinese(sentence.zh, interactiveWords, dict ?? undefined, segmentZh),
@@ -552,10 +647,12 @@ function SentenceView({
           </span>
         ) : enPrimary ? (
           <span className="text-[16px] md:text-[18px]">
-            {hoverWords.length > 0 ? (
+            {hasUnderlines ? (
               <EnglishAlignedText
                 text={enText}
-                words={interactiveWords}
+                spans={layers.spans}
+                glosses={layers.glosses}
+                translators={layers.translators}
                 idPrefix={sentence.id}
                 revealWords={reveal.words}
                 showDefsInline={showDefsInline}
@@ -621,10 +718,12 @@ function SentenceView({
             {!enPrimary ? (
               <div className="flex items-start justify-between gap-3">
                 <div className="text-[16px] leading-[1.8]">
-                  {hoverWords.length > 0 ? (
+                  {hasUnderlines ? (
                     <EnglishAlignedText
                       text={enText}
-                      words={interactiveWords}
+                      spans={layers.spans}
+                glosses={layers.glosses}
+                translators={layers.translators}
                       idPrefix={`${sentence.id}_en`}
                       revealWords={reveal.words}
                       showDefsInline={showDefsInline}
@@ -684,7 +783,7 @@ function SentenceView({
             </div>
             {(showPinyin || showZhuyin) && (
               <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[12px]">
-                {interactiveWords.map((w, i) => {
+                {chipWords.map((w, i) => {
                     const senses =
                       w.senses && w.senses.length > 0
                         ? w.senses
