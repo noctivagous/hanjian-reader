@@ -68,7 +68,7 @@ interface Props {
   showSpeakerButtons: boolean;
   speakOnClick: boolean;
   dict: ReadingProvider | null;
-  /** Classical word breaker (Jiayan). Used for traditional-script docs. */
+  /** Classical word breaker (Jiayan). Supplied when the document's register routes segmentation to it. */
   segmentZh?: (zh: string) => string[];
   /** Which word-alignment surface is interactive. */
   alignRole: UnderlineMode;

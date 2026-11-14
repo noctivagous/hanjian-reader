@@ -1,13 +1,16 @@
 // Language register: which variety of Chinese a document is written
 // in (UI label "Register"). The reader's feature set follows the
-// register — in this first slice, the order dictionaries are consulted
-// for word readings. A document's effective register resolves in one
-// place (resolveDocLanguageRegister): a per-document user override
-// wins, then the register the document declares, then detection over
-// the document's Chinese text, then the 'mandarin' default.
+// register — slice 1: the order dictionaries are consulted for word
+// readings; slice 2: which word segmenter breaks the Chinese text
+// (see segmentationRoute). A document's effective register resolves
+// in one place (resolveDocLanguageRegister): a per-document user
+// override wins, then the register the document declares, then
+// detection over the document's Chinese text, then the 'mandarin'
+// default.
 
 import type { Doc, LanguageRegister } from '../data/types';
 import type { DictRecord, ReadingProvider } from './dictionary';
+import { docScript } from './script.ts';
 
 export type { LanguageRegister };
 
@@ -116,6 +119,47 @@ export function resolveDocLanguageRegister(
   const text = docChineseText(doc);
   if (text) return { register: detectLanguageRegister(text), source: 'detected' };
   return { register: 'mandarin', source: 'default' };
+}
+
+/** Which word segmenter breaks a document's Chinese text. */
+export type SegmentationRoute = 'jiayan' | 'modern';
+
+/**
+ * Marker hits (classical + modern) below which a *detected* register
+ * is too thin an evidence base to route segmentation on: a one-line
+ * Analects quotation carries two or three function words, and flipping
+ * its word breaker on that evidence would churn behavior the detector
+ * itself calls uncertain. Declared and overridden registers always
+ * route on the register alone.
+ */
+const MIN_ROUTE_EVIDENCE = 4;
+
+/**
+ * Segmentation follows the register (slice 2): classical text is
+ * broken by the Jiayan classical segmenter, mandarin text by the
+ * modern path (Intl.Segmenter + CC-CEDICT). Script is only a fallback
+ * for when no register can be determined — an empty document, or a
+ * detected register resting on fewer than MIN_ROUTE_EVIDENCE marker
+ * hits — where the pre-Register behavior is kept: Jiayan for
+ * traditional script, the modern segmenter otherwise. Note the route
+ * changes word boundaries only; readings still come from CC-CEDICT
+ * whichever route is taken (the Jiayan asset attests headwords, it
+ * carries no glosses).
+ */
+export function segmentationRoute(
+  resolved: ResolvedRegister,
+  doc: Doc,
+): SegmentationRoute {
+  if (resolved.source === 'override' || resolved.source === 'declared') {
+    return resolved.register === 'classical' ? 'jiayan' : 'modern';
+  }
+  if (resolved.source === 'detected') {
+    const s = scoreLanguageRegister(docChineseText(doc));
+    if (s.classicalHits + s.modernHits >= MIN_ROUTE_EVIDENCE) {
+      return resolved.register === 'classical' ? 'jiayan' : 'modern';
+    }
+  }
+  return docScript(doc) === 'traditional' ? 'jiayan' : 'modern';
 }
 
 /** Human phrasing for a resolution source, used in control titles. */
