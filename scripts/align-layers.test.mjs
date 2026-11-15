@@ -91,9 +91,9 @@ describe('layered underlines', () => {
     }
     // 37 hand-picked marks before the zero-gap fill; the fill marks every
     // English word with no Chinese counterpart, book-wide. The gloss-cut
-    // pass added 33 more inside the formerly whole-sentence glosses of
-    // s02 and s27.
-    assert.equal(total, 982);
+    // passes added 33 more inside the formerly whole-sentence glosses of
+    // s02 and s27, and 9 more inside the two flagged clauses (s02/s04).
+    assert.equal(total, 991);
   });
 
   it('s01 marks its scaffolding words and keeps content words glossed', () => {
@@ -185,11 +185,11 @@ describe('coverage classification (gloss-covered / span-only / gap)', () => {
       }
     }
     assert.equal(spans, 483);
-    // 367 spans carry word-level glosses strictly inside them; the
-    // other 116 are span-class segments (111 still carry a whole-span
+    // 369 spans carry word-level glosses strictly inside them; the
+    // other 114 are span-class segments (109 still carry a whole-span
     // gloss record, which the renderer demotes; the rest none).
-    assert.equal(spansWithInner, 367);
-    assert.equal(wholeSpanGlosses, 111);
+    assert.equal(spansWithInner, 369);
+    assert.equal(wholeSpanGlosses, 109);
     assert.equal(tokens, 2231);
     assert.equal(gap, 0, 'gap words are reported as gaps, never absorbed');
     assert.equal(glossCovered + marked + spanOnly, tokens);
