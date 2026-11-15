@@ -68,7 +68,7 @@ interface Props {
   showSpeakerButtons: boolean;
   speakOnClick: boolean;
   dict: ReadingProvider | null;
-  /** Classical word breaker (Jiayan). Used for traditional-script docs. */
+  /** Classical word breaker (Jiayan). Supplied when the document's register routes segmentation to it. */
   segmentZh?: (zh: string) => string[];
   /** Which word-alignment surface is interactive. */
   alignRole: UnderlineMode;
@@ -102,7 +102,7 @@ function hoverSpanClasses({
   let c = 'cursor-pointer transition relative px-0.5';
   if (revealWords && hasZh) {
     c +=
-      ' border-b border-dotted border-[#C73E1D]/60 hover:bg-[#FFF0EB] dark:hover:bg-[#2A1A16] rounded-sm';
+      ' border-b border-dotted border-[#1D4ED8]/70 hover:bg-[#EDF2FE] dark:hover:bg-[#17233D] rounded-sm';
   }
   if (pinned) c += ' !bg-[var(--verm)] !text-white rounded';
   else if (linked) {
@@ -342,6 +342,7 @@ function EnglishAlignedText({
   spans,
   glosses,
   translators,
+  gaps,
   idPrefix,
   revealWords,
   showDefsInline,
@@ -357,6 +358,7 @@ function EnglishAlignedText({
   spans: WordAlign[];
   glosses: WordAlign[];
   translators: WordAlign[];
+  gaps: { enStart: number; enEnd: number }[];
   idPrefix: string;
   revealWords: boolean;
   showDefsInline: boolean;
@@ -381,6 +383,14 @@ function EnglishAlignedText({
   const glossList = glosses.filter(valid);
   const spanList = spans.filter(valid);
   const translatorList = translators.filter(valid);
+  const gapList = gaps.filter(
+    (g) =>
+      Number.isInteger(g.enStart) &&
+      Number.isInteger(g.enEnd) &&
+      g.enStart >= 0 &&
+      g.enEnd > g.enStart &&
+      g.enEnd <= text.length,
+  );
   // Interactive words in reading order; the index is the pin-key suffix,
   // as it was when a single layer was rendered.
   const wordList = [...glossList, ...spanList].sort(
@@ -393,8 +403,10 @@ function EnglishAlignedText({
   // The layers overlap (a gloss sits inside its span; a translator mark
   // can too), so the text is cut at every range boundary into atomic
   // runs. Each run takes the most specific layer covering it:
-  // gloss > translator > span > plain.
-  type Kind = 'gloss' | 'span' | 'translator' | 'plain';
+  // gloss > translator > span > gap > plain. A run is a gap when a word
+  // sits in no layer at all — the file has no alignment for it, and it
+  // is underlined red rather than left looking intentionally bare.
+  type Kind = 'gloss' | 'span' | 'translator' | 'gap' | 'plain';
   interface Run {
     start: number;
     end: number;
@@ -405,6 +417,10 @@ function EnglishAlignedText({
   for (const w of [...glossList, ...spanList, ...translatorList]) {
     bounds.add(w.enStart);
     bounds.add(w.enEnd);
+  }
+  for (const g of gapList) {
+    bounds.add(g.enStart);
+    bounds.add(g.enEnd);
   }
   const pts = [...bounds].sort((a, b) => a - b);
   const runs: Run[] = [];
@@ -417,13 +433,20 @@ function EnglishAlignedText({
       (w) => w.enStart <= start && end <= w.enEnd,
     );
     const span = spanList.find((w) => w.enStart <= start && end <= w.enEnd);
+    const inGap =
+      !gloss &&
+      !translator &&
+      !span &&
+      gapList.some((g) => g.enStart <= start && end <= g.enEnd);
     const kind: Kind = gloss
       ? 'gloss'
       : translator
         ? 'translator'
         : span
           ? 'span'
-          : 'plain';
+          : inGap
+            ? 'gap'
+            : 'plain';
     const word = gloss ?? span ?? null;
     const last = runs[runs.length - 1];
     if (last && last.kind === kind && last.word === word && last.end === start) {
@@ -450,6 +473,25 @@ function EnglishAlignedText({
               className={
                 revealWords
                   ? 'border-b border-dotted border-neutral-400 dark:border-neutral-500 cursor-help px-0.5'
+                  : undefined
+              }
+            >
+              {highlight(slice, search)}
+            </span>
+          );
+        }
+        if (run.kind === 'gap') {
+          return (
+            <span
+              key={i}
+              title={
+                revealWords
+                  ? 'No alignment data for this text — a gap in the file'
+                  : undefined
+              }
+              className={
+                revealWords
+                  ? 'border-b-2 border-solid border-red-600 dark:border-red-500 cursor-help px-0.5'
                   : undefined
               }
             >
@@ -505,7 +547,7 @@ function EnglishAlignedText({
             })}
             style={
               run.kind === 'span' && !pinned
-                ? { borderColor: 'rgba(199, 62, 29, 0.30)' }
+                ? { borderColor: 'rgba(161, 98, 7, 0.35)' }
                 : undefined
             }
           >
@@ -653,6 +695,7 @@ function SentenceView({
                 spans={layers.spans}
                 glosses={layers.glosses}
                 translators={layers.translators}
+                gaps={layers.gaps}
                 idPrefix={sentence.id}
                 revealWords={reveal.words}
                 showDefsInline={showDefsInline}
@@ -724,6 +767,7 @@ function SentenceView({
                       spans={layers.spans}
                 glosses={layers.glosses}
                 translators={layers.translators}
+                gaps={layers.gaps}
                       idPrefix={`${sentence.id}_en`}
                       revealWords={reveal.words}
                       showDefsInline={showDefsInline}

@@ -239,6 +239,15 @@
     ],
     "s02": [
       {
+        "en": "If",
+        "zh": "苟",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 0,
+        "enEnd": 2
+      },
+      {
         "en": "If a man has not been properly taught",
         "zh": "苟不教",
         "pinyin": "",
@@ -248,12 +257,66 @@
         "enEnd": 37
       },
       {
-        "en": "If a man has not been properly taught",
-        "zh": "苟不教",
+        "en": "a",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 3,
+        "enEnd": 4
+      },
+      {
+        "en": "man",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 5,
+        "enEnd": 8
+      },
+      {
+        "en": "has",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 9,
+        "enEnd": 12
+      },
+      {
+        "en": "not",
+        "zh": "不",
         "pinyin": "",
         "def": "",
         "role": "gloss",
-        "enStart": 0,
+        "enStart": 13,
+        "enEnd": 16
+      },
+      {
+        "en": "been",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 17,
+        "enEnd": 21
+      },
+      {
+        "en": "properly",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 22,
+        "enEnd": 30
+      },
+      {
+        "en": "taught",
+        "zh": "教",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 31,
         "enEnd": 37
       },
       {
@@ -302,6 +365,15 @@
         "enEnd": 75
       },
       {
+        "en": "The",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 77,
+        "enEnd": 80
+      },
+      {
         "en": "The most important thing in education is the close cooperation between teacher and pupil",
         "zh": "教之道，貴以專",
         "pinyin": "",
@@ -311,12 +383,93 @@
         "enEnd": 165
       },
       {
-        "en": "The most important thing in education is the close cooperation between teacher and pupil",
-        "zh": "教之道，貴以專",
+        "en": "most important",
+        "zh": "貴",
         "pinyin": "",
         "def": "",
         "role": "gloss",
-        "enStart": 77,
+        "enStart": 81,
+        "enEnd": 95
+      },
+      {
+        "en": "thing",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 96,
+        "enEnd": 101
+      },
+      {
+        "en": "in education",
+        "zh": "教之道",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 102,
+        "enEnd": 114
+      },
+      {
+        "en": "is",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 115,
+        "enEnd": 117
+      },
+      {
+        "en": "the",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 118,
+        "enEnd": 121
+      },
+      {
+        "en": "close cooperation",
+        "zh": "專",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 122,
+        "enEnd": 139
+      },
+      {
+        "en": "between",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 140,
+        "enEnd": 147
+      },
+      {
+        "en": "teacher",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 148,
+        "enEnd": 155
+      },
+      {
+        "en": "and",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 156,
+        "enEnd": 159
+      },
+      {
+        "en": "pupil",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 160,
         "enEnd": 165
       }
     ],
@@ -675,6 +828,15 @@
         "enEnd": 54
       },
       {
+        "en": "and",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 56,
+        "enEnd": 59
+      },
+      {
         "en": "and all of them became famous men",
         "zh": "名俱揚",
         "pinyin": "",
@@ -684,12 +846,48 @@
         "enEnd": 89
       },
       {
-        "en": "and all of them became famous men",
-        "zh": "名俱揚",
+        "en": "all",
+        "zh": "俱",
         "pinyin": "",
         "def": "",
         "role": "gloss",
-        "enStart": 56,
+        "enStart": 60,
+        "enEnd": 63
+      },
+      {
+        "en": "of",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 64,
+        "enEnd": 66
+      },
+      {
+        "en": "them",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 67,
+        "enEnd": 71
+      },
+      {
+        "en": "became famous",
+        "zh": "揚",
+        "pinyin": "",
+        "def": "",
+        "role": "gloss",
+        "enStart": 72,
+        "enEnd": 85
+      },
+      {
+        "en": "men",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 86,
         "enEnd": 89
       }
     ],
@@ -5095,6 +5293,15 @@
         "enEnd": 64
       },
       {
+        "en": "which",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 66,
+        "enEnd": 71
+      },
+      {
         "en": "which teaches children the art of sprinkling water, sweeping, and behaving properly",
         "zh": "小學",
         "pinyin": "",
@@ -5104,13 +5311,112 @@
         "enEnd": 149
       },
       {
-        "en": "which teaches children the art of sprinkling water, sweeping, and behaving properly",
-        "zh": "小學",
+        "en": "teaches",
+        "zh": "",
         "pinyin": "",
         "def": "",
-        "role": "gloss",
-        "enStart": 66,
+        "role": "translator",
+        "enStart": 72,
+        "enEnd": 79
+      },
+      {
+        "en": "children",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 80,
+        "enEnd": 88
+      },
+      {
+        "en": "the",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 89,
+        "enEnd": 92
+      },
+      {
+        "en": "art",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 93,
+        "enEnd": 96
+      },
+      {
+        "en": "of",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 97,
+        "enEnd": 99
+      },
+      {
+        "en": "sprinkling",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 100,
+        "enEnd": 110
+      },
+      {
+        "en": "water",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 111,
+        "enEnd": 116
+      },
+      {
+        "en": "sweeping",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 118,
+        "enEnd": 126
+      },
+      {
+        "en": "and",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 128,
+        "enEnd": 131
+      },
+      {
+        "en": "behaving",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 132,
+        "enEnd": 140
+      },
+      {
+        "en": "properly",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 141,
         "enEnd": 149
+      },
+      {
+        "en": "It",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 151,
+        "enEnd": 153
       },
       {
         "en": "It also teaches the six accomplishments: rites, music, archery, driving, writing, and mathematics",
@@ -5122,12 +5428,111 @@
         "enEnd": 248
       },
       {
-        "en": "It also teaches the six accomplishments: rites, music, archery, driving, writing, and mathematics",
-        "zh": "小學",
+        "en": "also",
+        "zh": "",
         "pinyin": "",
         "def": "",
-        "role": "gloss",
-        "enStart": 151,
+        "role": "translator",
+        "enStart": 154,
+        "enEnd": 158
+      },
+      {
+        "en": "teaches",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 159,
+        "enEnd": 166
+      },
+      {
+        "en": "the",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 167,
+        "enEnd": 170
+      },
+      {
+        "en": "six",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 171,
+        "enEnd": 174
+      },
+      {
+        "en": "accomplishments",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 175,
+        "enEnd": 190
+      },
+      {
+        "en": "rites",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 192,
+        "enEnd": 197
+      },
+      {
+        "en": "music",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 199,
+        "enEnd": 204
+      },
+      {
+        "en": "archery",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 206,
+        "enEnd": 213
+      },
+      {
+        "en": "driving",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 215,
+        "enEnd": 222
+      },
+      {
+        "en": "writing",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 224,
+        "enEnd": 231
+      },
+      {
+        "en": "and",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 233,
+        "enEnd": 236
+      },
+      {
+        "en": "mathematics",
+        "zh": "",
+        "pinyin": "",
+        "def": "",
+        "role": "translator",
+        "enStart": 237,
         "enEnd": 248
       },
       {
