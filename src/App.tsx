@@ -30,6 +30,7 @@ import { loadJiayan, type JiayanIndex } from './lib/jiayan';
 import {
   lookupInRegisterOrder,
   resolveDocLanguageRegister,
+  segmentationRoute,
   type RegisterProviders,
 } from './lib/languageRegister';
 import { loadPublicDocs } from './lib/publicDocs';
@@ -482,11 +483,20 @@ export default function App() {
         : 'idle';
 
   const [jiayan, setJiayan] = useState<JiayanIndex | null>(null);
-  // Segmentation stays script-keyed in this slice: Jiayan loads for
-  // traditional-script docs, as before. The register only reorders
-  // dictionary consultation (below).
+  // Segmentation follows the register (slice 2): the resolved register
+  // picks the word breaker — Jiayan for classical, the modern path
+  // otherwise — and script is only the fallback when no register can
+  // be determined (see segmentationRoute). Jiayan still loads for
+  // every traditional-script doc regardless of route, because the
+  // classical dictionary provider below consults its headwords in
+  // either register.
+  const segRoute = useMemo(
+    () => segmentationRoute(docRegister, rawDoc),
+    [docRegister, rawDoc],
+  );
   const needsJiayan =
-    brand.features.words && docScript(rawDoc) === 'traditional';
+    brand.features.words &&
+    (segRoute === 'jiayan' || docScript(rawDoc) === 'traditional');
   useEffect(() => {
     if (!needsJiayan || jiayan) return;
     let live = true;
@@ -497,7 +507,7 @@ export default function App() {
       live = false;
     };
   }, [needsJiayan, jiayan]);
-  const segmentZh = jiayan?.segment;
+  const segmentZh = segRoute === 'jiayan' ? jiayan?.segment : undefined;
 
   // Register-ordered dictionary consultation for word readings. The
   // classical source is the Jiayan classical lexicon: it attests

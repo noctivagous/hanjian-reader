@@ -167,6 +167,55 @@ export interface UnderlineLayers {
   glosses: WordAlign[];
   /** Authored marks for English words with no Chinese counterpart. */
   translators: WordAlign[];
+  /**
+   * Word ranges covered by no layer at all — gaps in the alignment
+   * data. Only computed in 'both' mode, where every word is supposed
+   * to carry some mark; the reader underlines these red so missing
+   * data looks missing.
+   */
+  gaps: { enStart: number; enEnd: number }[];
+}
+
+/** Word tokens for coverage purposes (alphabetic, incl. apostrophes). */
+const WORD_TOKEN_RE = /[A-Za-z]+(?:['’][A-Za-z]+)?/g;
+
+/**
+ * A whole-span gloss: a gloss whose range is exactly a span's range.
+ * Whatever its length — one word or a whole sentence — it is a
+ * phrase-level mapping, not word-level coverage: a segment counts as
+ * gloss-covered only where a gloss sits strictly inside its span.
+ * Whole-span glosses therefore render as span, never as gloss, in
+ * every display mode; the span underneath them still shows.
+ */
+export function isWholeSpanGloss(
+  gloss: WordAlign,
+  words: WordAlign[],
+): boolean {
+  if (alignRole(gloss) !== 'gloss' || !hasOffsets(gloss)) return false;
+  return words.some(
+    (w) =>
+      alignRole(w) === 'span' &&
+      hasOffsets(w) &&
+      w.enStart === gloss.enStart &&
+      w.enEnd === gloss.enEnd,
+  );
+}
+
+/** Word-token ranges of `text` that no layer range fully covers. */
+function uncoveredWordRanges(
+  text: string,
+  layers: WordAlign[],
+): { enStart: number; enEnd: number }[] {
+  const gaps: { enStart: number; enEnd: number }[] = [];
+  for (const m of text.matchAll(WORD_TOKEN_RE)) {
+    const start = m.index;
+    const end = start + m[0].length;
+    const covered = layers.some(
+      (w) => hasOffsets(w) && w.enStart! <= start && end <= w.enEnd!,
+    );
+    if (!covered) gaps.push({ enStart: start, enEnd: end });
+  }
+  return gaps;
 }
 
 /**
@@ -184,13 +233,23 @@ export function layeredUnderlines(
 ): UnderlineLayers {
   const normalized = normalizeTranslationWords(text, zh, words);
   const spans = normalized.filter((w) => alignRole(w) === 'span' && hasOffsets(w));
+  // Whole-span glosses are demoted in every mode: a segment is
+  // gloss-class only where a gloss sits strictly inside its span.
   const glosses = normalized.filter(
-    (w) => alignRole(w) === 'gloss' && w.zh && hasOffsets(w),
+    (w) =>
+      alignRole(w) === 'gloss' &&
+      w.zh &&
+      hasOffsets(w) &&
+      !isWholeSpanGloss(w, normalized),
   );
   const translators = normalized.filter(
     (w) => alignRole(w) === 'translator' && hasOffsets(w),
   );
-  if (mode === 'span') return { spans, glosses: [], translators: [] };
-  if (mode === 'gloss') return { spans: [], glosses, translators };
-  return { spans, glosses, translators };
+  if (mode === 'span') return { spans, glosses: [], translators: [], gaps: [] };
+  if (mode === 'gloss') return { spans: [], glosses, translators, gaps: [] };
+  const gaps =
+    normalized.length > 0
+      ? uncoveredWordRanges(text, [...spans, ...glosses, ...translators])
+      : [];
+  return { spans, glosses, translators, gaps };
 }
