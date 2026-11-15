@@ -179,51 +179,26 @@ export interface UnderlineLayers {
 /** Word tokens for coverage purposes (alphabetic, incl. apostrophes). */
 const WORD_TOKEN_RE = /[A-Za-z]+(?:['’][A-Za-z]+)?/g;
 
-function wordCount(en: string): number {
-  return (en.match(WORD_TOKEN_RE) ?? []).length;
-}
-
 /**
- * Words at or above which a gloss is sentence-scale rather than a
- * phrase gloss. The book's genuine phrase glosses run to about six
- * words ('from which all things are classified'); a gloss swallowing
- * seven or more words with no inner structure is a clause or sentence
- * wearing a gloss's clothes.
+ * A whole-span gloss: a gloss whose range is exactly a span's range.
+ * Whatever its length — one word or a whole sentence — it is a
+ * phrase-level mapping, not word-level coverage: a segment counts as
+ * gloss-covered only where a gloss sits strictly inside its span.
+ * Whole-span glosses therefore render as span, never as gloss, in
+ * every display mode; the span underneath them still shows.
  */
-export const SENTENCE_GLOSS_MIN_WORDS = 7;
-
-/**
- * A degenerate gloss: its range equals its span's range, it covers at
- * least SENTENCE_GLOSS_MIN_WORDS words, and no gloss or translator
- * mark sits strictly inside it. Such a record claims word-level
- * coverage it does not provide — every word inside it is really only
- * span-covered — so the reader demotes it (the span still shows) and
- * the coverage checker refuses to count it as gloss coverage.
- */
-export function isDegenerateGloss(
+export function isWholeSpanGloss(
   gloss: WordAlign,
   words: WordAlign[],
 ): boolean {
   if (alignRole(gloss) !== 'gloss' || !hasOffsets(gloss)) return false;
-  if (wordCount(gloss.en) < SENTENCE_GLOSS_MIN_WORDS) return false;
-  const sameSpan = words.some(
+  return words.some(
     (w) =>
       alignRole(w) === 'span' &&
       hasOffsets(w) &&
       w.enStart === gloss.enStart &&
       w.enEnd === gloss.enEnd,
   );
-  if (!sameSpan) return false;
-  const hasInner = words.some(
-    (w) =>
-      w !== gloss &&
-      hasOffsets(w) &&
-      (alignRole(w) === 'gloss' || alignRole(w) === 'translator') &&
-      w.enStart! >= gloss.enStart! &&
-      w.enEnd! <= gloss.enEnd! &&
-      (w.enStart! > gloss.enStart! || w.enEnd! < gloss.enEnd!),
-  );
-  return !hasInner;
 }
 
 /** Word-token ranges of `text` that no layer range fully covers. */
@@ -258,14 +233,14 @@ export function layeredUnderlines(
 ): UnderlineLayers {
   const normalized = normalizeTranslationWords(text, zh, words);
   const spans = normalized.filter((w) => alignRole(w) === 'span' && hasOffsets(w));
-  // Degenerate (sentence-scale) glosses are demoted in every mode:
-  // they are not glosses, and the span underneath them still shows.
+  // Whole-span glosses are demoted in every mode: a segment is
+  // gloss-class only where a gloss sits strictly inside its span.
   const glosses = normalized.filter(
     (w) =>
       alignRole(w) === 'gloss' &&
       w.zh &&
       hasOffsets(w) &&
-      !isDegenerateGloss(w, normalized),
+      !isWholeSpanGloss(w, normalized),
   );
   const translators = normalized.filter(
     (w) => alignRole(w) === 'translator' && hasOffsets(w),

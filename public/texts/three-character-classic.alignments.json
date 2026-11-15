@@ -239,15 +239,6 @@
     ],
     "s02": [
       {
-        "en": "If",
-        "zh": "苟",
-        "pinyin": "",
-        "def": "",
-        "role": "gloss",
-        "enStart": 0,
-        "enEnd": 2
-      },
-      {
         "en": "If a man has not been properly taught",
         "zh": "苟不教",
         "pinyin": "",
@@ -257,66 +248,12 @@
         "enEnd": 37
       },
       {
-        "en": "a",
-        "zh": "",
-        "pinyin": "",
-        "def": "",
-        "role": "translator",
-        "enStart": 3,
-        "enEnd": 4
-      },
-      {
-        "en": "man",
-        "zh": "",
-        "pinyin": "",
-        "def": "",
-        "role": "translator",
-        "enStart": 5,
-        "enEnd": 8
-      },
-      {
-        "en": "has",
-        "zh": "",
-        "pinyin": "",
-        "def": "",
-        "role": "translator",
-        "enStart": 9,
-        "enEnd": 12
-      },
-      {
-        "en": "not",
-        "zh": "不",
+        "en": "If a man has not been properly taught",
+        "zh": "苟不教",
         "pinyin": "",
         "def": "",
         "role": "gloss",
-        "enStart": 13,
-        "enEnd": 16
-      },
-      {
-        "en": "been",
-        "zh": "",
-        "pinyin": "",
-        "def": "",
-        "role": "translator",
-        "enStart": 17,
-        "enEnd": 21
-      },
-      {
-        "en": "properly",
-        "zh": "",
-        "pinyin": "",
-        "def": "",
-        "role": "translator",
-        "enStart": 22,
-        "enEnd": 30
-      },
-      {
-        "en": "taught",
-        "zh": "教",
-        "pinyin": "",
-        "def": "",
-        "role": "gloss",
-        "enStart": 31,
+        "enStart": 0,
         "enEnd": 37
       },
       {
@@ -828,15 +765,6 @@
         "enEnd": 54
       },
       {
-        "en": "and",
-        "zh": "",
-        "pinyin": "",
-        "def": "",
-        "role": "translator",
-        "enStart": 56,
-        "enEnd": 59
-      },
-      {
         "en": "and all of them became famous men",
         "zh": "名俱揚",
         "pinyin": "",
@@ -846,48 +774,12 @@
         "enEnd": 89
       },
       {
-        "en": "all",
-        "zh": "俱",
+        "en": "and all of them became famous men",
+        "zh": "名俱揚",
         "pinyin": "",
         "def": "",
         "role": "gloss",
-        "enStart": 60,
-        "enEnd": 63
-      },
-      {
-        "en": "of",
-        "zh": "",
-        "pinyin": "",
-        "def": "",
-        "role": "translator",
-        "enStart": 64,
-        "enEnd": 66
-      },
-      {
-        "en": "them",
-        "zh": "",
-        "pinyin": "",
-        "def": "",
-        "role": "translator",
-        "enStart": 67,
-        "enEnd": 71
-      },
-      {
-        "en": "became famous",
-        "zh": "揚",
-        "pinyin": "",
-        "def": "",
-        "role": "gloss",
-        "enStart": 72,
-        "enEnd": 85
-      },
-      {
-        "en": "men",
-        "zh": "",
-        "pinyin": "",
-        "def": "",
-        "role": "translator",
-        "enStart": 86,
+        "enStart": 56,
         "enEnd": 89
       }
     ],

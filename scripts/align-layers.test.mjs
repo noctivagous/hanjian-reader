@@ -2,7 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
-  isDegenerateGloss,
+  isWholeSpanGloss,
   layeredUnderlines,
   normalizeTranslationWords,
   underlinesFor,
@@ -91,8 +91,9 @@ describe('layered underlines', () => {
     }
     // 37 hand-picked marks before the zero-gap fill; the fill marks every
     // English word with no Chinese counterpart, book-wide. The gloss-cut
-    // pass added 42 more inside the formerly whole-sentence glosses.
-    assert.equal(total, 991);
+    // pass added 33 more inside the formerly whole-sentence glosses of
+    // s02 and s27.
+    assert.equal(total, 982);
   });
 
   it('s01 marks its scaffolding words and keeps content words glossed', () => {
@@ -130,7 +131,10 @@ describe('coverage classification (gloss-covered / span-only / gap)', () => {
   const inside = (ranges, s, e) =>
     ranges.some((w) => w.enStart <= s && e <= w.enEnd);
 
-  it('the whole book: no degenerate glosses, no span-only words, no gaps', () => {
+  it('the whole book: spans classify by strictly-inner glosses; no word is a gap', () => {
+    let spans = 0;
+    let spansWithInner = 0;
+    let wholeSpanGlosses = 0;
     let tokens = 0;
     let glossCovered = 0;
     let marked = 0;
@@ -138,13 +142,29 @@ describe('coverage classification (gloss-covered / span-only / gap)', () => {
     let gap = 0;
     for (const [id, words] of Object.entries(alignments.units)) {
       const { zh, en } = texts[id];
-      for (const w of words) {
-        assert.ok(
-          !isDegenerateGloss(w, words),
-          `${id}: degenerate gloss '${w.en}' must be cut to word level`,
+      const rawSpans = words.filter((w) => w.role === 'span');
+      const rawGlosses = words.filter((w) => w.role === 'gloss');
+      spans += rawSpans.length;
+      wholeSpanGlosses += rawGlosses.filter((g) =>
+        isWholeSpanGloss(g, words),
+      ).length;
+      for (const s of rawSpans) {
+        const inner = rawGlosses.some(
+          (g) =>
+            g.enStart >= s.enStart &&
+            g.enEnd <= s.enEnd &&
+            (g.enStart > s.enStart || g.enEnd < s.enEnd),
         );
+        if (inner) spansWithInner += 1;
       }
       const layers = layeredUnderlines(en, zh, words, 'both');
+      // The renderer's gloss layer must never carry a whole-span gloss.
+      for (const g of layers.glosses) {
+        assert.ok(
+          !isWholeSpanGloss(g, words),
+          `${id}: whole-span gloss '${g.en}' leaked into the gloss layer`,
+        );
+      }
       const gapRanges = new Set(
         layers.gaps.map((g) => `${g.enStart}-${g.enEnd}`),
       );
@@ -164,43 +184,68 @@ describe('coverage classification (gloss-covered / span-only / gap)', () => {
         }
       }
     }
+    assert.equal(spans, 483);
+    // 367 spans carry word-level glosses strictly inside them; the
+    // other 116 are span-class segments (111 still carry a whole-span
+    // gloss record, which the renderer demotes; the rest none).
+    assert.equal(spansWithInner, 367);
+    assert.equal(wholeSpanGlosses, 111);
     assert.equal(tokens, 2231);
     assert.equal(gap, 0, 'gap words are reported as gaps, never absorbed');
-    assert.equal(spanOnly, 0, 'every spanned word is glossed or marked');
-    assert.equal(glossCovered + marked, tokens);
+    assert.equal(glossCovered + marked + spanOnly, tokens);
+    assert.ok(spanOnly > 0, 'span-class words are an honest, expected class');
   });
 
-  it('a sentence-scale gloss is demoted to its span, not deleted', () => {
+  it('a whole-span gloss is demoted at any length — even one word', () => {
+    const text = 'Heaven and Earth';
+    const words = [
+      { en: 'Heaven', zh: '天', role: 'span', enStart: 0, enEnd: 6 },
+      { en: 'Heaven', zh: '天', role: 'gloss', enStart: 0, enEnd: 6 },
+    ];
+    assert.ok(isWholeSpanGloss(words[1], words));
+    for (const mode of ['both', 'gloss']) {
+      const layers = layeredUnderlines(text, '天地', words, mode);
+      assert.equal(layers.glosses.length, 0, mode);
+    }
+    const both = layeredUnderlines(text, '天地', words, 'both');
+    assert.equal(both.spans.length, 1);
+    // 'Heaven' itself is span-covered (span-only, not a gap); the
+    // fixture's other words have no coverage at all, so they are gaps.
+    assert.deepEqual(both.gaps, [{ enStart: 7, enEnd: 10 }, { enStart: 11, enEnd: 16 }]);
+  });
+
+  it('a whole-span gloss over a sentence is demoted the same way', () => {
     const text = 'One two three four five six seven eight';
     const words = [
       { en: text, zh: '甲乙', role: 'span', enStart: 0, enEnd: 39 },
       { en: text, zh: '甲乙', role: 'gloss', enStart: 0, enEnd: 39 },
     ];
-    assert.ok(isDegenerateGloss(words[1], words));
     const layers = layeredUnderlines(text, '甲乙', words, 'both');
     assert.equal(layers.glosses.length, 0);
     assert.equal(layers.spans.length, 1);
-    // Span-covered words are span-only, not gaps: nothing turns red.
     assert.deepEqual(layers.gaps, []);
   });
 
-  it('a phrase gloss at span scale is not degenerate', () => {
-    const text = 'from which all things are classified';
-    const words = [
-      { en: text, zh: '本乎數', role: 'span', enStart: 0, enEnd: 36 },
-      { en: text, zh: '本乎數', role: 'gloss', enStart: 0, enEnd: 36 },
-    ];
-    assert.ok(!isDegenerateGloss(words[1], words));
-  });
-
-  it('inner entries rescue a long gloss from demotion', () => {
+  it('inner glosses survive; only the whole-span record is demoted', () => {
     const text = 'One two three four five six seven eight';
     const words = [
       { en: text, zh: '甲乙', role: 'span', enStart: 0, enEnd: 39 },
       { en: text, zh: '甲乙', role: 'gloss', enStart: 0, enEnd: 39 },
       { en: 'three', zh: '三', role: 'gloss', enStart: 8, enEnd: 13 },
     ];
-    assert.ok(!isDegenerateGloss(words[1], words));
+    const layers = layeredUnderlines(text, '甲乙', words, 'both');
+    assert.deepEqual(layers.glosses.map((g) => g.en), ['three']);
+  });
+
+  it('a gloss strictly inside its span is kept as gloss', () => {
+    const text = 'carefully chose her neighbours';
+    const words = [
+      { en: text, zh: '擇鄰處', role: 'span', enStart: 0, enEnd: 30 },
+      { en: 'chose her neighbours', zh: '擇鄰處', role: 'gloss', enStart: 10, enEnd: 30 },
+    ];
+    assert.ok(!isWholeSpanGloss(words[1], words));
+    const layers = layeredUnderlines(text, '擇鄰處', words, 'gloss');
+    assert.deepEqual(layers.glosses.map((g) => g.en), ['chose her neighbours']);
   });
 
   it('an uncovered word is reported as a gap range', () => {
